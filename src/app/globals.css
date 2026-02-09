@@ -26,9 +26,7 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  @apply antialiased text-gray-900 bg-white;
-}
+/* body styles moved to layout.tsx */
 
 /* ================================
    ACCESSIBILITY - REDUCED MOTION

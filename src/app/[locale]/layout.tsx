@@ -50,7 +50,7 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale}>
-      <body className="font-sans text-gray-900 overflow-x-hidden">
+      <body className="font-sans text-gray-900 bg-white antialiased overflow-x-hidden">
         <NextIntlClientProvider messages={messages}>
           <JsonLd />
           {children}
