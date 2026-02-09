@@ -1,0 +1,69 @@
+{
+  "home": {
+    "badge": "✨ Buka untuk Proyek 2025",
+    "title": "Jasa Pembuatan Website",
+    "titleHighlight": "& Sistem Digital",
+    "subtitle": "Website, Sistem, dan Solusi Digital yang cepat, modern, dan terintegrasi untuk bisnis & lembaga Anda.",
+    "ctaConsult": "Konsultasi Gratis",
+    "ctaPortfolio": "Lihat Portfolio",
+    "statsProjects": "Proyek Selesai",
+    "statsClients": "Klien Puas",
+    "statsSupport": "Support"
+  },
+  "nav": {
+    "home": "Beranda",
+    "services": "Layanan",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "about": "Tentang",
+    "contact": "Kontak"
+  },
+  "services": {
+    "badge": "LAYANAN KAMI",
+    "title": "Layanan Kami",
+    "subtitle": "Solusi digital lengkap untuk kebutuhan bisnis dan lembaga Anda."
+  },
+  "portfolio": {
+    "badge": "PORTFOLIO",
+    "title": "Portfolio Kami",
+    "subtitle": "Proyek-proyek terbaik yang telah kami kerjakan.",
+    "viewRepo": "Lihat Repository",
+    "viewLive": "Lihat Demo"
+  },
+  "blog": {
+    "badge": "BLOG & INSIGHTS",
+    "title": "Blog & Insights",
+    "subtitle": "Artikel terbaru tentang teknologi, transformasi digital, dan inovasi bisnis.",
+    "readMore": "Selengkapnya",
+    "readTime": "menit baca",
+    "backToList": "Kembali ke Blog"
+  },
+  "testimonials": {
+    "badge": "TESTIMONI",
+    "title": "Apa Kata Klien Kami",
+    "subtitle": "Kepercayaan klien adalah prioritas utama kami."
+  },
+  "about": {
+    "badge": "TENTANG KAMI",
+    "title": "Tentang Velora",
+    "subtitle": "Kami adalah tim profesional yang berdedikasi untuk membantu bisnis Anda berkembang."
+  },
+  "faq": {
+    "badge": "FAQ",
+    "title": "Pertanyaan Umum",
+    "subtitle": "Jawaban untuk pertanyaan yang sering ditanyakan."
+  },
+  "contact": {
+    "badge": "KONTAK",
+    "title": "Hubungi Kami",
+    "subtitle": "Siap membantu mewujudkan proyek digital Anda.",
+    "name": "Nama",
+    "email": "Email",
+    "message": "Pesan",
+    "send": "Kirim Pesan"
+  },
+  "footer": {
+    "copyright": "Velora ID. Hak Cipta Dilindungi.",
+    "tagline": "Solusi Digital Terpercaya"
+  }
+}

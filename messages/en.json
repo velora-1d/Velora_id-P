@@ -1,0 +1,69 @@
+{
+  "home": {
+    "badge": "✨ Open for Projects 2025",
+    "title": "Website Development",
+    "titleHighlight": "& Digital Systems",
+    "subtitle": "Fast, modern, and integrated website, systems, and digital solutions for your business & organization.",
+    "ctaConsult": "Free Consultation",
+    "ctaPortfolio": "View Portfolio",
+    "statsProjects": "Projects Completed",
+    "statsClients": "Satisfied Clients",
+    "statsSupport": "Support"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "services": {
+    "badge": "OUR SERVICES",
+    "title": "Our Services",
+    "subtitle": "Complete digital solutions for your business and organization needs."
+  },
+  "portfolio": {
+    "badge": "PORTFOLIO",
+    "title": "Our Portfolio",
+    "subtitle": "The best projects we have worked on.",
+    "viewRepo": "View Repository",
+    "viewLive": "View Demo"
+  },
+  "blog": {
+    "badge": "BLOG & INSIGHTS",
+    "title": "Blog & Insights",
+    "subtitle": "Latest articles about technology, digital transformation, and business innovation.",
+    "readMore": "Read More",
+    "readTime": "min read",
+    "backToList": "Back to Blog"
+  },
+  "testimonials": {
+    "badge": "TESTIMONIALS",
+    "title": "What Our Clients Say",
+    "subtitle": "Client trust is our top priority."
+  },
+  "about": {
+    "badge": "ABOUT US",
+    "title": "About Velora",
+    "subtitle": "We are a professional team dedicated to helping your business grow."
+  },
+  "faq": {
+    "badge": "FAQ",
+    "title": "Frequently Asked Questions",
+    "subtitle": "Answers to commonly asked questions."
+  },
+  "contact": {
+    "badge": "CONTACT",
+    "title": "Contact Us",
+    "subtitle": "Ready to help realize your digital project.",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message"
+  },
+  "footer": {
+    "copyright": "Velora ID. All Rights Reserved.",
+    "tagline": "Trusted Digital Solutions"
+  }
+}

@@ -1,0 +1,350 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ================================
+   MOTION DESIGN SYSTEM - VELORA
+   Performance-first, GPU-accelerated
+   ================================ */
+
+:root {
+  /* Duration tokens - balanced for visibility and smoothness */
+  --duration-instant: 100ms;
+  --duration-fast: 200ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-reveal: 600ms;
+
+  /* Easing tokens */
+  --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased text-gray-900 bg-white;
+  }
+}
+
+/* ================================
+   ACCESSIBILITY - REDUCED MOTION
+   ================================ */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scroll-reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ================================
+   LAYOUT
+   ================================ */
+.container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* ================================
+   SCROLL REVEAL ANIMATIONS
+   GPU-accelerated with will-change
+   ================================ */
+
+/* Base reveal state (hidden) */
+.reveal-hidden {
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* Reveal variants */
+.reveal-up {
+  transform: translateY(24px);
+}
+
+.reveal-down {
+  transform: translateY(-24px);
+}
+
+.reveal-left {
+  transform: translateX(24px);
+}
+
+.reveal-right {
+  transform: translateX(-24px);
+}
+
+.reveal-scale {
+  transform: scale(0.95);
+}
+
+/* Visible state */
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0) translateX(0) scale(1);
+  will-change: auto;
+  transition: opacity var(--duration-reveal) var(--ease-out),
+    transform var(--duration-reveal) var(--ease-out);
+}
+
+/* Stagger delays for children */
+.stagger-1 {
+  transition-delay: 50ms;
+}
+
+.stagger-2 {
+  transition-delay: 100ms;
+}
+
+.stagger-3 {
+  transition-delay: 150ms;
+}
+
+.stagger-4 {
+  transition-delay: 200ms;
+}
+
+.stagger-5 {
+  transition-delay: 250ms;
+}
+
+.stagger-6 {
+  transition-delay: 300ms;
+}
+
+/* ================================
+   BUTTON ANIMATIONS
+   Standardized micro-interactions
+   ================================ */
+
+/* Primary button hover */
+.btn-hover {
+  transition: transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.btn-hover:hover {
+  transform: translateY(-2px);
+}
+
+.btn-hover:active {
+  transform: translateY(0);
+  transition-duration: 50ms;
+}
+
+/* ================================
+   CARD ANIMATIONS
+   Subtle, professional hovers
+   ================================ */
+
+.card-hover {
+  transition: transform var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05),
+    0 8px 10px -6px rgb(0 0 0 / 0.05);
+}
+
+/* ================================
+   IMAGE ANIMATIONS
+   Optimized zoom effect
+   ================================ */
+
+.img-zoom {
+  transition: transform var(--duration-slow) var(--ease-out);
+  will-change: transform;
+}
+
+.group:hover .img-zoom {
+  transform: scale(1.05);
+}
+
+/* ================================
+   MARQUEE / TESTIMONIALS
+   Smooth infinite scroll
+   ================================ */
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ================================
+   SUBTLE STATUS INDICATOR
+   Replace aggressive ping
+   ================================ */
+
+@keyframes subtle-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.status-pulse {
+  animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+/* ================================
+   SCROLL HINT ANIMATION
+   Replaces bouncy default
+   ================================ */
+
+@keyframes scroll-hint {
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(6px);
+    opacity: 0.5;
+  }
+}
+
+.animate-scroll-hint {
+  animation: scroll-hint 2s ease-in-out infinite;
+}
+
+/* ================================
+   NAVBAR TRANSITION
+   Fast, professional
+   ================================ */
+
+.navbar-transition {
+  transition: background-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    padding var(--duration-fast) var(--ease-out),
+    backdrop-filter var(--duration-fast) var(--ease-out);
+}
+
+/* ================================
+   ACCORDION ANIMATION
+   Smooth height transition
+   ================================ */
+
+.accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-slow) var(--ease-out);
+}
+
+.accordion-content.open {
+  grid-template-rows: 1fr;
+}
+
+.accordion-content>div {
+  overflow: hidden;
+}
+
+/* ================================
+   ICON ANIMATIONS
+   Subtle, purposeful
+   ================================ */
+
+.icon-hover {
+  transition: transform var(--duration-fast) var(--ease-out),
+    color var(--duration-fast) var(--ease-out);
+}
+
+.group:hover .icon-hover {
+  transform: translateX(3px);
+}
+
+/* ================================
+   FOCUS STATES
+   Accessible, visible
+   ================================ */
+
+.focus-ring {
+  transition: box-shadow var(--duration-fast) var(--ease-out),
+    border-color var(--duration-fast) var(--ease-out);
+}
+
+.focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+/* ================================
+   LOADING SPINNER
+   Smooth rotation
+   ================================ */
+
+@keyframes spin-smooth {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-smooth {
+  animation: spin-smooth 1s linear infinite;
+}
+
+/* ================================
+   PAGE TRANSITION OVERLAY
+   For route changes (if needed)
+   ================================ */
+
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--duration-slow) var(--ease-out),
+    transform var(--duration-slow) var(--ease-out);
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+}

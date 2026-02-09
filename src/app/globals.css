@@ -1,26 +1,169 @@
-@import "tailwindcss";
+@import 'tailwindcss';
+
+/* ================================
+   MOTION DESIGN SYSTEM - VELORA
+   Performance-first, GPU-accelerated
+   ================================ */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Duration tokens */
+  --duration-instant: 100ms;
+  --duration-fast: 200ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --duration-reveal: 600ms;
+
+  /* Easing tokens */
+  --ease-out: cubic-bezier(0.0, 0.0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Colors */
+  --primary: #3b82f6;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply antialiased text-gray-900 bg-white;
+}
+
+/* ================================
+   ACCESSIBILITY - REDUCED MOTION
+   ================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ================================
+   BUTTON ANIMATIONS
+   ================================ */
+.btn-hover {
+  transition: transform var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    background-color var(--duration-fast) var(--ease-out);
+}
+
+.btn-hover:hover {
+  transform: translateY(-2px);
+}
+
+.btn-hover:active {
+  transform: translateY(0);
+  transition-duration: 50ms;
+}
+
+/* ================================
+   CARD ANIMATIONS
+   ================================ */
+.card-hover {
+  transition: transform var(--duration-normal) var(--ease-out),
+    box-shadow var(--duration-normal) var(--ease-out);
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.05),
+    0 8px 10px -6px rgb(0 0 0 / 0.05);
+}
+
+/* ================================
+   MARQUEE ANIMATION
+   ================================ */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 35s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ================================
+   STATUS PULSE
+   ================================ */
+@keyframes subtle-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+.status-pulse {
+  animation: subtle-pulse 2s ease-in-out infinite;
+}
+
+/* ================================
+   SCROLL HINT
+   ================================ */
+@keyframes scroll-hint {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 0.5;
+  }
+}
+
+.animate-scroll-hint {
+  animation: scroll-hint 2s ease-in-out infinite;
+}
+
+/* ================================
+   NAVBAR TRANSITION
+   ================================ */
+.navbar-transition {
+  transition: background-color var(--duration-fast) var(--ease-out),
+    box-shadow var(--duration-fast) var(--ease-out),
+    padding var(--duration-fast) var(--ease-out);
+}
+
+/* ================================
+   ACCORDION
+   ================================ */
+.accordion-content {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows var(--duration-slow) var(--ease-out);
+}
+
+.accordion-content.open {
+  grid-template-rows: 1fr;
+}
+
+.accordion-content > div {
+  overflow: hidden;
+}
+
+/* ================================
+   ICON HOVER
+   ================================ */
+.icon-hover {
+  transition: transform var(--duration-fast) var(--ease-out);
+}
+
+.group:hover .icon-hover {
+  transform: translateX(3px);
 }
