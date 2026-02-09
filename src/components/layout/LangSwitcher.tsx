@@ -8,7 +8,7 @@ type Props = {
   isScrolled: boolean;
 };
 
-const LanguageSwitcher = ({ isScrolled }: Props) => {
+const LangSwitcher = ({ isScrolled }: Props) => {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
@@ -59,4 +59,4 @@ const LanguageSwitcher = ({ isScrolled }: Props) => {
   );
 };
 
-export default LanguageSwitcher;
+export default LangSwitcher;

@@ -29,6 +29,10 @@ type Props = {
   params: Promise<{ locale: string }>;
 };
 
+import JsonLd from '@/components/layout/JsonLd';
+
+// ... (existing imports)
+
 export default async function LocaleLayout({ children, params }: Props) {
   const { locale } = await params;
 
@@ -42,6 +46,7 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale}>
       <body className="font-sans text-gray-900 overflow-x-hidden">
         <NextIntlClientProvider messages={messages}>
+          <JsonLd />
           {children}
         </NextIntlClientProvider>
       </body>

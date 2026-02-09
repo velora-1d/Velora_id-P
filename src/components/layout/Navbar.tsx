@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import LanguageSwitcher from './LanguageSwitcher';
+import LangSwitcher from './LangSwitcher';
 
 const Navbar = () => {
   const t = useTranslations('nav');
@@ -78,7 +78,7 @@ const Navbar = () => {
               {link.label}
             </a>
           ))}
-          <LanguageSwitcher isScrolled={isScrolled} />
+          <LangSwitcher isScrolled={isScrolled} />
         </div>
 
         {/* Mobile Menu Button */}
@@ -104,7 +104,7 @@ const Navbar = () => {
                 {link.label}
               </a>
             ))}
-            <LanguageSwitcher isScrolled={true} />
+            <LangSwitcher isScrolled={true} />
           </div>
         </div>
       )}
