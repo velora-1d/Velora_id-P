@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import LanguageSwitcher from './LanguageSwitcher';
 
@@ -53,7 +54,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto px-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <img src="/images/logo.png" alt="Velora" className="h-8 w-auto" />
+          <Image src="/images/logo.png" alt="Velora" width={32} height={32} className="h-8 w-auto" />
           <span
             className={`text-xl font-bold ${
               isScrolled ? 'text-gray-900' : 'text-white'
