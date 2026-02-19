@@ -1,4 +1,4 @@
-import { Phone, Linkedin, Github } from 'lucide-react';
+import { Phone, Linkedin, Github, MapPin, Mail } from 'lucide-react';
 
 // TikTok icon (not in lucide-react)
 const TikTokIcon = () => (
@@ -54,8 +54,8 @@ const Footer = () => {
                         Mitra transformasi digital terpercaya untuk bisnis Anda. Kami menghadirkan solusi teknologi inovatif untuk mendorong pertumbuhan bisnis di era digital.
                     </p>
                     <div className="text-gray-600 mb-6 flex flex-col gap-2 text-sm">
-                        <p>📍 Jakarta, Indonesia</p>
-                        <p>📧 velora@gmail.com</p>
+                        <p className="flex items-center gap-2"><MapPin className="w-4 h-4 text-gray-400 flex-shrink-0" /> Jakarta, Indonesia</p>
+                        <p className="flex items-center gap-2"><Mail className="w-4 h-4 text-gray-400 flex-shrink-0" /> velora@gmail.com</p>
                     </div>
                     <div className="flex gap-3">
                         {socialLinks.map((social) => (

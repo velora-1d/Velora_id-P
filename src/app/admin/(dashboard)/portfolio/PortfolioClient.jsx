@@ -17,7 +17,7 @@ export default function PortfolioClient({ initialProjects }) {
     const router = useRouter();
 
     function getEmptyForm() {
-        return { title: '', category: '', client: '', description: '', challenge: '', solution: '', tech: '', image_url: '', icon: '🌐', published: false };
+        return { title: '', category: '', client: '', description: '', challenge: '', solution: '', tech: '', image_url: '', icon: 'Globe', published: false };
     }
 
     const filtered = projects.filter(p =>

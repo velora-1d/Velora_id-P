@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowRight, MessageSquare, Play } from 'lucide-react';
+import { ArrowRight, MessageSquare, Play, Sparkles } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 import CountUp from '../animations/CountUp';
@@ -65,7 +65,7 @@ const Hero = () => {
                     <ScrollReveal direction="down">
                         <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 mb-6 sm:mb-8">
                             <span className="w-2 h-2 bg-emerald-400 rounded-full status-pulse"></span>
-                            <span className="text-white/90 text-sm font-medium">✨ Open for Projects 2025</span>
+                            <span className="text-white/90 text-sm font-medium flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5 text-amber-300" /> Open for Projects 2025</span>
                         </div>
                     </ScrollReveal>
 

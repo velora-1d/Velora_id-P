@@ -1,9 +1,18 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, ExternalLink, MessageSquare, ArrowRight, Layers, Sparkles } from 'lucide-react';
+import { X, ExternalLink, MessageSquare, ArrowRight, Layers, Sparkles, ShoppingCart, CreditCard, Building2, Truck, GraduationCap, BarChart3, MapPin, Zap, Target, Lightbulb } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
+
+const iconMap = {
+    'ShoppingCart': ShoppingCart,
+    'CreditCard': CreditCard,
+    'Building2': Building2,
+    'Truck': Truck,
+    'GraduationCap': GraduationCap,
+    'BarChart3': BarChart3,
+};
 
 const fallbackProjects = [
     {
@@ -12,7 +21,7 @@ const fallbackProjects = [
         challenge: "Klien membutuhkan sistem yang dapat mengelola ribuan produk dengan banyak varian dan integrasi ke marketplace.",
         solution: "Kami membangun platform custom dengan dashboard terpusat, sync otomatis ke Tokopedia/Shopee, dan laporan penjualan real-time.",
         tech: "React, Node.js, PostgreSQL",
-        image_url: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80", icon: "🛒"
+        image_url: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80", icon: "ShoppingCart"
     },
     {
         title: "Digital Banking App", category: "Finance & Banking", client: "Bank Digital Nusantara",
@@ -20,7 +29,7 @@ const fallbackProjects = [
         challenge: "Membutuhkan keamanan tingkat tinggi dengan UX yang tetap mudah digunakan oleh semua kalangan.",
         solution: "Implementasi biometric authentication, end-to-end encryption, dengan UI/UX yang intuitif dan accessibility-friendly.",
         tech: "Flutter, Go, MongoDB",
-        image_url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80", icon: "💳"
+        image_url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80", icon: "CreditCard"
     },
     {
         title: "Hospital Management System", category: "Healthcare", client: "RS Sehat Sejahtera",
@@ -28,7 +37,7 @@ const fallbackProjects = [
         challenge: "Sistem lama berbasis kertas menyebabkan keterlambatan layanan dan kehilangan data pasien.",
         solution: "Migrasi penuh ke sistem digital dengan modul pendaftaran, antrian, rekam medis, billing, dan telemedicine.",
         tech: "Laravel, Vue.js, MySQL",
-        image_url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80", icon: "🏥"
+        image_url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80", icon: "Building2"
     },
     {
         title: "Fleet Management System", category: "Logistics", client: "Logistics Prima",
@@ -36,7 +45,7 @@ const fallbackProjects = [
         challenge: "Armada 200+ kendaraan sulit dipantau, banyak keterlambatan dan inefisiensi rute.",
         solution: "GPS tracking real-time, algoritma optimasi rute, dashboard monitoring, dan notifikasi otomatis ke pelanggan.",
         tech: "Python, Django, PostgreSQL",
-        image_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80", icon: "🚚"
+        image_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80", icon: "Truck"
     },
     {
         title: "Learning Management System", category: "Education", client: "EduTech Indonesia",
@@ -44,7 +53,7 @@ const fallbackProjects = [
         challenge: "Pandemi memaksa sekolah beralih online tanpa infrastruktur yang memadai.",
         solution: "LMS lengkap dengan video conference, bank soal, rapor digital, dan integrasi dengan sistem sekolah.",
         tech: "Next.js, Firebase, WebRTC",
-        image_url: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80", icon: "📚"
+        image_url: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80", icon: "GraduationCap"
     },
     {
         title: "Business Analytics Dashboard", category: "Retail & E-Commerce", client: "Retail Mart Group",
@@ -52,7 +61,7 @@ const fallbackProjects = [
         challenge: "Data tersebar di banyak sistem, sulit mendapat gambaran bisnis secara menyeluruh.",
         solution: "Data warehouse terpusat dengan visualisasi interaktif dan prediksi penjualan berbasis machine learning.",
         tech: "React, Python, TensorFlow",
-        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", icon: "📊"
+        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", icon: "BarChart3"
     }
 ];
 
@@ -159,8 +168,8 @@ const Portfolio = () => {
                                                 {featured.description}
                                             </p>
                                             <div className="flex items-center gap-4">
-                                                <span className="text-white/50 text-xs sm:text-sm">📍 {featured.client}</span>
-                                                <span className="text-white/50 text-xs sm:text-sm font-mono">⚡ {featured.tech}</span>
+                                                <span className="text-white/50 text-xs sm:text-sm flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {featured.client}</span>
+                                                <span className="text-white/50 text-xs sm:text-sm font-mono flex items-center gap-1"><Zap className="w-3.5 h-3.5" /> {featured.tech}</span>
                                             </div>
                                         </div>
 
@@ -254,7 +263,7 @@ const Portfolio = () => {
                                     </span>
                                 </div>
                                 <div className="flex items-center gap-3">
-                                    <span className="text-3xl sm:text-4xl">{selectedProject.icon}</span>
+                                    {(() => { const PIcon = iconMap[selectedProject.icon]; return PIcon ? <PIcon className="w-7 h-7 sm:w-8 sm:h-8 text-white" strokeWidth={1.5} /> : null; })()}
                                     <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{selectedProject.title}</h3>
                                 </div>
                             </div>
@@ -271,7 +280,7 @@ const Portfolio = () => {
                                     <div className="pl-2">
                                         <div className="flex items-center gap-2 mb-3">
                                             <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
-                                                <span className="text-lg">🎯</span>
+                                                <Target className="w-4 h-4 text-amber-600" />
                                             </div>
                                             <h4 className="font-bold text-gray-900 text-sm">Tantangan</h4>
                                         </div>
@@ -283,7 +292,7 @@ const Portfolio = () => {
                                     <div className="pl-2">
                                         <div className="flex items-center gap-2 mb-3">
                                             <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
-                                                <span className="text-lg">💡</span>
+                                                <Lightbulb className="w-4 h-4 text-emerald-600" />
                                             </div>
                                             <h4 className="font-bold text-gray-900 text-sm">Solusi</h4>
                                         </div>
