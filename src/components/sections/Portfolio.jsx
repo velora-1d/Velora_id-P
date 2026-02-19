@@ -225,49 +225,93 @@ const Portfolio = () => {
             {/* Modal */}
             {selectedProject && (
                 <div
-                    className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                    className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4"
                     onClick={closeModal}
                 >
                     <div
-                        className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
+                        className="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-gray-100"
                         onClick={(e) => e.stopPropagation()}
+                        style={{ scrollbarWidth: 'none' }}
                     >
-                        <div className="h-56 relative">
+                        {/* Hero Image */}
+                        <div className="h-64 sm:h-72 relative overflow-hidden rounded-t-3xl">
                             <img src={selectedProject.image_url || selectedProject.image} alt={selectedProject.title} className="w-full h-full object-cover" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                            <button onClick={closeModal} className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
+                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
+
+                            {/* Close Button */}
+                            <button onClick={closeModal} className="absolute top-4 right-4 w-10 h-10 bg-white/15 backdrop-blur-xl rounded-full flex items-center justify-center text-white hover:bg-white/25 transition-all duration-200 border border-white/20 hover:scale-105">
                                 <X className="w-5 h-5" />
                             </button>
-                            <div className="absolute bottom-4 left-6">
-                                <span className="text-4xl mb-2 block">{selectedProject.icon}</span>
-                                <h3 className="text-2xl font-bold text-white">{selectedProject.title}</h3>
+
+                            {/* Header overlay content */}
+                            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
+                                <div className="flex items-center gap-2 mb-3">
+                                    <span className="px-3 py-1 bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-full uppercase tracking-wider">
+                                        {selectedProject.category}
+                                    </span>
+                                    <span className="px-3 py-1 bg-blue-500/20 backdrop-blur-md border border-blue-400/30 text-blue-200 text-xs font-semibold rounded-full">
+                                        {selectedProject.client}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <span className="text-3xl sm:text-4xl">{selectedProject.icon}</span>
+                                    <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{selectedProject.title}</h3>
+                                </div>
                             </div>
                         </div>
-                        <div className="p-6">
-                            <div className="flex items-center gap-2 mb-6">
-                                <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">{selectedProject.category}</span>
-                                <span className="text-gray-500">•</span>
-                                <span className="text-gray-600">{selectedProject.client}</span>
+
+                        {/* Content */}
+                        <div className="p-6 sm:p-8">
+                            <p className="text-gray-600 leading-relaxed mb-6 text-sm sm:text-base">{selectedProject.description}</p>
+
+                            {/* Challenge & Solution Cards */}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+                                <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 rounded-2xl p-5 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-amber-400 to-orange-400 rounded-r-full"></div>
+                                    <div className="pl-2">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+                                                <span className="text-lg">🎯</span>
+                                            </div>
+                                            <h4 className="font-bold text-gray-900 text-sm">Tantangan</h4>
+                                        </div>
+                                        <p className="text-gray-600 text-sm leading-relaxed">{selectedProject.challenge}</p>
+                                    </div>
+                                </div>
+                                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-5 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-emerald-400 to-teal-400 rounded-r-full"></div>
+                                    <div className="pl-2">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
+                                                <span className="text-lg">💡</span>
+                                            </div>
+                                            <h4 className="font-bold text-gray-900 text-sm">Solusi</h4>
+                                        </div>
+                                        <p className="text-gray-600 text-sm leading-relaxed">{selectedProject.solution}</p>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="space-y-6">
-                                <div>
-                                    <h4 className="font-bold text-gray-900 mb-2">🎯 Tantangan</h4>
-                                    <p className="text-gray-600 leading-relaxed">{selectedProject.challenge}</p>
-                                </div>
-                                <div>
-                                    <h4 className="font-bold text-gray-900 mb-2">💡 Solusi</h4>
-                                    <p className="text-gray-600 leading-relaxed">{selectedProject.solution}</p>
-                                </div>
-                                <div className="bg-gray-50 rounded-xl p-4">
-                                    <h4 className="font-bold text-gray-900 mb-2">Tech Stack</h4>
-                                    <p className="text-gray-600 font-mono text-sm">{selectedProject.tech}</p>
+
+                            {/* Tech Stack Pills */}
+                            <div className="bg-gray-50 rounded-2xl p-5 border border-gray-100 mb-6">
+                                <h4 className="font-bold text-gray-900 text-sm mb-3 flex items-center gap-2">
+                                    <Layers className="w-4 h-4 text-gray-400" /> Tech Stack
+                                </h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {selectedProject.tech.split(', ').map((t, i) => (
+                                        <span key={i} className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs font-mono font-medium text-gray-700 shadow-sm">
+                                            {t}
+                                        </span>
+                                    ))}
                                 </div>
                             </div>
-                            <div className="mt-8 pt-6 border-t border-gray-100">
-                                <p className="text-gray-500 text-sm mb-4">Tertarik dengan project serupa?</p>
+
+                            {/* CTA */}
+                            <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-5 sm:p-6 border border-emerald-100">
+                                <p className="text-gray-700 text-sm font-medium mb-4">Tertarik dengan project serupa?</p>
                                 <button
                                     onClick={() => handleWhatsApp(selectedProject)}
-                                    className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 rounded-xl transition-all duration-200 hover:-translate-y-1 shadow-lg flex items-center justify-center gap-3"
+                                    className="w-full bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-bold py-3.5 sm:py-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2.5 text-sm sm:text-base"
                                 >
                                     <MessageSquare className="w-5 h-5" />
                                     Diskusikan Project Serupa
