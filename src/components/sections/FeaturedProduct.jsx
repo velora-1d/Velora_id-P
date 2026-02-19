@@ -160,41 +160,41 @@ const FeaturedProduct = () => {
                                     key={idx}
                                     onClick={() => handleTabClick(idx)}
                                     className={`relative text-left rounded-2xl p-5 sm:p-6 transition-all duration-400 overflow-hidden group ${isActive
-                                        ? `bg-white shadow-xl shadow-gray-200/70 border-2 ${feat.border_color} scale-[1.02]`
-                                        : 'bg-white/60 hover:bg-white border-2 border-transparent hover:border-gray-100 hover:shadow-lg'
+                                        ? `bg-gradient-to-br ${feat.color_gradient} shadow-xl shadow-gray-300/50 scale-[1.03] border-2 border-white/20`
+                                        : `${feat.bg_light} border-2 ${feat.border_color} hover:shadow-lg hover:scale-[1.01]`
                                         }`}
                                 >
                                     {/* Progress bar */}
                                     {isActive && (
-                                        <div className="absolute bottom-0 left-0 h-[3px] transition-none">
-                                            <div className={`h-full bg-gradient-to-r ${feat.color_gradient} rounded-full`} style={{ width: `${progress}%` }}></div>
+                                        <div className="absolute bottom-0 left-0 h-[3px] w-full bg-black/10">
+                                            <div className="h-full bg-white/70 rounded-full transition-none" style={{ width: `${progress}%` }}></div>
                                         </div>
                                     )}
 
-                                    {/* Subtle bg glow for active */}
+                                    {/* Decorative glow for active */}
                                     {isActive && (
-                                        <div className={`absolute top-0 right-0 w-32 h-32 ${feat.bg_light} rounded-full blur-3xl -translate-y-1/2 translate-x-1/4 opacity-60`}></div>
+                                        <div className="absolute top-0 right-0 w-40 h-40 bg-white/15 rounded-full blur-3xl -translate-y-1/2 translate-x-1/4"></div>
                                     )}
 
                                     <div className="relative z-10">
                                         <div className="flex items-center gap-3 mb-3">
                                             <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${isActive
-                                                ? `bg-gradient-to-br ${feat.color_gradient} shadow-lg`
-                                                : 'bg-gray-100 group-hover:bg-gray-200'
+                                                ? 'bg-white/20 backdrop-blur-sm border border-white/20'
+                                                : `bg-white shadow-sm`
                                                 }`}>
-                                                <FIcon className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors ${isActive ? 'text-white' : 'text-gray-400 group-hover:text-gray-600'}`} strokeWidth={1.5} />
+                                                <FIcon className={`w-5 h-5 sm:w-6 sm:h-6 transition-colors ${isActive ? 'text-white' : feat.text_color}`} strokeWidth={1.5} />
                                             </div>
                                             {isActive && (
-                                                <span className={`px-2.5 py-1 ${feat.bg_light} ${feat.text_color} rounded-full text-[10px] sm:text-xs font-semibold`}>
+                                                <span className="px-2.5 py-1 bg-white/20 backdrop-blur-sm text-white rounded-full text-[10px] sm:text-xs font-semibold border border-white/20">
                                                     Aktif
                                                 </span>
                                             )}
                                         </div>
 
-                                        <h4 className={`font-bold text-base sm:text-lg mb-1 transition-colors ${isActive ? 'text-gray-900' : 'text-gray-500 group-hover:text-gray-700'}`}>
+                                        <h4 className={`font-bold text-base sm:text-lg mb-1 transition-colors ${isActive ? 'text-white' : 'text-gray-800'}`}>
                                             {feat.title}
                                         </h4>
-                                        <p className={`text-xs sm:text-sm transition-colors ${isActive ? 'text-gray-500' : 'text-gray-400'}`}>
+                                        <p className={`text-xs sm:text-sm transition-colors ${isActive ? 'text-white/80' : 'text-gray-500'}`}>
                                             {feat.subtitle || feat.description?.slice(0, 40) + '...'}
                                         </p>
                                     </div>
