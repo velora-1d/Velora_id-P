@@ -79,7 +79,7 @@ const Founder = () => {
                         name: data.name || fallbackFounder.name,
                         title: data.title || fallbackFounder.title,
                         photo_url: data.photo_url || fallbackFounder.photo_url,
-                        bio_paragraphs: data.bio_paragraphs || fallbackFounder.bio_paragraphs,
+                        bio_paragraphs: (data.bio_paragraphs || fallbackFounder.bio_paragraphs).map(p => p.replace(/text-white/g, 'text-gray-900')),
                         stats: data.stats || fallbackFounder.stats,
                         social_links: data.social_links || fallbackFounder.social_links,
                     });
