@@ -46,7 +46,7 @@ const fallbackTestimonials = [
 ];
 
 const TestimonialCard = ({ testimonial }) => (
-    <div className="flex-shrink-0 w-[400px] bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/10 mx-4">
+    <div className="flex-shrink-0 w-[85vw] sm:w-[400px] bg-white/10 backdrop-blur-lg rounded-2xl p-6 sm:p-8 border border-white/10 mx-2 sm:mx-4">
         {/* Quote Icon */}
         <Quote className="w-8 h-8 text-primary/50 mb-4" strokeWidth={1} />
 

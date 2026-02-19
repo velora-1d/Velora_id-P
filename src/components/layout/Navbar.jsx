@@ -66,7 +66,7 @@ const Navbar = () => {
                     <img
                         src="/images/logo.png"
                         alt="Velora"
-                        className="h-16 w-auto"
+                        className="h-10 sm:h-16 w-auto"
                     />
                     <span className={`text-2xl font-extrabold tracking-tight ${scrolled ? 'text-gray-900' : 'text-white'}`}>
                         Velora
