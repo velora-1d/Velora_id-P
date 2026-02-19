@@ -1,5 +1,6 @@
 
 import { Inter, Playfair_Display } from 'next/font/google';
+import Script from 'next/script';
 import './globals.css';
 
 const inter = Inter({
@@ -86,6 +87,18 @@ export default function RootLayout({ children }) {
     return (
         <html lang="id">
             <head>
+                <Script
+                    src="https://www.googletagmanager.com/gtag/js?id=G-1XJG5X3KZR"
+                    strategy="afterInteractive"
+                />
+                <Script id="gtag-init" strategy="afterInteractive">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-1XJG5X3KZR');
+                    `}
+                </Script>
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
