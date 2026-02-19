@@ -1,77 +1,84 @@
-import { useState } from 'react';
-import { X, ExternalLink, MessageSquare } from 'lucide-react';
+'use client';
 
-const projects = [
+import { useState, useEffect } from 'react';
+import { X, ExternalLink, MessageSquare } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import ScrollReveal from '../animations/ScrollReveal';
+
+const fallbackProjects = [
     {
-        title: "E-Commerce Platform",
-        category: "Retail & E-Commerce",
-        client: "Fashion Hub Indonesia",
+        title: "E-Commerce Platform", category: "Retail & E-Commerce", client: "Fashion Hub Indonesia",
         description: "Platform e-commerce multi-channel dengan integrasi payment gateway dan inventory management real-time.",
         challenge: "Klien membutuhkan sistem yang dapat mengelola ribuan produk dengan banyak varian dan integrasi ke marketplace.",
         solution: "Kami membangun platform custom dengan dashboard terpusat, sync otomatis ke Tokopedia/Shopee, dan laporan penjualan real-time.",
         tech: "React, Node.js, PostgreSQL",
-        image: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80",
-        icon: "🛒"
+        image_url: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80", icon: "🛒"
     },
     {
-        title: "Digital Banking App",
-        category: "Finance & Banking",
-        client: "Bank Digital Nusantara",
+        title: "Digital Banking App", category: "Finance & Banking", client: "Bank Digital Nusantara",
         description: "Aplikasi mobile banking dengan fitur transfer, pembayaran, dan investment tracking.",
         challenge: "Membutuhkan keamanan tingkat tinggi dengan UX yang tetap mudah digunakan oleh semua kalangan.",
         solution: "Implementasi biometric authentication, end-to-end encryption, dengan UI/UX yang intuitif dan accessibility-friendly.",
         tech: "Flutter, Go, MongoDB",
-        image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80",
-        icon: "💳"
+        image_url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80", icon: "💳"
     },
     {
-        title: "Hospital Management System",
-        category: "Healthcare",
-        client: "RS Sehat Sejahtera",
+        title: "Hospital Management System", category: "Healthcare", client: "RS Sehat Sejahtera",
         description: "Sistem informasi rumah sakit terintegrasi dengan rekam medis elektronik dan telemedicine.",
         challenge: "Sistem lama berbasis kertas menyebabkan keterlambatan layanan dan kehilangan data pasien.",
         solution: "Migrasi penuh ke sistem digital dengan modul pendaftaran, antrian, rekam medis, billing, dan telemedicine.",
         tech: "Laravel, Vue.js, MySQL",
-        image: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80",
-        icon: "🏥"
+        image_url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80", icon: "🏥"
     },
     {
-        title: "Fleet Management System",
-        category: "Logistics",
-        client: "Logistics Prima",
+        title: "Fleet Management System", category: "Logistics", client: "Logistics Prima",
         description: "Sistem tracking armada real-time dengan optimasi rute dan manajemen pengiriman.",
         challenge: "Armada 200+ kendaraan sulit dipantau, banyak keterlambatan dan inefisiensi rute.",
         solution: "GPS tracking real-time, algoritma optimasi rute, dashboard monitoring, dan notifikasi otomatis ke pelanggan.",
         tech: "Python, Django, PostgreSQL",
-        image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
-        icon: "🚚"
+        image_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80", icon: "🚚"
     },
     {
-        title: "Learning Management System",
-        category: "Education",
-        client: "EduTech Indonesia",
+        title: "Learning Management System", category: "Education", client: "EduTech Indonesia",
         description: "Platform e-learning dengan virtual classroom, quiz interaktif, dan progress tracking.",
         challenge: "Pandemi memaksa sekolah beralih online tanpa infrastruktur yang memadai.",
         solution: "LMS lengkap dengan video conference, bank soal, rapor digital, dan integrasi dengan sistem sekolah.",
         tech: "Next.js, Firebase, WebRTC",
-        image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80",
-        icon: "📚"
+        image_url: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80", icon: "📚"
     },
     {
-        title: "Business Analytics Dashboard",
-        category: "Retail & E-Commerce",
-        client: "Retail Mart Group",
+        title: "Business Analytics Dashboard", category: "Retail & E-Commerce", client: "Retail Mart Group",
         description: "Dashboard analytics real-time dengan AI-powered insights untuk pengambilan keputusan bisnis.",
         challenge: "Data tersebar di banyak sistem, sulit mendapat gambaran bisnis secara menyeluruh.",
         solution: "Data warehouse terpusat dengan visualisasi interaktif dan prediksi penjualan berbasis machine learning.",
         tech: "React, Python, TensorFlow",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-        icon: "📊"
+        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", icon: "📊"
     }
 ];
 
 const Portfolio = () => {
     const [selectedProject, setSelectedProject] = useState(null);
+    const [projects, setProjects] = useState(fallbackProjects);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            try {
+                const supabase = createClient();
+                const { data, error } = await supabase
+                    .from('portfolio_projects')
+                    .select('*')
+                    .eq('published', true)
+                    .order('created_at', { ascending: false });
+
+                if (!error && data && data.length > 0) {
+                    setProjects(data);
+                }
+            } catch {
+                // Fallback to hardcoded data
+            }
+        };
+        fetchProjects();
+    }, []);
 
     const openModal = (project) => setSelectedProject(project);
     const closeModal = () => setSelectedProject(null);
@@ -82,59 +89,65 @@ const Portfolio = () => {
     };
 
     return (
-        <section id="portfolio" className="py-12 sm:py-20 bg-gray-50">
-            <div className="container mx-auto px-4">
-                <div className="text-center mb-16">
-                    <span className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold mb-4 tracking-wide">
-                        PORTFOLIO
-                    </span>
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">Portfolio Kami</h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Proyek-proyek transformasi digital yang telah kami selesaikan dengan sukses.
-                    </p>
-                </div>
+        <section id="portfolio" className="py-16 sm:py-24 bg-gray-50 relative overflow-hidden">
+            {/* Background decoration */}
+            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+
+            <div className="container mx-auto px-4 relative z-10">
+                <ScrollReveal width="100%">
+                    <div className="text-center mb-16">
+                        <span className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold mb-4 tracking-wide">
+                            PORTFOLIO
+                        </span>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">Portfolio Kami</h2>
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                            Proyek-proyek transformasi digital yang telah kami selesaikan dengan sukses.
+                        </p>
+                    </div>
+                </ScrollReveal>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {projects.map((project, index) => (
-                        <div
-                            key={index}
-                            className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-200 flex flex-col h-full cursor-pointer group"
-                            onClick={() => openModal(project)}
-                        >
-                            <div className="h-48 overflow-hidden relative">
-                                <img
-                                    src={project.image}
-                                    alt={project.title}
-                                    className="w-full h-full object-cover transition-transform duration-[400ms] ease-out group-hover:scale-105"
-                                />
-                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <span className="text-white font-medium flex items-center gap-2">
-                                        <ExternalLink className="w-5 h-5" />
-                                        Lihat Detail
-                                    </span>
+                        <ScrollReveal key={project.id || index} delay={index * 0.1} className="h-full">
+                            <div
+                                className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-200 flex flex-col h-full cursor-pointer group"
+                                onClick={() => openModal(project)}
+                            >
+                                <div className="h-48 overflow-hidden relative">
+                                    <img
+                                        src={project.image_url || project.image}
+                                        alt={project.title}
+                                        className="w-full h-full object-cover transition-transform duration-[400ms] ease-out group-hover:scale-105"
+                                    />
+                                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <span className="text-white font-medium flex items-center gap-2">
+                                            <ExternalLink className="w-5 h-5" />
+                                            Lihat Detail
+                                        </span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="p-6 flex flex-col flex-grow">
-                                <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
-                                    {project.title}
-                                </h3>
-                                <div className="text-sm font-medium text-gray-500 mb-3 flex items-center gap-2">
-                                    <span className="bg-blue-50 text-blue-600 px-2 py-1 rounded-md text-xs uppercase tracking-wide">
-                                        {project.category}
-                                    </span>
-                                    <span className="text-gray-400">•</span>
-                                    <span>{project.client}</span>
-                                </div>
-                                <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">
-                                    {project.description}
-                                </p>
-                                <div className="pt-4 border-t border-gray-100 mt-auto">
-                                    <p className="text-xs text-gray-500 font-mono">
-                                        <span className="font-bold text-gray-700">Tech:</span> {project.tech}
+                                <div className="p-6 flex flex-col flex-grow">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
+                                        {project.title}
+                                    </h3>
+                                    <div className="text-sm font-medium text-gray-500 mb-3 flex items-center gap-2">
+                                        <span className="bg-blue-50 text-blue-600 px-2 py-1 rounded-md text-xs uppercase tracking-wide">
+                                            {project.category}
+                                        </span>
+                                        <span className="text-gray-400">•</span>
+                                        <span>{project.client}</span>
+                                    </div>
+                                    <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">
+                                        {project.description}
                                     </p>
+                                    <div className="pt-4 border-t border-gray-100 mt-auto">
+                                        <p className="text-xs text-gray-500 font-mono">
+                                            <span className="font-bold text-gray-700">Tech:</span> {project.tech}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </ScrollReveal>
                     ))}
                 </div>
             </div>
@@ -152,7 +165,7 @@ const Portfolio = () => {
                         {/* Modal Header Image */}
                         <div className="h-56 relative">
                             <img
-                                src={selectedProject.image}
+                                src={selectedProject.image_url || selectedProject.image}
                                 alt={selectedProject.title}
                                 className="w-full h-full object-cover"
                             />

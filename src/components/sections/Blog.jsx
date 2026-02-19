@@ -1,85 +1,57 @@
-import { useState } from 'react';
+'use client';
+
+import { useState, useEffect } from 'react';
 import { X, Eye, Calendar, User, MessageSquare, BookOpen } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import ScrollReveal from '../animations/ScrollReveal';
 
-const posts = [
+const fallbackPosts = [
     {
-        title: "Tren Transformasi Digital 2025",
-        category: "Technology",
+        title: "Tren Transformasi Digital 2025", category: "Technology",
         excerpt: "Pelajari tren terbaru dalam transformasi digital yang akan membentuk masa depan bisnis di Indonesia.",
-        content: `Transformasi digital bukan lagi pilihan, melainkan keharusan bagi bisnis yang ingin bertahan di era modern. Berikut adalah tren utama yang perlu Anda perhatikan:
-
-**1. AI-Powered Automation**
-Kecerdasan buatan semakin accessible untuk UMKM. Chatbot, analisis data, dan personalisasi pelanggan kini bisa diimplementasikan dengan biaya terjangkau.
-
-**2. Low-Code/No-Code Platforms**
-Memungkinkan bisnis membangun aplikasi tanpa coding mendalam, mempercepat time-to-market secara signifikan.
-
-**3. Cloud-First Strategy**
-Infrastruktur cloud menjadi fondasi utama, memberikan skalabilitas dan efisiensi biaya yang lebih baik.
-
-**4. Cybersecurity Priority**
-Dengan meningkatnya digitalisasi, keamanan siber menjadi investasi wajib, bukan opsional.`,
-        author: "Tim Velora",
-        date: "20 Des 2024",
-        readTime: "5 menit",
-        views: "1.2K",
-        image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
+        content: `Transformasi digital bukan lagi pilihan, melainkan keharusan bagi bisnis yang ingin bertahan di era modern. Berikut adalah tren utama yang perlu Anda perhatikan:\n\n**1. AI-Powered Automation**\nKecerdasan buatan semakin accessible untuk UMKM.\n\n**2. Low-Code/No-Code Platforms**\nMemungkinkan bisnis membangun aplikasi tanpa coding mendalam.\n\n**3. Cloud-First Strategy**\nInfrastruktur cloud menjadi fondasi utama.\n\n**4. Cybersecurity Priority**\nKeamanan siber menjadi investasi wajib.`,
+        author: "Tim Velora", created_at: "2024-12-20", read_time: "5 menit",
+        image_url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
     },
     {
-        title: "Implementasi AI untuk UMKM",
-        category: "AI & Automation",
+        title: "Implementasi AI untuk UMKM", category: "AI & Automation",
         excerpt: "Bagaimana bisnis kecil dan menengah dapat memanfaatkan kecerdasan buatan untuk meningkatkan efisiensi.",
-        content: `Banyak yang mengira AI hanya untuk perusahaan besar. Padahal, UMKM justru bisa mendapat keuntungan signifikan dari implementasi AI yang tepat.
-
-**Chatbot untuk Customer Service**
-Respon pelanggan 24/7 tanpa menambah staf. Bisa handle FAQ, pesanan, dan keluhan secara otomatis.
-
-**Analisis Penjualan Otomatis**
-AI bisa mengidentifikasi pattern pembelian, prediksi stok, dan rekomendasi produk yang perlu dipromosikan.
-
-**Personalisasi Marketing**
-Email yang disesuaikan dengan behavior pelanggan meningkatkan conversion rate hingga 3x lipat.
-
-**Mulai dari Mana?**
-Tidak perlu langsung kompleks. Mulai dari chatbot WhatsApp sederhana, lalu kembangkan seiring pertumbuhan bisnis.`,
-        author: "Tim Velora",
-        date: "15 Des 2024",
-        readTime: "4 menit",
-        views: "850",
-        image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80"
+        content: `Banyak yang mengira AI hanya untuk perusahaan besar. Padahal, UMKM justru bisa mendapat keuntungan signifikan.\n\n**Chatbot untuk Customer Service**\nRespon pelanggan 24/7 tanpa menambah staf.\n\n**Analisis Penjualan Otomatis**\nAI bisa mengidentifikasi pattern pembelian.\n\n**Personalisasi Marketing**\nEmail yang disesuaikan dengan behavior pelanggan.`,
+        author: "Tim Velora", created_at: "2024-12-15", read_time: "4 menit",
+        image_url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80"
     },
     {
-        title: "Migrasi ke Cloud: Panduan Lengkap",
-        category: "Cloud Computing",
+        title: "Migrasi ke Cloud: Panduan Lengkap", category: "Cloud Computing",
         excerpt: "Langkah-langkah strategis untuk memindahkan infrastruktur bisnis Anda ke cloud dengan aman.",
-        content: `Migrasi ke cloud adalah langkah besar yang membutuhkan perencanaan matang. Berikut panduan kami:
-
-**Fase 1: Assessment**
-Audit infrastruktur existing. Identifikasi aplikasi mana yang prioritas untuk migrasi dan mana yang perlu refactoring.
-
-**Fase 2: Pilih Provider**
-AWS, Google Cloud, atau Azure? Masing-masing punya kelebihan. Sesuaikan dengan kebutuhan dan budget.
-
-**Fase 3: Pilot Project**
-Jangan langsung migrasi semua. Mulai dengan satu aplikasi non-critical untuk testing dan pembelajaran.
-
-**Fase 4: Full Migration**
-Setelah pilot berhasil, lanjutkan migrasi bertahap dengan rollback plan yang jelas.
-
-**Key Metrics:**
-- Downtime target: < 1 jam
-- Cost savings: 20-40% setelah 1 tahun
-- Performance improvement: 2-3x`,
-        author: "Tim Velora",
-        date: "10 Des 2024",
-        readTime: "6 menit",
-        views: "620",
-        image: "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=800&q=80"
+        content: `Migrasi ke cloud adalah langkah besar yang membutuhkan perencanaan matang.\n\n**Fase 1: Assessment**\nAudit infrastruktur existing.\n\n**Fase 2: Pilih Provider**\nAWS, Google Cloud, atau Azure?\n\n**Fase 3: Pilot Project**\nMulai dengan satu aplikasi non-critical.\n\n**Fase 4: Full Migration**\nLanjutkan migrasi bertahap.`,
+        author: "Tim Velora", created_at: "2024-12-10", read_time: "6 menit",
+        image_url: "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=800&q=80"
     }
 ];
 
 const Blog = () => {
     const [selectedPost, setSelectedPost] = useState(null);
+    const [posts, setPosts] = useState(fallbackPosts);
+
+    useEffect(() => {
+        const fetchPosts = async () => {
+            try {
+                const supabase = createClient();
+                const { data, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .eq('published', true)
+                    .order('created_at', { ascending: false });
+
+                if (!error && data && data.length > 0) {
+                    setPosts(data);
+                }
+            } catch {
+                // Fallback to hardcoded data
+            }
+        };
+        fetchPosts();
+    }, []);
 
     const openModal = (post) => setSelectedPost(post);
     const closeModal = () => setSelectedPost(null);
@@ -89,60 +61,69 @@ const Blog = () => {
         window.open(`https://wa.me/6281320442174?text=${encodeURIComponent(message)}`, '_blank');
     };
 
+    const formatDate = (dateStr) => {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
+    };
+
     return (
         <section id="blog" className="py-12 sm:py-20 bg-white">
             <div className="container mx-auto px-4">
-                <div className="text-center mb-16">
-                    <span className="inline-block px-4 py-2 bg-purple-100 text-purple-600 rounded-full text-sm font-semibold mb-4 tracking-wide">
-                        BLOG & INSIGHTS
-                    </span>
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">Blog & Insights</h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                        Artikel terbaru tentang teknologi, transformasi digital, dan inovasi bisnis.
-                    </p>
-                </div>
+                <ScrollReveal width="100%">
+                    <div className="text-center mb-16">
+                        <span className="inline-block px-4 py-2 bg-accent/10 text-accent-dark rounded-full text-sm font-semibold mb-4 tracking-wide">
+                            BLOG & INSIGHTS
+                        </span>
+                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">Blog & Insights</h2>
+                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                            Artikel terbaru tentang teknologi, transformasi digital, dan inovasi bisnis.
+                        </p>
+                    </div>
+                </ScrollReveal>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {posts.map((post, index) => (
-                        <div
-                            key={index}
-                            className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-200 flex flex-col h-full cursor-pointer group"
-                            onClick={() => openModal(post)}
-                        >
-                            <div className="h-48 overflow-hidden relative">
-                                <img
-                                    src={post.image}
-                                    alt={post.title}
-                                    className="w-full h-full object-cover transition-transform duration-[400ms] ease-out group-hover:scale-105"
-                                />
-                                <div className="absolute top-4 left-4">
-                                    <span className="bg-white/90 backdrop-blur-sm text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
-                                        {post.category}
-                                    </span>
+                        <ScrollReveal key={post.id || index} delay={index * 0.1} className="h-full">
+                            <div
+                                className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-200 flex flex-col h-full cursor-pointer group"
+                                onClick={() => openModal(post)}
+                            >
+                                <div className="h-48 overflow-hidden relative">
+                                    <img
+                                        src={post.image_url || post.image}
+                                        alt={post.title}
+                                        className="w-full h-full object-cover transition-transform duration-[400ms] ease-out group-hover:scale-105"
+                                    />
+                                    <div className="absolute top-4 left-4">
+                                        <span className="bg-white/90 backdrop-blur-sm text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
+                                            {post.category}
+                                        </span>
+                                    </div>
+                                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <span className="text-white font-medium flex items-center gap-2">
+                                            <BookOpen className="w-5 h-5" />
+                                            Baca Artikel
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <span className="text-white font-medium flex items-center gap-2">
-                                        <BookOpen className="w-5 h-5" />
-                                        Baca Artikel
-                                    </span>
+                                <div className="p-6 flex flex-col flex-grow">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
+                                        {post.title}
+                                    </h3>
+                                    <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">
+                                        {post.excerpt}
+                                    </p>
+                                    <div className="pt-4 border-t border-gray-100 mt-auto flex justify-between items-center text-xs text-gray-500">
+                                        <span className="font-medium text-gray-700">{post.author}</span>
+                                        <span className="flex items-center gap-1">
+                                            <Calendar className="w-3 h-3" />
+                                            {formatDate(post.created_at)}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                            <div className="p-6 flex flex-col flex-grow">
-                                <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
-                                    {post.title}
-                                </h3>
-                                <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">
-                                    {post.excerpt}
-                                </p>
-                                <div className="pt-4 border-t border-gray-100 mt-auto flex justify-between items-center text-xs text-gray-500">
-                                    <span className="font-medium text-gray-700">{post.author}</span>
-                                    <span className="flex items-center gap-1">
-                                        <Eye className="w-3 h-3" />
-                                        {post.views}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                        </ScrollReveal>
                     ))}
                 </div>
             </div>
@@ -160,7 +141,7 @@ const Blog = () => {
                         {/* Modal Header Image */}
                         <div className="h-56 relative">
                             <img
-                                src={selectedPost.image}
+                                src={selectedPost.image_url || selectedPost.image}
                                 alt={selectedPost.title}
                                 className="w-full h-full object-cover"
                             />
@@ -189,11 +170,11 @@ const Blog = () => {
                                 </span>
                                 <span className="flex items-center gap-1">
                                     <Calendar className="w-4 h-4" />
-                                    {selectedPost.date}
+                                    {formatDate(selectedPost.created_at)}
                                 </span>
                                 <span className="flex items-center gap-1">
                                     <BookOpen className="w-4 h-4" />
-                                    {selectedPost.readTime}
+                                    {selectedPost.read_time}
                                 </span>
                             </div>
 
@@ -204,6 +185,10 @@ const Blog = () => {
                                         {paragraph.startsWith('**') ? (
                                             <strong className="text-gray-900 block mt-4">
                                                 {paragraph.replace(/\*\*/g, '')}
+                                            </strong>
+                                        ) : paragraph.startsWith('## ') ? (
+                                            <strong className="text-gray-900 block mt-4 text-lg">
+                                                {paragraph.replace('## ', '')}
                                             </strong>
                                         ) : paragraph}
                                     </p>

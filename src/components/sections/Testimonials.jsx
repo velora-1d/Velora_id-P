@@ -1,52 +1,49 @@
-import { Star, Quote } from 'lucide-react';
+'use client';
 
-const testimonials = [
+import { useState, useEffect } from 'react';
+import { Star, Quote } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+import ScrollReveal from '../animations/ScrollReveal';
+
+// Fallback data jika DB belum ada
+const fallbackTestimonials = [
     {
-        quote: "Velora sangat membantu digitalisasi administrasi pesantren kami. Sistem bendahara terintegrasi WA membuat pembayaran SPP jadi transparan.",
+        content: "Velora sangat membantu digitalisasi administrasi pesantren kami. Sistem bendahara terintegrasi WA membuat pembayaran SPP jadi transparan.",
         name: "Ustadz Ahmad Fauzi",
         role: "Kepala Pesantren Al-Hikmah",
-        avatar: "AF",
         rating: 5
     },
     {
-        quote: "Deploy website tugas kuliah dalam hitungan jam! Responsif dan profesional. Sangat recommended untuk mahasiswa yang butuh website cepat.",
+        content: "Deploy website tugas kuliah dalam hitungan jam! Responsif dan profesional. Sangat recommended untuk mahasiswa yang butuh website cepat.",
         name: "Rizky Pratama",
         role: "Mahasiswa IT",
-        avatar: "RP",
         rating: 5
     },
     {
-        quote: "Integrasi payment gateway Midtrans untuk toko online kami berjalan lancar. Tim support sangat responsif dan helpful.",
+        content: "Integrasi payment gateway Midtrans untuk toko online kami berjalan lancar. Tim support sangat responsif dan helpful.",
         name: "Siti Nurhaliza",
         role: "Owner Toko Online",
-        avatar: "SN",
         rating: 5
     },
     {
-        quote: "Website company profile kami jadi lebih profesional. SEO-nya juga bagus, sekarang sudah muncul di Google page 1!",
+        content: "Website company profile kami jadi lebih profesional. SEO-nya juga bagus, sekarang sudah muncul di Google page 1!",
         name: "Budi Santoso",
         role: "Direktur CV Maju Jaya",
-        avatar: "BS",
         rating: 5
     },
     {
-        quote: "Sistem e-learning yang dibuatkan sangat user-friendly. Guru-guru kami yang gaptek pun bisa pakai dengan mudah.",
+        content: "Sistem e-learning yang dibuatkan sangat user-friendly. Guru-guru kami yang gaptek pun bisa pakai dengan mudah.",
         name: "Ibu Dewi Kartika",
         role: "Kepala Sekolah SDN 01",
-        avatar: "DK",
         rating: 5
     },
     {
-        quote: "Maintenance server kami ditangani dengan baik. Response time cepat dan harga sangat bersaing.",
+        content: "Maintenance server kami ditangani dengan baik. Response time cepat dan harga sangat bersaing.",
         name: "Andi Wijaya",
         role: "IT Manager PT Sukses",
-        avatar: "AW",
         rating: 5
     }
 ];
-
-// Duplicate for infinite scroll effect
-const allTestimonials = [...testimonials, ...testimonials];
 
 const TestimonialCard = ({ testimonial }) => (
     <div className="flex-shrink-0 w-[400px] bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/10 mx-4">
@@ -55,49 +52,81 @@ const TestimonialCard = ({ testimonial }) => (
 
         {/* Stars */}
         <div className="flex gap-1 mb-4">
-            {[...Array(testimonial.rating)].map((_, i) => (
+            {[...Array(testimonial.rating || 5)].map((_, i) => (
                 <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
             ))}
         </div>
 
         {/* Quote */}
         <p className="text-white/90 text-base leading-relaxed mb-6">
-            "{testimonial.quote}"
+            &quot;{testimonial.content}&quot;
         </p>
 
         {/* Author */}
         <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-purple-600 flex items-center justify-center text-white font-bold text-sm">
-                {testimonial.avatar}
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent-dark flex items-center justify-center text-white font-bold text-sm">
+                {testimonial.avatar_url ? (
+                    <img src={testimonial.avatar_url} alt={testimonial.name} className="w-full h-full rounded-full object-cover" />
+                ) : (
+                    testimonial.name.split(' ').map(w => w[0]).join('').substring(0, 2)
+                )}
             </div>
             <div>
                 <p className="text-white font-semibold text-sm">{testimonial.name}</p>
-                <p className="text-gray-400 text-xs">{testimonial.role}</p>
+                <p className="text-gray-400 text-xs">{testimonial.role}{testimonial.company ? ` • ${testimonial.company}` : ''}</p>
             </div>
         </div>
     </div>
 );
 
 const Testimonials = () => {
+    const [testimonials, setTestimonials] = useState(fallbackTestimonials);
+
+    useEffect(() => {
+        const fetchTestimonials = async () => {
+            try {
+                const supabase = createClient();
+                const { data, error } = await supabase
+                    .from('testimonials')
+                    .select('*')
+                    .eq('published', true)
+                    .order('created_at', { ascending: false });
+
+                if (!error && data && data.length > 0) {
+                    setTestimonials(data);
+                }
+            } catch {
+                // Fallback to hardcoded data if DB not available
+            }
+        };
+
+        fetchTestimonials();
+    }, []);
+
+    // Duplicate for infinite scroll effect
+    const allTestimonials = [...testimonials, ...testimonials];
+
     return (
         <section id="testimonials" className="py-16 sm:py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
             {/* Decorative elements */}
             <div className="absolute top-0 left-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
 
             <div className="container mx-auto px-6 relative z-10">
                 {/* Header */}
-                <div className="text-center mb-16">
-                    <span className="inline-block px-4 py-2 bg-white/10 text-white/80 rounded-full text-sm font-semibold mb-4 tracking-wide backdrop-blur-sm">
-                        TESTIMONI
-                    </span>
-                    <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
-                        Apa Kata Klien Kami
-                    </h2>
-                    <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                        Kepuasan klien adalah prioritas utama kami.
-                    </p>
-                </div>
+                <ScrollReveal width="100%">
+                    <div className="text-center mb-16">
+                        <span className="inline-block px-4 py-2 bg-white/10 text-white/80 rounded-full text-sm font-semibold mb-4 tracking-wide backdrop-blur-sm">
+                            TESTIMONI
+                        </span>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+                            Apa Kata Klien Kami
+                        </h2>
+                        <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
+                            Kepuasan klien adalah prioritas utama kami.
+                        </p>
+                    </div>
+                </ScrollReveal>
             </div>
 
             {/* Auto-scrolling Marquee */}

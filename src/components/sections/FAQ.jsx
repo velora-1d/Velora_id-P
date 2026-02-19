@@ -1,7 +1,10 @@
-import { useState } from 'react';
-import { ChevronDown, MessageSquare } from 'lucide-react';
+'use client';
 
-const faqs = [
+import { useState, useEffect } from 'react';
+import { ChevronDown, MessageSquare } from 'lucide-react';
+import { createClient } from '@/lib/supabase/client';
+
+const fallbackFaqs = [
     {
         question: "Apakah website/sistem butuh database?",
         answer: "Tergantung kebutuhan. Untuk company profile statis, tidak perlu database. Untuk sistem dengan CRUD (bendahara, sekretaris, dll), kami gunakan MySQL/PostgreSQL yang aman dan scalable."
@@ -30,6 +33,27 @@ const faqs = [
 
 const FAQ = () => {
     const [openIndex, setOpenIndex] = useState(0);
+    const [faqs, setFaqs] = useState(fallbackFaqs);
+
+    useEffect(() => {
+        const fetchFaqs = async () => {
+            try {
+                const supabase = createClient();
+                const { data, error } = await supabase
+                    .from('faqs')
+                    .select('*')
+                    .eq('published', true)
+                    .order('sort_order', { ascending: true });
+
+                if (!error && data && data.length > 0) {
+                    setFaqs(data);
+                }
+            } catch {
+                // Fallback to hardcoded data
+            }
+        };
+        fetchFaqs();
+    }, []);
 
     return (
         <section id="faq" className="py-16 sm:py-24 bg-gray-50 relative overflow-hidden">
@@ -62,7 +86,7 @@ const FAQ = () => {
                     <div className="space-y-4">
                         {faqs.map((faq, index) => (
                             <div
-                                key={index}
+                                key={faq.id || index}
                                 className={`bg-white rounded-2xl border transition-all duration-300 overflow-hidden ${openIndex === index ? 'border-primary shadow-lg' : 'border-gray-200 hover:border-gray-300'
                                     }`}
                             >
