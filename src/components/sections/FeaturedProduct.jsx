@@ -23,7 +23,7 @@ const fallbackFeatures = [
     {
         icon_name: 'GraduationCap', title: 'Sistem Pendidikan',
         description: 'E-Rapor digital, perhitungan nilai nasional, ijazah digital yang sah.',
-        color_gradient: 'from-violet-500 to-purple-600',
+        color_gradient: 'from-sky-500 to-cyan-600',
         highlights: ['E-Rapor Kurikulum Merdeka', 'Perhitungan nilai nasional', 'Ijazah & sertifikat digital', 'Absensi digital terintegrasi']
     },
 ];
@@ -115,7 +115,7 @@ const FeaturedProduct = () => {
             onMouseLeave={() => { setPaused(false); startRef.current = Date.now(); }}
         >
             {/* Decorative bg */}
-            <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-to-br from-primary/5 to-violet-500/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+            <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-to-br from-primary/5 to-teal-500/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10">
@@ -128,7 +128,7 @@ const FeaturedProduct = () => {
                         </span>
                         <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-5 tracking-tight leading-tight">
                             Sistem Manajemen <br className="hidden sm:block" />
-                            <span className="bg-gradient-to-r from-primary to-violet-600 bg-clip-text text-transparent">Pesantren & Sekolah</span>
+                            <span className="bg-gradient-to-r from-primary to-teal-600 bg-clip-text text-transparent">Pesantren & Sekolah</span>
                         </h2>
                         <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
                             Solusi digital all-in-one untuk mengelola administrasi, keuangan, dan akademik lembaga pendidikan Anda.
@@ -249,20 +249,20 @@ const FeaturedProduct = () => {
                             >
                                 {/* Decorative */}
                                 <div className="absolute top-0 right-0 w-80 h-80 bg-primary/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
-                                <div className="absolute bottom-0 left-0 w-60 h-60 bg-violet-500/20 rounded-full blur-3xl -translate-x-1/4 translate-y-1/3"></div>
-                                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-violet-500/10"></div>
+                                <div className="absolute bottom-0 left-0 w-60 h-60 bg-teal-500/20 rounded-full blur-3xl -translate-x-1/4 translate-y-1/3"></div>
+                                <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-teal-500/10"></div>
 
                                 <div className="relative z-10 p-6 sm:p-8 md:p-10">
                                     <div className="flex flex-col lg:flex-row items-start lg:items-center gap-6 lg:gap-10">
                                         <div className="flex items-center gap-4 flex-shrink-0">
-                                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-primary to-violet-600 flex items-center justify-center shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform duration-500">
+                                            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-primary to-teal-600 flex items-center justify-center shadow-lg shadow-primary/30 group-hover:scale-110 transition-transform duration-500">
                                                 <Database className="w-7 h-7 sm:w-8 sm:h-8 text-white" strokeWidth={1.5} />
                                             </div>
                                         </div>
 
                                         <div className="flex-1">
                                             <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
-                                                Full System <span className="bg-gradient-to-r from-primary to-violet-400 bg-clip-text text-transparent">Terintegrasi</span>
+                                                Full System <span className="bg-gradient-to-r from-primary to-teal-400 bg-clip-text text-transparent">Terintegrasi</span>
                                             </h3>
                                             <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
                                                 Gabungkan Bendahara + Sekretaris + Pendidikan dalam satu platform dengan single sign-on dan reporting terpusat.
@@ -294,7 +294,7 @@ const FeaturedProduct = () => {
                                             </div>
                                         </div>
 
-                                        <button className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-violet-600 hover:from-blue-600 hover:to-violet-700 text-white rounded-full font-bold text-sm shadow-xl shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 flex-shrink-0 group-hover:gap-3">
+                                        <button className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-teal-600 hover:from-blue-600 hover:to-teal-700 text-white rounded-full font-bold text-sm shadow-xl shadow-primary/20 transition-all duration-300 hover:-translate-y-0.5 flex-shrink-0 group-hover:gap-3">
                                             Hubungi Kami
                                             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                         </button>
