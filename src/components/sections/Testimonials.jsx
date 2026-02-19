@@ -46,34 +46,51 @@ const fallbackTestimonials = [
 ];
 
 const TestimonialCard = ({ testimonial }) => (
-    <div className="flex-shrink-0 w-[85vw] sm:w-[400px] bg-white/10 backdrop-blur-lg rounded-2xl p-6 sm:p-8 border border-white/10 mx-2 sm:mx-4">
-        {/* Quote Icon */}
-        <Quote className="w-8 h-8 text-primary/50 mb-4" strokeWidth={1} />
-
-        {/* Stars */}
-        <div className="flex gap-1 mb-4">
-            {[...Array(testimonial.rating || 5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-            ))}
-        </div>
-
-        {/* Quote */}
-        <p className="text-white/90 text-base leading-relaxed mb-6">
-            &quot;{testimonial.content}&quot;
-        </p>
-
-        {/* Author */}
-        <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent-dark flex items-center justify-center text-white font-bold text-sm">
-                {testimonial.avatar_url ? (
-                    <img src={testimonial.avatar_url} alt={testimonial.name} className="w-full h-full rounded-full object-cover" />
-                ) : (
-                    testimonial.name.split(' ').map(w => w[0]).join('').substring(0, 2)
-                )}
+    <div className="flex-shrink-0 w-[85vw] sm:w-[400px] pt-8 mx-3 sm:mx-4">
+        <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-lg relative group hover:-translate-y-1 transition-all duration-300">
+            {/* Overlapping Avatar */}
+            <div className="absolute -top-8 left-1/2 -translate-x-1/2">
+                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-teal-400 to-emerald-500 p-1 shadow-lg group-hover:scale-110 transition-transform duration-300">
+                    <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
+                        {testimonial.avatar_url ? (
+                            <img src={testimonial.avatar_url} alt={testimonial.name} className="w-full h-full object-cover" />
+                        ) : (
+                            <span className="text-teal-600 font-bold text-xl">
+                                {testimonial.name.split(' ').map(w => w[0]).join('').substring(0, 2)}
+                            </span>
+                        )}
+                    </div>
+                </div>
             </div>
-            <div>
-                <p className="text-white font-semibold text-sm">{testimonial.name}</p>
-                <p className="text-gray-400 text-xs">{testimonial.role}{testimonial.company ? ` • ${testimonial.company}` : ''}</p>
+
+            {/* Quote Icon */}
+            <div className="absolute top-6 right-6 text-gray-100 group-hover:text-teal-50 transition-colors">
+                <Quote className="w-10 h-10 fill-current" />
+            </div>
+
+            <div className="mt-8 text-center">
+                {/* Stars */}
+                <div className="flex justify-center gap-1 mb-4">
+                    {[...Array(testimonial.rating || 5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    ))}
+                </div>
+
+                {/* Content */}
+                <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6 italic relative z-10">
+                    &quot;{testimonial.content}&quot;
+                </p>
+
+                {/* Author */}
+                <div>
+                    <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
+                    <p className="text-teal-600 text-xs font-medium uppercase tracking-wide mt-1">
+                        {testimonial.role}
+                    </p>
+                    {testimonial.company && (
+                        <p className="text-gray-400 text-xs mt-0.5">{testimonial.company}</p>
+                    )}
+                </div>
             </div>
         </div>
     </div>
@@ -107,33 +124,33 @@ const Testimonials = () => {
     const allTestimonials = [...testimonials, ...testimonials];
 
     return (
-        <section id="testimonials" className="py-16 sm:py-24 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden">
+        <section id="testimonials" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
             {/* Decorative elements */}
-            <div className="absolute top-0 left-0 w-96 h-96 bg-primary/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
+            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
 
             <div className="container mx-auto px-6 relative z-10">
                 {/* Header */}
                 <ScrollReveal width="100%">
-                    <div className="text-center mb-16">
-                        <span className="inline-block px-4 py-2 bg-white/10 text-white/80 rounded-full text-sm font-semibold mb-4 tracking-wide backdrop-blur-sm">
-                            TESTIMONI
+                    <div className="flex flex-col items-center mb-16">
+                        <span className="inline-block px-4 py-2 bg-teal-50 text-teal-700 rounded-full text-xs font-bold uppercase tracking-widest mb-4 border border-teal-100">
+                            Testimoni
                         </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight text-center">
                             Apa Kata Klien Kami
                         </h2>
-                        <p className="text-lg text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                            Kepuasan klien adalah prioritas utama kami.
+                        <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed text-center">
+                            Kepuasan klien adalah prioritas utama kami dalam setiap karya yang kami ciptakan.
                         </p>
                     </div>
                 </ScrollReveal>
             </div>
 
             {/* Auto-scrolling Marquee */}
-            <div className="relative overflow-hidden">
+            <div className="relative overflow-hidden py-4">
                 {/* Gradient overlays */}
-                <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-900 to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-900 to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-32 bg-gradient-to-r from-[#faf9f7] to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-32 bg-gradient-to-l from-[#faf9f7] to-transparent z-10 pointer-events-none"></div>
 
                 {/* Scrolling container */}
                 <div className="flex animate-marquee hover:pause-animation">
@@ -144,12 +161,14 @@ const Testimonials = () => {
             </div>
 
             {/* Trust indicator */}
-            <div className="container mx-auto px-6 mt-12">
-                <div className="text-center">
-                    <p className="text-gray-500 text-sm">
-                        Dipercaya oleh <span className="text-white font-semibold">50+ klien</span> di seluruh Indonesia
-                    </p>
-                </div>
+            <div className="container mx-auto px-6 mt-16">
+                <ScrollReveal width="100%">
+                    <div className="text-center">
+                        <p className="text-gray-400 text-sm font-medium">
+                            Dipercaya oleh <span className="text-gray-900 font-bold">50+ klien</span> di seluruh Indonesia
+                        </p>
+                    </div>
+                </ScrollReveal>
             </div>
         </section>
     );

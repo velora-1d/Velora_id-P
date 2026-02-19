@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Linkedin, Github, MapPin, ArrowRight, Briefcase, GraduationCap, Code2, Scale } from 'lucide-react';
+import { Linkedin, Github, MapPin, ArrowRight, Briefcase, GraduationCap, Code2, Scale, Mail, Calendar, CheckCircle2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 
@@ -20,37 +20,36 @@ const WhatsAppIcon = () => (
 );
 
 const socialConfig = [
-    { type: 'whatsapp', icon: <WhatsAppIcon />, color: 'hover:text-green-600' },
-    { type: 'linkedin', icon: <Linkedin className="w-4 h-4" />, color: 'hover:text-blue-600' },
-    { type: 'tiktok', icon: <TikTokIcon />, color: 'hover:text-pink-600' },
-    { type: 'github', icon: <Github className="w-4 h-4" />, color: 'hover:text-gray-900' },
+    { type: 'whatsapp', icon: <WhatsAppIcon />, color: 'hover:text-green-600', bg: 'hover:bg-green-50' },
+    { type: 'linkedin', icon: <Linkedin className="w-4 h-4" />, color: 'hover:text-blue-600', bg: 'hover:bg-blue-50' },
+    { type: 'tiktok', icon: <TikTokIcon />, color: 'hover:text-pink-600', bg: 'hover:bg-pink-50' },
+    { type: 'github', icon: <Github className="w-4 h-4" />, color: 'hover:text-gray-900', bg: 'hover:bg-gray-100' },
 ];
 
 const journey = [
-    { year: '2020', text: 'Lulus S.H. — Universitas Hukum', icon: GraduationCap },
+    { year: '2020', text: 'Lulus S.H. — Universitas Islam KH.Ruhiyat Cipasung', icon: GraduationCap },
     { year: '2021', text: 'Mendalami Web Development', icon: Code2 },
     { year: '2022', text: 'Freelance Full-Stack Developer', icon: Briefcase },
     { year: '2023', text: 'Mendirikan Velora', icon: Scale },
 ];
 
 const expertise = [
-    'Next.js', 'React', 'Node.js', 'PostgreSQL', 'Laravel', 'Flutter',
-    'UI/UX Design', 'Payment Gateway', 'Legal Tech', 'Digital Strategy'
+    'Frontend', 'Backend', 'Golang', 'Next.js', 'React', 'Node.js', 'PostgreSQL', 'Laravel', 'Flutter',
+    'UI/UX Design', 'Payment Gateway', 'Legal Tech', 'Digital Strategy', 'Optimasi SEO',
 ];
 
 const fallbackFounder = {
     name: 'Mahin Utsman Nawawi, S.H.',
     title: 'Founder & CEO',
-    photo_url: '/images/founder.jpg',
+    photo_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
     bio_paragraphs: [
         'Seorang Sarjana Hukum yang memiliki passion kuat di bidang teknologi dan pengembangan web. Kombinasi unik antara latar belakang hukum dan keahlian teknis memberikan perspektif holistik dalam membangun solusi digital yang tidak hanya canggih, tapi juga aman dan sesuai regulasi.',
-        'Berbasis di Pasirjambu, Bandung , Mahin mendirikan Velora pada tahun 2023 dengan misi sederhana: membantu UMKM dan institusi Indonesia untuk go digital dengan cara yang terjangkau dan berkualitas.',
-        'Dengan pengalaman menangani berbagai proyek mulai dari website sederhana hingga sistem kompleks seperti manajemen pesantren dan integrasi payment gateway, Mahin memimpin tim Velora untuk selalu mengutamakan kualitas dan kepuasan klien.'
+        'Berasal dari Pasirjambu, Bandung, Mahin mendirikan Velora pada tahun 2023 dengan misi sederhana: membantu UMKM dan institusi Indonesia untuk go digital dengan cara yang terjangkau dan berkualitas.'
     ],
     stats: [
-        { value: '50+', label: 'Proyek' },
-        { value: '2023', label: 'Didirikan' },
-        { value: '24/7', label: 'Support' }
+        { value: '50+', label: 'Proyek Selesai' },
+        { value: '2023', label: 'Tahun Berdiri' },
+        { value: '24/7', label: 'Support Client' }
     ],
     social_links: [
         { type: 'whatsapp', href: 'https://wa.me/6281320442174', label: 'WhatsApp' },
@@ -67,19 +66,13 @@ const Founder = () => {
         const fetchFounder = async () => {
             try {
                 const supabase = createClient();
-                const { data, error } = await supabase
-                    .from('founder')
-                    .select('*')
-                    .eq('published', true)
-                    .limit(1)
-                    .single();
-
+                const { data, error } = await supabase.from('founder').select('*').eq('published', true).single();
                 if (!error && data) {
                     setFounderData({
                         name: data.name || fallbackFounder.name,
                         title: data.title || fallbackFounder.title,
                         photo_url: data.photo_url || fallbackFounder.photo_url,
-                        bio_paragraphs: (data.bio_paragraphs || fallbackFounder.bio_paragraphs).map(p => p.replace(/text-white/g, 'text-gray-900')),
+                        bio_paragraphs: (data.bio_paragraphs || fallbackFounder.bio_paragraphs),
                         stats: data.stats || fallbackFounder.stats,
                         social_links: data.social_links || fallbackFounder.social_links,
                     });
@@ -91,150 +84,157 @@ const Founder = () => {
 
     return (
         <section id="founder" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
-            {/* Decorative large typography watermark */}
-            <div className="absolute top-16 left-0 right-0 flex justify-center pointer-events-none select-none">
-                <span className="text-[120px] sm:text-[180px] lg:text-[220px] font-black text-gray-900/[0.018] leading-none tracking-tighter">VELORA</span>
-            </div>
+            {/* Background Texture */}
+            <div className="absolute inset-0 opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
 
             <div className="container mx-auto px-4 relative z-10">
-                {/* Minimal header */}
                 <ScrollReveal width="100%">
-                    <div className="flex flex-col items-center mb-16 sm:mb-20">
-                        <div className="w-12 h-[2px] bg-gray-900 mb-6"></div>
-                        <span className="text-xs font-bold tracking-[0.3em] text-gray-400 uppercase mb-4">Founder & CEO</span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight text-center">
-                            Di Balik Velora
+                    <div className="flex flex-col items-center mb-16 text-center">
+                        <span className="inline-block px-4 py-2 bg-teal-50 text-teal-700 rounded-full text-xs font-bold uppercase tracking-widest mb-4 border border-teal-100">
+                            Leadership
+                        </span>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+                            Meet The Founder
                         </h2>
                     </div>
                 </ScrollReveal>
 
-                {/* Main Layout: 2-column with proper grid */}
-                <div className="max-w-6xl mx-auto">
-                    <div className="flex flex-col lg:flex-row gap-10 lg:gap-16">
+                <div className="max-w-7xl mx-auto">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
-                        {/* Left: Photo + Social — fixed width */}
-                        <div className="w-full lg:w-[400px] lg:flex-shrink-0">
+                        {/* LEFT COLUMN: Photo (Sticky) */}
+                        <div className="lg:col-span-5 relative z-0 lg:sticky lg:top-24">
                             <ScrollReveal direction="right" width="100%">
-                                <div className="lg:sticky lg:top-24">
-                                    {/* Photo with geometric accent */}
-                                    <div className="relative mb-8">
-                                        <div className="absolute -top-3 -left-3 w-full h-full bg-gradient-to-br from-teal-100 to-cyan-50 rounded-2xl"></div>
-                                        <div className="relative">
-                                            <img
-                                                src={founderData.photo_url}
-                                                alt={founderData.name}
-                                                className="w-full h-[400px] sm:h-[480px] object-cover object-top rounded-2xl shadow-xl relative z-10"
-                                            />
-                                            <div className="absolute -bottom-2 -right-2 w-20 h-20 border-b-[3px] border-r-[3px] border-teal-500 rounded-br-2xl z-0"></div>
-                                        </div>
-                                    </div>
-
-                                    {/* Name card below photo */}
-                                    <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-1">{founderData.name}</h3>
-                                        <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-                                            <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
-                                            <span>Pasirjambu, Bandung</span>
-                                        </div>
-
-                                        {/* Social row */}
-                                        <div className="flex items-center gap-1 pt-3 border-t border-gray-100">
-                                            {founderData.social_links.map((link, index) => {
-                                                const sc = socialConfig.find(s => s.type === link.type);
-                                                return (
-                                                    <a
-                                                        key={index}
-                                                        href={link.href}
-                                                        target="_blank"
-                                                        rel="noopener noreferrer"
-                                                        className={`w-9 h-9 rounded-lg text-gray-400 flex items-center justify-center transition-all duration-200 hover:bg-gray-50 ${sc?.color || 'hover:text-gray-900'}`}
-                                                        aria-label={link.label}
-                                                    >
-                                                        {sc?.icon || <Code2 className="w-4 h-4" />}
-                                                    </a>
-                                                );
-                                            })}
-                                            <div className="flex-1"></div>
-                                            <a href={founderData.social_links[0]?.href || '#'}
-                                                target="_blank" rel="noopener noreferrer"
-                                                className="flex items-center gap-1.5 text-xs font-semibold text-teal-600 hover:text-teal-700 transition-colors">
-                                                Hubungi <ArrowRight className="w-3.5 h-3.5" />
-                                            </a>
-                                        </div>
+                                <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-gray-300/50 h-[500px] sm:h-[600px] lg:h-[700px]">
+                                    <img
+                                        src={founderData.photo_url}
+                                        alt={founderData.name}
+                                        className="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-700"
+                                    />
+                                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 to-transparent"></div>
+                                    {/* Mobile Name Overlay */}
+                                    <div className="absolute bottom-0 left-0 p-6 lg:hidden">
+                                        <h3 className="text-2xl font-bold text-white">{founderData.name}</h3>
+                                        <p className="text-white/80">{founderData.title}</p>
                                     </div>
                                 </div>
                             </ScrollReveal>
                         </div>
 
-                        {/* Right: Content — fills remaining space */}
-                        <div className="flex-1 min-w-0">
+                        {/* RIGHT COLUMN: Bento Grid Content */}
+                        <div className="lg:col-span-7 relative z-10 lg:-ml-12 lg:mt-12 -mt-10 px-0 sm:px-0 space-y-6">
+
+                            {/* CARD 1: Bio & Introduction (Overlapping) */}
                             <ScrollReveal direction="left" width="100%">
-                                <div>
-                                    {/* Story */}
-                                    <div className="mb-10">
-                                        <h4 className="text-sm font-bold tracking-[0.2em] text-teal-600 uppercase mb-5">Cerita Saya</h4>
-                                        <div className="space-y-4">
-                                            {founderData.bio_paragraphs.map((p, i) => (
-                                                <p key={i} className="text-gray-900 text-[15px] sm:text-base leading-[1.8]" dangerouslySetInnerHTML={{ __html: p }} />
-                                            ))}
+                                <div className="bg-white rounded-3xl p-6 sm:p-10 shadow-xl shadow-gray-200/60 border border-gray-100">
+                                    <div className="hidden lg:block mb-6 pb-6 border-b border-gray-100">
+                                        <h3 className="text-4xl font-extrabold text-gray-900 mb-2">{founderData.name}</h3>
+                                        <div className="flex items-center gap-3 text-gray-500">
+                                            <span className="text-teal-600 font-bold uppercase tracking-wider text-sm">{founderData.title}</span>
+                                            <span className="w-1 h-1 rounded-full bg-gray-300"></span>
+                                            <span className="flex items-center gap-1 text-sm"><MapPin className="w-3.5 h-3.5" /> Pasirjambu, Bandung</span>
                                         </div>
                                     </div>
+                                    <div className="space-y-4 text-gray-600 leading-relaxed text-[15px] sm:text-base">
+                                        {founderData.bio_paragraphs.map((p, i) => (
+                                            <p key={i} dangerouslySetInnerHTML={{ __html: p }} />
+                                        ))}
+                                    </div>
+                                    {/* Stats Strip */}
+                                    <div className="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-gray-100">
+                                        {founderData.stats.map((stat, i) => (
+                                            <div key={i} className="text-center sm:text-left">
+                                                <div className="text-2xl font-black text-gray-900">{stat.value}</div>
+                                                <div className="text-[10px] sm:text-xs text-gray-400 font-bold uppercase tracking-wide">{stat.label}</div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </ScrollReveal>
 
-                                    {/* Divider */}
-                                    <div className="w-full h-px bg-gray-200 mb-10"></div>
-
-                                    {/* Journey Timeline */}
-                                    <div className="mb-10">
-                                        <h4 className="text-sm font-bold tracking-[0.2em] text-teal-600 uppercase mb-6">Perjalanan</h4>
-                                        <div className="relative">
-                                            <div className="absolute left-[19px] top-2 bottom-2 w-px bg-gray-200"></div>
-                                            <div className="space-y-5">
-                                                {journey.map((j, i) => {
-                                                    const JIcon = j.icon;
-                                                    return (
-                                                        <div key={i} className="flex items-center gap-4 group">
-                                                            <div className="w-10 h-10 rounded-full bg-white border-2 border-gray-200 group-hover:border-teal-400 flex items-center justify-center flex-shrink-0 transition-colors duration-300 relative z-10">
-                                                                <JIcon className="w-4 h-4 text-gray-400 group-hover:text-teal-500 transition-colors duration-300" />
-                                                            </div>
-                                                            <div>
-                                                                <span className="text-xs font-bold text-teal-600 tracking-wider">{j.year}</span>
-                                                                <p className="text-gray-700 text-sm font-medium">{j.text}</p>
-                                                            </div>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {/* CARD 2: Journey / Timeline */}
+                                <ScrollReveal direction="up" delay={0.1}>
+                                    <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-lg shadow-gray-200/40 border border-gray-100 h-full">
+                                        <h4 className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">
+                                            <span className="w-6 h-[2px] bg-teal-500"></span> Perjalanan
+                                        </h4>
+                                        <div className="space-y-6 relative">
+                                            <div className="absolute left-[15px] top-2 bottom-2 w-px bg-gray-100"></div>
+                                            {journey.map((j, i) => {
+                                                const JIcon = j.icon;
+                                                return (
+                                                    <div key={i} className="flex gap-4 relative z-10">
+                                                        <div className="w-8 h-8 rounded-full bg-white border border-gray-200 flex items-center justify-center flex-shrink-0 text-gray-400">
+                                                            <JIcon className="w-3.5 h-3.5" />
                                                         </div>
+                                                        <div>
+                                                            <span className="inline-block px-2 py-0.5 bg-gray-100 text-[10px] font-bold text-gray-600 rounded mb-1">{j.year}</span>
+                                                            <p className="text-sm font-bold text-gray-900 leading-tight">{j.text}</p>
+                                                        </div>
+                                                    </div>
+                                                );
+                                            })}
+                                        </div>
+                                    </div>
+                                </ScrollReveal>
+
+                                {/* CARD 3: Expertise & Skills */}
+                                <ScrollReveal direction="up" delay={0.2}>
+                                    <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-lg shadow-gray-200/40 border border-gray-100 h-full flex flex-col">
+                                        <h4 className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 mb-6">
+                                            <span className="w-6 h-[2px] bg-teal-500"></span> Keahlian
+                                        </h4>
+                                        <div className="flex flex-wrap gap-2 mb-8">
+                                            {expertise.slice(0, 10).map((skill, i) => (
+                                                <span key={i} className="px-2.5 py-1 rounded-md bg-gray-50 border border-gray-100 text-xs font-medium text-gray-600">
+                                                    {skill}
+                                                </span>
+                                            ))}
+                                            <span className="px-2.5 py-1 text-xs font-medium text-gray-400">+4 others</span>
+                                        </div>
+
+                                        <div className="mt-auto">
+                                            <h4 className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 mb-4">
+                                                <span className="w-6 h-[2px] bg-teal-500"></span> Connect
+                                            </h4>
+                                            <div className="flex gap-2">
+                                                {founderData.social_links.map((link, i) => {
+                                                    const sc = socialConfig.find(s => s.type === link.type);
+                                                    return (
+                                                        <a
+                                                            key={i}
+                                                            href={link.href}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className={`w-10 h-10 rounded-xl flex items-center justify-center text-gray-400 transition-all duration-200 border border-gray-100 hover:-translate-y-1 ${sc?.bg || 'hover:bg-gray-50'} ${sc?.color || 'hover:text-gray-900'}`}
+                                                        >
+                                                            {sc?.icon}
+                                                        </a>
                                                     );
                                                 })}
                                             </div>
                                         </div>
                                     </div>
+                                </ScrollReveal>
+                            </div>
 
-                                    {/* Divider */}
-                                    <div className="w-full h-px bg-gray-200 mb-10"></div>
-
-                                    {/* Expertise Tags */}
-                                    <div className="mb-10">
-                                        <h4 className="text-sm font-bold tracking-[0.2em] text-teal-600 uppercase mb-5">Keahlian</h4>
-                                        <div className="flex flex-wrap gap-2">
-                                            {expertise.map((skill, i) => (
-                                                <span key={i} className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:border-teal-300 hover:text-teal-700 hover:bg-teal-50 transition-all duration-200 cursor-default">
-                                                    {skill}
-                                                </span>
-                                            ))}
-                                        </div>
+                            {/* CARD 4: CTA (Full Width) */}
+                            <ScrollReveal direction="up" delay={0.3}>
+                                <div className="bg-gray-900 rounded-3xl p-6 sm:p-8 shadow-xl shadow-gray-900/20 text-white flex flex-col sm:flex-row items-center justify-between gap-6">
+                                    <div>
+                                        <h3 className="text-xl font-bold mb-1">Siap berkolaborasi?</h3>
+                                        <p className="text-gray-400 text-sm">Konsultasikan ide digital Anda langsung dengan founder.</p>
                                     </div>
-
-                                    {/* Stats bar */}
-                                    <div className="bg-gray-900 rounded-2xl p-6 sm:p-8">
-                                        <div className="grid grid-cols-3 divide-x divide-gray-700">
-                                            {founderData.stats.map((stat, i) => (
-                                                <div key={i} className="text-center px-2">
-                                                    <span className="block text-2xl sm:text-3xl font-extrabold text-white mb-1">{stat.value}</span>
-                                                    <span className="text-[11px] sm:text-xs text-gray-400 uppercase tracking-wider font-medium">{stat.label}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
+                                    <a
+                                        href="#contact"
+                                        className="flex-shrink-0 px-6 py-3 bg-white text-gray-900 rounded-xl font-bold text-sm hover:bg-teal-50 transition-colors flex items-center gap-2"
+                                    >
+                                        <Mail className="w-4 h-4" /> Hubungi Saya
+                                    </a>
                                 </div>
                             </ScrollReveal>
+
                         </div>
                     </div>
                 </div>

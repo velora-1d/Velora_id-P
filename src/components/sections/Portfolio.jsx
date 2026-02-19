@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, ExternalLink, MessageSquare, ArrowRight, Layers, Sparkles, ShoppingCart, CreditCard, Building2, Truck, GraduationCap, BarChart3, MapPin, Zap, Target, Lightbulb } from 'lucide-react';
+import { X, ExternalLink, MessageSquare, ArrowRight, Layers, Sparkles, ShoppingCart, CreditCard, Building2, Truck, GraduationCap, BarChart3, MapPin, Zap, Target, Lightbulb, ChevronRight } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 
@@ -58,8 +58,8 @@ const fallbackProjects = [
     {
         title: "Business Analytics Dashboard", category: "Retail & E-Commerce", client: "Retail Mart Group",
         description: "Dashboard analytics real-time dengan AI-powered insights untuk pengambilan keputusan bisnis.",
-        challenge: "Data tersebar di banyak sistem, sulit mendapat gambaran bisnis secara menyeluruh.",
-        solution: "Data warehouse terpusat dengan visualisasi interaktif dan prediksi penjualan berbasis machine learning.",
+        challenge: "Data penjualan tersebar di berbagai platform, sulit mengambil keputusan berbasis data.",
+        solution: "Unified dashboard dengan integrasi multi-source, visualisasi data interaktif, dan AI recommendation engine.",
         tech: "React, Python, TensorFlow",
         image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", icon: "BarChart3"
     }
@@ -99,83 +99,86 @@ const Portfolio = () => {
     };
 
     return (
-        <section id="portfolio" className="py-16 sm:py-24 md:py-32 bg-gradient-to-b from-slate-50 via-white to-slate-50 relative overflow-hidden">
-            {/* Decorative */}
-            <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-gradient-to-br from-blue-500/5 to-primary/5 rounded-full blur-3xl -translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-emerald-500/5 to-teal-500/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+        <section id="portfolio" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
+            {/* Subtle dot pattern */}
+            <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10">
                 {/* Header */}
                 <ScrollReveal width="100%">
-                    <div className="text-center mb-10 sm:mb-14">
-                        <span className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-100 text-blue-600 rounded-full text-sm font-semibold mb-5 tracking-wide">
-                            <Layers className="w-4 h-4" />
-                            PORTFOLIO
+                    <div className="flex flex-col items-center mb-14 sm:mb-18">
+                        <div className="w-12 h-[2px] bg-gray-900 mb-6"></div>
+                        <span className="text-xs font-bold tracking-[0.3em] text-gray-400 uppercase mb-4 flex items-center gap-2">
+                            <Layers className="w-3.5 h-3.5" /> Portfolio
                         </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">Portfolio Kami</h2>
-                        <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight text-center">
+                            Portfolio Kami
+                        </h2>
+                        <p className="text-base sm:text-lg text-gray-500 max-w-lg mx-auto leading-relaxed text-center">
                             Proyek-proyek transformasi digital yang telah kami selesaikan dengan sukses.
                         </p>
                     </div>
                 </ScrollReveal>
 
                 {/* Category Pills */}
-                <div className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-10">
-                    {categories.map(cat => (
-                        <button
-                            key={cat}
-                            onClick={() => setFilter(cat)}
-                            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${filter === cat
-                                ? 'bg-gray-900 text-white shadow-lg shadow-gray-900/20'
-                                : 'bg-white text-gray-500 hover:bg-gray-100 border border-gray-200'
-                                }`}
-                        >
-                            {cat}
-                        </button>
-                    ))}
-                </div>
+                <ScrollReveal width="100%">
+                    <div className="flex flex-wrap justify-center gap-2 mb-10 sm:mb-12">
+                        {categories.map(cat => (
+                            <button
+                                key={cat}
+                                onClick={() => setFilter(cat)}
+                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${filter === cat
+                                    ? 'bg-gray-900 text-white shadow-lg shadow-gray-900/20'
+                                    : 'bg-white text-gray-500 hover:bg-gray-100 border border-gray-200'
+                                    }`}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div>
+                </ScrollReveal>
 
                 <div className="max-w-6xl mx-auto">
-                    {/* FEATURED PROJECT — Hero Card */}
+                    {/* FEATURED — Overlapping Card Hero */}
                     {featured && (
                         <ScrollReveal width="100%">
                             <div
-                                className="relative rounded-2xl sm:rounded-3xl overflow-hidden mb-5 sm:mb-6 cursor-pointer group"
+                                className="relative mb-8 cursor-pointer group"
                                 onClick={() => openModal(featured)}
                             >
-                                <div className="aspect-[21/9] sm:aspect-[21/8] relative">
+                                {/* Image */}
+                                <div className="h-[280px] sm:h-[360px] md:h-[400px] rounded-2xl overflow-hidden">
                                     <img
                                         src={featured.image_url || featured.image}
                                         alt={featured.title}
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/50 to-transparent"></div>
+                                </div>
 
-                                    <div className="absolute inset-0 p-6 sm:p-8 md:p-12 flex flex-col justify-end">
-                                        <div className="max-w-xl">
-                                            <div className="flex items-center gap-3 mb-3 sm:mb-4">
-                                                <span className="px-3 py-1 bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-full uppercase tracking-wider">
-                                                    {featured.category}
-                                                </span>
-                                                <span className="px-3 py-1 bg-emerald-500/20 backdrop-blur-md border border-emerald-400/30 text-emerald-300 text-xs font-semibold rounded-full flex items-center gap-1">
-                                                    <Sparkles className="w-3 h-3" /> Featured
-                                                </span>
-                                            </div>
-                                            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3 tracking-tight">
-                                                {featured.title}
-                                            </h3>
-                                            <p className="text-white/70 text-sm sm:text-base mb-4 sm:mb-5 leading-relaxed line-clamp-2">
-                                                {featured.description}
-                                            </p>
-                                            <div className="flex items-center gap-4">
-                                                <span className="text-white/50 text-xs sm:text-sm flex items-center gap-1"><MapPin className="w-3.5 h-3.5" /> {featured.client}</span>
-                                                <span className="text-white/50 text-xs sm:text-sm font-mono flex items-center gap-1"><Zap className="w-3.5 h-3.5" /> {featured.tech}</span>
-                                            </div>
+                                {/* Overlapping Card */}
+                                <div className="relative mx-4 sm:mx-8 md:mx-12 -mt-20 sm:-mt-24">
+                                    <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-gray-100">
+                                        <div className="flex flex-wrap items-center gap-2 mb-3">
+                                            <span className="px-3 py-1 bg-teal-50 text-teal-700 text-[11px] font-bold rounded-md uppercase tracking-wider border border-teal-100">
+                                                {featured.category}
+                                            </span>
+                                            <span className="px-2.5 py-1 bg-amber-50 text-amber-600 text-[11px] font-bold rounded-md flex items-center gap-1 border border-amber-100">
+                                                <Sparkles className="w-3 h-3" /> Featured
+                                            </span>
                                         </div>
-
-                                        <div className="absolute bottom-6 sm:bottom-8 md:bottom-12 right-6 sm:right-8 md:right-12">
-                                            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 group-hover:scale-110">
-                                                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:translate-x-0.5 transition-transform" />
+                                        <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 mb-2 tracking-tight">
+                                            {featured.title}
+                                        </h3>
+                                        <p className="text-gray-500 text-sm sm:text-base mb-4 leading-relaxed line-clamp-2 max-w-2xl">
+                                            {featured.description}
+                                        </p>
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-4 text-xs sm:text-sm text-gray-400">
+                                                <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {featured.client}</span>
+                                                <span className="flex items-center gap-1.5 font-mono"><Zap className="w-3.5 h-3.5" /> {featured.tech}</span>
+                                            </div>
+                                            <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center group-hover:bg-teal-600 transition-colors duration-300">
+                                                <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" />
                                             </div>
                                         </div>
                                     </div>
@@ -184,49 +187,55 @@ const Portfolio = () => {
                         </ScrollReveal>
                     )}
 
-                    {/* REST — Bento Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-                        {rest.map((project, index) => (
-                            <ScrollReveal key={project.id || index} delay={index * 0.08} className="h-full">
-                                <div
-                                    className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full cursor-pointer group"
-                                    onClick={() => openModal(project)}
-                                >
-                                    <div className="h-44 sm:h-48 overflow-hidden relative">
-                                        <img
-                                            src={project.image_url || project.image}
-                                            alt={project.title}
-                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                                        <div className="absolute top-3 left-3">
-                                            <span className="bg-white/90 backdrop-blur-sm text-gray-700 px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-semibold uppercase tracking-wider shadow-sm">
-                                                {project.category}
-                                            </span>
+                    {/* REST — Overlapping Card Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                        {rest.map((project, index) => {
+                            const PIcon = iconMap[project.icon];
+                            return (
+                                <ScrollReveal key={project.id || index} delay={index * 0.08} width="100%">
+                                    <div
+                                        className="cursor-pointer group"
+                                        onClick={() => openModal(project)}
+                                    >
+                                        {/* Image */}
+                                        <div className="h-48 sm:h-52 rounded-2xl overflow-hidden">
+                                            <img
+                                                src={project.image_url || project.image}
+                                                alt={project.title}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            />
                                         </div>
-                                        <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                                            <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center">
-                                                <ExternalLink className="w-4 h-4 text-white" />
+
+                                        {/* Overlapping Content Card */}
+                                        <div className="relative mx-3 -mt-10">
+                                            <div className="bg-white rounded-xl p-5 shadow-lg border border-gray-100 group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <span className="bg-gray-100 text-gray-600 px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                                                        {project.category}
+                                                    </span>
+                                                    {PIcon && <PIcon className="w-4 h-4 text-gray-300" />}
+                                                </div>
+                                                <h4 className="font-bold text-gray-900 text-base sm:text-lg mb-1 leading-snug group-hover:text-teal-600 transition-colors line-clamp-1">
+                                                    {project.title}
+                                                </h4>
+                                                <p className="text-gray-400 text-xs mb-3">{project.client}</p>
+                                                <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4">
+                                                    {project.description}
+                                                </p>
+                                                <div className="flex items-center justify-between pt-3 border-t border-gray-50">
+                                                    <p className="text-[10px] text-gray-400 font-mono truncate pr-2">
+                                                        {project.tech}
+                                                    </p>
+                                                    <span className="text-xs font-semibold text-teal-600 flex items-center gap-1 flex-shrink-0 group-hover:gap-2 transition-all">
+                                                        Detail <ChevronRight className="w-3.5 h-3.5" />
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="p-5 flex flex-col flex-grow">
-                                        <h3 className="text-lg font-bold text-gray-900 mb-1.5 group-hover:text-primary transition-colors leading-snug">
-                                            {project.title}
-                                        </h3>
-                                        <p className="text-gray-500 text-xs mb-3">{project.client}</p>
-                                        <p className="text-gray-600 text-sm mb-4 flex-grow leading-relaxed line-clamp-2">
-                                            {project.description}
-                                        </p>
-                                        <div className="pt-3 border-t border-gray-100 mt-auto">
-                                            <p className="text-[10px] sm:text-xs text-gray-400 font-mono">
-                                                <span className="font-semibold text-gray-600">Tech:</span> {project.tech}
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </ScrollReveal>
-                        ))}
+                                </ScrollReveal>
+                            );
+                        })}
                     </div>
                 </div>
             </div>
@@ -247,18 +256,16 @@ const Portfolio = () => {
                             <img src={selectedProject.image_url || selectedProject.image} alt={selectedProject.title} className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
 
-                            {/* Close Button */}
                             <button onClick={closeModal} className="absolute top-4 right-4 w-10 h-10 bg-white/15 backdrop-blur-xl rounded-full flex items-center justify-center text-white hover:bg-white/25 transition-all duration-200 border border-white/20 hover:scale-105">
                                 <X className="w-5 h-5" />
                             </button>
 
-                            {/* Header overlay content */}
                             <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
                                 <div className="flex items-center gap-2 mb-3">
                                     <span className="px-3 py-1 bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-full uppercase tracking-wider">
                                         {selectedProject.category}
                                     </span>
-                                    <span className="px-3 py-1 bg-blue-500/20 backdrop-blur-md border border-blue-400/30 text-blue-200 text-xs font-semibold rounded-full">
+                                    <span className="px-3 py-1 bg-teal-500/20 backdrop-blur-md border border-teal-400/30 text-teal-200 text-xs font-semibold rounded-full">
                                         {selectedProject.client}
                                     </span>
                                 </div>
@@ -287,12 +294,12 @@ const Portfolio = () => {
                                         <p className="text-gray-600 text-sm leading-relaxed">{selectedProject.challenge}</p>
                                     </div>
                                 </div>
-                                <div className="bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100 rounded-2xl p-5 relative overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-emerald-400 to-teal-400 rounded-r-full"></div>
+                                <div className="bg-gradient-to-br from-teal-50 to-cyan-50 border border-teal-100 rounded-2xl p-5 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-teal-400 to-cyan-400 rounded-r-full"></div>
                                     <div className="pl-2">
                                         <div className="flex items-center gap-2 mb-3">
-                                            <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
-                                                <Lightbulb className="w-4 h-4 text-emerald-600" />
+                                            <div className="w-8 h-8 rounded-lg bg-teal-100 flex items-center justify-center">
+                                                <Lightbulb className="w-4 h-4 text-teal-600" />
                                             </div>
                                             <h4 className="font-bold text-gray-900 text-sm">Solusi</h4>
                                         </div>
@@ -301,7 +308,7 @@ const Portfolio = () => {
                                 </div>
                             </div>
 
-                            {/* Tech Stack Pills */}
+                            {/* Tech Stack */}
                             <div className="bg-gray-50 rounded-2xl p-5 border border-gray-100 mb-6">
                                 <h4 className="font-bold text-gray-900 text-sm mb-3 flex items-center gap-2">
                                     <Layers className="w-4 h-4 text-gray-400" /> Tech Stack
@@ -316,11 +323,11 @@ const Portfolio = () => {
                             </div>
 
                             {/* CTA */}
-                            <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-2xl p-5 sm:p-6 border border-emerald-100">
+                            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-2xl p-5 sm:p-6 border border-teal-100">
                                 <p className="text-gray-700 text-sm font-medium mb-4">Tertarik dengan project serupa?</p>
                                 <button
                                     onClick={() => handleWhatsApp(selectedProject)}
-                                    className="w-full bg-gradient-to-r from-emerald-500 to-green-500 hover:from-emerald-600 hover:to-green-600 text-white font-bold py-3.5 sm:py-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-emerald-500/20 flex items-center justify-center gap-2.5 text-sm sm:text-base"
+                                    className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-bold py-3.5 sm:py-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2.5 text-sm sm:text-base"
                                 >
                                     <MessageSquare className="w-5 h-5" />
                                     Diskusikan Project Serupa

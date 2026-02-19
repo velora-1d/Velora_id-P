@@ -171,32 +171,56 @@ const About = () => {
                     </ScrollReveal>
                 </div>
 
-                {/* Values / Pillars Section */}
+                {/* Values / Pillars Section — Overlapping Card UI */}
                 <ScrollReveal width="100%">
-                    <div className="text-center mb-10">
-                        <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Nilai Inti Kami</h3>
-                        <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">Prinsip yang menjadi fondasi setiap solusi yang kami bangun.</p>
+                    <div className="relative mb-20 sm:mb-28">
+                        {/* Section Header */}
+                        <div className="text-center mb-10 sm:mb-12">
+                            <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">Nilai Inti Kami</h3>
+                            <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">
+                                Prinsip yang menjadi fondasi setiap solusi yang kami bangun.
+                            </p>
+                        </div>
+
+                        {/* Banner Image */}
+                        <div className="h-[250px] sm:h-[350px] rounded-3xl overflow-hidden relative shadow-lg shadow-gray-200/50 mb-0 z-0">
+                            <img
+                                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1200&q=80"
+                                alt="Velora Values"
+                                className="w-full h-full object-cover"
+                            />
+                            <div className="absolute inset-0 bg-gray-900/60 mix-blend-multiply"></div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+
+                            {/* Decorative text on image */}
+                            <div className="absolute bottom-8 left-0 right-0 text-center text-white/20 font-bold text-[10vw] sm:text-[120px] leading-none tracking-tighter select-none pointer-events-none">
+                                VELORA
+                            </div>
+                        </div>
+
+                        {/* Overlapping Cards Grid */}
+                        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10 -mt-16 sm:-mt-24">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                                {values.map((v, i) => {
+                                    const Icon = v.icon;
+                                    const c = colorMap[v.color];
+                                    return (
+                                        <div
+                                            key={i}
+                                            className="group bg-white rounded-2xl p-6 shadow-xl shadow-gray-200/50 border border-gray-100 hover:-translate-y-2 transition-transform duration-300 h-full flex flex-col items-center text-center sm:items-start sm:text-left"
+                                        >
+                                            <div className={`w-12 h-12 rounded-xl ${c.bg} flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300 ring-1 ${c.ring}`}>
+                                                <Icon className={`w-5 h-5 ${c.icon}`} />
+                                            </div>
+                                            <h4 className="text-lg font-bold text-gray-900 mb-2">{v.title}</h4>
+                                            <p className="text-sm text-gray-500 leading-relaxed">{v.desc}</p>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
                     </div>
                 </ScrollReveal>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-                    {values.map((v, i) => {
-                        const Icon = v.icon;
-                        const c = colorMap[v.color];
-                        return (
-                            <ScrollReveal key={i} direction="up" delay={i * 0.1}>
-                                <div className={`group relative bg-white rounded-2xl border ${c.border} p-6 hover:shadow-lg hover:shadow-gray-100 transition-all duration-300 hover:-translate-y-1`}>
-                                    {/* Icon */}
-                                    <div className={`w-12 h-12 rounded-xl ${c.bg} flex items-center justify-center mb-4 ring-4 ${c.ring} group-hover:scale-110 transition-transform duration-300`}>
-                                        <Icon className={`w-5 h-5 ${c.icon}`} strokeWidth={2} />
-                                    </div>
-                                    <h4 className="text-lg font-bold text-gray-900 mb-2">{v.title}</h4>
-                                    <p className="text-sm text-gray-500 leading-relaxed">{v.desc}</p>
-                                </div>
-                            </ScrollReveal>
-                        );
-                    })}
-                </div>
             </div>
         </section>
     );

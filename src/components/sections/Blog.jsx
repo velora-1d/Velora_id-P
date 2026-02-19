@@ -88,60 +88,54 @@ const Blog = () => {
                 </ScrollReveal>
 
                 <div className="max-w-6xl mx-auto">
-                    {/* Featured Article — Full Width Hero */}
+                    {/* Featured Article — Overlapping Card Hero */}
                     {featured && (
                         <ScrollReveal width="100%">
                             <div
-                                className="relative rounded-2xl overflow-hidden cursor-pointer group mb-8"
+                                className="relative mb-8 cursor-pointer group"
                                 onClick={() => openModal(featured)}
                             >
-                                <div className="h-[300px] sm:h-[400px] md:h-[450px] relative">
+                                {/* Image */}
+                                <div className="h-[280px] sm:h-[360px] md:h-[400px] rounded-2xl overflow-hidden">
                                     <img
                                         src={featured.image_url || featured.image}
                                         alt={featured.title}
                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/40 to-transparent"></div>
+                                </div>
 
-                                    {/* Top badges */}
-                                    <div className="absolute top-5 left-5 sm:top-6 sm:left-6 flex items-center gap-2">
-                                        <span className="px-3 py-1 bg-teal-500 text-white text-[11px] font-bold rounded-md uppercase tracking-wider">
-                                            Featured
-                                        </span>
-                                        <span className="px-3 py-1 bg-white/10 backdrop-blur-md border border-white/20 text-white text-[11px] font-semibold rounded-md uppercase tracking-wider">
-                                            {featured.category}
-                                        </span>
-                                    </div>
-
-                                    {/* Bottom content */}
-                                    <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8 md:p-10">
-                                        <div className="max-w-2xl">
-                                            <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white mb-3 tracking-tight leading-tight">
-                                                {featured.title}
-                                            </h3>
-                                            <p className="text-white/60 text-sm sm:text-base mb-5 leading-relaxed line-clamp-2 max-w-xl">
-                                                {featured.excerpt}
-                                            </p>
-                                            <div className="flex items-center gap-4 text-white/40 text-xs sm:text-sm">
-                                                <span className="flex items-center gap-1.5">
+                                {/* Overlapping Card */}
+                                <div className="relative mx-4 sm:mx-8 md:mx-12 -mt-20 sm:-mt-24">
+                                    <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-gray-100">
+                                        <div className="flex flex-wrap items-center gap-2 mb-3">
+                                            <span className="px-3 py-1 bg-teal-50 text-teal-700 text-[11px] font-bold rounded-md uppercase tracking-wider border border-teal-100">
+                                                Featured
+                                            </span>
+                                            <span className="px-3 py-1 bg-gray-100 text-gray-600 text-[11px] font-bold rounded-md uppercase tracking-wider border border-gray-200">
+                                                {featured.category}
+                                            </span>
+                                        </div>
+                                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight leading-tight">
+                                            {featured.title}
+                                        </h3>
+                                        <p className="text-gray-500 text-sm sm:text-base mb-5 leading-relaxed line-clamp-2 max-w-2xl">
+                                            {featured.excerpt}
+                                        </p>
+                                        <div className="flex items-center justify-between">
+                                            <div className="flex items-center gap-4 text-xs sm:text-sm text-gray-400">
+                                                <span className="flex items-center gap-1.5 align-middle">
                                                     <User className="w-3.5 h-3.5" /> {featured.author}
                                                 </span>
-                                                <span className="w-1 h-1 rounded-full bg-white/30"></span>
-                                                <span className="flex items-center gap-1.5">
+                                                <span className="flex items-center gap-1.5 align-middle">
                                                     <Calendar className="w-3.5 h-3.5" /> {formatDate(featured.created_at)}
                                                 </span>
-                                                <span className="w-1 h-1 rounded-full bg-white/30"></span>
-                                                <span className="flex items-center gap-1.5">
+                                                <span className="flex items-center gap-1.5 align-middle">
                                                     <Clock className="w-3.5 h-3.5" /> {featured.read_time}
                                                 </span>
                                             </div>
-                                        </div>
-                                    </div>
-
-                                    {/* Read arrow */}
-                                    <div className="absolute bottom-6 right-6 sm:bottom-8 sm:right-8">
-                                        <div className="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-teal-500 group-hover:border-teal-500 transition-all duration-300 group-hover:scale-110">
-                                            <ArrowRight className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-0.5" />
+                                            <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center group-hover:bg-teal-600 transition-colors duration-300">
+                                                <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -149,56 +143,53 @@ const Blog = () => {
                         </ScrollReveal>
                     )}
 
-                    {/* Article Cards Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {/* Article Cards Grid — Overlapping Card UI */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                         {(rest.length > 0 ? rest : posts.slice(0, 3)).map((post, index) => (
                             <ScrollReveal key={post.id || index} delay={index * 0.1} width="100%">
                                 <div
-                                    className="bg-white rounded-2xl overflow-hidden border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 cursor-pointer group"
+                                    className="cursor-pointer group"
                                     onClick={() => openModal(post)}
                                 >
                                     {/* Image */}
-                                    <div className="h-48 relative overflow-hidden">
+                                    <div className="h-48 sm:h-52 rounded-2xl overflow-hidden">
                                         <img
                                             src={post.image_url || post.image}
                                             alt={post.title}
                                             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                         />
-                                        <div className="absolute top-3 left-3">
-                                            <span className="px-2.5 py-1 bg-white/90 backdrop-blur-sm text-gray-700 text-[10px] font-bold rounded-md uppercase tracking-wider">
-                                                {post.category}
-                                            </span>
-                                        </div>
                                     </div>
 
-                                    {/* Content */}
-                                    <div className="p-5 sm:p-6">
-                                        <div className="flex items-center gap-3 text-gray-400 text-[11px] mb-3">
-                                            <span className="flex items-center gap-1">
-                                                <Calendar className="w-3 h-3" /> {formatDate(post.created_at)}
-                                            </span>
-                                            <span className="flex items-center gap-1">
-                                                <Clock className="w-3 h-3" /> {post.read_time}
-                                            </span>
-                                        </div>
-                                        <h4 className="font-bold text-gray-900 text-base sm:text-lg mb-2 leading-snug group-hover:text-teal-600 transition-colors line-clamp-2">
-                                            {post.title}
-                                        </h4>
-                                        <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed mb-4">
-                                            {post.excerpt}
-                                        </p>
-
-                                        {/* Author + Read more */}
-                                        <div className="flex items-center justify-between pt-4 border-t border-gray-50">
-                                            <div className="flex items-center gap-2">
-                                                <div className="w-7 h-7 rounded-full bg-teal-50 flex items-center justify-center">
-                                                    <User className="w-3.5 h-3.5 text-teal-600" />
-                                                </div>
-                                                <span className="text-xs text-gray-500 font-medium">{post.author}</span>
+                                    {/* Overlapping Content Card */}
+                                    <div className="relative mx-3 -mt-10">
+                                        <div className="bg-white rounded-xl p-5 shadow-lg border border-gray-100 group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <span className="bg-gray-100 text-gray-600 px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                                                    {post.category}
+                                                </span>
+                                                <span className="text-gray-400 text-[10px] flex items-center gap-1">
+                                                    <Clock className="w-3 h-3" /> {post.read_time}
+                                                </span>
                                             </div>
-                                            <span className="text-xs font-semibold text-teal-600 flex items-center gap-1 group-hover:gap-2 transition-all">
-                                                Baca <ChevronRight className="w-3.5 h-3.5" />
-                                            </span>
+                                            <h4 className="font-bold text-gray-900 text-base sm:text-lg mb-1 leading-snug group-hover:text-teal-600 transition-colors line-clamp-2">
+                                                {post.title}
+                                            </h4>
+                                            <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed mb-4">
+                                                {post.excerpt}
+                                            </p>
+
+                                            {/* Author + Read more */}
+                                            <div className="flex items-center justify-between pt-3 border-t border-gray-50">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-6 h-6 rounded-full bg-teal-50 flex items-center justify-center">
+                                                        <User className="w-3 h-3 text-teal-600" />
+                                                    </div>
+                                                    <span className="text-xs text-gray-500 font-medium">{post.author}</span>
+                                                </div>
+                                                <span className="text-xs font-semibold text-teal-600 flex items-center gap-1 group-hover:gap-2 transition-all">
+                                                    Baca <ChevronRight className="w-3.5 h-3.5" />
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
