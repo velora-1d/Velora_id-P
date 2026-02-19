@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -47,27 +47,34 @@ export default function AdminLayout({ children }) {
     const [user, setUser] = useState(null);
     const router = useRouter();
     const pathname = usePathname();
-    const supabase = createClient();
+
+    // Memoize supabase client to avoid recreating on every render
+    const supabase = useMemo(() => createClient(), []);
 
     useEffect(() => {
         supabase.auth.getUser().then(({ data: { user } }) => {
             setUser(user);
         });
-    }, []);
+    }, [supabase]);
 
-    const handleLogout = async () => {
+    const handleLogout = useCallback(async () => {
         await supabase.auth.signOut();
         router.push('/admin/login');
         router.refresh();
-    };
+    }, [supabase, router]);
 
-    const isActive = (href) => {
+    const isActive = useCallback((href) => {
         if (href === '/admin') return pathname === '/admin';
         return pathname.startsWith(href);
-    };
+    }, [pathname]);
+
+    const pageTitle = useMemo(() => {
+        if (pathname === '/admin') return 'Dashboard';
+        return pathname.split('/').filter(Boolean).pop()?.replace(/-/g, ' ') || '';
+    }, [pathname]);
 
     return (
-        <div className="min-h-screen bg-gray-950 flex">
+        <div className="min-h-screen bg-gray-950">
             {/* Sidebar overlay (mobile) */}
             {sidebarOpen && (
                 <div
@@ -76,10 +83,10 @@ export default function AdminLayout({ children }) {
                 />
             )}
 
-            {/* Sidebar */}
-            <aside className={`fixed lg:static inset-y-0 left-0 z-50 w-64 bg-gray-900 border-r border-gray-800 flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
+            {/* Sidebar — ALWAYS fixed, never scrolls with page */}
+            <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-gray-900 border-r border-gray-800 flex flex-col transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}>
                 {/* Logo */}
-                <div className="p-6 border-b border-gray-800">
+                <div className="p-6 border-b border-gray-800 flex-shrink-0">
                     <div className="flex items-center gap-3">
                         <img src="/images/logo.png" alt="Velora" className="h-10 w-auto" />
                         <div>
@@ -89,8 +96,8 @@ export default function AdminLayout({ children }) {
                     </div>
                 </div>
 
-                {/* Navigation */}
-                <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
+                {/* Navigation — scrollable within the fixed sidebar */}
+                <nav className="flex-1 p-4 space-y-1 overflow-y-auto scrollbar-thin">
                     {sidebarLinks.map((link) => link.type === 'divider' ? (
                         <div key={link.id} className="pt-4 pb-2 px-4">
                             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{link.label}</p>
@@ -99,6 +106,7 @@ export default function AdminLayout({ children }) {
                         <Link
                             key={link.id}
                             href={link.href}
+                            prefetch={true}
                             onClick={() => setSidebarOpen(false)}
                             className={`flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${isActive(link.href)
                                 ? 'bg-primary/10 text-primary'
@@ -115,7 +123,7 @@ export default function AdminLayout({ children }) {
                 </nav>
 
                 {/* Bottom */}
-                <div className="p-4 border-t border-gray-800 space-y-2">
+                <div className="p-4 border-t border-gray-800 space-y-2 flex-shrink-0">
                     <Link
                         href="/"
                         target="_blank"
@@ -135,7 +143,7 @@ export default function AdminLayout({ children }) {
 
                 {/* User info */}
                 {user && (
-                    <div className="p-4 border-t border-gray-800">
+                    <div className="p-4 border-t border-gray-800 flex-shrink-0">
                         <div className="flex items-center gap-3">
                             <div className="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center text-primary text-sm font-bold">
                                 {user.email?.[0]?.toUpperCase()}
@@ -149,9 +157,9 @@ export default function AdminLayout({ children }) {
                 )}
             </aside>
 
-            {/* Main content */}
-            <div className="flex-1 flex flex-col min-w-0">
-                {/* Top bar */}
+            {/* Main content — offset by sidebar width on desktop */}
+            <div className="lg:ml-64 flex flex-col min-h-screen">
+                {/* Top bar — sticky within the main content area */}
                 <header className="sticky top-0 z-30 bg-gray-950/80 backdrop-blur-xl border-b border-gray-800 px-4 sm:px-6 py-3 sm:py-4 flex items-center gap-3 sm:gap-4">
                     <button
                         onClick={() => setSidebarOpen(true)}
@@ -161,13 +169,13 @@ export default function AdminLayout({ children }) {
                     </button>
                     <div className="flex-1">
                         <h2 className="text-lg font-semibold text-white capitalize">
-                            {pathname === '/admin' ? 'Dashboard' : pathname.split('/').filter(Boolean).pop()?.replace(/-/g, ' ')}
+                            {pageTitle}
                         </h2>
                     </div>
                 </header>
 
                 {/* Page content */}
-                <main className="flex-1 p-4 sm:p-6 overflow-y-auto">
+                <main className="flex-1 p-4 sm:p-6">
                     {children}
                 </main>
             </div>

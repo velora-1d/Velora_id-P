@@ -58,7 +58,7 @@ const Workflow = () => {
                 <div className="relative max-w-5xl mx-auto">
                     <div className="hidden md:block absolute top-16 left-[10%] right-[10%] h-1 bg-gradient-to-r from-blue-500 via-accent to-emerald-500 rounded-full"></div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-6">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-6">
                         {steps.map((step, index) => {
                             const IconComp = iconMap[step.icon_name] || Globe;
                             return (

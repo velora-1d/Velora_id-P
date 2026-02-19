@@ -69,7 +69,7 @@ const Contact = () => {
                     <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
                         <div className="grid grid-cols-1 lg:grid-cols-5">
                             {/* Left: Contact Info */}
-                            <div className="lg:col-span-2 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-10 lg:p-12 text-white relative overflow-hidden">
+                            <div className="lg:col-span-2 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 p-6 sm:p-10 lg:p-12 text-white relative overflow-hidden">
                                 <ScrollReveal delay={0.2} direction="right" width="100%" className="h-full">
                                     {/* Decoration */}
                                     <div className="absolute top-0 right-0 w-64 h-64 bg-primary/20 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2"></div>
@@ -122,7 +122,7 @@ const Contact = () => {
                             </div>
 
                             {/* Right: Form */}
-                            <div className="lg:col-span-3 p-10 lg:p-12">
+                            <div className="lg:col-span-3 p-6 sm:p-10 lg:p-12">
                                 <ScrollReveal delay={0.4} direction="left" width="100%">
                                     <form onSubmit={handleSubmit} className="space-y-6">
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

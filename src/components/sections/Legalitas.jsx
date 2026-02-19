@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Shield, CheckCircle, Building, MapPin, FileText, Calendar, Award, Globe, Verified } from 'lucide-react';
+import { Shield, CheckCircle, Building, MapPin, FileText, Calendar, Award, Globe, Verified, BadgeCheck, Crown, Star, Fingerprint, Scale } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 
@@ -18,43 +18,6 @@ const fallback = {
     footer_text: 'Legalitas ini diterbitkan dan dikelola secara resmi melalui sistem OSS, serta ditandatangani secara elektronik oleh instansi terkait sesuai dengan ketentuan peraturan perundang-undangan yang berlaku.'
 };
 
-const NibSection = ({ d }) => (
-    <>
-        <p className="text-slate-400 text-xs sm:text-sm uppercase tracking-[0.2em] sm:tracking-[0.3em] mb-2 sm:mb-3">Nomor Induk Berusaha</p>
-        <h3 className="text-2xl sm:text-3xl md:text-5xl font-bold text-white tracking-wider mb-3 sm:mb-4" style={{ fontFamily: 'monospace' }}>{d.nib}</h3>
-        <div className="inline-flex items-center gap-3 px-6 py-3 bg-emerald-500/15 border border-emerald-500/30 rounded-2xl">
-            <span className="relative flex h-3 w-3"><span className="status-pulse inline-flex rounded-full h-full w-full bg-emerald-400"></span></span>
-            <span className="text-emerald-300 font-semibold text-lg">{d.status}</span>
-        </div>
-    </>
-);
-
-const InfoBadges = ({ d }) => (
-    <>
-        <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl flex-1">
-            <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
-            <div><p className="text-white font-medium text-sm">{d.perizinan_text}</p><p className="text-slate-400 text-xs">{d.perizinan_sub}</p></div>
-        </div>
-        <div className="flex items-center gap-4 p-4 bg-white/5 rounded-xl flex-1">
-            <Award className="w-5 h-5 text-cyan-400 flex-shrink-0" />
-            <div><p className="text-white font-medium text-sm">{d.skala_text}</p><p className="text-slate-400 text-xs">{d.skala_sub}</p></div>
-        </div>
-    </>
-);
-
-const DetailCard = ({ delay, icon: Icon, iconColor, borderColor, title, value, sub }) => (
-    <ScrollReveal delay={delay} className="h-full">
-        <div className={`bg-slate-800/40 backdrop-blur rounded-2xl p-6 border border-slate-700/50 hover:${borderColor} transition-colors duration-300 h-full`}>
-            <div className={`w-14 h-14 bg-gradient-to-br ${iconColor} rounded-2xl flex items-center justify-center mb-5`}>
-                <Icon className="w-7 h-7" />
-            </div>
-            <h4 className="text-white font-semibold text-lg mb-2">{title}</h4>
-            <p className="text-slate-300 font-medium">{value}</p>
-            <p className="text-slate-500 text-sm mt-1">{sub}</p>
-        </div>
-    </ScrollReveal>
-);
-
 const Legalitas = () => {
     const [d, setD] = useState(fallback);
 
@@ -69,82 +32,170 @@ const Legalitas = () => {
         fetch_();
     }, []);
 
-    const cards = [
-        { delay: 0.4, icon: Building, iconColor: 'from-emerald-500/20 to-emerald-600/20', borderColor: 'border-emerald-500/30', title: 'Nama Usaha', value: d.nama_usaha, sub: d.nama_usaha_sub },
-        { delay: 0.5, icon: Shield, iconColor: 'from-cyan-500/20 to-cyan-600/20', borderColor: 'border-cyan-500/30', title: 'Pemilik', value: d.pemilik, sub: d.pemilik_title },
-        { delay: 0.6, icon: MapPin, iconColor: 'from-indigo-500/20 to-indigo-600/20', borderColor: 'border-indigo-500/30', title: 'Domisili', value: d.domisili, sub: d.domisili_sub },
-        { delay: 0.7, icon: Calendar, iconColor: 'from-amber-500/20 to-amber-600/20', borderColor: 'border-amber-500/30', title: 'Tanggal Terbit', value: d.tanggal_terbit, sub: d.tanggal_terbit_sub },
+    const details = [
+        { icon: Building, label: 'Nama Usaha', value: d.nama_usaha, sub: d.nama_usaha_sub, color: 'text-amber-600', bg: 'bg-amber-50' },
+        { icon: Shield, label: 'Pemilik', value: d.pemilik, sub: d.pemilik_title, color: 'text-teal-600', bg: 'bg-teal-50' },
+        { icon: MapPin, label: 'Domisili', value: d.domisili, sub: d.domisili_sub, color: 'text-blue-600', bg: 'bg-blue-50' },
+        { icon: Calendar, label: 'Tanggal Terbit', value: d.tanggal_terbit, sub: d.tanggal_terbit_sub, color: 'text-violet-600', bg: 'bg-violet-50' },
     ];
 
     return (
-        <section id="legalitas" className="py-16 sm:py-20 md:py-28 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 relative overflow-hidden">
-            <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px]"></div>
-            <div className="absolute bottom-0 right-1/4 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[120px]"></div>
-            <div className="container mx-auto px-4 relative z-10">
+        <section id="legalitas" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
+            {/* Background */}
+            <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+            <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+
+            <div className="container mx-auto px-4 sm:px-6 relative z-10">
+                {/* Header */}
                 <ScrollReveal width="100%">
-                    <div className="text-center mb-12 sm:mb-16 md:mb-20">
-                        <div className="inline-flex items-center gap-2 px-4 py-1.5 sm:px-5 sm:py-2 bg-emerald-500/10 border border-emerald-500/20 rounded-full mb-4 sm:mb-6">
-                            <Verified className="w-4 h-4 text-emerald-400" />
-                            <span className="text-emerald-400 text-sm font-medium tracking-widest uppercase">Legalitas Usaha</span>
+                    <div className="text-center mb-12 sm:mb-16">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200/60 text-amber-700 rounded-full text-xs font-bold uppercase tracking-widest mb-5">
+                            <Verified className="w-3.5 h-3.5" />
+                            Legalitas Resmi
                         </div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-4 sm:mb-6 md:mb-8 leading-tight">
-                            Usaha Terdaftar <br className="hidden md:block" />
-                            <span className="bg-gradient-to-r from-emerald-400 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">Secara Resmi</span>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
+                            Usaha Terdaftar <br className="hidden sm:block" />
+                            <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">Secara Resmi</span>
                         </h2>
-                        <p className="text-base sm:text-lg text-slate-400 max-w-3xl mx-auto leading-relaxed text-justify md:text-center px-2 sm:px-0">
-                            Velora ID merupakan usaha yang telah terdaftar secara resmi dan memiliki legalitas yang diterbitkan oleh Pemerintah Republik Indonesia melalui sistem OSS (Online Single Submission).
+                        <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+                            Velora ID memiliki legalitas resmi yang diterbitkan oleh Pemerintah Republik Indonesia melalui sistem OSS.
                         </p>
                     </div>
                 </ScrollReveal>
 
-                <div className="max-w-6xl mx-auto">
-                    <ScrollReveal delay={0.2} width="100%">
-                        <div className="relative mb-8 sm:mb-12">
-                            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/20 via-cyan-500/20 to-emerald-500/20 rounded-2xl sm:rounded-[2rem] blur-2xl opacity-50"></div>
-                            <div className="relative bg-gradient-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl sm:rounded-[2rem] p-5 sm:p-8 md:p-12 border border-white/10 shadow-2xl">
-                                {/* Mobile */}
-                                <div className="flex flex-col lg:hidden items-center gap-5 sm:gap-8">
-                                    <div className="relative">
-                                        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-2xl blur-2xl opacity-40"></div>
-                                        <div className="relative w-18 h-18 sm:w-24 sm:h-24 bg-gradient-to-br from-emerald-500 to-cyan-600 rounded-2xl sm:rounded-3xl flex items-center justify-center shadow-xl">
-                                            <Shield className="w-10 h-10 sm:w-12 sm:h-12 text-white" />
+                {/* === MAIN CERTIFICATE CARD === */}
+                <div className="max-w-4xl mx-auto">
+                    <ScrollReveal delay={0.1} width="100%">
+                        <div className="relative">
+                            {/* Outer glow */}
+                            <div className="absolute -inset-1 bg-gradient-to-br from-amber-300/30 via-amber-200/20 to-teal-300/20 rounded-[2rem] blur-lg pointer-events-none"></div>
+
+                            {/* Certificate Card */}
+                            <div className="relative bg-white rounded-2xl sm:rounded-3xl border-2 border-amber-200/80 shadow-2xl shadow-amber-100/30 overflow-hidden">
+                                {/* Top gold ribbon */}
+                                <div className="h-2 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400"></div>
+
+                                {/* Corner ornaments */}
+                                <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-amber-300/50 rounded-tl-xl pointer-events-none"></div>
+                                <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-amber-300/50 rounded-tr-xl pointer-events-none"></div>
+                                <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-amber-300/50 rounded-bl-xl pointer-events-none"></div>
+                                <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-amber-300/50 rounded-br-xl pointer-events-none"></div>
+
+                                {/* Watermark */}
+                                <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">
+                                    <Shield className="w-80 h-80 text-amber-900" />
+                                </div>
+
+                                <div className="relative p-6 sm:p-10 md:p-12 lg:p-14">
+                                    {/* Certificate Header */}
+                                    <div className="text-center mb-8 sm:mb-10">
+                                        <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-gradient-to-br from-amber-100 to-amber-50 border-2 border-amber-200 mb-5 shadow-lg shadow-amber-100/50">
+                                            <Crown className="w-8 h-8 sm:w-10 sm:h-10 text-amber-500" />
+                                        </div>
+                                        <p className="text-amber-600/80 text-xs sm:text-sm uppercase tracking-[0.25em] font-semibold mb-3">Nomor Induk Berusaha</p>
+                                        <h3 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 tracking-[0.15em] mb-4" style={{ fontFamily: "'Courier New', Courier, monospace" }}>
+                                            {d.nib}
+                                        </h3>
+                                        <div className="inline-flex items-center gap-2.5 px-5 py-2.5 bg-emerald-50 border border-emerald-200 rounded-full">
+                                            <span className="relative flex h-2.5 w-2.5">
+                                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                                            </span>
+                                            <span className="text-emerald-700 font-bold text-sm tracking-wide">{d.status}</span>
                                         </div>
                                     </div>
-                                    <div className="text-center"><NibSection d={d} /></div>
-                                    <div className="flex flex-col sm:flex-row gap-4 w-full max-w-md"><InfoBadges d={d} /></div>
-                                </div>
-                                {/* Desktop */}
-                                <div className="hidden lg:flex items-center justify-center gap-12">
-                                    <div className="relative flex-shrink-0">
-                                        <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-cyan-500 rounded-3xl blur-2xl opacity-40"></div>
-                                        <div className="relative w-28 h-28 bg-gradient-to-br from-emerald-500 to-cyan-600 rounded-3xl flex items-center justify-center shadow-xl">
-                                            <Shield className="w-14 h-14 text-white" />
+
+                                    {/* Decorative divider */}
+                                    <div className="flex items-center gap-4 mb-8 sm:mb-10">
+                                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-300/50 to-transparent"></div>
+                                        <Star className="w-4 h-4 text-amber-300" />
+                                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-300/50 to-transparent"></div>
+                                    </div>
+
+                                    {/* Detail Grid */}
+                                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-8 sm:mb-10">
+                                        {details.map((item, i) => (
+                                            <div key={i} className="group text-center p-4 sm:p-5 rounded-2xl border border-gray-100 hover:border-amber-200 bg-gray-50/50 hover:bg-amber-50/50 transition-all duration-300 hover:shadow-md hover:-translate-y-1">
+                                                <div className={`inline-flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-xl ${item.bg} mb-3 group-hover:scale-110 transition-transform duration-300`}>
+                                                    <item.icon className={`w-5 h-5 sm:w-6 sm:h-6 ${item.color}`} strokeWidth={1.8} />
+                                                </div>
+                                                <p className="text-gray-400 text-[10px] sm:text-xs uppercase tracking-wider font-semibold mb-1.5">{item.label}</p>
+                                                <p className="text-gray-900 font-bold text-sm sm:text-base leading-snug">{item.value}</p>
+                                                <p className="text-gray-400 text-xs mt-1">{item.sub}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    {/* Badges Row */}
+                                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-10">
+                                        <div className="flex-1 flex items-center gap-3 px-5 py-4 bg-gradient-to-r from-emerald-50 to-teal-50 border border-emerald-200/60 rounded-2xl">
+                                            <div className="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                                                <BadgeCheck className="w-5 h-5 text-emerald-600" />
+                                            </div>
+                                            <div>
+                                                <p className="text-gray-900 font-bold text-sm">{d.perizinan_text}</p>
+                                                <p className="text-gray-500 text-xs">{d.perizinan_sub}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex-1 flex items-center gap-3 px-5 py-4 bg-gradient-to-r from-amber-50 to-yellow-50 border border-amber-200/60 rounded-2xl">
+                                            <div className="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center flex-shrink-0">
+                                                <Award className="w-5 h-5 text-amber-600" />
+                                            </div>
+                                            <div>
+                                                <p className="text-gray-900 font-bold text-sm">{d.skala_text}</p>
+                                                <p className="text-gray-500 text-xs">{d.skala_sub}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="text-center flex-1"><NibSection d={d} /></div>
-                                    <div className="space-y-4 flex-shrink-0 w-64"><InfoBadges d={d} /></div>
+
+                                    {/* Divider */}
+                                    <div className="flex items-center gap-4 mb-8 sm:mb-10">
+                                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-300/50 to-transparent"></div>
+                                        <Star className="w-4 h-4 text-amber-300" />
+                                        <div className="flex-1 h-px bg-gradient-to-r from-transparent via-amber-300/50 to-transparent"></div>
+                                    </div>
+
+                                    {/* Bottom Info Sections */}
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6 mb-8 sm:mb-10">
+                                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-gray-50/80 border border-gray-100">
+                                            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+                                                <Globe className="w-5 h-5 text-blue-500" />
+                                            </div>
+                                            <div>
+                                                <h4 className="text-gray-900 font-bold text-sm mb-1.5">Wilayah Operasional</h4>
+                                                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{d.wilayah_desc}</p>
+                                            </div>
+                                        </div>
+                                        <div className="flex items-start gap-4 p-5 rounded-2xl bg-gray-50/80 border border-gray-100">
+                                            <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center flex-shrink-0">
+                                                <FileText className="w-5 h-5 text-violet-500" />
+                                            </div>
+                                            <div>
+                                                <h4 className="text-gray-900 font-bold text-sm mb-1.5">Bidang Usaha (KBLI)</h4>
+                                                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{d.kbli_desc}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Footer stamp */}
+                                    <div className="text-center pt-6 border-t border-amber-100">
+                                        <div className="inline-flex items-center gap-2 mb-3">
+                                            <Fingerprint className="w-4 h-4 text-amber-400" />
+                                            <span className="text-amber-600/70 text-xs font-semibold uppercase tracking-widest">Ditandatangani Secara Elektronik</span>
+                                            <Fingerprint className="w-4 h-4 text-amber-400" />
+                                        </div>
+                                        <p className="text-gray-400 text-xs leading-relaxed max-w-lg mx-auto">
+                                            {d.footer_text}
+                                        </p>
+                                    </div>
                                 </div>
+
+                                {/* Bottom gold ribbon */}
+                                <div className="h-2 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400"></div>
                             </div>
                         </div>
                     </ScrollReveal>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                        {cards.map((c, i) => <DetailCard key={i} {...c} />)}
-                    </div>
-
-                    <div className="bg-slate-800/30 backdrop-blur rounded-2xl p-8 border border-slate-700/30">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            <div className="flex items-start gap-5">
-                                <div className="w-12 h-12 bg-cyan-500/10 rounded-xl flex items-center justify-center flex-shrink-0"><Globe className="w-6 h-6 text-cyan-400" /></div>
-                                <div><h4 className="text-white font-semibold text-lg mb-2">Wilayah Operasional</h4><p className="text-slate-400 text-justify">{d.wilayah_desc}</p></div>
-                            </div>
-                            <div className="flex items-start gap-5">
-                                <div className="w-12 h-12 bg-emerald-500/10 rounded-xl flex items-center justify-center flex-shrink-0"><FileText className="w-6 h-6 text-emerald-400" /></div>
-                                <div><h4 className="text-white font-semibold text-lg mb-2">Bidang Usaha (KBLI)</h4><p className="text-slate-400 text-justify">{d.kbli_desc}</p></div>
-                            </div>
-                        </div>
-                    </div>
-                    <p className="text-center text-slate-500 text-sm mt-10">{d.footer_text}</p>
                 </div>
             </div>
         </section>

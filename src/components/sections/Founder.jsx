@@ -68,13 +68,24 @@ const Founder = () => {
                 const supabase = createClient();
                 const { data, error } = await supabase.from('founder').select('*').eq('published', true).single();
                 if (!error && data) {
+                    // Map DB field names: admin saves 'bio' array, component uses 'bio_paragraphs'
+                    const bioParagraphs = data.bio_paragraphs || data.bio || fallbackFounder.bio_paragraphs;
+
+                    // Map social_links: admin saves {platform, url}, component uses {type, href}
+                    const rawLinks = data.social_links || fallbackFounder.social_links;
+                    const mappedLinks = rawLinks.map(link => ({
+                        type: link.type || link.platform || '',
+                        href: link.href || link.url || '',
+                        label: link.label || link.platform || '',
+                    }));
+
                     setFounderData({
                         name: data.name || fallbackFounder.name,
                         title: data.title || fallbackFounder.title,
                         photo_url: data.photo_url || fallbackFounder.photo_url,
-                        bio_paragraphs: (data.bio_paragraphs || fallbackFounder.bio_paragraphs),
+                        bio_paragraphs: bioParagraphs,
                         stats: data.stats || fallbackFounder.stats,
-                        social_links: data.social_links || fallbackFounder.social_links,
+                        social_links: mappedLinks,
                     });
                 }
             } catch { }
@@ -105,7 +116,7 @@ const Founder = () => {
                         {/* LEFT COLUMN: Photo (Sticky) */}
                         <div className="lg:col-span-5 relative z-0 lg:sticky lg:top-24">
                             <ScrollReveal direction="right" width="100%">
-                                <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-gray-300/50 h-[500px] sm:h-[600px] lg:h-[700px]">
+                                <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-gray-300/50 h-[380px] sm:h-[500px] lg:h-[700px]">
                                     <img
                                         src={founderData.photo_url}
                                         alt={founderData.name}

@@ -118,7 +118,7 @@ const About = () => {
                             </div>
 
                             {/* Floating stat card on image */}
-                            <div className="absolute -bottom-6 -right-4 sm:right-6 bg-white rounded-xl shadow-lg shadow-gray-200/80 border border-gray-100 p-4 flex items-center gap-3">
+                            <div className="absolute -bottom-6 right-4 sm:right-6 bg-white rounded-xl shadow-lg shadow-gray-200/80 border border-gray-100 p-4 flex items-center gap-3">
                                 <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center">
                                     <Award className="w-5 h-5 text-white" />
                                 </div>

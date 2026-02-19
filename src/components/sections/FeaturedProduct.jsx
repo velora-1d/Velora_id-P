@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { GraduationCap, Users, Database, Wallet, FileText, CheckCircle2, Globe, ArrowRight, Sparkles, Zap, Shield, BarChart3 } from 'lucide-react';
+import { GraduationCap, Users, Database, Wallet, FileText, CheckCircle2, Globe, ArrowRight, Sparkles, Zap, Shield, BarChart3, Layers, Bell, LayoutDashboard, FileBarChart, Headphones, Settings } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 
@@ -151,7 +151,7 @@ const FeaturedProduct = () => {
 
                 <div className="max-w-6xl mx-auto">
                     {/* === TOP: 3 Horizontal Feature Cards === */}
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-5 sm:mb-6">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 mb-5 sm:mb-6">
                         {features.map((feat, idx) => {
                             const FIcon = iconMap[feat.icon_name] || Globe;
                             const isActive = idx === activeTab;
@@ -319,17 +319,81 @@ const FeaturedProduct = () => {
                         </div>
                     </ScrollReveal>
 
-                    {/* Benefits strip */}
-                    <div className="mt-10 sm:mt-14">
-                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-                            {benefits.map((benefit, i) => (
-                                <div key={i} className="flex items-center gap-2.5 bg-white rounded-xl px-4 py-3 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-                                    <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0" />
-                                    <span className="text-gray-700 text-xs sm:text-sm font-medium leading-tight">{benefit}</span>
+                    {/* Benefits — Overlapping Modern Cards */}
+                    <ScrollReveal width="100%" delay={0.2}>
+                        <div className="mt-10 sm:mt-14 relative">
+                            {/* Section label */}
+                            <div className="text-center mb-8">
+                                <span className="inline-flex items-center gap-2 px-3 py-1.5 bg-gray-100 text-gray-500 rounded-full text-xs font-semibold uppercase tracking-widest">
+                                    <Sparkles className="w-3 h-3" />
+                                    Kenapa Pilih Kami
+                                </span>
+                            </div>
+
+                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4 sm:gap-5">
+                                {/* Card 1 — Terintegrasi */}
+                                <div className="group relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 border-2 border-gray-100 hover:border-teal-200 shadow-sm hover:shadow-xl hover:shadow-teal-100/40 transition-all duration-500 hover:-translate-y-2 md:translate-y-0">
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center mb-4 sm:mb-5 shadow-lg shadow-teal-200/50 group-hover:scale-110 transition-transform duration-500">
+                                        <Layers className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
+                                    </div>
+                                    <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-1.5 leading-snug">Terintegrasi dalam Satu Platform</h4>
+                                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">Semua sistem terhubung — tidak perlu pindah-pindah aplikasi.</p>
+                                    {/* Decorative corner */}
+                                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-teal-500/5 to-transparent rounded-bl-[60px] rounded-tr-3xl pointer-events-none"></div>
                                 </div>
-                            ))}
+
+                                {/* Card 2 — Notifikasi WA */}
+                                <div className="group relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 border-2 border-gray-100 hover:border-emerald-200 shadow-sm hover:shadow-xl hover:shadow-emerald-100/40 transition-all duration-500 hover:-translate-y-2 md:translate-y-4">
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center mb-4 sm:mb-5 shadow-lg shadow-emerald-200/50 group-hover:scale-110 transition-transform duration-500">
+                                        <Bell className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
+                                    </div>
+                                    <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-1.5 leading-snug">Notifikasi Real-Time via WhatsApp</h4>
+                                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">Update otomatis langsung ke HP Anda — tanpa perlu cek manual.</p>
+                                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-emerald-500/5 to-transparent rounded-bl-[60px] rounded-tr-3xl pointer-events-none"></div>
+                                </div>
+
+                                {/* Card 3 — Dashboard Admin */}
+                                <div className="group relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 border-2 border-gray-100 hover:border-blue-200 shadow-sm hover:shadow-xl hover:shadow-blue-100/40 transition-all duration-500 hover:-translate-y-2 md:translate-y-0">
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center mb-4 sm:mb-5 shadow-lg shadow-blue-200/50 group-hover:scale-110 transition-transform duration-500">
+                                        <LayoutDashboard className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
+                                    </div>
+                                    <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-1.5 leading-snug">Dashboard Admin Mudah Digunakan</h4>
+                                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">Tampilan simpel, siapapun bisa gunakan — tanpa pelatihan khusus.</p>
+                                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-500/5 to-transparent rounded-bl-[60px] rounded-tr-3xl pointer-events-none"></div>
+                                </div>
+
+                                {/* Card 4 — Laporan Keuangan */}
+                                <div className="group relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 border-2 border-gray-100 hover:border-amber-200 shadow-sm hover:shadow-xl hover:shadow-amber-100/40 transition-all duration-500 hover:-translate-y-2 md:translate-y-4">
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center mb-4 sm:mb-5 shadow-lg shadow-amber-200/50 group-hover:scale-110 transition-transform duration-500">
+                                        <FileBarChart className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
+                                    </div>
+                                    <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-1.5 leading-snug">Laporan Keuangan Otomatis</h4>
+                                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">Rekap harian, bulanan — semua tersusun rapi secara otomatis.</p>
+                                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-amber-500/5 to-transparent rounded-bl-[60px] rounded-tr-3xl pointer-events-none"></div>
+                                </div>
+
+                                {/* Card 5 — Support & Maintenance */}
+                                <div className="group relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 border-2 border-gray-100 hover:border-violet-200 shadow-sm hover:shadow-xl hover:shadow-violet-100/40 transition-all duration-500 hover:-translate-y-2 md:translate-y-0">
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-violet-500 to-purple-500 flex items-center justify-center mb-4 sm:mb-5 shadow-lg shadow-violet-200/50 group-hover:scale-110 transition-transform duration-500">
+                                        <Headphones className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
+                                    </div>
+                                    <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-1.5 leading-snug">Support & Maintenance Berkelanjutan</h4>
+                                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">Kami selalu standby — perbaikan bug, update, dan backup rutin.</p>
+                                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-violet-500/5 to-transparent rounded-bl-[60px] rounded-tr-3xl pointer-events-none"></div>
+                                </div>
+
+                                {/* Card 6 — Customizable */}
+                                <div className="group relative bg-white rounded-2xl sm:rounded-3xl p-5 sm:p-7 border-2 border-gray-100 hover:border-rose-200 shadow-sm hover:shadow-xl hover:shadow-rose-100/40 transition-all duration-500 hover:-translate-y-2 md:translate-y-4">
+                                    <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-rose-500 to-pink-500 flex items-center justify-center mb-4 sm:mb-5 shadow-lg shadow-rose-200/50 group-hover:scale-110 transition-transform duration-500">
+                                        <Settings className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.8} />
+                                    </div>
+                                    <h4 className="font-bold text-sm sm:text-base text-gray-900 mb-1.5 leading-snug">Customizable Sesuai Kebutuhan</h4>
+                                    <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">Fitur bisa disesuaikan 100% — sesuai alur kerja institusi Anda.</p>
+                                    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-rose-500/5 to-transparent rounded-bl-[60px] rounded-tr-3xl pointer-events-none"></div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </ScrollReveal>
                 </div>
             </div>
         </section>
