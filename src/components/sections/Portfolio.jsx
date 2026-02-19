@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, ExternalLink, MessageSquare } from 'lucide-react';
+import { X, ExternalLink, MessageSquare, ArrowRight, Layers, Sparkles } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 
@@ -59,6 +59,7 @@ const fallbackProjects = [
 const Portfolio = () => {
     const [selectedProject, setSelectedProject] = useState(null);
     const [projects, setProjects] = useState(fallbackProjects);
+    const [filter, setFilter] = useState('Semua');
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -69,16 +70,16 @@ const Portfolio = () => {
                     .select('*')
                     .eq('published', true)
                     .order('created_at', { ascending: false });
-
-                if (!error && data && data.length > 0) {
-                    setProjects(data);
-                }
-            } catch {
-                // Fallback to hardcoded data
-            }
+                if (!error && data && data.length > 0) setProjects(data);
+            } catch { }
         };
         fetchProjects();
     }, []);
+
+    const categories = ['Semua', ...new Set(projects.map(p => p.category))];
+    const filtered = filter === 'Semua' ? projects : projects.filter(p => p.category === filter);
+    const featured = filtered[0];
+    const rest = filtered.slice(1);
 
     const openModal = (project) => setSelectedProject(project);
     const closeModal = () => setSelectedProject(null);
@@ -89,66 +90,135 @@ const Portfolio = () => {
     };
 
     return (
-        <section id="portfolio" className="py-16 sm:py-24 bg-gray-50 relative overflow-hidden">
-            {/* Background decoration */}
-            <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl -translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+        <section id="portfolio" className="py-16 sm:py-24 md:py-32 bg-gradient-to-b from-slate-50 via-white to-slate-50 relative overflow-hidden">
+            {/* Decorative */}
+            <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-gradient-to-br from-blue-500/5 to-primary/5 rounded-full blur-3xl -translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-emerald-500/5 to-teal-500/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
 
-            <div className="container mx-auto px-4 relative z-10">
+            <div className="container mx-auto px-4 sm:px-6 relative z-10">
+                {/* Header */}
                 <ScrollReveal width="100%">
-                    <div className="text-center mb-16">
-                        <span className="inline-block px-4 py-2 bg-blue-100 text-blue-600 rounded-full text-sm font-semibold mb-4 tracking-wide">
+                    <div className="text-center mb-10 sm:mb-14">
+                        <span className="inline-flex items-center gap-2 px-4 py-2 bg-blue-50 border border-blue-100 text-blue-600 rounded-full text-sm font-semibold mb-5 tracking-wide">
+                            <Layers className="w-4 h-4" />
                             PORTFOLIO
                         </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">Portfolio Kami</h2>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">Portfolio Kami</h2>
+                        <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
                             Proyek-proyek transformasi digital yang telah kami selesaikan dengan sukses.
                         </p>
                     </div>
                 </ScrollReveal>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {projects.map((project, index) => (
-                        <ScrollReveal key={project.id || index} delay={index * 0.1} className="h-full">
+                {/* Category Pills */}
+                <div className="flex flex-wrap justify-center gap-2 mb-8 sm:mb-10">
+                    {categories.map(cat => (
+                        <button
+                            key={cat}
+                            onClick={() => setFilter(cat)}
+                            className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${filter === cat
+                                ? 'bg-gray-900 text-white shadow-lg shadow-gray-900/20'
+                                : 'bg-white text-gray-500 hover:bg-gray-100 border border-gray-200'
+                                }`}
+                        >
+                            {cat}
+                        </button>
+                    ))}
+                </div>
+
+                <div className="max-w-6xl mx-auto">
+                    {/* FEATURED PROJECT — Hero Card */}
+                    {featured && (
+                        <ScrollReveal width="100%">
                             <div
-                                className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-200 flex flex-col h-full cursor-pointer group"
-                                onClick={() => openModal(project)}
+                                className="relative rounded-2xl sm:rounded-3xl overflow-hidden mb-5 sm:mb-6 cursor-pointer group"
+                                onClick={() => openModal(featured)}
                             >
-                                <div className="h-48 overflow-hidden relative">
+                                <div className="aspect-[21/9] sm:aspect-[21/8] relative">
                                     <img
-                                        src={project.image_url || project.image}
-                                        alt={project.title}
-                                        className="w-full h-full object-cover transition-transform duration-[400ms] ease-out group-hover:scale-105"
+                                        src={featured.image_url || featured.image}
+                                        alt={featured.title}
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                     />
-                                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <span className="text-white font-medium flex items-center gap-2">
-                                            <ExternalLink className="w-5 h-5" />
-                                            Lihat Detail
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="p-6 flex flex-col flex-grow">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-2 leading-tight">
-                                        {project.title}
-                                    </h3>
-                                    <div className="text-sm font-medium text-gray-500 mb-3 flex items-center gap-2">
-                                        <span className="bg-blue-50 text-blue-600 px-2 py-1 rounded-md text-xs uppercase tracking-wide">
-                                            {project.category}
-                                        </span>
-                                        <span className="text-gray-400">•</span>
-                                        <span>{project.client}</span>
-                                    </div>
-                                    <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">
-                                        {project.description}
-                                    </p>
-                                    <div className="pt-4 border-t border-gray-100 mt-auto">
-                                        <p className="text-xs text-gray-500 font-mono">
-                                            <span className="font-bold text-gray-700">Tech:</span> {project.tech}
-                                        </p>
+                                    <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 via-gray-900/50 to-transparent"></div>
+
+                                    <div className="absolute inset-0 p-6 sm:p-8 md:p-12 flex flex-col justify-end">
+                                        <div className="max-w-xl">
+                                            <div className="flex items-center gap-3 mb-3 sm:mb-4">
+                                                <span className="px-3 py-1 bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-full uppercase tracking-wider">
+                                                    {featured.category}
+                                                </span>
+                                                <span className="px-3 py-1 bg-emerald-500/20 backdrop-blur-md border border-emerald-400/30 text-emerald-300 text-xs font-semibold rounded-full flex items-center gap-1">
+                                                    <Sparkles className="w-3 h-3" /> Featured
+                                                </span>
+                                            </div>
+                                            <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-2 sm:mb-3 tracking-tight">
+                                                {featured.title}
+                                            </h3>
+                                            <p className="text-white/70 text-sm sm:text-base mb-4 sm:mb-5 leading-relaxed line-clamp-2">
+                                                {featured.description}
+                                            </p>
+                                            <div className="flex items-center gap-4">
+                                                <span className="text-white/50 text-xs sm:text-sm">📍 {featured.client}</span>
+                                                <span className="text-white/50 text-xs sm:text-sm font-mono">⚡ {featured.tech}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="absolute bottom-6 sm:bottom-8 md:bottom-12 right-6 sm:right-8 md:right-12">
+                                            <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 group-hover:scale-110">
+                                                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-white group-hover:translate-x-0.5 transition-transform" />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </ScrollReveal>
-                    ))}
+                    )}
+
+                    {/* REST — Bento Grid */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+                        {rest.map((project, index) => (
+                            <ScrollReveal key={project.id || index} delay={index * 0.08} className="h-full">
+                                <div
+                                    className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full cursor-pointer group"
+                                    onClick={() => openModal(project)}
+                                >
+                                    <div className="h-44 sm:h-48 overflow-hidden relative">
+                                        <img
+                                            src={project.image_url || project.image}
+                                            alt={project.title}
+                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                        <div className="absolute top-3 left-3">
+                                            <span className="bg-white/90 backdrop-blur-sm text-gray-700 px-2.5 py-1 rounded-lg text-[10px] sm:text-xs font-semibold uppercase tracking-wider shadow-sm">
+                                                {project.category}
+                                            </span>
+                                        </div>
+                                        <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                                            <div className="w-9 h-9 rounded-full bg-white/20 backdrop-blur-md border border-white/30 flex items-center justify-center">
+                                                <ExternalLink className="w-4 h-4 text-white" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="p-5 flex flex-col flex-grow">
+                                        <h3 className="text-lg font-bold text-gray-900 mb-1.5 group-hover:text-primary transition-colors leading-snug">
+                                            {project.title}
+                                        </h3>
+                                        <p className="text-gray-500 text-xs mb-3">{project.client}</p>
+                                        <p className="text-gray-600 text-sm mb-4 flex-grow leading-relaxed line-clamp-2">
+                                            {project.description}
+                                        </p>
+                                        <div className="pt-3 border-t border-gray-100 mt-auto">
+                                            <p className="text-[10px] sm:text-xs text-gray-400 font-mono">
+                                                <span className="font-semibold text-gray-600">Tech:</span> {project.tech}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ScrollReveal>
+                        ))}
+                    </div>
                 </div>
             </div>
 
@@ -162,18 +232,10 @@ const Portfolio = () => {
                         className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Modal Header Image */}
                         <div className="h-56 relative">
-                            <img
-                                src={selectedProject.image_url || selectedProject.image}
-                                alt={selectedProject.title}
-                                className="w-full h-full object-cover"
-                            />
+                            <img src={selectedProject.image_url || selectedProject.image} alt={selectedProject.title} className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                            <button
-                                onClick={closeModal}
-                                className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
-                            >
+                            <button onClick={closeModal} className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
                                 <X className="w-5 h-5" />
                             </button>
                             <div className="absolute bottom-4 left-6">
@@ -181,39 +243,26 @@ const Portfolio = () => {
                                 <h3 className="text-2xl font-bold text-white">{selectedProject.title}</h3>
                             </div>
                         </div>
-
-                        {/* Modal Content */}
                         <div className="p-6">
                             <div className="flex items-center gap-2 mb-6">
-                                <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">
-                                    {selectedProject.category}
-                                </span>
+                                <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">{selectedProject.category}</span>
                                 <span className="text-gray-500">•</span>
                                 <span className="text-gray-600">{selectedProject.client}</span>
                             </div>
-
                             <div className="space-y-6">
                                 <div>
-                                    <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
-                                        🎯 Tantangan
-                                    </h4>
+                                    <h4 className="font-bold text-gray-900 mb-2">🎯 Tantangan</h4>
                                     <p className="text-gray-600 leading-relaxed">{selectedProject.challenge}</p>
                                 </div>
-
                                 <div>
-                                    <h4 className="font-bold text-gray-900 mb-2 flex items-center gap-2">
-                                        💡 Solusi
-                                    </h4>
+                                    <h4 className="font-bold text-gray-900 mb-2">💡 Solusi</h4>
                                     <p className="text-gray-600 leading-relaxed">{selectedProject.solution}</p>
                                 </div>
-
                                 <div className="bg-gray-50 rounded-xl p-4">
                                     <h4 className="font-bold text-gray-900 mb-2">Tech Stack</h4>
                                     <p className="text-gray-600 font-mono text-sm">{selectedProject.tech}</p>
                                 </div>
                             </div>
-
-                            {/* CTA */}
                             <div className="mt-8 pt-6 border-t border-gray-100">
                                 <p className="text-gray-500 text-sm mb-4">Tertarik dengan project serupa?</p>
                                 <button

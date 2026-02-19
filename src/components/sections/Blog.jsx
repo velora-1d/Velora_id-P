@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Eye, Calendar, User, MessageSquare, BookOpen } from 'lucide-react';
+import { X, Calendar, User, MessageSquare, BookOpen, ArrowRight, Clock, PenLine } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 
@@ -42,13 +42,8 @@ const Blog = () => {
                     .select('*')
                     .eq('published', true)
                     .order('created_at', { ascending: false });
-
-                if (!error && data && data.length > 0) {
-                    setPosts(data);
-                }
-            } catch {
-                // Fallback to hardcoded data
-            }
+                if (!error && data && data.length > 0) setPosts(data);
+            } catch { }
         };
         fetchPosts();
     }, []);
@@ -67,64 +62,130 @@ const Blog = () => {
         return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' });
     };
 
+    const featured = posts[0];
+    const rest = posts.slice(1);
+
     return (
-        <section id="blog" className="py-12 sm:py-20 bg-white">
-            <div className="container mx-auto px-4">
+        <section id="blog" className="py-16 sm:py-24 md:py-32 bg-white relative overflow-hidden">
+            {/* Decorative */}
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-primary/5 to-teal-500/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+
+            <div className="container mx-auto px-4 sm:px-6 relative z-10">
+                {/* Header */}
                 <ScrollReveal width="100%">
-                    <div className="text-center mb-16">
-                        <span className="inline-block px-4 py-2 bg-accent/10 text-accent-dark rounded-full text-sm font-semibold mb-4 tracking-wide">
+                    <div className="text-center mb-10 sm:mb-14">
+                        <span className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-100 text-amber-600 rounded-full text-sm font-semibold mb-5 tracking-wide">
+                            <PenLine className="w-4 h-4" />
                             BLOG & INSIGHTS
                         </span>
-                        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-4">Blog & Insights</h2>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">Blog & Insights</h2>
+                        <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
                             Artikel terbaru tentang teknologi, transformasi digital, dan inovasi bisnis.
                         </p>
                     </div>
                 </ScrollReveal>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {posts.map((post, index) => (
-                        <ScrollReveal key={post.id || index} delay={index * 0.1} className="h-full">
-                            <div
-                                className="bg-white rounded-xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-200 flex flex-col h-full cursor-pointer group"
-                                onClick={() => openModal(post)}
-                            >
-                                <div className="h-48 overflow-hidden relative">
-                                    <img
-                                        src={post.image_url || post.image}
-                                        alt={post.title}
-                                        className="w-full h-full object-cover transition-transform duration-[400ms] ease-out group-hover:scale-105"
-                                    />
-                                    <div className="absolute top-4 left-4">
-                                        <span className="bg-white/90 backdrop-blur-sm text-primary px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider shadow-sm">
-                                            {post.category}
-                                        </span>
+                <div className="max-w-6xl mx-auto">
+                    {/* Featured + Sidebar Layout */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6">
+
+                        {/* FEATURED ARTICLE — Left (large) */}
+                        {featured && (
+                            <div className="lg:col-span-7">
+                                <ScrollReveal width="100%">
+                                    <div
+                                        className="relative rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer group h-full"
+                                        onClick={() => openModal(featured)}
+                                    >
+                                        <div className="aspect-[4/3] sm:aspect-[16/10] lg:h-full lg:min-h-[420px] relative">
+                                            <img
+                                                src={featured.image_url || featured.image}
+                                                alt={featured.title}
+                                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/30 to-transparent"></div>
+
+                                            <div className="absolute inset-0 p-5 sm:p-7 md:p-8 flex flex-col justify-end">
+                                                <div className="flex items-center gap-2 mb-3">
+                                                    <span className="px-3 py-1 bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-full uppercase tracking-wider">
+                                                        {featured.category}
+                                                    </span>
+                                                    <span className="px-2.5 py-1 bg-amber-500/20 backdrop-blur-md border border-amber-400/30 text-amber-300 text-xs font-semibold rounded-full flex items-center gap-1">
+                                                        <Clock className="w-3 h-3" /> {featured.read_time}
+                                                    </span>
+                                                </div>
+                                                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2 sm:mb-3 tracking-tight leading-snug">
+                                                    {featured.title}
+                                                </h3>
+                                                <p className="text-white/70 text-sm sm:text-base mb-4 leading-relaxed line-clamp-2 max-w-lg">
+                                                    {featured.excerpt}
+                                                </p>
+                                                <div className="flex items-center gap-3 text-white/50 text-xs sm:text-sm">
+                                                    <span className="flex items-center gap-1">
+                                                        <User className="w-3.5 h-3.5" /> {featured.author}
+                                                    </span>
+                                                    <span>•</span>
+                                                    <span className="flex items-center gap-1">
+                                                        <Calendar className="w-3.5 h-3.5" /> {formatDate(featured.created_at)}
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div className="absolute top-5 right-5 sm:top-7 sm:right-7">
+                                                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 group-hover:scale-110">
+                                                    <BookOpen className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                        <span className="text-white font-medium flex items-center gap-2">
-                                            <BookOpen className="w-5 h-5" />
-                                            Baca Artikel
-                                        </span>
-                                    </div>
-                                </div>
-                                <div className="p-6 flex flex-col flex-grow">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-primary transition-colors">
-                                        {post.title}
-                                    </h3>
-                                    <p className="text-gray-600 text-sm mb-6 flex-grow leading-relaxed">
-                                        {post.excerpt}
-                                    </p>
-                                    <div className="pt-4 border-t border-gray-100 mt-auto flex justify-between items-center text-xs text-gray-500">
-                                        <span className="font-medium text-gray-700">{post.author}</span>
-                                        <span className="flex items-center gap-1">
-                                            <Calendar className="w-3 h-3" />
-                                            {formatDate(post.created_at)}
-                                        </span>
-                                    </div>
-                                </div>
+                                </ScrollReveal>
                             </div>
-                        </ScrollReveal>
-                    ))}
+                        )}
+
+                        {/* OTHER ARTICLES — Right (stacked list) */}
+                        <div className="lg:col-span-5 flex flex-col gap-4 sm:gap-5">
+                            {rest.map((post, index) => (
+                                <ScrollReveal key={post.id || index} delay={index * 0.1} width="100%">
+                                    <div
+                                        className="bg-white rounded-2xl border border-gray-100 overflow-hidden hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group flex flex-row h-full"
+                                        onClick={() => openModal(post)}
+                                    >
+                                        {/* Thumbnail */}
+                                        <div className="w-32 sm:w-40 flex-shrink-0 relative overflow-hidden">
+                                            <img
+                                                src={post.image_url || post.image}
+                                                alt={post.title}
+                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            />
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="p-4 sm:p-5 flex flex-col justify-center flex-1 min-w-0">
+                                            <div className="flex items-center gap-2 mb-2">
+                                                <span className="bg-gray-100 text-gray-600 px-2 py-0.5 rounded-md text-[10px] sm:text-xs font-semibold uppercase tracking-wider">
+                                                    {post.category}
+                                                </span>
+                                                <span className="text-gray-400 text-[10px] sm:text-xs flex items-center gap-1">
+                                                    <Clock className="w-3 h-3" /> {post.read_time}
+                                                </span>
+                                            </div>
+                                            <h4 className="font-bold text-gray-900 text-sm sm:text-base mb-1.5 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                                                {post.title}
+                                            </h4>
+                                            <p className="text-gray-500 text-xs sm:text-sm line-clamp-2 leading-relaxed mb-2">
+                                                {post.excerpt}
+                                            </p>
+                                            <div className="flex items-center gap-2 text-gray-400 text-[10px] sm:text-xs mt-auto">
+                                                <span>{post.author}</span>
+                                                <span>•</span>
+                                                <span>{formatDate(post.created_at)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ScrollReveal>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -138,18 +199,10 @@ const Blog = () => {
                         className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
                         onClick={(e) => e.stopPropagation()}
                     >
-                        {/* Modal Header Image */}
                         <div className="h-56 relative">
-                            <img
-                                src={selectedPost.image_url || selectedPost.image}
-                                alt={selectedPost.title}
-                                className="w-full h-full object-cover"
-                            />
+                            <img src={selectedPost.image_url || selectedPost.image} alt={selectedPost.title} className="w-full h-full object-cover" />
                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
-                            <button
-                                onClick={closeModal}
-                                className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors"
-                            >
+                            <button onClick={closeModal} className="absolute top-4 right-4 w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors">
                                 <X className="w-5 h-5" />
                             </button>
                             <div className="absolute bottom-4 left-6 right-6">
@@ -159,26 +212,18 @@ const Blog = () => {
                                 <h3 className="text-2xl font-bold text-white">{selectedPost.title}</h3>
                             </div>
                         </div>
-
-                        {/* Modal Content */}
                         <div className="p-6">
-                            {/* Meta info */}
                             <div className="flex items-center gap-4 text-sm text-gray-500 mb-6 pb-4 border-b border-gray-100">
                                 <span className="flex items-center gap-1">
-                                    <User className="w-4 h-4" />
-                                    {selectedPost.author}
+                                    <User className="w-4 h-4" /> {selectedPost.author}
                                 </span>
                                 <span className="flex items-center gap-1">
-                                    <Calendar className="w-4 h-4" />
-                                    {formatDate(selectedPost.created_at)}
+                                    <Calendar className="w-4 h-4" /> {formatDate(selectedPost.created_at)}
                                 </span>
                                 <span className="flex items-center gap-1">
-                                    <BookOpen className="w-4 h-4" />
-                                    {selectedPost.read_time}
+                                    <BookOpen className="w-4 h-4" /> {selectedPost.read_time}
                                 </span>
                             </div>
-
-                            {/* Article content */}
                             <div className="prose prose-gray max-w-none">
                                 {selectedPost.content.split('\n\n').map((paragraph, i) => (
                                     <p key={i} className="text-gray-600 leading-relaxed mb-4">
@@ -194,8 +239,6 @@ const Blog = () => {
                                     </p>
                                 ))}
                             </div>
-
-                            {/* CTA */}
                             <div className="mt-8 pt-6 border-t border-gray-100">
                                 <p className="text-gray-500 text-sm mb-4">Ingin diskusi lebih lanjut tentang topik ini?</p>
                                 <button
