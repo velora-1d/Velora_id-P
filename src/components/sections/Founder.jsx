@@ -44,7 +44,7 @@ const fallbackFounder = {
     photo_url: '/images/founder.jpg',
     bio_paragraphs: [
         'Seorang Sarjana Hukum yang memiliki passion kuat di bidang teknologi dan pengembangan web. Kombinasi unik antara latar belakang hukum dan keahlian teknis memberikan perspektif holistik dalam membangun solusi digital yang tidak hanya canggih, tapi juga aman dan sesuai regulasi.',
-        'Berbasis di <strong class="text-gray-900 font-semibold">Pasirjambu, Bandung</strong>, Mahin mendirikan Velora pada tahun 2023 dengan misi sederhana: membantu UMKM dan institusi Indonesia untuk go digital dengan cara yang terjangkau dan berkualitas.',
+        'Berbasis di <strong class="text-gray-800 font-semibold">Pasirjambu, Bandung</strong>, Mahin mendirikan Velora pada tahun 2023 dengan misi sederhana: membantu UMKM dan institusi Indonesia untuk go digital dengan cara yang terjangkau dan berkualitas.',
         'Dengan pengalaman menangani berbagai proyek mulai dari website sederhana hingga sistem kompleks seperti manajemen pesantren dan integrasi payment gateway, Mahin memimpin tim Velora untuk selalu mengutamakan kualitas dan kepuasan klien.'
     ],
     stats: [
@@ -108,133 +108,134 @@ const Founder = () => {
                     </div>
                 </ScrollReveal>
 
-                {/* Main Layout: Editorial Style */}
+                {/* Main Layout: 2-column with proper grid */}
                 <div className="max-w-6xl mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+                    <div className="flex flex-col lg:flex-row gap-10 lg:gap-16">
 
-                        {/* Left: Photo + Social */}
-                        <ScrollReveal direction="right" width="100%">
-                            <div className="lg:col-span-5 lg:sticky lg:top-24">
-                                {/* Photo with geometric accent */}
-                                <div className="relative mb-8">
-                                    {/* Geometric background shape */}
-                                    <div className="absolute -top-3 -left-3 w-full h-full bg-gradient-to-br from-teal-100 to-cyan-50 rounded-2xl"></div>
-                                    <div className="relative">
-                                        <img
-                                            src={founderData.photo_url}
-                                            alt={founderData.name}
-                                            className="w-full h-[400px] sm:h-[480px] object-cover object-top rounded-2xl shadow-xl relative z-10"
-                                        />
-                                        {/* Corner accent */}
-                                        <div className="absolute -bottom-2 -right-2 w-20 h-20 border-b-[3px] border-r-[3px] border-teal-500 rounded-br-2xl z-0"></div>
-                                    </div>
-                                </div>
-
-                                {/* Name card below photo */}
-                                <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-1">{founderData.name}</h3>
-                                    <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-                                        <MapPin className="w-3.5 h-3.5" />
-                                        <span>Pasirjambu, Bandung</span>
+                        {/* Left: Photo + Social — fixed width */}
+                        <div className="w-full lg:w-[400px] lg:flex-shrink-0">
+                            <ScrollReveal direction="right" width="100%">
+                                <div className="lg:sticky lg:top-24">
+                                    {/* Photo with geometric accent */}
+                                    <div className="relative mb-8">
+                                        <div className="absolute -top-3 -left-3 w-full h-full bg-gradient-to-br from-teal-100 to-cyan-50 rounded-2xl"></div>
+                                        <div className="relative">
+                                            <img
+                                                src={founderData.photo_url}
+                                                alt={founderData.name}
+                                                className="w-full h-[400px] sm:h-[480px] object-cover object-top rounded-2xl shadow-xl relative z-10"
+                                            />
+                                            <div className="absolute -bottom-2 -right-2 w-20 h-20 border-b-[3px] border-r-[3px] border-teal-500 rounded-br-2xl z-0"></div>
+                                        </div>
                                     </div>
 
-                                    {/* Social row */}
-                                    <div className="flex items-center gap-1 pt-3 border-t border-gray-100">
-                                        {founderData.social_links.map((link, index) => {
-                                            const sc = socialConfig.find(s => s.type === link.type);
-                                            return (
-                                                <a
-                                                    key={index}
-                                                    href={link.href}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className={`w-9 h-9 rounded-lg text-gray-400 flex items-center justify-center transition-all duration-200 hover:bg-gray-50 ${sc?.color || 'hover:text-gray-900'}`}
-                                                    aria-label={link.label}
-                                                >
-                                                    {sc?.icon || <Code2 className="w-4 h-4" />}
-                                                </a>
-                                            );
-                                        })}
-                                        <div className="flex-1"></div>
-                                        <a href={founderData.social_links[0]?.href || '#'}
-                                            target="_blank" rel="noopener noreferrer"
-                                            className="flex items-center gap-1.5 text-xs font-semibold text-teal-600 hover:text-teal-700 transition-colors">
-                                            Hubungi <ArrowRight className="w-3.5 h-3.5" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </ScrollReveal>
+                                    {/* Name card below photo */}
+                                    <div className="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                                        <h3 className="text-xl font-bold text-gray-900 mb-1">{founderData.name}</h3>
+                                        <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
+                                            <MapPin className="w-3.5 h-3.5 flex-shrink-0" />
+                                            <span>Pasirjambu, Bandung</span>
+                                        </div>
 
-                        {/* Right: Content */}
-                        <ScrollReveal direction="left" width="100%">
-                            <div className="lg:col-span-7">
-                                {/* Story */}
-                                <div className="mb-10">
-                                    <h4 className="text-sm font-bold tracking-[0.2em] text-teal-600 uppercase mb-5">Cerita Saya</h4>
-                                    <div className="space-y-4">
-                                        {founderData.bio_paragraphs.map((p, i) => (
-                                            <p key={i} className="text-gray-600 text-[15px] sm:text-base leading-[1.8]" dangerouslySetInnerHTML={{ __html: p }} />
-                                        ))}
-                                    </div>
-                                </div>
-
-                                {/* Divider */}
-                                <div className="w-full h-px bg-gray-200 mb-10"></div>
-
-                                {/* Journey Timeline */}
-                                <div className="mb-10">
-                                    <h4 className="text-sm font-bold tracking-[0.2em] text-teal-600 uppercase mb-6">Perjalanan</h4>
-                                    <div className="relative">
-                                        {/* Timeline line */}
-                                        <div className="absolute left-[19px] top-2 bottom-2 w-px bg-gray-200"></div>
-                                        <div className="space-y-6">
-                                            {journey.map((j, i) => {
-                                                const JIcon = j.icon;
+                                        {/* Social row */}
+                                        <div className="flex items-center gap-1 pt-3 border-t border-gray-100">
+                                            {founderData.social_links.map((link, index) => {
+                                                const sc = socialConfig.find(s => s.type === link.type);
                                                 return (
-                                                    <div key={i} className="flex items-start gap-4 group">
-                                                        <div className="w-10 h-10 rounded-full bg-white border-2 border-gray-200 group-hover:border-teal-400 flex items-center justify-center flex-shrink-0 transition-colors duration-300 relative z-10">
-                                                            <JIcon className="w-4 h-4 text-gray-400 group-hover:text-teal-500 transition-colors duration-300" />
-                                                        </div>
-                                                        <div className="pt-1.5">
-                                                            <span className="text-xs font-bold text-teal-600 tracking-wider">{j.year}</span>
-                                                            <p className="text-gray-700 text-sm font-medium">{j.text}</p>
-                                                        </div>
-                                                    </div>
+                                                    <a
+                                                        key={index}
+                                                        href={link.href}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className={`w-9 h-9 rounded-lg text-gray-400 flex items-center justify-center transition-all duration-200 hover:bg-gray-50 ${sc?.color || 'hover:text-gray-900'}`}
+                                                        aria-label={link.label}
+                                                    >
+                                                        {sc?.icon || <Code2 className="w-4 h-4" />}
+                                                    </a>
                                                 );
                                             })}
+                                            <div className="flex-1"></div>
+                                            <a href={founderData.social_links[0]?.href || '#'}
+                                                target="_blank" rel="noopener noreferrer"
+                                                className="flex items-center gap-1.5 text-xs font-semibold text-teal-600 hover:text-teal-700 transition-colors">
+                                                Hubungi <ArrowRight className="w-3.5 h-3.5" />
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
+                            </ScrollReveal>
+                        </div>
 
-                                {/* Divider */}
-                                <div className="w-full h-px bg-gray-200 mb-10"></div>
-
-                                {/* Expertise Tags */}
-                                <div className="mb-10">
-                                    <h4 className="text-sm font-bold tracking-[0.2em] text-teal-600 uppercase mb-5">Keahlian</h4>
-                                    <div className="flex flex-wrap gap-2">
-                                        {expertise.map((skill, i) => (
-                                            <span key={i} className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:border-teal-300 hover:text-teal-700 hover:bg-teal-50 transition-all duration-200 cursor-default">
-                                                {skill}
-                                            </span>
-                                        ))}
+                        {/* Right: Content — fills remaining space */}
+                        <div className="flex-1 min-w-0">
+                            <ScrollReveal direction="left" width="100%">
+                                <div>
+                                    {/* Story */}
+                                    <div className="mb-10">
+                                        <h4 className="text-sm font-bold tracking-[0.2em] text-teal-600 uppercase mb-5">Cerita Saya</h4>
+                                        <div className="space-y-4">
+                                            {founderData.bio_paragraphs.map((p, i) => (
+                                                <p key={i} className="text-gray-600 text-[15px] sm:text-base leading-[1.8]" dangerouslySetInnerHTML={{ __html: p }} />
+                                            ))}
+                                        </div>
                                     </div>
-                                </div>
 
-                                {/* Stats — editorial style */}
-                                <div className="bg-gray-900 rounded-2xl p-6 sm:p-8">
-                                    <div className="grid grid-cols-3 divide-x divide-gray-700">
-                                        {founderData.stats.map((stat, i) => (
-                                            <div key={i} className="text-center px-2">
-                                                <span className="block text-2xl sm:text-3xl font-extrabold text-white mb-1">{stat.value}</span>
-                                                <span className="text-[11px] sm:text-xs text-gray-400 uppercase tracking-wider font-medium">{stat.label}</span>
+                                    {/* Divider */}
+                                    <div className="w-full h-px bg-gray-200 mb-10"></div>
+
+                                    {/* Journey Timeline */}
+                                    <div className="mb-10">
+                                        <h4 className="text-sm font-bold tracking-[0.2em] text-teal-600 uppercase mb-6">Perjalanan</h4>
+                                        <div className="relative">
+                                            <div className="absolute left-[19px] top-2 bottom-2 w-px bg-gray-200"></div>
+                                            <div className="space-y-5">
+                                                {journey.map((j, i) => {
+                                                    const JIcon = j.icon;
+                                                    return (
+                                                        <div key={i} className="flex items-center gap-4 group">
+                                                            <div className="w-10 h-10 rounded-full bg-white border-2 border-gray-200 group-hover:border-teal-400 flex items-center justify-center flex-shrink-0 transition-colors duration-300 relative z-10">
+                                                                <JIcon className="w-4 h-4 text-gray-400 group-hover:text-teal-500 transition-colors duration-300" />
+                                                            </div>
+                                                            <div>
+                                                                <span className="text-xs font-bold text-teal-600 tracking-wider">{j.year}</span>
+                                                                <p className="text-gray-700 text-sm font-medium">{j.text}</p>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
                                             </div>
-                                        ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Divider */}
+                                    <div className="w-full h-px bg-gray-200 mb-10"></div>
+
+                                    {/* Expertise Tags */}
+                                    <div className="mb-10">
+                                        <h4 className="text-sm font-bold tracking-[0.2em] text-teal-600 uppercase mb-5">Keahlian</h4>
+                                        <div className="flex flex-wrap gap-2">
+                                            {expertise.map((skill, i) => (
+                                                <span key={i} className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-white border border-gray-200 rounded-lg hover:border-teal-300 hover:text-teal-700 hover:bg-teal-50 transition-all duration-200 cursor-default">
+                                                    {skill}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* Stats bar */}
+                                    <div className="bg-gray-900 rounded-2xl p-6 sm:p-8">
+                                        <div className="grid grid-cols-3 divide-x divide-gray-700">
+                                            {founderData.stats.map((stat, i) => (
+                                                <div key={i} className="text-center px-2">
+                                                    <span className="block text-2xl sm:text-3xl font-extrabold text-white mb-1">{stat.value}</span>
+                                                    <span className="text-[11px] sm:text-xs text-gray-400 uppercase tracking-wider font-medium">{stat.label}</span>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </ScrollReveal>
+                            </ScrollReveal>
+                        </div>
                     </div>
                 </div>
             </div>
