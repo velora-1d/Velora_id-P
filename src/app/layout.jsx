@@ -19,7 +19,7 @@ export const metadata = {
         default: 'Jasa Pembuatan Website & Sistem Digital Profesional | Velora ID',
         template: '%s | Velora ID',
     },
-    description: 'Jasa pembuatan website profesional, sistem informasi sekolah & pesantren, dan aplikasi bisnis terbaik di Indonesia. Konsultasi gratis via WhatsApp.',
+    description: 'Jasa pembuatan website profesional untuk pesantren, sekolah, UMKM, dan perusahaan di Bandung & Indonesia. Sistem informasi, aplikasi bisnis, & landing page. Konsultasi gratis via WhatsApp.',
     alternates: {
         canonical: '/',
     },
