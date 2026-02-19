@@ -251,8 +251,8 @@ const Services = () => {
                             </div>
                         )}
 
-                        {/* ===== SMALLER CARDS (glass panels) ===== */}
-                        {rest.map((svc, i) => {
+                        {/* ===== STACKED CARDS (right side, 2 cards) ===== */}
+                        {rest.slice(0, 2).map((svc, i) => {
                             const I = iconMap[svc.icon_name] || Globe;
                             return (
                                 <div key={i} className="lg:col-span-5">
@@ -280,6 +280,42 @@ const Services = () => {
                                 </div>
                             );
                         })}
+
+                        {/* ===== BOTTOM BANNER CARD (full-width) ===== */}
+                        {rest[2] && (() => {
+                            const svc = rest[2];
+                            const I = iconMap[svc.icon_name] || Globe;
+                            return (
+                                <div className="lg:col-span-12">
+                                    <div className="group relative bg-white/[0.04] backdrop-blur-xl rounded-2xl border border-white/[0.08] hover:border-white/20 hover:bg-white/[0.07] transition-all duration-500 overflow-hidden cursor-pointer"
+                                        onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                                    >
+                                        {/* Hover glow */}
+                                        <div className={`absolute -inset-1 bg-gradient-to-r ${cat?.gradient} opacity-0 group-hover:opacity-[0.04] blur-xl transition-opacity duration-500 rounded-2xl`}></div>
+                                        {/* Decorative gradient line */}
+                                        <div className={`absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent ${cat?.gradient} to-transparent opacity-30`}></div>
+
+                                        <div className="relative z-10 p-5 sm:p-6 md:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+                                            <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br ${cat?.gradient} flex items-center justify-center flex-shrink-0 shadow-lg group-hover:scale-110 group-hover:rotate-2 transition-all duration-500`}>
+                                                <I className="w-6 h-6 sm:w-7 sm:h-7 text-white" strokeWidth={1.5} />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <h4 className="text-white font-bold text-base sm:text-lg mb-1 group-hover:text-white/90 transition-colors">
+                                                    {svc.title}
+                                                </h4>
+                                                <p className="text-slate-400 text-sm sm:text-base leading-relaxed group-hover:text-slate-300 transition-colors">
+                                                    {svc.description}
+                                                </p>
+                                            </div>
+                                            <button className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 hover:bg-white/15 border border-white/10 rounded-full text-sm font-semibold text-white transition-all duration-300 flex-shrink-0 group-hover:gap-3">
+                                                Konsultasi
+                                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })()}
                     </div>
                 </div>
 
