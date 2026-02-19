@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 import CountUp from '../animations/CountUp';
+import { Users, Rocket, Shield, Lightbulb, Award, TrendingUp, Clock, Target } from 'lucide-react';
 
 const fallbackAbout = {
     storyTitle: 'Sejarah Velora',
@@ -17,6 +18,22 @@ const fallbackAbout = {
         { value: 98, label: 'Klien Puas', suffix: '%' }
     ]
 };
+
+const values = [
+    { icon: Lightbulb, title: 'Inovasi', desc: 'Kami selalu mengadopsi teknologi terbaru untuk solusi terdepan.', color: 'amber' },
+    { icon: Shield, title: 'Kepercayaan', desc: 'Transparansi & keamanan data adalah prioritas utama kami.', color: 'blue' },
+    { icon: Rocket, title: 'Kecepatan', desc: 'Pengerjaan cepat tanpa mengorbankan kualitas hasil akhir.', color: 'emerald' },
+    { icon: Users, title: 'Kolaborasi', desc: 'Kami bekerja bersama klien sebagai mitra, bukan vendor.', color: 'rose' },
+];
+
+const colorMap = {
+    amber: { bg: 'bg-amber-50', icon: 'text-amber-500', border: 'border-amber-200', ring: 'ring-amber-100' },
+    blue: { bg: 'bg-blue-50', icon: 'text-blue-500', border: 'border-blue-200', ring: 'ring-blue-100' },
+    emerald: { bg: 'bg-emerald-50', icon: 'text-emerald-500', border: 'border-emerald-200', ring: 'ring-emerald-100' },
+    rose: { bg: 'bg-rose-50', icon: 'text-rose-500', border: 'border-rose-200', ring: 'ring-rose-100' },
+};
+
+const statIcons = [Award, TrendingUp, Clock, Target];
 
 const About = () => {
     const [aboutData, setAboutData] = useState(fallbackAbout);
@@ -58,52 +75,127 @@ const About = () => {
     }, []);
 
     return (
-        <section id="tentang" className="py-16 sm:py-24 bg-white relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+        <section id="tentang" className="py-20 sm:py-28 bg-gradient-to-b from-white via-gray-50/50 to-white relative overflow-hidden">
+            {/* Background decorations */}
+            <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-teal-100/40 to-transparent rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
+            <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-blue-100/30 to-transparent rounded-full blur-3xl -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
 
             <div className="container mx-auto px-4 relative z-10">
+                {/* Section Header */}
                 <ScrollReveal width="100%">
-                    <div className="text-center mb-16">
-                        <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-semibold mb-4 tracking-wide">
+                    <div className="text-center mb-16 sm:mb-20">
+                        <span className="inline-flex items-center gap-2 px-4 py-2 bg-teal-50 border border-teal-200/60 text-teal-700 rounded-full text-xs font-bold tracking-widest uppercase mb-5">
+                            <Users className="w-3.5 h-3.5" />
                             TENTANG KAMI
                         </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">Tentang Velora</h2>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                            Kami adalah tim profesional yang berdedikasi untuk membantu bisnis Anda tumbuh melalui inovasi digital.
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
+                            Mengenal <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">Velora</span>
+                        </h2>
+                        <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
+                            Tim profesional yang berdedikasi membantu bisnis Anda tumbuh melalui inovasi digital dan solusi teknologi terdepan.
                         </p>
                     </div>
                 </ScrollReveal>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+                {/* Story Section — Image + Text */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-20 sm:mb-28">
+                    {/* Image side with decorative frame */}
                     <ScrollReveal direction="right">
-                        <div>
-                            <img
-                                src={aboutData.imageUrl}
-                                alt="Tim Velora"
-                                className="rounded-2xl shadow-xl w-full object-cover h-[400px]"
-                            />
-                        </div>
-                    </ScrollReveal>
+                        <div className="relative">
+                            {/* Decorative elements */}
+                            <div className="absolute -top-4 -left-4 w-24 h-24 border-t-[3px] border-l-[3px] border-teal-400/50 rounded-tl-3xl pointer-events-none"></div>
+                            <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-[3px] border-r-[3px] border-cyan-400/50 rounded-br-3xl pointer-events-none"></div>
 
-                    <ScrollReveal direction="left">
-                        <div>
-                            <h3 className="text-2xl font-bold text-gray-800 mb-4">{aboutData.storyTitle}</h3>
-                            {aboutData.paragraphs.map((p, i) => (
-                                <p key={i} className="text-gray-600 mb-4 leading-relaxed text-justify">{p}</p>
-                            ))}
+                            {/* Main image */}
+                            <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-200/60">
+                                <img
+                                    src={aboutData.imageUrl}
+                                    alt="Tim Velora"
+                                    className="w-full h-[350px] sm:h-[450px] object-cover"
+                                />
+                                {/* Subtle overlay gradient */}
+                                <div className="absolute inset-0 bg-gradient-to-t from-gray-900/20 via-transparent to-transparent"></div>
+                            </div>
 
-                            <div className="grid grid-cols-2 gap-6 mt-8">
-                                {aboutData.stats.map((stat, i) => (
-                                    <div key={i} className="bg-gray-50 p-4 rounded-xl text-center">
-                                        <span className="block text-3xl font-bold text-primary mb-1">
-                                            <CountUp to={stat.value} />{stat.suffix}
-                                        </span>
-                                        <span className="text-sm text-gray-500">{stat.label}</span>
-                                    </div>
-                                ))}
+                            {/* Floating stat card on image */}
+                            <div className="absolute -bottom-6 -right-4 sm:right-6 bg-white rounded-xl shadow-lg shadow-gray-200/80 border border-gray-100 p-4 flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-teal-500 to-cyan-500 flex items-center justify-center">
+                                    <Award className="w-5 h-5 text-white" />
+                                </div>
+                                <div>
+                                    <span className="block text-xl font-bold text-gray-900">
+                                        <CountUp to={aboutData.stats[0]?.value || 50} />{aboutData.stats[0]?.suffix || '+'}
+                                    </span>
+                                    <span className="text-xs text-gray-500">{aboutData.stats[0]?.label || 'Proyek Selesai'}</span>
+                                </div>
                             </div>
                         </div>
                     </ScrollReveal>
+
+                    {/* Text side */}
+                    <ScrollReveal direction="left">
+                        <div>
+                            {/* Story title with accent line */}
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="w-1 h-8 bg-gradient-to-b from-teal-500 to-cyan-500 rounded-full"></div>
+                                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">{aboutData.storyTitle}</h3>
+                            </div>
+
+                            {/* Paragraphs */}
+                            <div className="space-y-4 mb-8">
+                                {aboutData.paragraphs.map((p, i) => (
+                                    <p key={i} className="text-gray-600 leading-relaxed text-[15px] sm:text-base">{p}</p>
+                                ))}
+                            </div>
+
+                            {/* Stats row */}
+                            <div className="grid grid-cols-2 gap-4">
+                                {aboutData.stats.map((stat, i) => {
+                                    const StatIcon = statIcons[i] || Award;
+                                    return (
+                                        <div key={i} className="group bg-white border border-gray-100 rounded-xl p-5 shadow-sm hover:shadow-md hover:border-teal-200/50 transition-all duration-300">
+                                            <div className="flex items-center gap-3 mb-2">
+                                                <div className="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center group-hover:bg-teal-100 transition-colors">
+                                                    <StatIcon className="w-4 h-4 text-teal-600" />
+                                                </div>
+                                                <span className="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                                                    <CountUp to={stat.value} />{stat.suffix}
+                                                </span>
+                                            </div>
+                                            <span className="text-sm text-gray-500 font-medium">{stat.label}</span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                    </ScrollReveal>
+                </div>
+
+                {/* Values / Pillars Section */}
+                <ScrollReveal width="100%">
+                    <div className="text-center mb-10">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-3">Nilai Inti Kami</h3>
+                        <p className="text-gray-500 text-sm sm:text-base max-w-lg mx-auto">Prinsip yang menjadi fondasi setiap solusi yang kami bangun.</p>
+                    </div>
+                </ScrollReveal>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                    {values.map((v, i) => {
+                        const Icon = v.icon;
+                        const c = colorMap[v.color];
+                        return (
+                            <ScrollReveal key={i} direction="up" delay={i * 0.1}>
+                                <div className={`group relative bg-white rounded-2xl border ${c.border} p-6 hover:shadow-lg hover:shadow-gray-100 transition-all duration-300 hover:-translate-y-1`}>
+                                    {/* Icon */}
+                                    <div className={`w-12 h-12 rounded-xl ${c.bg} flex items-center justify-center mb-4 ring-4 ${c.ring} group-hover:scale-110 transition-transform duration-300`}>
+                                        <Icon className={`w-5 h-5 ${c.icon}`} strokeWidth={2} />
+                                    </div>
+                                    <h4 className="text-lg font-bold text-gray-900 mb-2">{v.title}</h4>
+                                    <p className="text-sm text-gray-500 leading-relaxed">{v.desc}</p>
+                                </div>
+                            </ScrollReveal>
+                        );
+                    })}
                 </div>
             </div>
         </section>
