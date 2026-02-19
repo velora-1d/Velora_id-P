@@ -130,6 +130,8 @@ const FeaturedProduct = () => {
             {/* Decorative bg */}
             <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-gradient-to-br from-primary/5 to-teal-500/5 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-emerald-500/5 to-blue-500/5 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+            {/* Subtle grid crosshatch */}
+            <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h40M0 0v40' stroke='%23000' stroke-width='0.3' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '40px 40px' }}></div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10">
                 {/* Header */}
@@ -139,7 +141,7 @@ const FeaturedProduct = () => {
                             <Sparkles className="w-4 h-4" />
                             PRODUK UNGGULAN
                         </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-5 tracking-tight leading-tight">
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-5 tracking-tight leading-tight">
                             Sistem Manajemen <br className="hidden sm:block" />
                             <span className="bg-gradient-to-r from-primary to-teal-600 bg-clip-text text-transparent">Pesantren & Sekolah</span>
                         </h2>

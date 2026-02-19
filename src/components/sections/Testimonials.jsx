@@ -128,6 +128,8 @@ const Testimonials = () => {
             {/* Decorative elements */}
             <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
             <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
+            {/* Subtle circle rings */}
+            <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='56' height='56' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='28' cy='28' r='12' stroke='%23000' stroke-width='0.4' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '56px 56px' }}></div>
 
             <div className="container mx-auto px-6 relative z-10">
                 {/* Header */}
@@ -136,7 +138,7 @@ const Testimonials = () => {
                         <span className="inline-block px-4 py-2 bg-teal-50 text-teal-700 rounded-full text-xs font-bold uppercase tracking-widest mb-4 border border-teal-100">
                             Testimoni
                         </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight text-center">
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight text-center">
                             Apa Kata Klien Kami
                         </h2>
                         <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed text-center">

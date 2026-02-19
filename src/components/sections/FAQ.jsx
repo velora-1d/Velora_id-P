@@ -84,7 +84,8 @@ const FAQ = () => {
             {/* Background decoration */}
             <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
             <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
-            <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+            {/* Subtle triangle pattern */}
+            <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='44' height='38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 2L42 36H2Z' stroke='%23000' stroke-width='0.3' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '44px 38px' }}></div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10">
                 {/* Header — Centered, Friendly */}
@@ -94,7 +95,7 @@ const FAQ = () => {
                             <HelpCircle className="w-3.5 h-3.5" />
                             Pertanyaan Umum
                         </div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
                             Ada Pertanyaan? <br className="hidden sm:block" />
                             <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">Kami Jawab!</span>
                         </h2>
@@ -115,8 +116,8 @@ const FAQ = () => {
                                 <ScrollReveal key={faq.id || index} delay={index * 0.06} width="100%">
                                     <div
                                         className={`group bg-white rounded-2xl sm:rounded-3xl border-2 transition-all duration-400 overflow-hidden ${isOpen
-                                                ? 'border-teal-200 shadow-xl shadow-teal-100/40'
-                                                : 'border-gray-100 hover:border-gray-200 shadow-sm hover:shadow-md'
+                                            ? 'border-teal-200 shadow-xl shadow-teal-100/40'
+                                            : 'border-gray-100 hover:border-gray-200 shadow-sm hover:shadow-md'
                                             }`}
                                     >
                                         {/* Question Button */}
@@ -126,8 +127,8 @@ const FAQ = () => {
                                         >
                                             {/* Icon Badge */}
                                             <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0 transition-all duration-300 shadow-sm ${isOpen
-                                                    ? 'scale-110 shadow-md'
-                                                    : 'group-hover:scale-105'
+                                                ? 'scale-110 shadow-md'
+                                                : 'group-hover:scale-105'
                                                 }`}>
                                                 <IconComp className="w-5 h-5 sm:w-6 sm:h-6 text-white" strokeWidth={2} />
                                             </div>
@@ -140,8 +141,8 @@ const FAQ = () => {
 
                                             {/* Toggle Icon */}
                                             <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${isOpen
-                                                    ? 'bg-teal-500 text-white rotate-0'
-                                                    : 'bg-gray-100 text-gray-400 group-hover:bg-teal-50 group-hover:text-teal-500'
+                                                ? 'bg-teal-500 text-white rotate-0'
+                                                : 'bg-gray-100 text-gray-400 group-hover:bg-teal-50 group-hover:text-teal-500'
                                                 }`}>
                                                 {isOpen ? (
                                                     <Minus className="w-4 h-4" />

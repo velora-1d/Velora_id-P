@@ -71,7 +71,7 @@ const Hero = () => {
 
                     {/* Main Heading */}
                     <ScrollReveal delay={0.2}>
-                        <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 sm:mb-8 leading-tight tracking-tight">
+                        <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 sm:mb-8 leading-tight tracking-tight">
                             Jasa Pembuatan Website
                             <br />
                             <span className="bg-gradient-to-r from-primary via-blue-400 to-accent-light bg-clip-text text-transparent">

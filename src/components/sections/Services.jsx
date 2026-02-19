@@ -101,8 +101,8 @@ const Services = () => {
 
     return (
         <section id="services" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
-            {/* Subtle grid pattern */}
-            <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+            {/* Subtle diagonal lines */}
+            <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 40L40 0' stroke='%23000' stroke-width='0.5' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '40px 40px' }}></div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10">
                 {/* Header */}
@@ -112,7 +112,7 @@ const Services = () => {
                         <span className="text-xs font-bold tracking-[0.3em] text-gray-400 uppercase mb-4 flex items-center gap-2">
                             <Layers className="w-3.5 h-3.5" /> Layanan Kami
                         </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
                             Solusi Digital Komprehensif
                         </h2>
                         <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">

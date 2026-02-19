@@ -39,6 +39,8 @@ const Workflow = () => {
         <section id="workflow" className="py-16 sm:py-24 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
             <div className="absolute top-1/2 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
             <div className="absolute top-1/2 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
+            {/* Subtle horizontal dotted lines */}
+            <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30h60' stroke='%23000' stroke-width='0.3' stroke-dasharray='4 4' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '60px 60px' }}></div>
 
             <div className="container mx-auto px-6 relative z-10">
                 <ScrollReveal width="100%">
@@ -46,7 +48,7 @@ const Workflow = () => {
                         <span className="inline-block px-4 py-2 bg-accent/10 text-accent-dark rounded-full text-sm font-semibold mb-4 tracking-wide">
                             CARA KERJA
                         </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">
                             Proses yang Jelas & Transparan
                         </h2>
                         <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">

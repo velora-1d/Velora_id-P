@@ -67,8 +67,8 @@ const Blog = () => {
 
     return (
         <section id="blog" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
-            {/* Subtle pattern */}
-            <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+            {/* Subtle square grid */}
+            <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='48' height='48' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='8' y='8' width='32' height='32' rx='2' stroke='%23000' stroke-width='0.4' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '48px 48px' }}></div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10">
                 {/* Header */}
@@ -78,7 +78,7 @@ const Blog = () => {
                         <span className="text-xs font-bold tracking-[0.3em] text-gray-400 uppercase mb-4 flex items-center gap-2">
                             <PenLine className="w-3.5 h-3.5" /> Blog & Insights
                         </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight text-center">
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight text-center">
                             Artikel Terbaru
                         </h2>
                         <p className="text-base sm:text-lg text-gray-500 max-w-lg mx-auto leading-relaxed text-center">

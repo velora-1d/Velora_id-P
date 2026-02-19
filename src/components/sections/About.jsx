@@ -79,6 +79,8 @@ const About = () => {
             {/* Background decorations */}
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-teal-100/40 to-transparent rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-blue-100/30 to-transparent rounded-full blur-3xl -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
+            {/* Subtle diamond mesh */}
+            <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='36' height='36' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M18 0L36 18L18 36L0 18Z' stroke='%23000' stroke-width='0.3' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '36px 36px' }}></div>
 
             <div className="container mx-auto px-4 relative z-10">
                 {/* Section Header */}
@@ -88,7 +90,7 @@ const About = () => {
                             <Users className="w-3.5 h-3.5" />
                             TENTANG KAMI
                         </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
                             Mengenal <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">Velora</span>
                         </h2>
                         <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">

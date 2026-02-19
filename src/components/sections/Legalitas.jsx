@@ -44,7 +44,8 @@ const Legalitas = () => {
             {/* Background */}
             <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
             <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
-            <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'radial-gradient(circle, #000 1px, transparent 1px)', backgroundSize: '24px 24px' }}></div>
+            {/* Subtle zigzag pattern */}
+            <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 20L20 0L40 20' stroke='%23000' stroke-width='0.3' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '40px 20px' }}></div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10">
                 {/* Header */}
@@ -54,7 +55,7 @@ const Legalitas = () => {
                             <Verified className="w-3.5 h-3.5" />
                             Legalitas Resmi
                         </div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
                             Usaha Terdaftar <br className="hidden sm:block" />
                             <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">Secara Resmi</span>
                         </h2>

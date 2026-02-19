@@ -95,8 +95,8 @@ const Founder = () => {
 
     return (
         <section id="founder" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
-            {/* Background Texture */}
-            <div className="absolute inset-0 opacity-[0.4]" style={{ backgroundImage: 'radial-gradient(#cbd5e1 1px, transparent 1px)', backgroundSize: '32px 32px' }}></div>
+            {/* Subtle hexagon pattern */}
+            <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='50' height='43' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25 0l25 14.4v28.8L25 43 0 28.8V14.4z' stroke='%23000' stroke-width='0.3' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '50px 43px' }}></div>
 
             <div className="container mx-auto px-4 relative z-10">
                 <ScrollReveal width="100%">
@@ -104,7 +104,7 @@ const Founder = () => {
                         <span className="inline-block px-4 py-2 bg-teal-50 text-teal-700 rounded-full text-xs font-bold uppercase tracking-widest mb-4 border border-teal-100">
                             Leadership
                         </span>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 tracking-tight">
                             Meet The Founder
                         </h2>
                     </div>

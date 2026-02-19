@@ -1,8 +1,17 @@
 
-import { Inter } from 'next/font/google';
+import { Inter, Playfair_Display } from 'next/font/google';
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({
+    subsets: ['latin'],
+    variable: '--font-inter',
+});
+
+const playfair = Playfair_Display({
+    subsets: ['latin'],
+    variable: '--font-playfair',
+    weight: ['400', '500', '600', '700', '800', '900'],
+});
 
 export const metadata = {
     metadataBase: new URL('https://www.ve-lora.my.id'),
@@ -82,7 +91,7 @@ export default function RootLayout({ children }) {
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
                 />
             </head>
-            <body className={inter.className} suppressHydrationWarning={true}>{children}</body>
+            <body className={`${inter.variable} ${playfair.variable} font-sans`} suppressHydrationWarning={true}>{children}</body>
         </html>
     );
 }

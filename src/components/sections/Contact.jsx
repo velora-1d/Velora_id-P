@@ -64,7 +64,7 @@ const Contact = () => {
                             <MessageCircle className="w-3.5 h-3.5" />
                             Hubungi Kami
                         </div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
                             Siap Memulai <br className="hidden sm:block" />
                             <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">Proyek Digital?</span>
                         </h2>
