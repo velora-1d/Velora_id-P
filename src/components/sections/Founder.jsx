@@ -175,7 +175,7 @@ const Founder = () => {
                                         <h4 className="text-sm font-bold tracking-[0.2em] text-teal-600 uppercase mb-5">Cerita Saya</h4>
                                         <div className="space-y-4">
                                             {founderData.bio_paragraphs.map((p, i) => (
-                                                <p key={i} className="text-gray-600 text-[15px] sm:text-base leading-[1.8]" dangerouslySetInnerHTML={{ __html: p }} />
+                                                <p key={i} className="text-gray-900 text-[15px] sm:text-base leading-[1.8]" dangerouslySetInnerHTML={{ __html: p }} />
                                             ))}
                                         </div>
                                     </div>
