@@ -88,7 +88,7 @@ export default function AdminLayout({ children }) {
                 {/* Logo */}
                 <div className="p-6 border-b border-gray-800 flex-shrink-0">
                     <div className="flex items-center gap-3">
-                        <img src="/images/logo.png" alt="Velora" className="h-10 w-auto" />
+                        <img src="/images/logo.webp" alt="Velora" width={160} height={40} className="h-10 w-auto" />
                         <div>
                             <span className="text-lg font-bold text-white">Velora</span>
                             <p className="text-xs text-gray-500">Admin Panel</p>
@@ -97,7 +97,7 @@ export default function AdminLayout({ children }) {
                 </div>
 
                 {/* Navigation — scrollable within the fixed sidebar */}
-                <nav className="flex-1 p-4 space-y-1 overflow-y-auto scrollbar-thin">
+                <nav className="flex-1 p-4 space-y-1 overflow-y-auto no-scrollbar">
                     {sidebarLinks.map((link) => link.type === 'divider' ? (
                         <div key={link.id} className="pt-4 pb-2 px-4">
                             <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{link.label}</p>

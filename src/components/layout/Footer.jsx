@@ -68,6 +68,12 @@ const Footer = () => {
             });
     }, [supabase]);
 
+    const [year, setYear] = useState(new Date().getFullYear());
+
+    useEffect(() => {
+        setYear(new Date().getFullYear());
+    }, []);
+
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
@@ -89,7 +95,7 @@ const Footer = () => {
                             {/* Brand Column */}
                             <div className="lg:col-span-5">
                                 <div className="flex items-center gap-3 mb-5">
-                                    <img src="/images/logo.png" alt="Velora" className="h-10 w-auto brightness-0 invert" />
+                                    <img src="/images/logo.webp" alt="Velora" width={160} height={40} className="h-10 w-auto brightness-0 invert" />
                                     <span className="text-2xl font-extrabold text-white tracking-tight">Velora</span>
                                 </div>
                                 <p className="text-gray-400 text-sm leading-relaxed mb-6 max-w-sm">
@@ -207,7 +213,7 @@ const Footer = () => {
                     <div className="h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
                     <div className="py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
                         <p className="text-gray-500 text-xs">
-                            &copy; {new Date().getFullYear()} Velora ID. All rights reserved.
+                            &copy; {year} Velora ID. All rights reserved.
                         </p>
                         <div className="flex items-center gap-6">
                             <a href="#faq" className="text-gray-500 text-xs hover:text-teal-400 transition-colors">FAQ</a>

@@ -4,8 +4,9 @@ import { Suspense } from 'react';
 import Navbar from '@/components/layout/Navbar';
 import Hero from '@/components/sections/Hero';
 import { createClient } from '@/lib/supabase/server';
+import { LazyMotion, domMax } from 'framer-motion';
 
-// Dynamic imports for heavy sections
+// ... (rest of dynamic imports)
 const Services = dynamic(() => import('@/components/sections/Services'));
 const FeaturedProduct = dynamic(() => import('@/components/sections/FeaturedProduct'));
 const Portfolio = dynamic(() => import('@/components/sections/Portfolio'));
@@ -51,26 +52,65 @@ export default async function Home() {
     } : null;
 
     return (
-        <div className="font-sans text-gray-900 overflow-x-hidden">
-            {faqSchema && (
-                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
-            )}
-            <Navbar />
-            <Hero />
-            <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading...</div>}>
-                <Services />
-                <FeaturedProduct />
-                <Portfolio />
-                <Workflow />
-                <Testimonials />
-                <About />
-                <Founder />
-                <Legalitas />
-                <Blog />
-                <FAQ />
-                <Contact />
-                <Footer />
-            </Suspense>
-        </div>
+        <LazyMotion features={domMax}>
+            <div className="font-sans text-gray-900 overflow-x-hidden">
+                {faqSchema && (
+                    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+                )}
+                <Navbar />
+                <Hero />
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <Services />
+                </Suspense>
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <FeaturedProduct />
+                </Suspense>
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <Portfolio />
+                </Suspense>
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <Workflow />
+                </Suspense>
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <Testimonials />
+                </Suspense>
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <About />
+                </Suspense>
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <Founder />
+                </Suspense>
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <Legalitas />
+                </Suspense>
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <Blog />
+                </Suspense>
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <FAQ />
+                </Suspense>
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <Contact />
+                </Suspense>
+                
+                <Suspense fallback={<SectionPlaceholder />}>
+                    <Footer />
+                </Suspense>
+            </div>
+        </LazyMotion>
     );
 }
+
+// Simple placeholder to maintain layout while loading
+const SectionPlaceholder = () => <div className="min-h-[200px] w-full" />;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Mail, Clock, Check, CheckCheck, Trash2, User, Phone, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react';
@@ -9,8 +9,21 @@ export default function MessagesClient({ initialMessages }) {
     const [messages, setMessages] = useState(initialMessages);
     const [expanded, setExpanded] = useState(null);
     const [filter, setFilter] = useState('all');
+    const [mounted, setMounted] = useState(false);
     const supabase = createClient();
     const router = useRouter();
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const formatDate = (dateStr, full = false) => {
+        if (!mounted) return '';
+        const date = new Date(dateStr);
+        return full
+            ? date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+            : date.toLocaleDateString('id-ID', { day: 'numeric', month: 'short' });
+    };
 
     const filtered = filter === 'all' ? messages
         : filter === 'unread' ? messages.filter(m => !m.is_read)
@@ -98,7 +111,7 @@ export default function MessagesClient({ initialMessages }) {
 
                             <div className="flex items-center gap-3 flex-shrink-0">
                                 <span className="text-xs text-gray-600 hidden sm:block">
-                                    {new Date(msg.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short' })}
+                                    {formatDate(msg.created_at)}
                                 </span>
                                 {expanded === msg.id ? <ChevronUp className="w-4 h-4 text-gray-500" /> : <ChevronDown className="w-4 h-4 text-gray-500" />}
                             </div>
@@ -130,7 +143,7 @@ export default function MessagesClient({ initialMessages }) {
                                     <div className="flex items-center justify-between pt-1">
                                         <span className="text-xs text-gray-600 flex items-center gap-1">
                                             <Clock className="w-3 h-3" />
-                                            {new Date(msg.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                            {formatDate(msg.created_at, true)}
                                         </span>
                                         <button onClick={() => handleDelete(msg.id)} className="p-2 text-gray-500 hover:text-red-400 hover:bg-red-500/10 rounded-lg transition-colors">
                                             <Trash2 className="w-4 h-4" />

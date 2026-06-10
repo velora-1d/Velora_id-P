@@ -19,10 +19,10 @@ const iconMap = {
 };
 
 const categoryImages = {
-    'quick': "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80",
-    'mid': "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80",
-    'premium': "https://images.unsplash.com/photo-1577962917302-cd874c4e3169?auto=format&fit=crop&w=800&q=80",
-    'addon': "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80"
+    'quick': "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=70",
+    'mid': "https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=600&q=70",
+    'premium': "https://images.unsplash.com/photo-1577962917302-cd874c4e3169?auto=format&fit=crop&w=600&q=70",
+    'addon': "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=70"
 };
 
 const fallbackCategories = [

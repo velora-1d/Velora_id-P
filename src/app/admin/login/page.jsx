@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Mail, Lock, Eye, EyeOff, LogIn, AlertCircle } from 'lucide-react';
@@ -11,8 +11,13 @@ export default function AdminLoginPage() {
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [year, setYear] = useState(new Date().getFullYear());
     const router = useRouter();
     const supabase = createClient();
+
+    useEffect(() => {
+        setYear(new Date().getFullYear());
+    }, []);
 
     const handleLogin = async (e) => {
         e.preventDefault();
@@ -48,7 +53,7 @@ export default function AdminLoginPage() {
                 {/* Logo */}
                 <div className="text-center mb-8">
                     <div className="inline-flex items-center gap-3 mb-4">
-                        <img src="/images/logo.png" alt="Velora" className="h-12 w-auto" />
+                        <img src="/images/logo.webp" alt="Velora" width={192} height={48} className="h-12 w-auto" />
                         <span className="text-3xl font-extrabold text-white">Velora</span>
                     </div>
                     <p className="text-gray-400 text-sm">Admin Dashboard</p>
@@ -124,7 +129,7 @@ export default function AdminLoginPage() {
                 </div>
 
                 <p className="text-center text-gray-600 text-xs mt-6">
-                    &copy; {new Date().getFullYear()} Velora. Panel Admin
+                    &copy; {year} Velora. Panel Admin
                 </p>
             </div>
         </div>

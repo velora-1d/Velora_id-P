@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { FileText, Briefcase, Star, MessageSquare, ArrowRight, Clock, Mail } from 'lucide-react';
 
@@ -11,6 +12,23 @@ const statCards = [
 ];
 
 export default function DashboardClient({ stats, recentMessages, recentPosts }) {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const formatDate = (dateStr) => {
+        if (!mounted) return '';
+        return new Date(dateStr).toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+    };
+
     return (
         <div className="space-y-8">
             {/* Stats Grid */}
@@ -67,7 +85,7 @@ export default function DashboardClient({ stats, recentMessages, recentPosts }) 
                                     <p className="text-sm text-gray-500 line-clamp-2">{msg.message}</p>
                                     <p className="text-xs text-gray-600 mt-2 flex items-center gap-1">
                                         <Clock className="w-3 h-3" />
-                                        {new Date(msg.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                        {formatDate(msg.created_at)}
                                     </p>
                                 </div>
                             ))

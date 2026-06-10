@@ -76,8 +76,10 @@ const Navbar = () => {
                             className="flex items-center gap-2.5 group"
                         >
                             <img
-                                src="/images/logo.png"
+                                src="/images/logo.webp"
                                 alt="Velora"
+                                width={160}
+                                height={40}
                                 className={`w-auto transition-all duration-300 ${scrolled ? 'h-8' : 'h-10 sm:h-14'}`}
                             />
                             <span className={`font-heading font-bold tracking-tight transition-all duration-300 ${scrolled
@@ -168,7 +170,7 @@ const Navbar = () => {
                         {/* Mobile Header */}
                         <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
                             <div className="flex items-center gap-2">
-                                <img src="/images/logo.png" alt="Velora" className="h-8 w-auto" />
+                                <img src="/images/logo.webp" alt="Velora" className="h-8 w-auto" />
                                 <span className="font-heading font-bold text-gray-900 text-lg">Velora</span>
                             </div>
                             <button

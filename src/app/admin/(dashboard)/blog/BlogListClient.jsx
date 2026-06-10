@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -10,8 +10,22 @@ export default function BlogListClient({ initialPosts }) {
     const [posts, setPosts] = useState(initialPosts);
     const [search, setSearch] = useState('');
     const [deleting, setDeleting] = useState(null);
+    const [mounted, setMounted] = useState(false);
     const supabase = createClient();
     const router = useRouter();
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
+    const formatDate = (dateStr) => {
+        if (!mounted) return '';
+        return new Date(dateStr).toLocaleDateString('id-ID', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+        });
+    };
 
     const filtered = posts.filter(p =>
         p.title.toLowerCase().includes(search.toLowerCase()) ||
@@ -101,7 +115,7 @@ export default function BlogListClient({ initialPosts }) {
                                             </button>
                                         </td>
                                         <td className="px-6 py-4 text-gray-500 hidden lg:table-cell">
-                                            {new Date(post.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' })}
+                                            {formatDate(post.created_at)}
                                         </td>
                                         <td className="px-6 py-4">
                                             <div className="flex items-center justify-end gap-2">

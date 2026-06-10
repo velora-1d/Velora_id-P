@@ -21,7 +21,7 @@ const fallbackProjects = [
         challenge: "Klien membutuhkan sistem yang dapat mengelola ribuan produk dengan banyak varian dan integrasi ke marketplace.",
         solution: "Kami membangun platform custom dengan dashboard terpusat, sync otomatis ke Tokopedia/Shopee, dan laporan penjualan real-time.",
         tech: "React, Node.js, PostgreSQL",
-        image_url: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80", icon: "ShoppingCart"
+        image_url: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=600&q=70", icon: "ShoppingCart"
     },
     {
         title: "Digital Banking App", category: "Finance & Banking", client: "Bank Digital Nusantara",
@@ -29,7 +29,7 @@ const fallbackProjects = [
         challenge: "Membutuhkan keamanan tingkat tinggi dengan UX yang tetap mudah digunakan oleh semua kalangan.",
         solution: "Implementasi biometric authentication, end-to-end encryption, dengan UI/UX yang intuitif dan accessibility-friendly.",
         tech: "Flutter, Go, MongoDB",
-        image_url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=80", icon: "CreditCard"
+        image_url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=70", icon: "CreditCard"
     },
     {
         title: "Hospital Management System", category: "Healthcare", client: "RS Sehat Sejahtera",
@@ -37,7 +37,7 @@ const fallbackProjects = [
         challenge: "Sistem lama berbasis kertas menyebabkan keterlambatan layanan dan kehilangan data pasien.",
         solution: "Migrasi penuh ke sistem digital dengan modul pendaftaran, antrian, rekam medis, billing, dan telemedicine.",
         tech: "Laravel, Vue.js, MySQL",
-        image_url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=80", icon: "Building2"
+        image_url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=70", icon: "Building2"
     },
     {
         title: "Fleet Management System", category: "Logistics", client: "Logistics Prima",
@@ -45,7 +45,7 @@ const fallbackProjects = [
         challenge: "Armada 200+ kendaraan sulit dipantau, banyak keterlambatan dan inefisiensi rute.",
         solution: "GPS tracking real-time, algoritma optimasi rute, dashboard monitoring, dan notifikasi otomatis ke pelanggan.",
         tech: "Python, Django, PostgreSQL",
-        image_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80", icon: "Truck"
+        image_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=70", icon: "Truck"
     },
     {
         title: "Learning Management System", category: "Education", client: "EduTech Indonesia",
@@ -53,7 +53,7 @@ const fallbackProjects = [
         challenge: "Pandemi memaksa sekolah beralih online tanpa infrastruktur yang memadai.",
         solution: "LMS lengkap dengan video conference, bank soal, rapor digital, dan integrasi dengan sistem sekolah.",
         tech: "Next.js, Firebase, WebRTC",
-        image_url: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80", icon: "GraduationCap"
+        image_url: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=600&q=70", icon: "GraduationCap"
     },
     {
         title: "Business Analytics Dashboard", category: "Retail & E-Commerce", client: "Retail Mart Group",
@@ -61,7 +61,7 @@ const fallbackProjects = [
         challenge: "Data penjualan tersebar di berbagai platform, sulit mengambil keputusan berbasis data.",
         solution: "Unified dashboard dengan integrasi multi-source, visualisasi data interaktif, dan AI recommendation engine.",
         tech: "React, Python, TensorFlow",
-        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80", icon: "BarChart3"
+        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=70", icon: "BarChart3"
     }
 ];
 

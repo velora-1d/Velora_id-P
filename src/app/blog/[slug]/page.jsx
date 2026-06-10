@@ -100,7 +100,7 @@ export default async function BlogPostPage({ params }) {
         publisher: {
             '@type': 'Organization',
             name: 'Velora ID',
-            logo: { '@type': 'ImageObject', url: 'https://www.ve-lora.my.id/images/logo.png' },
+            logo: { '@type': 'ImageObject', url: 'https://www.ve-lora.my.id/images/logo.webp' },
         },
         mainEntityOfPage: {
             '@type': 'WebPage',

@@ -33,10 +33,10 @@ export const metadata = {
         type: 'website',
         images: [
             {
-                url: '/images/logo.png',
-                width: 512,
-                height: 512,
-                alt: 'Velora ID - Jasa Pembuatan Website Profesional',
+                url: '/images/og-preview.webp',
+                width: 1200,
+                height: 630,
+                alt: 'Velora ID - Jasa Pembuatan Website & Sistem Digital Profesional',
             },
         ],
     },
@@ -60,7 +60,7 @@ const organizationSchema = {
     '@type': 'Organization',
     name: 'Velora',
     url: 'https://www.ve-lora.my.id',
-    logo: 'https://www.ve-lora.my.id/images/logo.png',
+    logo: 'https://www.ve-lora.my.id/images/logo.webp',
     description: 'Jasa pembuatan website dan sistem digital profesional di Indonesia',
     address: {
         '@type': 'PostalAddress',

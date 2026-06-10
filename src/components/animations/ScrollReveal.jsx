@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 
 const ScrollReveal = ({ children, width = "100%", delay = 0, direction = "up", className = "" }) => {
     const variants = {
@@ -25,14 +25,14 @@ const ScrollReveal = ({ children, width = "100%", delay = 0, direction = "up", c
 
     return (
         <div style={{ position: "relative", width }} className={className}>
-            <motion.div
+            <m.div
                 variants={variants}
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: false, margin: "-80px" }}
             >
                 {children}
-            </motion.div>
+            </m.div>
         </div>
     );
 };

@@ -11,19 +11,19 @@ const fallbackPosts = [
         title: "Tren Transformasi Digital 2025", category: "Technology", slug: "tren-transformasi-digital-2025",
         excerpt: "Pelajari tren terbaru dalam transformasi digital yang akan membentuk masa depan bisnis di Indonesia.",
         author: "Tim Velora", created_at: "2024-12-20", read_time: "5 menit",
-        image_url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
+        image_url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=70"
     },
     {
         title: "Implementasi AI untuk UMKM", category: "AI & Automation", slug: "implementasi-ai-untuk-umkm",
         excerpt: "Bagaimana bisnis kecil dan menengah dapat memanfaatkan kecerdasan buatan untuk meningkatkan efisiensi.",
         author: "Tim Velora", created_at: "2024-12-15", read_time: "4 menit",
-        image_url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80"
+        image_url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=70"
     },
     {
         title: "Migrasi ke Cloud: Panduan Lengkap", category: "Cloud Computing", slug: "migrasi-ke-cloud-panduan-lengkap",
         excerpt: "Langkah-langkah strategis untuk memindahkan infrastruktur bisnis Anda ke cloud dengan aman.",
         author: "Tim Velora", created_at: "2024-12-10", read_time: "6 menit",
-        image_url: "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=800&q=80"
+        image_url: "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=600&q=70"
     }
 ];
 
