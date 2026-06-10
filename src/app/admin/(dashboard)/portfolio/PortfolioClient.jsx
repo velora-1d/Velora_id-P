@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, Eye, EyeOff, Search, X, ArrowLeft, Save, Loader2 } from 'lucide-react';
+import ImageUpload from '@/components/admin/ImageUpload';
 
 export default function PortfolioClient({ initialProjects }) {
     const [projects, setProjects] = useState(initialProjects);
@@ -77,7 +78,6 @@ export default function PortfolioClient({ initialProjects }) {
                                     { key: 'client', label: 'Klien' },
                                     { key: 'icon', label: 'Icon (Emoji)' },
                                     { key: 'tech', label: 'Tech Stack' },
-                                    { key: 'image_url', label: 'Image URL' },
                                 ].map(f => (
                                     <div key={f.key}>
                                         <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
@@ -85,6 +85,12 @@ export default function PortfolioClient({ initialProjects }) {
                                     </div>
                                 ))}
                             </div>
+                            <ImageUpload
+                                label="Project Image"
+                                value={form.image_url}
+                                onChange={(url) => setForm({ ...form, image_url: url })}
+                                folder="portfolio"
+                            />
                             {['description', 'challenge', 'solution'].map(key => (
                                 <div key={key}>
                                     <label className="block text-sm text-gray-400 mb-1 capitalize">{key === 'description' ? 'Deskripsi' : key === 'challenge' ? 'Tantangan' : 'Solusi'}</label>

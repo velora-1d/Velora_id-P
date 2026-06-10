@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, X, Save, Loader2, Settings } from 'lucide-react';
+import ImageUpload from '@/components/admin/ImageUpload';
 
 export default function SiteSettingsClient({ initialData }) {
     const [items, setItems] = useState(initialData);
@@ -48,16 +49,19 @@ export default function SiteSettingsClient({ initialData }) {
                             <button onClick={closeForm} className="p-1 text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            {[
-                                { key: 'setting_key', label: 'Key (slug)', required: true },
-                                { key: 'setting_label', label: 'Label (tampilan)' },
-                                { key: 'setting_value', label: 'Value', required: true },
-                                { key: 'setting_suffix', label: 'Suffix (e.g. +, %)' },
-                                { key: 'sort_order', label: 'Urutan', type: 'number' },
-                            ].map(f => (
+                            {fields.map(f => (
                                 <div key={f.key}>
                                     <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
-                                    <input type={f.type || 'text'} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required={f.required} />
+                                    {(f.key === 'setting_value' && (form.setting_key.toLowerCase().includes('logo') || form.setting_key.toLowerCase().includes('image'))) ? (
+                                        <ImageUpload
+                                            value={form.setting_value}
+                                            onChange={(url) => setForm({ ...form, setting_value: url })}
+                                            folder="site"
+                                            label=""
+                                        />
+                                    ) : (
+                                        <input type={f.type || 'text'} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required={f.required} />
+                                    )}
                                 </div>
                             ))}
                             <div className="flex justify-end">

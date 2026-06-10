@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, Eye, EyeOff, X, Save, Loader2, Star as StarIcon } from 'lucide-react';
+import ImageUpload from '@/components/admin/ImageUpload';
 
 export default function TestimonialsClient({ initialTestimonials }) {
     const [items, setItems] = useState(initialTestimonials);
@@ -64,13 +65,18 @@ export default function TestimonialsClient({ initialTestimonials }) {
                                 { key: 'name', label: 'Nama', required: true },
                                 { key: 'role', label: 'Jabatan' },
                                 { key: 'company', label: 'Perusahaan' },
-                                { key: 'avatar_url', label: 'Avatar URL' },
                             ].map(f => (
                                 <div key={f.key}>
                                     <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
                                     <input type="text" value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required={f.required} />
                                 </div>
                             ))}
+                            <ImageUpload
+                                label="Avatar Klien"
+                                value={form.avatar_url}
+                                onChange={(url) => setForm({ ...form, avatar_url: url })}
+                                folder="testimonials"
+                            />
                             <div>
                                 <label className="block text-sm text-gray-400 mb-1">Rating</label>
                                 <div className="flex gap-1">

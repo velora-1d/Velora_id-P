@@ -1,6 +1,7 @@
 
 import { Inter, Playfair_Display } from 'next/font/google';
 import Script from 'next/script';
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import './globals.css';
 
 const inter = Inter({
@@ -104,7 +105,10 @@ export default function RootLayout({ children }) {
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
                 />
             </head>
-            <body className={`${inter.variable} ${playfair.variable} font-sans`} suppressHydrationWarning={true}>{children}</body>
+            <body className={`${inter.variable} ${playfair.variable} font-sans`} suppressHydrationWarning={true}>
+                {children}
+                <SpeedInsights />
+            </body>
         </html>
     );
 }

@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, X, Save, Loader2 } from 'lucide-react';
+import ImageUpload from '@/components/admin/ImageUpload';
 
 export default function AboutClient({ initialData }) {
     const [items, setItems] = useState(initialData);
@@ -60,10 +61,12 @@ export default function AboutClient({ initialData }) {
                                     <input type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required />
                                 </div>
                             </div>
-                            <div>
-                                <label className="block text-sm text-gray-400 mb-1">Image URL</label>
-                                <input type="text" value={form.image_url} onChange={(e) => setForm({ ...form, image_url: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
-                            </div>
+                            <ImageUpload
+                                label="Section Image"
+                                value={form.image_url}
+                                onChange={(url) => setForm({ ...form, image_url: url })}
+                                folder="about"
+                            />
                             <div>
                                 <label className="block text-sm text-gray-400 mb-1">Konten</label>
                                 <textarea value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={5} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />

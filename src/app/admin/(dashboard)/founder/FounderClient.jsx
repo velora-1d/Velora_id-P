@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Save, Loader2, User, Plus, X, Eye, EyeOff } from 'lucide-react';
+import ImageUpload from '@/components/admin/ImageUpload';
 
 export default function FounderClient({ initialData }) {
     const defaults = {
@@ -96,12 +97,13 @@ export default function FounderClient({ initialData }) {
                         </div>
                     </div>
 
-                    {/* Photo URL */}
-                    <div>
-                        <label className="block text-sm text-gray-400 mb-1">Photo URL</label>
-                        <input type="text" value={form.photo_url} onChange={(e) => setForm({ ...form, photo_url: e.target.value })} className={inp} />
-                        {form.photo_url && <img src={form.photo_url} alt="Preview" className="w-20 h-20 rounded-xl object-cover mt-2" />}
-                    </div>
+                    {/* Photo */}
+                    <ImageUpload
+                        label="Foto Founder"
+                        value={form.photo_url}
+                        onChange={(url) => setForm({ ...form, photo_url: url })}
+                        folder="team"
+                    />
 
                     {/* Published Toggle */}
                     <div className="flex items-center gap-3">

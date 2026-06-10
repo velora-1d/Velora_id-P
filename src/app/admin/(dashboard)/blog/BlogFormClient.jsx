@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, Save, Eye, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import ImageUpload from '@/components/admin/ImageUpload';
 
 export default function BlogFormClient({ post = null }) {
     const isEdit = !!post;
@@ -172,19 +173,12 @@ export default function BlogFormClient({ post = null }) {
                                 />
                             </div>
 
-                            <div>
-                                <label className="block text-sm font-medium text-gray-300 mb-2">Cover Image URL</label>
-                                <input
-                                    type="url"
-                                    value={form.image_url}
-                                    onChange={(e) => setForm({ ...form, image_url: e.target.value })}
-                                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 text-sm"
-                                    placeholder="https://images.unsplash.com/..."
-                                />
-                                {form.image_url && (
-                                    <img src={form.image_url} alt="Preview" className="mt-3 w-full h-32 object-cover rounded-xl border border-gray-700" />
-                                )}
-                            </div>
+                            <ImageUpload
+                                label="Cover Image"
+                                value={form.image_url}
+                                onChange={(url) => setForm({ ...form, image_url: url })}
+                                folder="blog"
+                            />
 
                             <div className="flex items-center gap-3">
                                 <button
