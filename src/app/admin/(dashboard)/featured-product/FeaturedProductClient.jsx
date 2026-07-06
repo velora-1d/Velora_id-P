@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, X, Save, Loader2, CheckCircle2 } from 'lucide-react';
 import IconPicker from '@/components/admin/IconPicker';
+import GradientPicker from '@/components/admin/GradientPicker';
 
 export default function FeaturedProductClient({ initialFeatures, initialBenefits }) {
     const [features, setFeatures] = useState(initialFeatures);
@@ -93,7 +94,7 @@ export default function FeaturedProductClient({ initialFeatures, initialBenefits
             <Modal show={showFeatForm} title={editing ? 'Edit Fitur' : 'Fitur Baru'} onClose={() => { setShowFeatForm(false); setEditing(null); }} onSubmit={submitFeature}>
                 {inp('Judul', featForm.title, (e) => setFeatForm({ ...featForm, title: e.target.value }), true)}
                 <IconPicker value={featForm.icon_name} onChange={(icon_name) => setFeatForm({ ...featForm, icon_name })} />
-                {inp('Gradient CSS', featForm.color_gradient, (e) => setFeatForm({ ...featForm, color_gradient: e.target.value }))}
+                <GradientPicker value={featForm.color_gradient} onChange={(color_gradient) => setFeatForm({ ...featForm, color_gradient })} />
                 <div>
                     <label className="block text-sm text-gray-400 mb-1">Deskripsi</label>
                     <textarea value={featForm.description} onChange={(e) => setFeatForm({ ...featForm, description: e.target.value })} rows={3} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />

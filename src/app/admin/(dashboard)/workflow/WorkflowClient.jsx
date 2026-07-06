@@ -4,6 +4,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, Eye, EyeOff, X, Save, Loader2 } from 'lucide-react';
 import IconPicker from '@/components/admin/IconPicker';
+import GradientPicker from '@/components/admin/GradientPicker';
 
 export default function WorkflowClient({ initialData }) {
     const [items, setItems] = useState(initialData);
@@ -63,8 +64,14 @@ export default function WorkflowClient({ initialData }) {
                                 <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
                                 {fields.map(f => (
                                     <div key={f.key}>
-                                        <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
-                                        <input type={f.type || 'text'} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required={f.required} />
+                                        {f.key === 'color_gradient' ? (
+                                            <GradientPicker value={form.color_gradient} onChange={(color_gradient) => setForm({ ...form, color_gradient })} />
+                                        ) : (
+                                            <>
+                                                <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
+                                                <input type={f.type || 'text'} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required={f.required} />
+                                            </>
+                                        )}
                                     </div>
                                 ))}
                             </div>

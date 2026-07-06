@@ -1,47 +1,66 @@
 import Script from 'next/script';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { createClient } from '@/lib/supabase/server';
 import './globals.css';
 
-export const metadata = {
-    metadataBase: new URL('https://www.ve-lora.my.id'),
-    title: {
-        default: 'Jasa Pembuatan Website & Sistem Digital Profesional | Velora ID',
-        template: '%s | Velora ID',
-    },
-    description: 'Jasa pembuatan website profesional untuk pesantren, sekolah, UMKM, dan perusahaan di Bandung & Indonesia. Sistem informasi, aplikasi bisnis, & landing page. Konsultasi gratis via WhatsApp.',
-    alternates: {
-        canonical: '/',
-    },
-    openGraph: {
-        title: 'Jasa Pembuatan Website & Sistem Digital | Velora ID',
-        description: 'Solusi digital terjangkau untuk UMKM & institusi Indonesia. Website, sistem informasi, & payment gateway.',
-        url: 'https://www.ve-lora.my.id',
-        siteName: 'Velora ID',
-        locale: 'id_ID',
-        type: 'website',
-        images: [
-            {
-                url: '/images/og-preview.webp',
-                width: 1200,
-                height: 630,
-                alt: 'Velora ID - Jasa Pembuatan Website & Sistem Digital Profesional',
-            },
-        ],
-    },
-    twitter: {
-        card: 'summary_large_image',
-        title: 'Jasa Pembuatan Website & Sistem Digital | Velora ID',
-        description: 'Solusi digital terjangkau untuk UMKM & institusi Indonesia.',
-    },
-    robots: {
-        index: true,
-        follow: true,
-    },
-    verification: {
-        google: 'googlef059f7343365627a',
-    },
-};
+export async function generateMetadata() {
+    let titleSetting = 'Jasa Pembuatan Website & Sistem Digital Profesional | Velora ID';
+    let descSetting = 'Jasa pembuatan website profesional untuk pesantren, sekolah, UMKM, dan perusahaan di Bandung & Indonesia. Sistem informasi, aplikasi bisnis, & landing page. Konsultasi gratis via WhatsApp.';
+    let googleVerification = 'googlef059f7343365627a';
+
+    try {
+        const supabase = await createClient();
+        const { data: settings } = await supabase.from('site_settings').select('*');
+        if (settings) {
+            titleSetting = settings.find(s => s.setting_key === 'site_title')?.setting_value || titleSetting;
+            descSetting = settings.find(s => s.setting_key === 'site_description')?.setting_value || descSetting;
+            googleVerification = settings.find(s => s.setting_key === 'google_verification')?.setting_value || googleVerification;
+        }
+    } catch (e) {
+        console.error("Error generating metadata:", e);
+    }
+
+    return {
+        metadataBase: new URL('https://www.ve-lora.my.id'),
+        title: {
+            default: titleSetting,
+            template: '%s | Velora ID',
+        },
+        description: descSetting,
+        alternates: {
+            canonical: '/',
+        },
+        openGraph: {
+            title: titleSetting,
+            description: descSetting,
+            url: 'https://www.ve-lora.my.id',
+            siteName: 'Velora ID',
+            locale: 'id_ID',
+            type: 'website',
+            images: [
+                {
+                    url: '/images/og-preview.webp',
+                    width: 1200,
+                    height: 630,
+                    alt: titleSetting,
+                },
+            ],
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: titleSetting,
+            description: descSetting,
+        },
+        robots: {
+            index: true,
+            follow: true,
+        },
+        verification: {
+            google: googleVerification,
+        },
+    };
+}
 
 // Organization JSON-LD Schema
 const organizationSchema = {
@@ -72,12 +91,23 @@ const organizationSchema = {
     ],
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+    let gaId = 'G-1XJG5X3KZR';
+    try {
+        const supabase = await createClient();
+        const { data: settings } = await supabase.from('site_settings').select('*');
+        if (settings) {
+            gaId = settings.find(s => s.setting_key === 'google_analytics_id')?.setting_value || gaId;
+        }
+    } catch (e) {
+        console.error("Error loading analytics ID:", e);
+    }
+
     return (
         <html lang="id">
             <head>
                 <Script
-                    src="https://www.googletagmanager.com/gtag/js?id=G-1XJG5X3KZR"
+                    src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
                     strategy="afterInteractive"
                 />
                 <Script id="gtag-init" strategy="afterInteractive">
@@ -85,7 +115,7 @@ export default function RootLayout({ children }) {
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
-                        gtag('config', 'G-1XJG5X3KZR');
+                        gtag('config', '${gaId}');
                     `}
                 </Script>
                 <script

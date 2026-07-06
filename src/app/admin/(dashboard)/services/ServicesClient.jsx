@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, Eye, EyeOff, Search, X, Save, Loader2 } from 'lucide-react';
 import IconPicker from '@/components/admin/IconPicker';
 import ImageUpload from '@/components/admin/ImageUpload';
+import GradientPicker from '@/components/admin/GradientPicker';
 
 function csvToArray(value) {
     return value.split(',').map((item) => item.trim()).filter(Boolean);
@@ -112,8 +113,14 @@ export default function ServicesClient({ initialData, categories = [] }) {
                                 <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
                                 {fields.map(f => (
                                     <div key={f.key}>
-                                        <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
-                                        <input type={f.type || 'text'} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required={f.required} />
+                                        {f.key === 'category_gradient' ? (
+                                            <GradientPicker value={form.category_gradient} onChange={(category_gradient) => setForm({ ...form, category_gradient })} label="Gradient Warna Kategori" />
+                                        ) : (
+                                            <>
+                                                <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
+                                                <input type={f.type || 'text'} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required={f.required} />
+                                            </>
+                                        )}
                                     </div>
                                 ))}
                             </div>
