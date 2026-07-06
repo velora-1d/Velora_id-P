@@ -61,16 +61,16 @@ export default function FeaturedProductClient({ initialFeatures, initialBenefits
         if (!error) setBenefits(benefits.filter(b => b.id !== id));
     };
 
-    const Modal = ({ show, title, onClose, onSubmit, children }) => show ? (
+    const Modal = ({ show, title, onClose, onSubmit, sizeClass = 'max-w-lg', children }) => show ? (
         <div className="fixed inset-0 bg-black/60 z-50 flex items-start justify-center p-4 pt-20 overflow-y-auto">
-            <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full max-w-lg space-y-5">
+            <div className={`bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full ${sizeClass} space-y-5`}>
                 <div className="flex items-center justify-between">
                     <h3 className="text-lg font-bold text-white">{title}</h3>
                     <button onClick={onClose} className="p-1 text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
                 </div>
                 <form onSubmit={onSubmit} className="space-y-4">
                     {children}
-                    <div className="flex justify-end">
+                    <div className="flex justify-end pt-2 border-t border-gray-800/60">
                         <button type="submit" disabled={saving} className="px-6 py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white rounded-xl text-sm font-medium flex items-center gap-2">
                             {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                             {saving ? 'Menyimpan...' : 'Simpan'}
@@ -91,19 +91,23 @@ export default function FeaturedProductClient({ initialFeatures, initialBenefits
     return (
         <div className="space-y-8">
             {/* Feature Form Modal */}
-            <Modal show={showFeatForm} title={editing ? 'Edit Fitur' : 'Fitur Baru'} onClose={() => { setShowFeatForm(false); setEditing(null); }} onSubmit={submitFeature}>
-                {inp('Judul', featForm.title, (e) => setFeatForm({ ...featForm, title: e.target.value }), true)}
-                <IconPicker value={featForm.icon_name} onChange={(icon_name) => setFeatForm({ ...featForm, icon_name })} />
-                <GradientPicker value={featForm.color_gradient} onChange={(color_gradient) => setFeatForm({ ...featForm, color_gradient })} />
+            <Modal show={showFeatForm} title={editing ? 'Edit Fitur' : 'Fitur Baru'} sizeClass="max-w-2xl" onClose={() => { setShowFeatForm(false); setEditing(null); }} onSubmit={submitFeature}>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {inp('Judul', featForm.title, (e) => setFeatForm({ ...featForm, title: e.target.value }), true)}
+                    {inp('Urutan', featForm.sort_order, (e) => setFeatForm({ ...featForm, sort_order: e.target.value }))}
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <IconPicker value={featForm.icon_name} onChange={(icon_name) => setFeatForm({ ...featForm, icon_name })} />
+                    <GradientPicker value={featForm.color_gradient} onChange={(color_gradient) => setFeatForm({ ...featForm, color_gradient })} label="Warna Gradasi Ikon" />
+                </div>
                 <div>
                     <label className="block text-sm text-gray-400 mb-1">Deskripsi</label>
                     <textarea value={featForm.description} onChange={(e) => setFeatForm({ ...featForm, description: e.target.value })} rows={3} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
                 </div>
-                {inp('Urutan', featForm.sort_order, (e) => setFeatForm({ ...featForm, sort_order: e.target.value }))}
             </Modal>
 
             {/* Benefit Form Modal */}
-            <Modal show={showBenForm} title={editing ? 'Edit Benefit' : 'Benefit Baru'} onClose={() => { setShowBenForm(false); setEditing(null); }} onSubmit={submitBenefit}>
+            <Modal show={showBenForm} title={editing ? 'Edit Benefit' : 'Benefit Baru'} sizeClass="max-w-lg" onClose={() => { setShowBenForm(false); setEditing(null); }} onSubmit={submitBenefit}>
                 {inp('Benefit', benForm.benefit, (e) => setBenForm({ ...benForm, benefit: e.target.value }), true)}
                 {inp('Urutan', benForm.sort_order, (e) => setBenForm({ ...benForm, sort_order: e.target.value }))}
             </Modal>

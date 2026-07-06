@@ -88,87 +88,98 @@ export default function PortfolioClient({ initialProjects, categories = [] }) {
             {/* Form Modal */}
             {showForm && (
                 <div className="fixed inset-0 bg-black/60 z-50 flex items-start justify-center p-4 pt-20 overflow-y-auto">
-                    <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full max-w-2xl space-y-5">
+                    <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full max-w-4xl space-y-5">
                         <div className="flex items-center justify-between">
                             <h3 className="text-lg font-bold text-white">{editing ? 'Edit Proyek' : 'Proyek Baru'}</h3>
                             <button onClick={closeForm} className="p-1 text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {[
-                                    { key: 'title', label: 'Judul', required: true },
-                                    { key: 'slug', label: 'Slug', required: true },
-                                    { key: 'client', label: 'Klien' },
-                                    { key: 'tech', label: 'Tech Stack' },
-                                ].map(f => (
-                                    <div key={f.key}>
-                                        <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
-                                        <input
-                                            type="text"
-                                            value={form[f.key]}
-                                            onChange={(e) => setForm({
-                                                ...form,
-                                                [f.key]: f.key === 'slug' ? slugify(e.target.value) : e.target.value,
-                                                slug: f.key === 'title' && !editing ? slugify(e.target.value) : form.slug,
-                                            })}
-                                            className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-                                            required={f.required}
-                                        />
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                {/* Kolom Kiri (2/3 lebar) untuk Teks & SEO */}
+                                <div className="lg:col-span-2 space-y-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        {[
+                                            { key: 'title', label: 'Judul', required: true },
+                                            { key: 'slug', label: 'Slug', required: true },
+                                            { key: 'client', label: 'Klien' },
+                                            { key: 'tech', label: 'Tech Stack' },
+                                        ].map(f => (
+                                            <div key={f.key}>
+                                                <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
+                                                <input
+                                                    type="text"
+                                                    value={form[f.key]}
+                                                    onChange={(e) => setForm({
+                                                        ...form,
+                                                        [f.key]: f.key === 'slug' ? slugify(e.target.value) : e.target.value,
+                                                        slug: f.key === 'title' && !editing ? slugify(e.target.value) : form.slug,
+                                                    })}
+                                                    className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                                    required={f.required}
+                                                />
+                                            </div>
+                                        ))}
+                                        <div>
+                                            <label className="block text-sm text-gray-400 mb-1">Kategori</label>
+                                            <select
+                                                value={form.category_id || ''}
+                                                onChange={(e) => {
+                                                    const selected = categories.find((category) => category.id === e.target.value);
+                                                    setForm({ ...form, category_id: e.target.value, category: selected?.name || form.category });
+                                                }}
+                                                className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                            >
+                                                <option value="">Pilih kategori</option>
+                                                {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+                                            </select>
+                                        </div>
+                                        <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
                                     </div>
-                                ))}
-                                <div>
-                                    <label className="block text-sm text-gray-400 mb-1">Kategori</label>
-                                    <select
-                                        value={form.category_id || ''}
-                                        onChange={(e) => {
-                                            const selected = categories.find((category) => category.id === e.target.value);
-                                            setForm({ ...form, category_id: e.target.value, category: selected?.name || form.category });
-                                        }}
-                                        className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-                                    >
-                                        <option value="">Pilih kategori</option>
-                                        {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
-                                    </select>
+                                    
+                                    {['description', 'challenge', 'solution'].map(key => (
+                                        <div key={key}>
+                                            <label className="block text-sm text-gray-400 mb-1 capitalize">{key === 'description' ? 'Deskripsi' : key === 'challenge' ? 'Tantangan' : 'Solusi'}</label>
+                                            <textarea value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} rows={3} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
+                                        </div>
+                                    ))}
+                                    
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm text-gray-400 mb-1">Tags</label>
+                                            <input value={form.tags || ''} onChange={(e) => setForm({ ...form, tags: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="web, dashboard" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm text-gray-400 mb-1">SEO Keywords</label>
+                                            <input value={form.seo_keywords || ''} onChange={(e) => setForm({ ...form, seo_keywords: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="keyword 1, keyword 2" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm text-gray-400 mb-1">SEO Title</label>
+                                        <input value={form.seo_title || ''} onChange={(e) => setForm({ ...form, seo_title: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm text-gray-400 mb-1">SEO Description</label>
+                                        <textarea value={form.seo_description || ''} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
+                                    </div>
                                 </div>
-                                <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
-                            </div>
-                            <ImageUpload
-                                label="Project Image"
-                                value={form.image_url}
-                                onChange={(url) => setForm({ ...form, image_url: url })}
-                                folder="portfolio"
-                            />
-                            <ImageUpload
-                                label="Background Image"
-                                value={form.background_image_url}
-                                onChange={(url) => setForm({ ...form, background_image_url: url })}
-                                folder="portfolio"
-                            />
-                            {['description', 'challenge', 'solution'].map(key => (
-                                <div key={key}>
-                                    <label className="block text-sm text-gray-400 mb-1 capitalize">{key === 'description' ? 'Deskripsi' : key === 'challenge' ? 'Tantangan' : 'Solusi'}</label>
-                                    <textarea value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} rows={3} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
-                                </div>
-                            ))}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm text-gray-400 mb-1">Tags</label>
-                                    <input value={form.tags || ''} onChange={(e) => setForm({ ...form, tags: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="web, dashboard" />
-                                </div>
-                                <div>
-                                    <label className="block text-sm text-gray-400 mb-1">SEO Keywords</label>
-                                    <input value={form.seo_keywords || ''} onChange={(e) => setForm({ ...form, seo_keywords: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="keyword 1, keyword 2" />
+
+                                {/* Kolom Kanan (1/3 lebar) untuk Gambar */}
+                                <div className="lg:col-span-1 space-y-4">
+                                    <ImageUpload
+                                        label="Project Image"
+                                        value={form.image_url}
+                                        onChange={(url) => setForm({ ...form, image_url: url })}
+                                        folder="portfolio"
+                                    />
+                                    <ImageUpload
+                                        label="Background Image"
+                                        value={form.background_image_url}
+                                        onChange={(url) => setForm({ ...form, background_image_url: url })}
+                                        folder="portfolio"
+                                    />
                                 </div>
                             </div>
-                            <div>
-                                <label className="block text-sm text-gray-400 mb-1">SEO Title</label>
-                                <input value={form.seo_title || ''} onChange={(e) => setForm({ ...form, seo_title: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
-                            </div>
-                            <div>
-                                <label className="block text-sm text-gray-400 mb-1">SEO Description</label>
-                                <textarea value={form.seo_description || ''} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
-                            </div>
-                            <div className="flex items-center justify-between pt-2">
+                            <div className="flex items-center justify-between pt-2 border-t border-gray-800">
                                 <div className="flex items-center gap-3">
                                     <button type="button" onClick={() => setForm({ ...form, published: !form.published })} className={`relative w-12 h-6 rounded-full transition-colors ${form.published ? 'bg-primary' : 'bg-gray-700'}`}>
                                         <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${form.published ? 'translate-x-6' : ''}`} />
