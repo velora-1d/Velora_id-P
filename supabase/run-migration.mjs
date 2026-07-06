@@ -1,6 +1,6 @@
 /**
  * Run Supabase migration via REST API
- * Usage: node supabase/run-migration.mjs
+ * Usage: node supabase/run-migration.mjs [migration-file.sql]
  */
 
 import { createClient } from '@supabase/supabase-js';
@@ -9,6 +9,19 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const envPath = path.join(__dirname, '..', '.env.local');
+if (fs.existsSync(envPath)) {
+    for (const line of fs.readFileSync(envPath, 'utf-8').split('\n')) {
+        const trimmed = line.trim();
+        if (!trimmed || trimmed.startsWith('#')) continue;
+        const index = trimmed.indexOf('=');
+        if (index === -1) continue;
+        const key = trimmed.slice(0, index);
+        const value = trimmed.slice(index + 1);
+        process.env[key] ||= value;
+    }
+}
 
 const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://aenvcxkxbvwrcwsffdbb.supabase.co';
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -23,16 +36,21 @@ if (!key) {
 const supabase = createClient(SUPABASE_URL, key);
 
 // Read migration SQL
-const sqlFile = fs.readFileSync(path.join(__dirname, 'migration.sql'), 'utf-8');
+const migrationFile = process.argv[2] || 'complete-migration-safe.sql';
+const sqlFile = fs.readFileSync(path.join(__dirname, migrationFile), 'utf-8')
+    .split('\n')
+    .filter(line => !line.trim().startsWith('--'))
+    .join('\n');
 
 // Split SQL into individual statements
 const statements = sqlFile
     .split(';')
     .map(s => s.trim())
-    .filter(s => s.length > 0 && !s.startsWith('--'));
+    .filter(s => s.length > 0);
 
-console.log(`📦 Running migration (${statements.length} statements)...\n`);
+console.log(`📦 Running ${migrationFile} (${statements.length} statements)...\n`);
 
+let applied = 0;
 for (let i = 0; i < statements.length; i++) {
     const stmt = statements[i];
     const preview = stmt.split('\n')[0].substring(0, 80);
@@ -41,8 +59,9 @@ for (let i = 0; i < statements.length; i++) {
         const { error } = await supabase.rpc('exec_sql', { sql: stmt + ';' });
         if (error) {
             // Try raw SQL via postgrest
-            console.log(`⚠️  [${i + 1}/${statements.length}] ${preview}... (RPC not available, skipping)`);
+            console.log(`⚠️  [${i + 1}/${statements.length}] ${preview}... (${error.message})`);
         } else {
+            applied++;
             console.log(`✅ [${i + 1}/${statements.length}] ${preview}...`);
         }
     } catch (err) {
@@ -50,6 +69,11 @@ for (let i = 0; i < statements.length; i++) {
     }
 }
 
-console.log('\n✅ Migration script completed.');
-console.log('\n⚠️  If RPC was not available, please run the SQL manually in Supabase SQL Editor:');
-console.log('   https://supabase.com/dashboard/project/aenvcxkxbvwrcwsffdbb/sql/new');
+if (applied === statements.length) {
+    console.log('\n✅ Migration script completed.');
+} else {
+    console.log(`\n⚠️  Applied ${applied}/${statements.length} statements.`);
+    console.log('Run the SQL manually in Supabase SQL Editor if RPC is not available:');
+    console.log('   https://supabase.com/dashboard/project/aenvcxkxbvwrcwsffdbb/sql/new');
+    process.exitCode = 1;
+}

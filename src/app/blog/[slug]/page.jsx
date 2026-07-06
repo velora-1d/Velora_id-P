@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
     const supabase = await createClient();
     const { data: post } = await supabase
         .from('blog_posts')
-        .select('title, excerpt, image_url, author, category')
+        .select('title, excerpt, image_url, author, category, seo_title, seo_description')
         .eq('slug', slug)
         .eq('published', true)
         .single();
@@ -23,18 +23,18 @@ export async function generateMetadata({ params }) {
     }
 
     return {
-        title: post.title,
-        description: post.excerpt,
+        title: post.seo_title || post.title,
+        description: post.seo_description || post.excerpt,
         openGraph: {
-            title: `${post.title} | Velora ID Blog`,
-            description: post.excerpt,
+            title: post.seo_title || `${post.title} | Velora ID Blog`,
+            description: post.seo_description || post.excerpt,
             type: 'article',
             images: post.image_url ? [{ url: post.image_url, width: 1200, height: 630, alt: post.title }] : [],
         },
         twitter: {
             card: 'summary_large_image',
-            title: post.title,
-            description: post.excerpt,
+            title: post.seo_title || post.title,
+            description: post.seo_description || post.excerpt,
         },
         alternates: {
             canonical: `/blog/${slug}`,
@@ -127,9 +127,9 @@ export default async function BlogPostPage({ params }) {
             <div className="min-h-screen bg-[#faf9f7]">
                 {/* Hero Image */}
                 <div className="relative h-[50vh] sm:h-[60vh] overflow-hidden">
-                    {post.image_url && (
+                    {(post.background_image_url || post.image_url) && (
                         <img
-                            src={post.image_url}
+                            src={post.background_image_url || post.image_url}
                             alt={post.title}
                             className="w-full h-full object-cover"
                         />

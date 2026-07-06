@@ -1,20 +1,7 @@
-
-import { Inter, Playfair_Display } from 'next/font/google';
 import Script from 'next/script';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import './globals.css';
-
-const inter = Inter({
-    subsets: ['latin'],
-    variable: '--font-inter',
-});
-
-const playfair = Playfair_Display({
-    subsets: ['latin'],
-    variable: '--font-playfair',
-    weight: ['400', '500', '600', '700', '800', '900'],
-});
 
 export const metadata = {
     metadataBase: new URL('https://www.ve-lora.my.id'),
@@ -106,7 +93,7 @@ export default function RootLayout({ children }) {
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
                 />
             </head>
-            <body className={`${inter.variable} ${playfair.variable} font-sans`} suppressHydrationWarning={true}>
+            <body className="font-sans" suppressHydrationWarning={true}>
                 {children}
                 <Analytics />
                 <SpeedInsights />

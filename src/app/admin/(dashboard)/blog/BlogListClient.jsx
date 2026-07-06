@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Plus, Edit, Trash2, Eye, EyeOff, Search } from 'lucide-react';
 
@@ -12,7 +11,6 @@ export default function BlogListClient({ initialPosts }) {
     const [deleting, setDeleting] = useState(null);
     const [mounted, setMounted] = useState(false);
     const supabase = createClient();
-    const router = useRouter();
 
     useEffect(() => {
         setMounted(true);

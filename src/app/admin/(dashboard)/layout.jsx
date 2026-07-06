@@ -22,7 +22,8 @@ import {
     User,
     Workflow,
     Scale,
-    Settings
+    Settings,
+    Tags
 } from 'lucide-react';
 
 const sidebarLinks = [
@@ -39,6 +40,8 @@ const sidebarLinks = [
     { id: 'founder', label: 'Founder', href: '/admin/founder', icon: User },
     { id: 'workflow', label: 'Workflow', href: '/admin/workflow', icon: Workflow },
     { id: 'legalitas', label: 'Legalitas', href: '/admin/legalitas', icon: Scale },
+    { id: 'page-sections', label: 'Page Sections', href: '/admin/page-sections', icon: LayoutDashboard },
+    { id: 'categories', label: 'Categories', href: '/admin/categories', icon: Tags },
     { id: 'site-settings', label: 'Site Settings', href: '/admin/site-settings', icon: Settings },
 ];
 

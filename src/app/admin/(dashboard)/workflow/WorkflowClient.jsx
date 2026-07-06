@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, Eye, EyeOff, X, Save, Loader2 } from 'lucide-react';
+import IconPicker from '@/components/admin/IconPicker';
 
 export default function WorkflowClient({ initialData }) {
     const [items, setItems] = useState(initialData);
@@ -44,7 +45,6 @@ export default function WorkflowClient({ initialData }) {
 
     const fields = [
         { key: 'title', label: 'Judul Step', required: true },
-        { key: 'icon_name', label: 'Icon Name (Lucide)' },
         { key: 'color_gradient', label: 'Gradient CSS' },
         { key: 'sort_order', label: 'Urutan', type: 'number' },
     ];
@@ -60,6 +60,7 @@ export default function WorkflowClient({ initialData }) {
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
                                 {fields.map(f => (
                                     <div key={f.key}>
                                         <label className="block text-sm text-gray-400 mb-1">{f.label}</label>

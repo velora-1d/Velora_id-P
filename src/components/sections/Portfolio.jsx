@@ -1,18 +1,11 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, ExternalLink, MessageSquare, ArrowRight, Layers, Sparkles, ShoppingCart, CreditCard, Building2, Truck, GraduationCap, BarChart3, MapPin, Zap, Target, Lightbulb, ChevronRight } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, Layers, Sparkles, MapPin, Zap, ChevronRight } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
-
-const iconMap = {
-    'ShoppingCart': ShoppingCart,
-    'CreditCard': CreditCard,
-    'Building2': Building2,
-    'Truck': Truck,
-    'GraduationCap': GraduationCap,
-    'BarChart3': BarChart3,
-};
+import { getIcon } from '@/lib/icons';
 
 const fallbackProjects = [
     {
@@ -21,7 +14,7 @@ const fallbackProjects = [
         challenge: "Klien membutuhkan sistem yang dapat mengelola ribuan produk dengan banyak varian dan integrasi ke marketplace.",
         solution: "Kami membangun platform custom dengan dashboard terpusat, sync otomatis ke Tokopedia/Shopee, dan laporan penjualan real-time.",
         tech: "React, Node.js, PostgreSQL",
-        image_url: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=600&q=70", icon: "ShoppingCart"
+        image_url: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=600&q=70", icon_name: "ShoppingCart", slug: 'e-commerce-platform'
     },
     {
         title: "Digital Banking App", category: "Finance & Banking", client: "Bank Digital Nusantara",
@@ -29,7 +22,7 @@ const fallbackProjects = [
         challenge: "Membutuhkan keamanan tingkat tinggi dengan UX yang tetap mudah digunakan oleh semua kalangan.",
         solution: "Implementasi biometric authentication, end-to-end encryption, dengan UI/UX yang intuitif dan accessibility-friendly.",
         tech: "Flutter, Go, MongoDB",
-        image_url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=70", icon: "CreditCard"
+        image_url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=70", icon_name: "CreditCard", slug: 'digital-banking-app'
     },
     {
         title: "Hospital Management System", category: "Healthcare", client: "RS Sehat Sejahtera",
@@ -37,7 +30,7 @@ const fallbackProjects = [
         challenge: "Sistem lama berbasis kertas menyebabkan keterlambatan layanan dan kehilangan data pasien.",
         solution: "Migrasi penuh ke sistem digital dengan modul pendaftaran, antrian, rekam medis, billing, dan telemedicine.",
         tech: "Laravel, Vue.js, MySQL",
-        image_url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=70", icon: "Building2"
+        image_url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=70", icon_name: "Building2", slug: 'hospital-management-system'
     },
     {
         title: "Fleet Management System", category: "Logistics", client: "Logistics Prima",
@@ -45,7 +38,7 @@ const fallbackProjects = [
         challenge: "Armada 200+ kendaraan sulit dipantau, banyak keterlambatan dan inefisiensi rute.",
         solution: "GPS tracking real-time, algoritma optimasi rute, dashboard monitoring, dan notifikasi otomatis ke pelanggan.",
         tech: "Python, Django, PostgreSQL",
-        image_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=70", icon: "Truck"
+        image_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=70", icon_name: "Truck", slug: 'fleet-management-system'
     },
     {
         title: "Learning Management System", category: "Education", client: "EduTech Indonesia",
@@ -53,7 +46,7 @@ const fallbackProjects = [
         challenge: "Pandemi memaksa sekolah beralih online tanpa infrastruktur yang memadai.",
         solution: "LMS lengkap dengan video conference, bank soal, rapor digital, dan integrasi dengan sistem sekolah.",
         tech: "Next.js, Firebase, WebRTC",
-        image_url: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=600&q=70", icon: "GraduationCap"
+        image_url: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=600&q=70", icon_name: "GraduationCap", slug: 'learning-management-system'
     },
     {
         title: "Business Analytics Dashboard", category: "Retail & E-Commerce", client: "Retail Mart Group",
@@ -61,12 +54,11 @@ const fallbackProjects = [
         challenge: "Data penjualan tersebar di berbagai platform, sulit mengambil keputusan berbasis data.",
         solution: "Unified dashboard dengan integrasi multi-source, visualisasi data interaktif, dan AI recommendation engine.",
         tech: "React, Python, TensorFlow",
-        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=70", icon: "BarChart3"
+        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=70", icon_name: "BarChart3", slug: 'business-analytics-dashboard'
     }
 ];
 
 const Portfolio = () => {
-    const [selectedProject, setSelectedProject] = useState(null);
     const [projects, setProjects] = useState(fallbackProjects);
     const [filter, setFilter] = useState('Semua');
 
@@ -90,13 +82,7 @@ const Portfolio = () => {
     const featured = filtered[0];
     const rest = filtered.slice(1);
 
-    const openModal = (project) => setSelectedProject(project);
-    const closeModal = () => setSelectedProject(null);
-
-    const handleWhatsApp = (project) => {
-        const message = `Halo Velora! Saya tertarik dengan project "${project.title}" yang ada di portfolio. Bisa diskusi lebih lanjut?`;
-        window.open(`https://wa.me/6281320442174?text=${encodeURIComponent(message)}`, '_blank');
-    };
+    const projectUrl = (project) => `/portfolio/${project.slug || project.id}`;
 
     return (
         <section id="portfolio" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
@@ -142,9 +128,9 @@ const Portfolio = () => {
                     {/* FEATURED — Overlapping Card Hero */}
                     {featured && (
                         <ScrollReveal width="100%">
-                            <div
+                            <Link
+                                href={projectUrl(featured)}
                                 className="relative mb-8 cursor-pointer group"
-                                onClick={() => openModal(featured)}
                             >
                                 {/* Image */}
                                 <div className="h-[280px] sm:h-[360px] md:h-[400px] rounded-2xl overflow-hidden">
@@ -183,19 +169,19 @@ const Portfolio = () => {
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </Link>
                         </ScrollReveal>
                     )}
 
                     {/* REST — Overlapping Card Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                         {rest.map((project, index) => {
-                            const PIcon = iconMap[project.icon];
+                            const PIcon = getIcon(project.icon_name || project.icon);
                             return (
                                 <ScrollReveal key={project.id || index} delay={index * 0.08} width="100%">
-                                    <div
+                                    <Link
+                                        href={projectUrl(project)}
                                         className="cursor-pointer group"
-                                        onClick={() => openModal(project)}
                                     >
                                         {/* Image */}
                                         <div className="h-48 sm:h-52 rounded-2xl overflow-hidden">
@@ -232,111 +218,13 @@ const Portfolio = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </ScrollReveal>
                             );
                         })}
                     </div>
                 </div>
             </div>
-
-            {/* Modal */}
-            {selectedProject && (
-                <div
-                    className="fixed inset-0 bg-black/50 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-4"
-                    onClick={closeModal}
-                >
-                    <div
-                        className="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-gray-100"
-                        onClick={(e) => e.stopPropagation()}
-                        style={{ scrollbarWidth: 'none' }}
-                    >
-                        {/* Hero Image */}
-                        <div className="h-64 sm:h-72 relative overflow-hidden rounded-t-3xl">
-                            <img src={selectedProject.image_url || selectedProject.image} alt={selectedProject.title} className="w-full h-full object-cover" />
-                            <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/40 to-transparent"></div>
-
-                            <button onClick={closeModal} className="absolute top-4 right-4 w-10 h-10 bg-white/15 backdrop-blur-xl rounded-full flex items-center justify-center text-white hover:bg-white/25 transition-all duration-200 border border-white/20 hover:scale-105">
-                                <X className="w-5 h-5" />
-                            </button>
-
-                            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-8">
-                                <div className="flex items-center gap-2 mb-3">
-                                    <span className="px-3 py-1 bg-white/15 backdrop-blur-md border border-white/20 text-white text-xs font-semibold rounded-full uppercase tracking-wider">
-                                        {selectedProject.category}
-                                    </span>
-                                    <span className="px-3 py-1 bg-teal-500/20 backdrop-blur-md border border-teal-400/30 text-teal-200 text-xs font-semibold rounded-full">
-                                        {selectedProject.client}
-                                    </span>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    {(() => { const PIcon = iconMap[selectedProject.icon]; return PIcon ? <PIcon className="w-7 h-7 sm:w-8 sm:h-8 text-white" strokeWidth={1.5} /> : null; })()}
-                                    <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">{selectedProject.title}</h3>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Content */}
-                        <div className="p-6 sm:p-8">
-                            <p className="text-gray-600 leading-relaxed mb-6 text-sm sm:text-base">{selectedProject.description}</p>
-
-                            {/* Challenge & Solution Cards */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                                <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-100 rounded-2xl p-5 relative overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-amber-400 to-orange-400 rounded-r-full"></div>
-                                    <div className="pl-2">
-                                        <div className="flex items-center gap-2 mb-3">
-                                            <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
-                                                <Target className="w-4 h-4 text-amber-600" />
-                                            </div>
-                                            <h4 className="font-bold text-gray-900 text-sm">Tantangan</h4>
-                                        </div>
-                                        <p className="text-gray-600 text-sm leading-relaxed">{selectedProject.challenge}</p>
-                                    </div>
-                                </div>
-                                <div className="bg-gradient-to-br from-teal-50 to-cyan-50 border border-teal-100 rounded-2xl p-5 relative overflow-hidden">
-                                    <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-teal-400 to-cyan-400 rounded-r-full"></div>
-                                    <div className="pl-2">
-                                        <div className="flex items-center gap-2 mb-3">
-                                            <div className="w-8 h-8 rounded-lg bg-teal-100 flex items-center justify-center">
-                                                <Lightbulb className="w-4 h-4 text-teal-600" />
-                                            </div>
-                                            <h4 className="font-bold text-gray-900 text-sm">Solusi</h4>
-                                        </div>
-                                        <p className="text-gray-600 text-sm leading-relaxed">{selectedProject.solution}</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {/* Tech Stack */}
-                            <div className="bg-gray-50 rounded-2xl p-5 border border-gray-100 mb-6">
-                                <h4 className="font-bold text-gray-900 text-sm mb-3 flex items-center gap-2">
-                                    <Layers className="w-4 h-4 text-gray-400" /> Tech Stack
-                                </h4>
-                                <div className="flex flex-wrap gap-2">
-                                    {selectedProject.tech.split(', ').map((t, i) => (
-                                        <span key={i} className="px-3 py-1.5 bg-white border border-gray-200 rounded-lg text-xs font-mono font-medium text-gray-700 shadow-sm">
-                                            {t}
-                                        </span>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* CTA */}
-                            <div className="bg-gradient-to-r from-teal-50 to-cyan-50 rounded-2xl p-5 sm:p-6 border border-teal-100">
-                                <p className="text-gray-700 text-sm font-medium mb-4">Tertarik dengan project serupa?</p>
-                                <button
-                                    onClick={() => handleWhatsApp(selectedProject)}
-                                    className="w-full bg-gradient-to-r from-teal-500 to-cyan-500 hover:from-teal-600 hover:to-cyan-600 text-white font-bold py-3.5 sm:py-4 rounded-xl transition-all duration-200 hover:-translate-y-0.5 shadow-lg shadow-teal-500/20 flex items-center justify-center gap-2.5 text-sm sm:text-base"
-                                >
-                                    <MessageSquare className="w-5 h-5" />
-                                    Diskusikan Project Serupa
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            )}
         </section>
     );
 };

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { useRouter } from 'next/navigation';
 import { Mail, Clock, Check, CheckCheck, Trash2, User, Phone, MessageSquare, ChevronDown, ChevronUp } from 'lucide-react';
 
 export default function MessagesClient({ initialMessages }) {
@@ -11,7 +10,6 @@ export default function MessagesClient({ initialMessages }) {
     const [filter, setFilter] = useState('all');
     const [mounted, setMounted] = useState(false);
     const supabase = createClient();
-    const router = useRouter();
 
     useEffect(() => {
         setMounted(true);

@@ -87,11 +87,12 @@ export const ScrollReveal = ({
     as: Component = 'div',
     ...props
 }) => {
+    const Tag = Component;
     const { ref, isVisible } = useScrollReveal();
     const animation = revealVariants[variant] || revealVariants.fadeUp;
 
     return (
-        <Component
+        <Tag
             ref={ref}
             className={`
                 transition-all ${duration} ease-out
@@ -105,7 +106,7 @@ export const ScrollReveal = ({
             {...props}
         >
             {children}
-        </Component>
+        </Tag>
     );
 };
 

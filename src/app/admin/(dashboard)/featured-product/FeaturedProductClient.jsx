@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, X, Save, Loader2, CheckCircle2 } from 'lucide-react';
+import IconPicker from '@/components/admin/IconPicker';
 
 export default function FeaturedProductClient({ initialFeatures, initialBenefits }) {
     const [features, setFeatures] = useState(initialFeatures);
@@ -91,7 +92,7 @@ export default function FeaturedProductClient({ initialFeatures, initialBenefits
             {/* Feature Form Modal */}
             <Modal show={showFeatForm} title={editing ? 'Edit Fitur' : 'Fitur Baru'} onClose={() => { setShowFeatForm(false); setEditing(null); }} onSubmit={submitFeature}>
                 {inp('Judul', featForm.title, (e) => setFeatForm({ ...featForm, title: e.target.value }), true)}
-                {inp('Icon (Lucide)', featForm.icon_name, (e) => setFeatForm({ ...featForm, icon_name: e.target.value }))}
+                <IconPicker value={featForm.icon_name} onChange={(icon_name) => setFeatForm({ ...featForm, icon_name })} />
                 {inp('Gradient CSS', featForm.color_gradient, (e) => setFeatForm({ ...featForm, color_gradient: e.target.value }))}
                 <div>
                     <label className="block text-sm text-gray-400 mb-1">Deskripsi</label>

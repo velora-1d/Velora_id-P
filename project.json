@@ -1,0 +1,34 @@
+{
+  "name": "velora-id",
+  "description": "Website company profile dan dashboard CMS Velora ID.",
+  "version": "1.0.0",
+  "lastUpdated": "2026-07-04",
+  "stack": {
+    "frontend": "next.js",
+    "backend": "next.js-fullstack",
+    "database": "supabase-postgresql",
+    "orm": "supabase-client",
+    "auth": "supabase-auth",
+    "realtime": null,
+    "mobile": null
+  },
+  "mode": "fullstack",
+  "platform": ["web"],
+  "multiTenant": false,
+  "tenantStrategy": null,
+  "scale": "small",
+  "team": "solo",
+  "hosting": {
+    "development": "local",
+    "staging": "vercel-preview",
+    "production": "vercel"
+  },
+  "infraBudget": "low",
+  "activeRules": [
+    "nextjs-fullstack",
+    "postgresql",
+    "supabase",
+    "dashboard-cms"
+  ],
+  "notes": "Semua gambar dashboard wajib upload; storage memakai Supabase Storage S3-compatible; detail portfolio/artikel wajib halaman."
+}

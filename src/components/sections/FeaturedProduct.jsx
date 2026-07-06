@@ -53,7 +53,7 @@ const INTERVAL = 6000;
 
 const FeaturedProduct = () => {
     const [features, setFeatures] = useState(fallbackFeatures);
-    const [benefits, setBenefits] = useState(fallbackBenefits);
+    const [, setBenefits] = useState(fallbackBenefits);
     const [activeTab, setActiveTab] = useState(0);
     const [paused, setPaused] = useState(false);
     const [transitioning, setTransitioning] = useState(false);

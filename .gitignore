@@ -33,4 +33,18 @@ dist-ssr
 # env
 .env.local
 .env*.local
+plan-update-velora-id.md
+IMPLEMENTATION_PLAN.md
 node_modules_old/
+
+# Agent and AI tools config
+.agent/
+.agents/
+.claude/
+.codex/
+.serena/
+skills-lock.json
+
+# pnpm files
+pnpm-lock.yaml
+pnpm-workspace.yaml

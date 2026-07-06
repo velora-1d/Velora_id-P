@@ -7,7 +7,11 @@ import { ArrowLeft, Save, Eye, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import ImageUpload from '@/components/admin/ImageUpload';
 
-export default function BlogFormClient({ post = null }) {
+function csvToArray(value) {
+    return value.split(',').map((item) => item.trim()).filter(Boolean);
+}
+
+export default function BlogFormClient({ post = null, categories = [] }) {
     const isEdit = !!post;
     const [form, setForm] = useState({
         title: post?.title || '',
@@ -15,9 +19,15 @@ export default function BlogFormClient({ post = null }) {
         content: post?.content || '',
         excerpt: post?.excerpt || '',
         image_url: post?.image_url || '',
+        background_image_url: post?.background_image_url || '',
+        category_id: post?.category_id || '',
         category: post?.category || 'Technology',
         author: post?.author || 'Tim Velora',
         read_time: post?.read_time || '5 menit',
+        tags: Array.isArray(post?.tags) ? post.tags.join(', ') : '',
+        seo_title: post?.seo_title || '',
+        seo_description: post?.seo_description || '',
+        seo_keywords: Array.isArray(post?.seo_keywords) ? post.seo_keywords.join(', ') : '',
         published: post?.published || false,
     });
     const [saving, setSaving] = useState(false);
@@ -46,11 +56,19 @@ export default function BlogFormClient({ post = null }) {
         e.preventDefault();
         setSaving(true);
         setError('');
+        const selectedCategory = categories.find((category) => category.id === form.category_id);
+        const payload = {
+            ...form,
+            category: selectedCategory?.name || form.category,
+            category_id: form.category_id || null,
+            tags: csvToArray(form.tags),
+            seo_keywords: csvToArray(form.seo_keywords),
+        };
 
         if (isEdit) {
             const { error } = await supabase
                 .from('blog_posts')
-                .update({ ...form, updated_at: new Date().toISOString() })
+                .update({ ...payload, updated_at: new Date().toISOString() })
                 .eq('id', post.id);
             if (error) {
                 setError(error.message);
@@ -58,7 +76,7 @@ export default function BlogFormClient({ post = null }) {
                 return;
             }
         } else {
-            const { error } = await supabase.from('blog_posts').insert(form);
+            const { error } = await supabase.from('blog_posts').insert(payload);
             if (error) {
                 setError(error.message.includes('duplicate') ? 'Slug sudah digunakan' : error.message);
                 setSaving(false);
@@ -143,13 +161,19 @@ export default function BlogFormClient({ post = null }) {
                         <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 space-y-5">
                             <div>
                                 <label className="block text-sm font-medium text-gray-300 mb-2">Kategori</label>
-                                <input
-                                    type="text"
-                                    value={form.category}
-                                    onChange={(e) => setForm({ ...form, category: e.target.value })}
+                                <select
+                                    value={form.category_id}
+                                    onChange={(e) => {
+                                        const selected = categories.find((category) => category.id === e.target.value);
+                                        setForm({ ...form, category_id: e.target.value, category: selected?.name || form.category });
+                                    }}
                                     className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                                    placeholder="Technology"
-                                />
+                                >
+                                    <option value="">Pilih kategori</option>
+                                    {categories.map((category) => (
+                                        <option key={category.id} value={category.id}>{category.name}</option>
+                                    ))}
+                                </select>
                             </div>
 
                             <div>
@@ -179,6 +203,55 @@ export default function BlogFormClient({ post = null }) {
                                 onChange={(url) => setForm({ ...form, image_url: url })}
                                 folder="blog"
                             />
+
+                            <ImageUpload
+                                label="Background Image"
+                                value={form.background_image_url}
+                                onChange={(url) => setForm({ ...form, background_image_url: url })}
+                                folder="blog"
+                            />
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">Tags</label>
+                                <input
+                                    type="text"
+                                    value={form.tags}
+                                    onChange={(e) => setForm({ ...form, tags: e.target.value })}
+                                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                    placeholder="website, umkm, seo"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">SEO Title</label>
+                                <input
+                                    type="text"
+                                    value={form.seo_title}
+                                    onChange={(e) => setForm({ ...form, seo_title: e.target.value })}
+                                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">SEO Description</label>
+                                <textarea
+                                    value={form.seo_description}
+                                    onChange={(e) => setForm({ ...form, seo_description: e.target.value })}
+                                    rows={2}
+                                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium text-gray-300 mb-2">SEO Keywords</label>
+                                <input
+                                    type="text"
+                                    value={form.seo_keywords}
+                                    onChange={(e) => setForm({ ...form, seo_keywords: e.target.value })}
+                                    className="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                    placeholder="keyword 1, keyword 2"
+                                />
+                            </div>
 
                             <div className="flex items-center gap-3">
                                 <button

@@ -1,38 +1,48 @@
 import { NextResponse } from 'next/server';
-import { uploadToR2 } from '@/lib/r2';
+import { uploadToStorage } from '@/lib/storage';
 import { createClient } from '@/lib/supabase/server';
+
+const allowedFolders = new Set(['blog', 'portfolio', 'services', 'about', 'founder', 'testimonials', 'site', 'general']);
+const maxSize = 5 * 1024 * 1024;
 
 export async function POST(request) {
     try {
-        // Auth check - ensure only logged in admin can upload
         const supabase = await createClient();
         const { data: { user } } = await supabase.auth.getUser();
         
         if (!user) {
-            return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            return NextResponse.json({ error: 'Tidak terautentikasi' }, { status: 401 });
         }
 
         const formData = await request.formData();
         const file = formData.get('file');
-        const folder = formData.get('folder') || 'general';
+        const requestedFolder = String(formData.get('folder') || 'general');
+        const folder = allowedFolders.has(requestedFolder) ? requestedFolder : 'general';
 
         if (!file) {
-            return NextResponse.json({ error: 'No file uploaded' }, { status: 400 });
+            return NextResponse.json({ error: 'File belum dipilih' }, { status: 400 });
+        }
+
+        if (!file.type?.startsWith('image/')) {
+            return NextResponse.json({ error: 'File wajib berupa gambar' }, { status: 422 });
+        }
+
+        if (file.size > maxSize) {
+            return NextResponse.json({ error: 'Ukuran gambar maksimal 5MB' }, { status: 422 });
         }
 
         const bytes = await file.arrayBuffer();
         const buffer = Buffer.from(bytes);
 
-        // Generate unique filename
         const timestamp = Date.now();
-        const originalName = file.name.replace(/\s+/g, '-').toLowerCase();
+        const originalName = file.name.replace(/[^a-zA-Z0-9._-]+/g, '-').toLowerCase();
         const fileName = `${folder}/${timestamp}-${originalName}`;
 
-        const publicUrl = await uploadToR2(buffer, fileName, file.type);
+        const publicUrl = await uploadToStorage(buffer, fileName, file.type);
 
         return NextResponse.json({ url: publicUrl });
     } catch (error) {
         console.error('Upload API Error:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: error.message || 'Gagal mengunggah gambar' }, { status: 500 });
     }
 }

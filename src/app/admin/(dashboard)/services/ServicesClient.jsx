@@ -3,8 +3,14 @@ import { useState } from 'react';
 import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, Eye, EyeOff, Search, X, Save, Loader2 } from 'lucide-react';
+import IconPicker from '@/components/admin/IconPicker';
+import ImageUpload from '@/components/admin/ImageUpload';
 
-export default function ServicesClient({ initialData }) {
+function csvToArray(value) {
+    return value.split(',').map((item) => item.trim()).filter(Boolean);
+}
+
+export default function ServicesClient({ initialData, categories = [] }) {
     const [items, setItems] = useState(initialData);
     const [search, setSearch] = useState('');
     const [showForm, setShowForm] = useState(false);
@@ -15,12 +21,20 @@ export default function ServicesClient({ initialData }) {
     const router = useRouter();
 
     function empty() {
-        return { category_id: '', category_name: '', category_description: '', category_gradient: 'from-blue-500 to-indigo-600', icon_name: 'Globe', title: '', description: '', sort_order: 0, published: true };
+        return { category_ref_id: '', category_id: '', category_name: '', category_description: '', category_gradient: 'from-blue-500 to-indigo-600', icon_name: 'Globe', title: '', description: '', image_url: '', background_image_url: '', tags: '', seo_title: '', seo_description: '', seo_keywords: '', sort_order: 0, published: true };
     }
 
     const filtered = items.filter(i => i.title.toLowerCase().includes(search.toLowerCase()) || i.category_name.toLowerCase().includes(search.toLowerCase()));
     const openNew = () => { setForm(empty()); setEditing(null); setShowForm(true); };
-    const openEdit = (item) => { setForm({ ...item }); setEditing(item.id); setShowForm(true); };
+    const openEdit = (item) => {
+        setForm({
+            ...item,
+            tags: Array.isArray(item.tags) ? item.tags.join(', ') : '',
+            seo_keywords: Array.isArray(item.seo_keywords) ? item.seo_keywords.join(', ') : '',
+        });
+        setEditing(item.id);
+        setShowForm(true);
+    };
     const closeForm = () => { setShowForm(false); setEditing(null); };
 
     const togglePublish = async (item) => {
@@ -38,6 +52,13 @@ export default function ServicesClient({ initialData }) {
         e.preventDefault();
         setSaving(true);
         const { id, created_at, updated_at, ...data } = form;
+        const selectedCategory = categories.find((category) => category.id === data.category_ref_id);
+        data.category_ref_id = data.category_ref_id || null;
+        data.category_id = selectedCategory?.slug || data.category_id;
+        data.category_name = selectedCategory?.name || data.category_name;
+        data.category_description = selectedCategory?.description || data.category_description;
+        data.tags = csvToArray(data.tags || '');
+        data.seo_keywords = csvToArray(data.seo_keywords || '');
         data.sort_order = parseInt(data.sort_order) || 0;
         if (editing) {
             const { data: updated, error } = await supabase.from('services').update({ ...data, updated_at: new Date().toISOString() }).eq('id', editing).select().single();
@@ -53,9 +74,6 @@ export default function ServicesClient({ initialData }) {
 
     const fields = [
         { key: 'title', label: 'Judul Layanan', required: true },
-        { key: 'category_id', label: 'Category ID (slug)' },
-        { key: 'category_name', label: 'Nama Kategori' },
-        { key: 'icon_name', label: 'Icon Name (Lucide)' },
         { key: 'category_gradient', label: 'Gradient CSS' },
         { key: 'sort_order', label: 'Urutan', type: 'number' },
     ];
@@ -71,6 +89,27 @@ export default function ServicesClient({ initialData }) {
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm text-gray-400 mb-1">Kategori</label>
+                                    <select
+                                        value={form.category_ref_id || ''}
+                                        onChange={(e) => {
+                                            const selected = categories.find((category) => category.id === e.target.value);
+                                            setForm({
+                                                ...form,
+                                                category_ref_id: e.target.value,
+                                                category_id: selected?.slug || form.category_id,
+                                                category_name: selected?.name || form.category_name,
+                                                category_description: selected?.description || form.category_description,
+                                            });
+                                        }}
+                                        className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                    >
+                                        <option value="">Pilih kategori</option>
+                                        {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+                                    </select>
+                                </div>
+                                <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
                                 {fields.map(f => (
                                     <div key={f.key}>
                                         <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
@@ -85,6 +124,26 @@ export default function ServicesClient({ initialData }) {
                             <div>
                                 <label className="block text-sm text-gray-400 mb-1">Deskripsi Kategori</label>
                                 <textarea value={form.category_description} onChange={(e) => setForm({ ...form, category_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
+                            </div>
+                            <ImageUpload label="Gambar Layanan" value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} folder="services" />
+                            <ImageUpload label="Background Gambar" value={form.background_image_url} onChange={(url) => setForm({ ...form, background_image_url: url })} folder="services" />
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm text-gray-400 mb-1">Tags</label>
+                                    <input value={form.tags || ''} onChange={(e) => setForm({ ...form, tags: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="website, seo" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm text-gray-400 mb-1">SEO Keywords</label>
+                                    <input value={form.seo_keywords || ''} onChange={(e) => setForm({ ...form, seo_keywords: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="keyword 1, keyword 2" />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm text-gray-400 mb-1">SEO Title</label>
+                                <input value={form.seo_title || ''} onChange={(e) => setForm({ ...form, seo_title: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
+                            </div>
+                            <div>
+                                <label className="block text-sm text-gray-400 mb-1">SEO Description</label>
+                                <textarea value={form.seo_description || ''} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
                             </div>
                             <div className="flex items-center justify-between pt-2">
                                 <div className="flex items-center gap-3">

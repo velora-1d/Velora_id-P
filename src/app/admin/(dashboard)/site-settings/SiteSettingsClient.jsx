@@ -16,6 +16,14 @@ export default function SiteSettingsClient({ initialData }) {
 
     function empty() { return { setting_key: '', setting_value: '', setting_label: '', setting_suffix: '', sort_order: 0 }; }
 
+    const fields = [
+        { key: 'setting_key', label: 'Key', required: true },
+        { key: 'setting_value', label: 'Value' },
+        { key: 'setting_label', label: 'Label' },
+        { key: 'setting_suffix', label: 'Suffix' },
+        { key: 'sort_order', label: 'Urutan', type: 'number' },
+    ];
+
     const openNew = () => { setForm(empty()); setEditing(null); setShowForm(true); };
     const openEdit = (item) => { setForm({ ...item }); setEditing(item.id); setShowForm(true); };
     const closeForm = () => { setShowForm(false); setEditing(null); };

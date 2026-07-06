@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Upload, X, Loader2, Image as ImageIcon } from 'lucide-react';
+import { Upload, X, Loader2 } from 'lucide-react';
 
 export default function ImageUpload({ value, onChange, folder = 'general', label = 'Gambar' }) {
     const [uploading, setUploading] = useState(false);
@@ -88,21 +88,6 @@ export default function ImageUpload({ value, onChange, folder = 'general', label
 
             {error && <p className="text-xs text-red-400">{error}</p>}
             
-            {/* Fallback URL input */}
-            {!uploading && (
-                <div className="flex items-center gap-2">
-                    <div className="relative flex-1">
-                        <ImageIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" />
-                        <input
-                            type="url"
-                            value={value}
-                            onChange={(e) => onChange(e.target.value)}
-                            placeholder="Atau masukkan URL gambar..."
-                            className="w-full pl-9 pr-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-xs text-white placeholder-gray-500 focus:outline-none focus:ring-1 focus:ring-primary/50"
-                        />
-                    </div>
-                </div>
-            )}
         </div>
     );
 }

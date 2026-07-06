@@ -23,8 +23,8 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['var(--font-inter)', 'Inter', 'sans-serif'],
-        heading: ['var(--font-playfair)', 'Playfair Display', 'Georgia', 'serif'],
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        heading: ['Georgia', 'serif'],
       }
     },
   },

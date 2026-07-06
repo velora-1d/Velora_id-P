@@ -5,8 +5,17 @@ import { createClient } from '@/lib/supabase/client';
 import { useRouter } from 'next/navigation';
 import { Plus, Edit, Trash2, Eye, EyeOff, Search, X, ArrowLeft, Save, Loader2 } from 'lucide-react';
 import ImageUpload from '@/components/admin/ImageUpload';
+import IconPicker from '@/components/admin/IconPicker';
 
-export default function PortfolioClient({ initialProjects }) {
+function slugify(value) {
+    return value.toLowerCase().replace(/[^a-z0-9\s-]/g, '').trim().replace(/\s+/g, '-').replace(/-+/g, '-');
+}
+
+function csvToArray(value) {
+    return value.split(',').map((item) => item.trim()).filter(Boolean);
+}
+
+export default function PortfolioClient({ initialProjects, categories = [] }) {
     const [projects, setProjects] = useState(initialProjects);
     const [search, setSearch] = useState('');
     const [showForm, setShowForm] = useState(false);
@@ -18,7 +27,7 @@ export default function PortfolioClient({ initialProjects }) {
     const router = useRouter();
 
     function getEmptyForm() {
-        return { title: '', category: '', client: '', description: '', challenge: '', solution: '', tech: '', image_url: '', icon: 'Globe', published: false };
+        return { title: '', slug: '', category_id: '', category: '', client: '', description: '', challenge: '', solution: '', tech: '', image_url: '', background_image_url: '', icon_name: 'Globe', tags: '', seo_title: '', seo_description: '', seo_keywords: '', published: false };
     }
 
     const filtered = projects.filter(p =>
@@ -27,7 +36,16 @@ export default function PortfolioClient({ initialProjects }) {
     );
 
     const openNew = () => { setForm(getEmptyForm()); setEditing(null); setShowForm(true); };
-    const openEdit = (project) => { setForm({ ...project }); setEditing(project.id); setShowForm(true); };
+    const openEdit = (project) => {
+        setForm({
+            ...project,
+            icon_name: project.icon_name || project.icon || 'Globe',
+            tags: Array.isArray(project.tags) ? project.tags.join(', ') : '',
+            seo_keywords: Array.isArray(project.seo_keywords) ? project.seo_keywords.join(', ') : '',
+        });
+        setEditing(project.id);
+        setShowForm(true);
+    };
     const closeForm = () => { setShowForm(false); setEditing(null); };
 
     const togglePublish = async (project) => {
@@ -46,7 +64,12 @@ export default function PortfolioClient({ initialProjects }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setSaving(true);
-        const { id, created_at, updated_at, ...data } = form;
+        const { id, created_at, updated_at, icon, ...data } = form;
+        const selectedCategory = categories.find((category) => category.id === data.category_id);
+        data.category = selectedCategory?.name || data.category;
+        data.category_id = data.category_id || null;
+        data.tags = csvToArray(data.tags || '');
+        data.seo_keywords = csvToArray(data.seo_keywords || '');
 
         if (editing) {
             const { data: updated, error } = await supabase.from('portfolio_projects').update({ ...data, updated_at: new Date().toISOString() }).eq('id', editing).select().single();
@@ -74,21 +97,51 @@ export default function PortfolioClient({ initialProjects }) {
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 {[
                                     { key: 'title', label: 'Judul', required: true },
-                                    { key: 'category', label: 'Kategori' },
+                                    { key: 'slug', label: 'Slug', required: true },
                                     { key: 'client', label: 'Klien' },
-                                    { key: 'icon', label: 'Icon (Emoji)' },
                                     { key: 'tech', label: 'Tech Stack' },
                                 ].map(f => (
                                     <div key={f.key}>
                                         <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
-                                        <input type="text" value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required={f.required} />
+                                        <input
+                                            type="text"
+                                            value={form[f.key]}
+                                            onChange={(e) => setForm({
+                                                ...form,
+                                                [f.key]: f.key === 'slug' ? slugify(e.target.value) : e.target.value,
+                                                slug: f.key === 'title' && !editing ? slugify(e.target.value) : form.slug,
+                                            })}
+                                            className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                            required={f.required}
+                                        />
                                     </div>
                                 ))}
+                                <div>
+                                    <label className="block text-sm text-gray-400 mb-1">Kategori</label>
+                                    <select
+                                        value={form.category_id || ''}
+                                        onChange={(e) => {
+                                            const selected = categories.find((category) => category.id === e.target.value);
+                                            setForm({ ...form, category_id: e.target.value, category: selected?.name || form.category });
+                                        }}
+                                        className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                    >
+                                        <option value="">Pilih kategori</option>
+                                        {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+                                    </select>
+                                </div>
+                                <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
                             </div>
                             <ImageUpload
                                 label="Project Image"
                                 value={form.image_url}
                                 onChange={(url) => setForm({ ...form, image_url: url })}
+                                folder="portfolio"
+                            />
+                            <ImageUpload
+                                label="Background Image"
+                                value={form.background_image_url}
+                                onChange={(url) => setForm({ ...form, background_image_url: url })}
                                 folder="portfolio"
                             />
                             {['description', 'challenge', 'solution'].map(key => (
@@ -97,6 +150,24 @@ export default function PortfolioClient({ initialProjects }) {
                                     <textarea value={form[key]} onChange={(e) => setForm({ ...form, [key]: e.target.value })} rows={3} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
                                 </div>
                             ))}
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm text-gray-400 mb-1">Tags</label>
+                                    <input value={form.tags || ''} onChange={(e) => setForm({ ...form, tags: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="web, dashboard" />
+                                </div>
+                                <div>
+                                    <label className="block text-sm text-gray-400 mb-1">SEO Keywords</label>
+                                    <input value={form.seo_keywords || ''} onChange={(e) => setForm({ ...form, seo_keywords: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="keyword 1, keyword 2" />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm text-gray-400 mb-1">SEO Title</label>
+                                <input value={form.seo_title || ''} onChange={(e) => setForm({ ...form, seo_title: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
+                            </div>
+                            <div>
+                                <label className="block text-sm text-gray-400 mb-1">SEO Description</label>
+                                <textarea value={form.seo_description || ''} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
+                            </div>
                             <div className="flex items-center justify-between pt-2">
                                 <div className="flex items-center gap-3">
                                     <button type="button" onClick={() => setForm({ ...form, published: !form.published })} className={`relative w-12 h-6 rounded-full transition-colors ${form.published ? 'bg-primary' : 'bg-gray-700'}`}>
@@ -137,7 +208,7 @@ export default function PortfolioClient({ initialProjects }) {
                         <div className="p-5">
                             <div className="flex items-start justify-between mb-2">
                                 <div>
-                                    <p className="text-white font-medium">{project.icon} {project.title}</p>
+                                    <p className="text-white font-medium">{project.title}</p>
                                     <p className="text-xs text-gray-500 mt-0.5">{project.category} • {project.client}</p>
                                 </div>
                                 <span className={`text-xs px-2 py-0.5 rounded-full ${project.published ? 'bg-emerald-500/10 text-emerald-400' : 'bg-gray-700 text-gray-400'}`}>

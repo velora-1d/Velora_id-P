@@ -47,7 +47,7 @@ const fallbackSocials = [
 const Footer = () => {
     const [socials, setSocials] = useState(fallbackSocials);
     const [location, setLocation] = useState('Pasirjambu, Bandung');
-    const [email, setEmail] = useState('velora20.id@gmail.com');
+    const [email] = useState('velora20.id@gmail.com');
     const supabase = useMemo(() => createClient(), []);
 
     useEffect(() => {
