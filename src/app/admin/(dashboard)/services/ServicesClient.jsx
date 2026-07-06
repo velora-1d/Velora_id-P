@@ -83,74 +83,83 @@ export default function ServicesClient({ initialData, categories = [] }) {
         <div className="space-y-6">
             {showForm && (
                 <div className="fixed inset-0 bg-black/60 z-50 flex items-start justify-center p-4 pt-20 overflow-y-auto">
-                    <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full max-w-2xl space-y-5">
+                    <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full max-w-4xl space-y-5">
                         <div className="flex items-center justify-between">
                             <h3 className="text-lg font-bold text-white">{editing ? 'Edit Service' : 'Service Baru'}</h3>
                             <button onClick={closeForm} className="p-1 text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm text-gray-400 mb-1">Kategori</label>
-                                    <select
-                                        value={form.category_ref_id || ''}
-                                        onChange={(e) => {
-                                            const selected = categories.find((category) => category.id === e.target.value);
-                                            setForm({
-                                                ...form,
-                                                category_ref_id: e.target.value,
-                                                category_id: selected?.slug || form.category_id,
-                                                category_name: selected?.name || form.category_name,
-                                                category_description: selected?.description || form.category_description,
-                                            });
-                                        }}
-                                        className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-                                    >
-                                        <option value="">Pilih kategori</option>
-                                        {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
-                                    </select>
-                                </div>
-                                <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
-                                {fields.map(f => (
-                                    <div key={f.key}>
-                                        {f.key === 'category_gradient' ? (
-                                            <GradientPicker value={form.category_gradient} onChange={(category_gradient) => setForm({ ...form, category_gradient })} label="Gradient Warna Kategori" />
-                                        ) : (
-                                            <>
-                                                <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
-                                                <input type={f.type || 'text'} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required={f.required} />
-                                            </>
-                                        )}
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                {/* Kolom Kiri (2/3 lebar) untuk Konten Teks & SEO */}
+                                <div className="lg:col-span-2 space-y-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm text-gray-400 mb-1">Kategori</label>
+                                            <select
+                                                value={form.category_ref_id || ''}
+                                                onChange={(e) => {
+                                                    const selected = categories.find((category) => category.id === e.target.value);
+                                                    setForm({
+                                                        ...form,
+                                                        category_ref_id: e.target.value,
+                                                        category_id: selected?.slug || form.category_id,
+                                                        category_name: selected?.name || form.category_name,
+                                                        category_description: selected?.description || form.category_description,
+                                                    });
+                                                }}
+                                                className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                            >
+                                                <option value="">Pilih kategori</option>
+                                                {categories.map((category) => <option key={category.id} value={category.id}>{category.name}</option>)}
+                                            </select>
+                                        </div>
+                                        <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
+                                        {fields.map(f => (
+                                            <div key={f.key}>
+                                                {f.key === 'category_gradient' ? (
+                                                    <GradientPicker value={form.category_gradient} onChange={(category_gradient) => setForm({ ...form, category_gradient })} label="Gradient Warna Kategori" />
+                                                ) : (
+                                                    <>
+                                                        <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
+                                                        <input type={f.type || 'text'} value={form[f.key]} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required={f.required} />
+                                                    </>
+                                                )}
+                                            </div>
+                                        ))}
                                     </div>
-                                ))}
-                            </div>
-                            <div>
-                                <label className="block text-sm text-gray-400 mb-1">Deskripsi</label>
-                                <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
-                            </div>
-                            <div>
-                                <label className="block text-sm text-gray-400 mb-1">Deskripsi Kategori</label>
-                                <textarea value={form.category_description} onChange={(e) => setForm({ ...form, category_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
-                            </div>
-                            <ImageUpload label="Gambar Utama Layanan" value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} folder="services" />
-                            <ImageUpload label="Gambar Latar Belakang" value={form.background_image_url} onChange={(url) => setForm({ ...form, background_image_url: url })} folder="services" />
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm text-gray-400 mb-1">Tag Layanan (pisahkan dengan koma)</label>
-                                    <input value={form.tags || ''} onChange={(e) => setForm({ ...form, tags: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Contoh: website, seo, company-profile" />
+                                    <div>
+                                        <label className="block text-sm text-gray-400 mb-1">Deskripsi</label>
+                                        <textarea value={form.description} onChange={(e) => setForm({ ...form, description: e.target.value })} rows={3} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm text-gray-400 mb-1">Deskripsi Kategori</label>
+                                        <textarea value={form.category_description} onChange={(e) => setForm({ ...form, category_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
+                                    </div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm text-gray-400 mb-1">Tag Layanan (pisahkan dengan koma)</label>
+                                            <input value={form.tags || ''} onChange={(e) => setForm({ ...form, tags: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Contoh: website, seo, company-profile" />
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm text-gray-400 mb-1">Kata Kunci SEO (pisahkan dengan koma)</label>
+                                            <input value={form.seo_keywords || ''} onChange={(e) => setForm({ ...form, seo_keywords: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Contoh: jasa website, buat web bandung" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm text-gray-400 mb-1">Judul Penelusuran SEO (SEO Title)</label>
+                                        <input value={form.seo_title || ''} onChange={(e) => setForm({ ...form, seo_title: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm text-gray-400 mb-1">Deskripsi Penelusuran SEO (SEO Description)</label>
+                                        <textarea value={form.seo_description || ''} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block text-sm text-gray-400 mb-1">Kata Kunci SEO (pisahkan dengan koma)</label>
-                                    <input value={form.seo_keywords || ''} onChange={(e) => setForm({ ...form, seo_keywords: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Contoh: jasa website, buat web bandung" />
+
+                                {/* Kolom Kanan (1/3 lebar) untuk Media Gambar */}
+                                <div className="lg:col-span-1 space-y-4">
+                                    <ImageUpload label="Gambar Utama Layanan" value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} folder="services" />
+                                    <ImageUpload label="Gambar Latar Belakang" value={form.background_image_url} onChange={(url) => setForm({ ...form, background_image_url: url })} folder="services" />
                                 </div>
-                            </div>
-                            <div>
-                                <label className="block text-sm text-gray-400 mb-1">Judul Penelusuran SEO (SEO Title)</label>
-                                <input value={form.seo_title || ''} onChange={(e) => setForm({ ...form, seo_title: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
-                            </div>
-                            <div>
-                                <label className="block text-sm text-gray-400 mb-1">Deskripsi Penelusuran SEO (SEO Description)</label>
-                                <textarea value={form.seo_description || ''} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
                             </div>
                             <div className="flex items-center justify-between pt-2">
                                 <div className="flex items-center gap-3">

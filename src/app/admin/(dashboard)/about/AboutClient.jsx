@@ -118,61 +118,67 @@ export default function AboutClient({ initialData }) {
                         <h2 className="text-base font-bold text-white">Cerita & Sejarah</h2>
                     </div>
 
-                    <div className="space-y-4">
-                        <div>
-                            <label className="block text-sm text-gray-400 mb-1">Judul Sejarah</label>
-                            <input 
-                                type="text" 
-                                value={form.story_title.title} 
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    story_title: { ...form.story_title, title: e.target.value }
-                                })}
-                                className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" 
-                                placeholder="Contoh: Sejarah Velora"
-                                required 
-                            />
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        {/* Kolom Kiri (2/3 lebar) untuk Teks */}
+                        <div className="lg:col-span-2 space-y-4">
+                            <div>
+                                <label className="block text-sm text-gray-400 mb-1">Judul Sejarah</label>
+                                <input 
+                                    type="text" 
+                                    value={form.story_title.title} 
+                                    onChange={(e) => setForm({
+                                        ...form,
+                                        story_title: { ...form.story_title, title: e.target.value }
+                                    })}
+                                    className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" 
+                                    placeholder="Contoh: Sejarah Velora"
+                                    required 
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm text-gray-400 mb-1">Paragraf Pertama</label>
+                                <textarea 
+                                    value={form.story_p1.content} 
+                                    onChange={(e) => setForm({
+                                        ...form,
+                                        story_p1: { ...form.story_p1, content: e.target.value }
+                                    })}
+                                    rows={4} 
+                                    className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y" 
+                                    placeholder="Tulis cerita sejarah paragraf 1 di sini..."
+                                    required 
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm text-gray-400 mb-1">Paragraf Kedua</label>
+                                <textarea 
+                                    value={form.story_p2.content} 
+                                    onChange={(e) => setForm({
+                                        ...form,
+                                        story_p2: { ...form.story_p2, content: e.target.value }
+                                    })}
+                                    rows={4} 
+                                    className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y" 
+                                    placeholder="Tulis cerita sejarah paragraf 2 di sini..."
+                                    required 
+                                />
+                            </div>
                         </div>
 
-                        <div>
-                            <label className="block text-sm text-gray-400 mb-1">Paragraf Pertama</label>
-                            <textarea 
-                                value={form.story_p1.content} 
-                                onChange={(e) => setForm({
+                        {/* Kolom Kanan (1/3 lebar) untuk Gambar */}
+                        <div className="lg:col-span-1">
+                            <ImageUpload
+                                label="Foto Utama Halaman Tentang"
+                                value={form.image.image_url}
+                                onChange={(url) => setForm({
                                     ...form,
-                                    story_p1: { ...form.story_p1, content: e.target.value }
+                                    image: { ...form.image, image_url: url }
                                 })}
-                                rows={4} 
-                                className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y" 
-                                placeholder="Tulis cerita sejarah paragraf 1 di sini..."
-                                required 
+                                folder="about"
                             />
                         </div>
-
-                        <div>
-                            <label className="block text-sm text-gray-400 mb-1">Paragraf Kedua</label>
-                            <textarea 
-                                value={form.story_p2.content} 
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    story_p2: { ...form.story_p2, content: e.target.value }
-                                })}
-                                rows={4} 
-                                className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y" 
-                                placeholder="Tulis cerita sejarah paragraf 2 di sini..."
-                                required 
-                            />
-                        </div>
-
-                        <ImageUpload
-                            label="Foto Utama Halaman Tentang"
-                            value={form.image.image_url}
-                            onChange={(url) => setForm({
-                                ...form,
-                                image: { ...form.image, image_url: url }
-                            })}
-                            folder="about"
-                        />
                     </div>
                 </div>
 

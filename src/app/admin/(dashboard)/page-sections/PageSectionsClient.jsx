@@ -114,72 +114,79 @@ export default function PageSectionsClient({ initialSections }) {
         <div className="space-y-6">
             {showForm && (
                 <div className="fixed inset-0 bg-black/60 z-50 flex items-start justify-center p-4 pt-20 overflow-y-auto">
-                    <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full max-w-3xl space-y-5">
+                    <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full max-w-4xl space-y-5">
                         <div className="flex items-center justify-between">
                             <h3 className="text-lg font-bold text-white">{editing ? 'Edit Section' : 'Section Baru'}</h3>
                             <button onClick={closeForm} className="p-1 text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-4">
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm text-gray-400 mb-1">Pilih Halaman (Page)</label>
-                                    <select
-                                        value={form.page_key}
-                                        onChange={(e) => setForm({ ...form, page_key: e.target.value })}
-                                        className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-                                        required
-                                    >
-                                        <option value="home">Halaman Utama (Home)</option>
-                                        <option value="about">Halaman Tentang (About)</option>
-                                        <option value="contact">Halaman Kontak (Contact)</option>
-                                    </select>
+                            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                                {/* Kolom Kiri (2/3 lebar) untuk Teks & SEO */}
+                                <div className="lg:col-span-2 space-y-4">
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-sm text-gray-400 mb-1">Pilih Halaman (Page)</label>
+                                            <select
+                                                value={form.page_key}
+                                                onChange={(e) => setForm({ ...form, page_key: e.target.value })}
+                                                className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                                required
+                                            >
+                                                <option value="home">Halaman Utama (Home)</option>
+                                                <option value="about">Halaman Tentang (About)</option>
+                                                <option value="contact">Halaman Kontak (Contact)</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="block text-sm text-gray-400 mb-1">Pilih Bagian (Section)</label>
+                                            <select
+                                                value={form.section_key}
+                                                onChange={(e) => setForm({ ...form, section_key: e.target.value })}
+                                                className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                                required
+                                            >
+                                                <option value="">Pilih bagian...</option>
+                                                <option value="hero">Bagian Hero</option>
+                                                <option value="about">Bagian Tentang Kami (About)</option>
+                                                <option value="services">Bagian Layanan (Services)</option>
+                                                <option value="portfolio">Bagian Portofolio</option>
+                                                <option value="workflow">Bagian Cara Kerja (Workflow)</option>
+                                                <option value="testimonials">Bagian Testimoni</option>
+                                                <option value="contact">Bagian Kontak</option>
+                                                <option value="footer">Bagian Footer</option>
+                                            </select>
+                                        </div>
+                                        {input('label', 'Label (Keterangan Singkat)')}
+                                        {input('tag', 'Tag (Kategori)')}
+                                        {input('title', 'Judul Utama')}
+                                        {input('subtitle', 'Subjudul')}
+                                        <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
+                                        <div>
+                                            <label className="block text-sm text-gray-400 mb-1">Urutan Tampilan</label>
+                                            <input type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm text-gray-400 mb-1">Konten / Isi Bagian</label>
+                                        <textarea value={form.content || ''} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={4} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y" />
+                                    </div>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                        {input('seo_title', 'SEO Title (Judul Penelusuran)')}
+                                        {input('seo_keywords', 'SEO Keywords (Kata Kunci - Pisahkan dengan koma)')}
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm text-gray-400 mb-1">SEO Description (Deskripsi Penelusuran)</label>
+                                        <textarea value={form.seo_description || ''} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
+                                    </div>
                                 </div>
-                                <div>
-                                    <label className="block text-sm text-gray-400 mb-1">Pilih Bagian (Section)</label>
-                                    <select
-                                        value={form.section_key}
-                                        onChange={(e) => setForm({ ...form, section_key: e.target.value })}
-                                        className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-                                        required
-                                    >
-                                        <option value="">Pilih bagian...</option>
-                                        <option value="hero">Bagian Hero</option>
-                                        <option value="about">Bagian Tentang Kami (About)</option>
-                                        <option value="services">Bagian Layanan (Services)</option>
-                                        <option value="portfolio">Bagian Portofolio</option>
-                                        <option value="workflow">Bagian Cara Kerja (Workflow)</option>
-                                        <option value="testimonials">Bagian Testimoni</option>
-                                        <option value="contact">Bagian Kontak</option>
-                                        <option value="footer">Bagian Footer</option>
-                                    </select>
-                                </div>
-                                {input('label', 'Label (Keterangan Singkat)')}
-                                {input('tag', 'Tag (Kategori)')}
-                                {input('title', 'Judul Utama')}
-                                {input('subtitle', 'Subjudul')}
-                                <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
-                                <div>
-                                    <label className="block text-sm text-gray-400 mb-1">Urutan Tampilan</label>
-                                    <input type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
+
+                                {/* Kolom Kanan (1/3 lebar) untuk Media Gambar */}
+                                <div className="lg:col-span-1 space-y-4">
+                                    <ImageUpload label="Gambar Utama" value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} folder="site" />
+                                    <ImageUpload label="Gambar Latar Belakang" value={form.background_image_url} onChange={(url) => setForm({ ...form, background_image_url: url })} folder="site" />
                                 </div>
                             </div>
-                            <div>
-                                <label className="block text-sm text-gray-400 mb-1">Konten / Isi Bagian</label>
-                                <textarea value={form.content || ''} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={4} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y" />
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <ImageUpload label="Gambar Utama" value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} folder="site" />
-                                <ImageUpload label="Gambar Latar Belakang" value={form.background_image_url} onChange={(url) => setForm({ ...form, background_image_url: url })} folder="site" />
-                            </div>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {input('seo_title', 'SEO Title (Judul Penelusuran)')}
-                                {input('seo_keywords', 'SEO Keywords (Kata Kunci - Pisahkan dengan koma)')}
-                            </div>
-                            <div>
-                                <label className="block text-sm text-gray-400 mb-1">SEO Description (Deskripsi Penelusuran)</label>
-                                <textarea value={form.seo_description || ''} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
-                            </div>
-                            <div className="flex items-center justify-between">
+                            <div className="flex items-center justify-between border-t border-gray-800 pt-4">
                                 <button type="button" onClick={() => setForm({ ...form, published: !form.published })} className={`relative w-12 h-6 rounded-full transition-colors ${form.published ? 'bg-primary' : 'bg-gray-700'}`}>
                                     <span className={`absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-transform ${form.published ? 'translate-x-6' : ''}`} />
                                 </button>
