@@ -98,6 +98,17 @@ export default function PageSectionsClient({ initialSections }) {
             />
         </div>
     );
+    const pageNames = { home: 'Halaman Utama', about: 'Tentang Kami', contact: 'Kontak' };
+    const sectionNames = {
+        hero: 'Bagian Hero',
+        about: 'Bagian Tentang',
+        services: 'Bagian Layanan',
+        portfolio: 'Bagian Portofolio',
+        workflow: 'Bagian Cara Kerja',
+        testimonials: 'Bagian Testimoni',
+        contact: 'Bagian Kontak',
+        footer: 'Bagian Footer'
+    };
 
     return (
         <div className="space-y-6">
@@ -110,32 +121,62 @@ export default function PageSectionsClient({ initialSections }) {
                         </div>
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {input('page_key', 'Page Key', true)}
-                                {input('section_key', 'Section Key', true)}
-                                {input('label', 'Label')}
-                                {input('tag', 'Tag')}
-                                {input('title', 'Judul')}
+                                <div>
+                                    <label className="block text-sm text-gray-400 mb-1">Pilih Halaman (Page)</label>
+                                    <select
+                                        value={form.page_key}
+                                        onChange={(e) => setForm({ ...form, page_key: e.target.value })}
+                                        className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                        required
+                                    >
+                                        <option value="home">Halaman Utama (Home)</option>
+                                        <option value="about">Halaman Tentang (About)</option>
+                                        <option value="contact">Halaman Kontak (Contact)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm text-gray-400 mb-1">Pilih Bagian (Section)</label>
+                                    <select
+                                        value={form.section_key}
+                                        onChange={(e) => setForm({ ...form, section_key: e.target.value })}
+                                        className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
+                                        required
+                                    >
+                                        <option value="">Pilih bagian...</option>
+                                        <option value="hero">Bagian Hero</option>
+                                        <option value="about">Bagian Tentang Kami (About)</option>
+                                        <option value="services">Bagian Layanan (Services)</option>
+                                        <option value="portfolio">Bagian Portofolio</option>
+                                        <option value="workflow">Bagian Cara Kerja (Workflow)</option>
+                                        <option value="testimonials">Bagian Testimoni</option>
+                                        <option value="contact">Bagian Kontak</option>
+                                        <option value="footer">Bagian Footer</option>
+                                    </select>
+                                </div>
+                                {input('label', 'Label (Keterangan Singkat)')}
+                                {input('tag', 'Tag (Kategori)')}
+                                {input('title', 'Judul Utama')}
                                 {input('subtitle', 'Subjudul')}
                                 <IconPicker value={form.icon_name} onChange={(icon_name) => setForm({ ...form, icon_name })} />
                                 <div>
-                                    <label className="block text-sm text-gray-400 mb-1">Urutan</label>
+                                    <label className="block text-sm text-gray-400 mb-1">Urutan Tampilan</label>
                                     <input type="number" value={form.sort_order} onChange={(e) => setForm({ ...form, sort_order: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm text-gray-400 mb-1">Konten</label>
+                                <label className="block text-sm text-gray-400 mb-1">Konten / Isi Bagian</label>
                                 <textarea value={form.content || ''} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={4} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-y" />
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                <ImageUpload label="Gambar" value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} folder="site" />
-                                <ImageUpload label="Background Gambar" value={form.background_image_url} onChange={(url) => setForm({ ...form, background_image_url: url })} folder="site" />
+                                <ImageUpload label="Gambar Utama" value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} folder="site" />
+                                <ImageUpload label="Gambar Latar Belakang" value={form.background_image_url} onChange={(url) => setForm({ ...form, background_image_url: url })} folder="site" />
                             </div>
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                {input('seo_title', 'SEO Title')}
-                                {input('seo_keywords', 'SEO Keywords')}
+                                {input('seo_title', 'SEO Title (Judul Penelusuran)')}
+                                {input('seo_keywords', 'SEO Keywords (Kata Kunci - Pisahkan dengan koma)')}
                             </div>
                             <div>
-                                <label className="block text-sm text-gray-400 mb-1">SEO Description</label>
+                                <label className="block text-sm text-gray-400 mb-1">SEO Description (Deskripsi Penelusuran)</label>
                                 <textarea value={form.seo_description || ''} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
                             </div>
                             <div className="flex items-center justify-between">
@@ -164,18 +205,20 @@ export default function PageSectionsClient({ initialSections }) {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {filtered.map((section) => (
-                    <div key={section.id} className="bg-gray-900 border border-gray-800 rounded-2xl p-5">
-                        <div className="flex items-start justify-between mb-2">
-                            <div>
-                                <p className="text-white font-medium">{section.title || section.section_key}</p>
-                                <p className="text-xs text-gray-500 mt-0.5">{section.page_key} / {section.section_key}</p>
+                    <div key={section.id} className="bg-gray-900 border border-gray-800 rounded-2xl p-5 flex flex-col justify-between">
+                        <div>
+                            <div className="flex items-start justify-between mb-2">
+                                <div>
+                                    <p className="text-white font-medium">{section.title || sectionNames[section.section_key] || section.section_key}</p>
+                                    <p className="text-xs text-gray-500 mt-0.5">{pageNames[section.page_key] || section.page_key} / {sectionNames[section.section_key] || section.section_key}</p>
+                                </div>
+                                <span className={`text-xs px-2 py-0.5 rounded-full ${section.published ? 'bg-emerald-500/10 text-emerald-400' : 'bg-gray-700 text-gray-400'}`}>
+                                    {section.published ? 'Live' : 'Draft'}
+                                </span>
                             </div>
-                            <span className={`text-xs px-2 py-0.5 rounded-full ${section.published ? 'bg-emerald-500/10 text-emerald-400' : 'bg-gray-700 text-gray-400'}`}>
-                                {section.published ? 'Live' : 'Draft'}
-                            </span>
+                            <p className="text-sm text-gray-400 line-clamp-2 mb-4">{section.subtitle || section.content || 'Tanpa konten'}</p>
                         </div>
-                        <p className="text-sm text-gray-400 line-clamp-2 mb-4">{section.subtitle || section.content || 'Tanpa konten'}</p>
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 pt-3 border-t border-gray-800">
                             <button onClick={() => openEdit(section)} className="flex-1 py-2 text-sm text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-xl flex items-center justify-center gap-1"><Edit className="w-3.5 h-3.5" /> Edit</button>
                             <button onClick={() => togglePublish(section)} className="p-2 text-gray-400 hover:text-primary hover:bg-primary/10 rounded-xl">{section.published ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}</button>
                             <button onClick={() => handleDelete(section.id)} className="p-2 text-gray-400 hover:text-red-400 hover:bg-red-500/10 rounded-xl"><Trash2 className="w-4 h-4" /></button>

@@ -132,24 +132,24 @@ export default function ServicesClient({ initialData, categories = [] }) {
                                 <label className="block text-sm text-gray-400 mb-1">Deskripsi Kategori</label>
                                 <textarea value={form.category_description} onChange={(e) => setForm({ ...form, category_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
                             </div>
-                            <ImageUpload label="Gambar Layanan" value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} folder="services" />
-                            <ImageUpload label="Background Gambar" value={form.background_image_url} onChange={(url) => setForm({ ...form, background_image_url: url })} folder="services" />
+                            <ImageUpload label="Gambar Utama Layanan" value={form.image_url} onChange={(url) => setForm({ ...form, image_url: url })} folder="services" />
+                            <ImageUpload label="Gambar Latar Belakang" value={form.background_image_url} onChange={(url) => setForm({ ...form, background_image_url: url })} folder="services" />
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm text-gray-400 mb-1">Tags</label>
-                                    <input value={form.tags || ''} onChange={(e) => setForm({ ...form, tags: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="website, seo" />
+                                    <label className="block text-sm text-gray-400 mb-1">Tag Layanan (pisahkan dengan koma)</label>
+                                    <input value={form.tags || ''} onChange={(e) => setForm({ ...form, tags: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Contoh: website, seo, company-profile" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm text-gray-400 mb-1">SEO Keywords</label>
-                                    <input value={form.seo_keywords || ''} onChange={(e) => setForm({ ...form, seo_keywords: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="keyword 1, keyword 2" />
+                                    <label className="block text-sm text-gray-400 mb-1">Kata Kunci SEO (pisahkan dengan koma)</label>
+                                    <input value={form.seo_keywords || ''} onChange={(e) => setForm({ ...form, seo_keywords: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" placeholder="Contoh: jasa website, buat web bandung" />
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-sm text-gray-400 mb-1">SEO Title</label>
+                                <label className="block text-sm text-gray-400 mb-1">Judul Penelusuran SEO (SEO Title)</label>
                                 <input value={form.seo_title || ''} onChange={(e) => setForm({ ...form, seo_title: e.target.value })} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" />
                             </div>
                             <div>
-                                <label className="block text-sm text-gray-400 mb-1">SEO Description</label>
+                                <label className="block text-sm text-gray-400 mb-1">Deskripsi Penelusuran SEO (SEO Description)</label>
                                 <textarea value={form.seo_description || ''} onChange={(e) => setForm({ ...form, seo_description: e.target.value })} rows={2} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
                             </div>
                             <div className="flex items-center justify-between pt-2">

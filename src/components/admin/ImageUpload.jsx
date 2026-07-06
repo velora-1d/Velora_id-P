@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
-import { Upload, X, Loader2 } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { Upload, X, Loader2, Edit } from 'lucide-react';
 
-export default function ImageUpload({ value, onChange, folder = 'general', label = 'Gambar' }) {
+export default function ImageUpload({ value, onChange, folder = 'general', label = 'Gambar', required = true }) {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState('');
+    const fileInputRef = useRef(null);
 
     const handleUpload = async (e) => {
         const file = e.target.files?.[0];
@@ -46,25 +47,59 @@ export default function ImageUpload({ value, onChange, folder = 'general', label
         }
     };
 
+    const triggerSelect = () => {
+        fileInputRef.current?.click();
+    };
+
     return (
         <div className="space-y-2">
-            <label className="block text-sm font-medium text-gray-300">{label}</label>
+            <div className="flex items-center justify-between">
+                <label className="block text-sm font-medium text-gray-300">
+                    {label} {required && <span className="text-red-500">*</span>}
+                </label>
+                {value && (
+                    <button
+                        type="button"
+                        onClick={triggerSelect}
+                        disabled={uploading}
+                        className="text-xs text-primary hover:underline flex items-center gap-1 cursor-pointer"
+                    >
+                        <Edit className="w-3 h-3" /> Ganti Gambar
+                    </button>
+                )}
+            </div>
             
             {value ? (
-                <div className="relative group rounded-xl overflow-hidden border border-gray-700 bg-gray-800">
-                    <img src={value} alt="Preview" className="w-full h-40 object-cover" />
-                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                <div className="relative group inline-block rounded-xl overflow-hidden border border-gray-700 bg-gray-900 h-80 max-w-full">
+                    {/* Natural aspect-ratio preview */}
+                    <img src={value} alt="Preview" className="h-full w-auto object-contain" />
+                    
+                    {/* Hover Overlay */}
+                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-3">
+                        <button
+                            type="button"
+                            onClick={triggerSelect}
+                            disabled={uploading}
+                            className="p-2.5 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors shadow-lg"
+                            title="Ganti Gambar"
+                        >
+                            {uploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <Edit className="w-4 h-4" />}
+                        </button>
                         <button
                             type="button"
                             onClick={() => onChange('')}
-                            className="p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                            className="p-2.5 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors shadow-lg"
+                            title="Hapus Gambar"
                         >
                             <X className="w-4 h-4" />
                         </button>
                     </div>
                 </div>
             ) : (
-                <label className="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-700 rounded-xl cursor-pointer hover:border-primary/50 hover:bg-gray-800/50 transition-all group">
+                <div 
+                    onClick={triggerSelect}
+                    className="flex flex-col items-center justify-center w-full h-80 border-2 border-dashed border-gray-700 rounded-xl cursor-pointer hover:border-primary/50 hover:bg-gray-800/50 transition-all group"
+                >
                     <div className="flex flex-col items-center justify-center pt-5 pb-6">
                         {uploading ? (
                             <Loader2 className="w-8 h-8 text-primary animate-spin mb-2" />
@@ -76,18 +111,36 @@ export default function ImageUpload({ value, onChange, folder = 'general', label
                         </p>
                         <p className="text-xs text-gray-500 mt-1">WebP, PNG, JPG (Maks. 5MB)</p>
                     </div>
-                    <input 
-                        type="file" 
-                        className="hidden" 
-                        accept="image/*" 
-                        onChange={handleUpload}
-                        disabled={uploading}
-                    />
-                </label>
+                </div>
             )}
 
-            {error && <p className="text-xs text-red-400">{error}</p>}
-            
+            {/* Hidden native input */}
+            <input 
+                type="file" 
+                ref={fileInputRef}
+                className="hidden" 
+                accept="image/*" 
+                onChange={handleUpload}
+                disabled={uploading}
+            />
+
+            {/* Hidden validation input to trigger HTML5 constraint validation */}
+            <input
+                type="text"
+                value={value || ''}
+                readOnly
+                required={required}
+                className="absolute opacity-0 pointer-events-none w-0 h-0"
+                tabIndex={-1}
+                onInvalid={(e) => {
+                    e.target.setCustomValidity('Gambar ini wajib diunggah!');
+                }}
+                onInput={(e) => {
+                    e.target.setCustomValidity('');
+                }}
+            />
+
+            {error && <p className="text-xs text-red-400 font-medium">{error}</p>}
         </div>
     );
 }
