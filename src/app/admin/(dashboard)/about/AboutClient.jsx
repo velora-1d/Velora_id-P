@@ -14,11 +14,19 @@ export default function AboutClient({ initialData }) {
     const supabase = createClient();
     const router = useRouter();
 
-    function empty() { return { section_key: '', title: '', content: '', image_url: '', stats_json: '[]' }; }
+    function empty() { return { section_key: '', title: '', content: '', image_url: '', stats: [] }; }
 
     const openNew = () => { setForm(empty()); setEditing(null); setShowForm(true); };
-    const openEdit = (item) => { setForm({ ...item, stats_json: JSON.stringify(item.stats_json || [], null, 2) }); setEditing(item.id); setShowForm(true); };
+    const openEdit = (item) => { setForm({ ...item, stats: Array.isArray(item.stats_json) ? item.stats_json : [] }); setEditing(item.id); setShowForm(true); };
     const closeForm = () => { setShowForm(false); setEditing(null); };
+
+    const updateStat = (idx, field, val) => {
+        const s = [...form.stats];
+        s[idx] = { ...s[idx], [field]: val };
+        setForm({ ...form, stats: s });
+    };
+    const addStat = () => setForm({ ...form, stats: [...form.stats, { label: '', value: '' }] });
+    const removeStat = (idx) => setForm({ ...form, stats: form.stats.filter((_, i) => i !== idx) });
 
     const handleDelete = async (id) => {
         if (!confirm('Yakin hapus konten ini?')) return;
@@ -27,10 +35,8 @@ export default function AboutClient({ initialData }) {
     };
     const handleSubmit = async (e) => {
         e.preventDefault(); setSaving(true);
-        const { id, created_at, updated_at, stats_json, ...rest } = form;
-        let parsedStats;
-        try { parsedStats = JSON.parse(stats_json); } catch { parsedStats = []; }
-        const data = { ...rest, stats_json: parsedStats };
+        const { id, created_at, updated_at, stats, ...rest } = form;
+        const data = { ...rest, stats_json: stats };
         if (editing) {
             const { data: u, error } = await supabase.from('about_content').update({ ...data, updated_at: new Date().toISOString() }).eq('id', editing).select().single();
             if (!error) setItems(items.map(i => i.id === editing ? u : i));
@@ -72,8 +78,22 @@ export default function AboutClient({ initialData }) {
                                 <textarea value={form.content} onChange={(e) => setForm({ ...form, content: e.target.value })} rows={5} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" />
                             </div>
                             <div>
-                                <label className="block text-sm text-gray-400 mb-1">Stats JSON (array of objects)</label>
-                                <textarea value={form.stats_json} onChange={(e) => setForm({ ...form, stats_json: e.target.value })} rows={4} className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm font-mono focus:outline-none focus:ring-2 focus:ring-primary/50 resize-none" placeholder='[{"label":"Proyek","value":"50+"}]' />
+                                <div className="flex items-center justify-between mb-2">
+                                    <label className="text-sm text-gray-400">Statistik Utama</label>
+                                    <button type="button" onClick={addStat} className="text-xs text-primary flex items-center gap-1"><Plus className="w-3 h-3" /> Tambah Stat</button>
+                                </div>
+                                <div className="space-y-2">
+                                    {(form.stats || []).map((s, i) => (
+                                        <div key={i} className="flex gap-2 items-center">
+                                            <input type="text" placeholder="Nilai (contoh: 50+)" value={s.value} onChange={(e) => updateStat(i, 'value', e.target.value)} className="w-28 px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required />
+                                            <input type="text" placeholder="Label (contoh: Klien Puas)" value={s.label} onChange={(e) => updateStat(i, 'label', e.target.value)} className="flex-1 px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50" required />
+                                            <button type="button" onClick={() => removeStat(i)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-xl"><X className="w-4 h-4" /></button>
+                                        </div>
+                                    ))}
+                                    {(form.stats || []).length === 0 && (
+                                        <p className="text-xs text-gray-500 italic">Belum ada statistik. Klik "+ Tambah Stat" untuk menambahkan.</p>
+                                    )}
+                                </div>
                             </div>
                             <div className="flex justify-end">
                                 <button type="submit" disabled={saving} className="px-6 py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white rounded-xl text-sm font-medium flex items-center gap-2">
