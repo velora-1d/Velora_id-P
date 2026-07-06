@@ -27,27 +27,27 @@ import {
 } from 'lucide-react';
 
 const sidebarLinks = [
-    { id: 'dashboard', label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+    { id: 'dashboard', label: 'Dashboard Utama', href: '/admin', icon: LayoutDashboard },
     { id: 'messages', label: 'Pesan Masuk', href: '/admin/messages', icon: MessageSquare },
     
-    { id: 'divider-dynamic', type: 'divider', label: 'Konten Dinamis' },
-    { id: 'blog', label: 'Blog / Artikel', href: '/admin/blog', icon: FileText },
-    { id: 'portfolio', label: 'Portfolio / Proyek', href: '/admin/portfolio', icon: Briefcase },
-    { id: 'testimonials', label: 'Testimonials', href: '/admin/testimonials', icon: Star },
-    
-    { id: 'divider-sections', type: 'divider', label: 'Struktur Website' },
-    { id: 'page-sections', label: 'Page Sections', href: '/admin/page-sections', icon: LayoutDashboard },
-    { id: 'services', label: 'Services / Layanan', href: '/admin/services', icon: Globe },
+    { id: 'divider-landing', type: 'divider', label: 'Profil & Landing Page' },
+    { id: 'about', label: 'Tentang Kami', href: '/admin/about', icon: Info },
+    { id: 'services', label: 'Layanan (Services)', href: '/admin/services', icon: Globe },
     { id: 'featured-product', label: 'Produk Unggulan', href: '/admin/featured-product', icon: Package },
-    { id: 'workflow', label: 'Workflow / Alur', href: '/admin/workflow', icon: Workflow },
-    { id: 'about', label: 'About / Tentang', href: '/admin/about', icon: Info },
-    { id: 'founder', label: 'Founder / Tim', href: '/admin/founder', icon: User },
-    { id: 'faq', label: 'FAQ / Tanya Jawab', href: '/admin/faq', icon: HelpCircle },
-    { id: 'legalitas', label: 'Legalitas', href: '/admin/legalitas', icon: Scale },
+    { id: 'workflow', label: 'Alur Kerja (Workflow)', href: '/admin/workflow', icon: Workflow },
+    { id: 'testimonials', label: 'Testimoni Klien', href: '/admin/testimonials', icon: Star },
+    { id: 'faq', label: 'Tanya Jawab (FAQ)', href: '/admin/faq', icon: HelpCircle },
+    { id: 'founder', label: 'Founder & Tim', href: '/admin/founder', icon: User },
+    { id: 'legalitas', label: 'Legalitas Kantor', href: '/admin/legalitas', icon: Scale },
     
-    { id: 'divider-settings', type: 'divider', label: 'Pengaturan' },
-    { id: 'categories', label: 'Categories / Kategori', href: '/admin/categories', icon: Tags },
-    { id: 'site-settings', label: 'Site Settings', href: '/admin/site-settings', icon: Settings },
+    { id: 'divider-dynamic', type: 'divider', label: 'Blog & Portofolio' },
+    { id: 'blog', label: 'Artikel & Blog', href: '/admin/blog', icon: FileText },
+    { id: 'portfolio', label: 'Portofolio Proyek', href: '/admin/portfolio', icon: Briefcase },
+    
+    { id: 'divider-settings', type: 'divider', label: 'Sistem & Pengaturan' },
+    { id: 'categories', label: 'Kategori Konten', href: '/admin/categories', icon: Tags },
+    { id: 'site-settings', label: 'Pengaturan Web (SEO & Analytics)', href: '/admin/site-settings', icon: Settings },
+    { id: 'page-sections', label: 'Struktur Section (Lanjutan)', href: '/admin/page-sections', icon: LayoutDashboard },
 ];
 
 export default function AdminLayout({ children }) {

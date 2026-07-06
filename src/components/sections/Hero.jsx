@@ -14,21 +14,42 @@ const fallbackStats = [
 
 const Hero = () => {
     const [stats, setStats] = useState(fallbackStats);
+    const [heroData, setHeroData] = useState({
+        title: 'Jasa Pembuatan Website\n& Sistem Digital',
+        subtitle: 'Website, Sistem, dan Solusi Digital yang cepat, modern, dan terintegrasi untuk bisnis & lembaga Anda.',
+        image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=70'
+    });
 
     useEffect(() => {
-        const fetchStats = async () => {
+        const fetchHeroData = async () => {
             try {
                 const supabase = createClient();
                 const { data, error } = await supabase
                     .from('site_settings')
                     .select('*')
-                    .eq('published', true)
-                    .like('setting_key', 'hero_stat_%')
-                    .order('sort_order', { ascending: true });
-                if (!error && data && data.length > 0) setStats(data);
+                    .eq('published', true);
+                
+                if (!error && data && data.length > 0) {
+                    // Extract stats
+                    const statItems = data.filter(item => item.setting_key.startsWith('hero_stat_'));
+                    if (statItems.length > 0) {
+                        setStats(statItems.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)));
+                    }
+
+                    // Extract hero configurations
+                    const titleItem = data.find(item => item.setting_key === 'hero_title');
+                    const subtitleItem = data.find(item => item.setting_key === 'hero_subtitle');
+                    const imageItem = data.find(item => item.setting_key === 'hero_image');
+
+                    setHeroData({
+                        title: titleItem ? titleItem.setting_value : 'Jasa Pembuatan Website\n& Sistem Digital',
+                        subtitle: subtitleItem ? subtitleItem.setting_value : 'Website, Sistem, dan Solusi Digital yang cepat, modern, dan terintegrasi untuk bisnis & lembaga Anda.',
+                        image: imageItem ? imageItem.setting_value : 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=70'
+                    });
+                }
             } catch { }
         };
-        fetchStats();
+        fetchHeroData();
     }, []);
 
     return (
@@ -36,11 +57,7 @@ const Hero = () => {
             {/* Background Image with Overlay */}
             <div className="absolute inset-0 z-0">
                 <img
-                    src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=70"
-                    srcSet="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=640&q=70 640w,
-                            https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=70 1200w,
-                            https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=70 1920w"
-                    sizes="(max-width: 640px) 100vw, 100vw"
+                    src={heroData.image}
                     alt="Office Background"
                     className="w-full h-full object-cover"
                     loading="eager"
@@ -71,19 +88,15 @@ const Hero = () => {
 
                     {/* Main Heading */}
                     <ScrollReveal delay={0.2}>
-                        <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 sm:mb-8 leading-tight tracking-tight">
-                            Jasa Pembuatan Website
-                            <br />
-                            <span className="bg-gradient-to-r from-primary via-blue-400 to-accent-light bg-clip-text text-transparent">
-                                & Sistem Digital
-                            </span>
+                        <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 sm:mb-8 leading-tight tracking-tight whitespace-pre-line">
+                            {heroData.title}
                         </h1>
                     </ScrollReveal>
 
                     {/* Subtitle */}
                     <ScrollReveal delay={0.4}>
-                        <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed font-light">
-                            Website, Sistem, dan Solusi Digital yang cepat, modern, dan terintegrasi untuk bisnis & lembaga Anda.
+                        <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed font-light whitespace-pre-line">
+                            {heroData.subtitle}
                         </p>
                     </ScrollReveal>
 

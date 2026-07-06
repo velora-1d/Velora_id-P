@@ -10,6 +10,9 @@ const SETTING_KEYS = [
     { value: 'site_description', label: 'Deskripsi Website (Meta Description SEO)', suffix: '', defaultLabel: 'Meta Description default untuk penelusuran Google' },
     { value: 'google_verification', label: 'Google Search Console Verification Token', suffix: '', defaultLabel: 'Token verifikasi Google Search Console' },
     { value: 'google_analytics_id', label: 'Google Analytics Measurement ID', suffix: '', defaultLabel: 'ID Pengukuran Google Analytics (G-XXXXXX)' },
+    { value: 'hero_title', label: 'Beranda - Judul Banner Utama (Hero Title)', suffix: '', defaultLabel: 'Jasa Pembuatan Website & Sistem Digital' },
+    { value: 'hero_subtitle', label: 'Beranda - Subjudul Banner (Hero Subtitle)', suffix: '', defaultLabel: 'Website, Sistem, dan Solusi Digital yang cepat, modern, dan terintegrasi untuk bisnis & lembaga Anda.' },
+    { value: 'hero_image', label: 'Beranda - Gambar Latar Belakang (Hero Background Image)', suffix: '', defaultLabel: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=70' },
     { value: 'hero_stat_projects', label: 'Statistik Hero - Jumlah Proyek Selesai', suffix: '+', defaultLabel: 'Proyek Selesai' },
     { value: 'hero_stat_satisfaction', label: 'Statistik Hero - Persentase Kepuasan Klien', suffix: '%', defaultLabel: 'Klien Puas' },
     { value: 'hero_stat_support', label: 'Statistik Hero - Layanan Support', suffix: '/24', defaultLabel: 'Support' }
@@ -95,7 +98,15 @@ export default function SiteSettingsClient({ initialData }) {
 
                             <div>
                                 <label className="block text-sm text-gray-400 mb-1">Isi / Nilai Pengaturan (Value)</label>
-                                {form.setting_key === 'site_description' ? (
+                                {(form.setting_key.toLowerCase().includes('image') || form.setting_key.toLowerCase().includes('logo')) ? (
+                                    <ImageUpload
+                                        value={form.setting_value}
+                                        onChange={(url) => setForm({ ...form, setting_value: url })}
+                                        folder="site"
+                                        label=""
+                                        required={true}
+                                    />
+                                ) : (form.setting_key === 'site_description' || form.setting_key === 'hero_subtitle') ? (
                                     <textarea 
                                         value={form.setting_value} 
                                         onChange={(e) => setForm({ ...form, setting_value: e.target.value })} 
