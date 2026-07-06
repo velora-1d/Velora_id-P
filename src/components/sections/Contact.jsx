@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Send, MapPin, Mail, Phone, Loader2, CheckCircle2, Clock, MessageCircle, ArrowUpRight, Sparkles, Building2, User } from 'lucide-react';
 import ScrollReveal from '../animations/ScrollReveal';
+import { createClient } from '@/lib/supabase/client';
 
 // WhatsApp icon
 const WhatsAppIcon = ({ className }) => (
@@ -20,6 +21,41 @@ const Contact = () => {
     });
     const [status, setStatus] = useState('');
     const [focusedField, setFocusedField] = useState(null);
+    const [contactData, setContactData] = useState({
+        whatsapp: '6281320442174',
+        email: 'velora20.id@gmail.com',
+        address: 'Pasirjambu, Bandung',
+        ctaTitle: 'Siap Memulai Proyek Digital?',
+        ctaSubtitle: 'Konsultasi gratis — ceritakan ide Anda dan kami bantu wujudkan.'
+    });
+
+    useEffect(() => {
+        const fetchContactSettings = async () => {
+            try {
+                const supabase = createClient();
+                const { data } = await supabase
+                    .from('site_settings')
+                    .select('*')
+                    .eq('published', true);
+                if (data) {
+                    const wa = data.find(d => d.setting_key === 'contact_whatsapp')?.setting_value;
+                    const mail = data.find(d => d.setting_key === 'contact_email')?.setting_value;
+                    const addr = data.find(d => d.setting_key === 'contact_address')?.setting_value;
+                    const title = data.find(d => d.setting_key === 'cta_title')?.setting_value;
+                    const sub = data.find(d => d.setting_key === 'cta_subtitle')?.setting_value;
+
+                    setContactData({
+                        whatsapp: wa || '6281320442174',
+                        email: mail || 'velora20.id@gmail.com',
+                        address: addr || 'Pasirjambu, Bandung',
+                        ctaTitle: title || 'Siap Memulai Proyek Digital?',
+                        ctaSubtitle: sub || 'Konsultasi gratis — ceritakan ide Anda dan kami bantu wujudkan.'
+                    });
+                }
+            } catch {}
+        };
+        fetchContactSettings();
+    }, []);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,7 +79,7 @@ const Contact = () => {
         } catch { }
 
         const waMessage = `Halo Velora!%0A%0A*Data Pengirim:*%0ANama: ${formData.name}%0AEmail: ${formData.email}%0APerusahaan: ${formData.company}%0A%0A*Pesan:*%0A${formData.message}`;
-        window.open(`https://wa.me/6281320442174?text=${waMessage}`, '_blank');
+        window.open(`https://wa.me/${contactData.whatsapp}?text=${waMessage}`, '_blank');
 
         setStatus('success');
         setFormData({ name: '', email: '', company: '', message: '' });
@@ -64,12 +100,11 @@ const Contact = () => {
                             <MessageCircle className="w-3.5 h-3.5" />
                             Hubungi Kami
                         </div>
-                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
-                            Siap Memulai <br className="hidden sm:block" />
-                            <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">Proyek Digital?</span>
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight whitespace-pre-line">
+                            {contactData.ctaTitle}
                         </h2>
-                        <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
-                            Konsultasi gratis — ceritakan ide Anda dan kami bantu wujudkan.
+                        <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed whitespace-pre-line">
+                            {contactData.ctaSubtitle}
                         </p>
                     </div>
                 </ScrollReveal>
@@ -175,9 +210,10 @@ const Contact = () => {
                         <div className="lg:col-span-5 grid grid-cols-2 lg:grid-cols-1 gap-4 sm:gap-5">
 
                             {/* WhatsApp Card — Highlighted */}
+                            {/* WhatsApp Card — Highlighted */}
                             <ScrollReveal delay={0.15} width="100%" className="col-span-2">
                                 <a
-                                    href="https://wa.me/6281320442174"
+                                    href={`https://wa.me/${contactData.whatsapp}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     className="group block bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl sm:rounded-3xl p-5 sm:p-7 text-white shadow-xl shadow-emerald-200/40 hover:shadow-2xl hover:shadow-emerald-200/60 transition-all duration-500 hover:-translate-y-1"
@@ -189,7 +225,9 @@ const Contact = () => {
                                         <ArrowUpRight className="w-5 h-5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
                                     </div>
                                     <h4 className="font-bold text-lg mb-1">Chat WhatsApp</h4>
-                                    <p className="text-white/80 text-sm">0813-2044-2174</p>
+                                    <p className="text-white/80 text-sm">
+                                        {contactData.whatsapp.startsWith('62') ? '0' + contactData.whatsapp.slice(2) : contactData.whatsapp}
+                                    </p>
                                     <p className="text-white/60 text-xs mt-1">Fast response — langsung terhubung</p>
                                 </a>
                             </ScrollReveal>
@@ -201,7 +239,7 @@ const Contact = () => {
                                         <Mail className="w-5 h-5 text-white" strokeWidth={1.8} />
                                     </div>
                                     <h4 className="font-bold text-sm text-gray-900 mb-1">Email</h4>
-                                    <p className="text-gray-500 text-xs leading-relaxed">velora20.id@gmail.com</p>
+                                    <p className="text-gray-500 text-xs leading-relaxed truncate">{contactData.email}</p>
                                 </div>
                             </ScrollReveal>
 
@@ -212,7 +250,7 @@ const Contact = () => {
                                         <MapPin className="w-5 h-5 text-white" strokeWidth={1.8} />
                                     </div>
                                     <h4 className="font-bold text-sm text-gray-900 mb-1">Lokasi</h4>
-                                    <p className="text-gray-500 text-xs leading-relaxed">Pasirjambu, Bandung</p>
+                                    <p className="text-gray-500 text-xs leading-relaxed">{contactData.address}</p>
                                 </div>
                             </ScrollReveal>
 

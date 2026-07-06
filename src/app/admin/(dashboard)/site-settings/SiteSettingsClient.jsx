@@ -13,6 +13,11 @@ const SETTING_KEYS = [
     { value: 'hero_title', label: 'Beranda - Judul Banner Utama (Hero Title)', suffix: '', defaultLabel: 'Jasa Pembuatan Website & Sistem Digital' },
     { value: 'hero_subtitle', label: 'Beranda - Subjudul Banner (Hero Subtitle)', suffix: '', defaultLabel: 'Website, Sistem, dan Solusi Digital yang cepat, modern, dan terintegrasi untuk bisnis & lembaga Anda.' },
     { value: 'hero_image', label: 'Beranda - Gambar Latar Belakang (Hero Background Image)', suffix: '', defaultLabel: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=70' },
+    { value: 'cta_title', label: 'Beranda - Judul Banner CTA Hubungi Kami', suffix: '', defaultLabel: 'Siap Memulai Proyek Digital?' },
+    { value: 'cta_subtitle', label: 'Beranda - Subjudul Banner CTA Hubungi Kami', suffix: '', defaultLabel: 'Konsultasi gratis — ceritakan ide Anda dan kami bantu wujudkan.' },
+    { value: 'contact_whatsapp', label: 'Kontak - Nomor WhatsApp (Contoh: 6281320442174)', suffix: '', defaultLabel: '6281320442174' },
+    { value: 'contact_email', label: 'Kontak - Alamat Email', suffix: '', defaultLabel: 'velora20.id@gmail.com' },
+    { value: 'contact_address', label: 'Kontak - Alamat / Lokasi Kantor', suffix: '', defaultLabel: 'Pasirjambu, Bandung' },
     { value: 'hero_stat_projects', label: 'Statistik Hero - Jumlah Proyek Selesai', suffix: '+', defaultLabel: 'Proyek Selesai' },
     { value: 'hero_stat_satisfaction', label: 'Statistik Hero - Persentase Kepuasan Klien', suffix: '%', defaultLabel: 'Klien Puas' },
     { value: 'hero_stat_support', label: 'Statistik Hero - Layanan Support', suffix: '/24', defaultLabel: 'Support' }
@@ -106,7 +111,7 @@ export default function SiteSettingsClient({ initialData }) {
                                         label=""
                                         required={true}
                                     />
-                                ) : (form.setting_key === 'site_description' || form.setting_key === 'hero_subtitle') ? (
+                                ) : (form.setting_key === 'site_description' || form.setting_key === 'hero_subtitle' || form.setting_key === 'cta_subtitle') ? (
                                     <textarea 
                                         value={form.setting_value} 
                                         onChange={(e) => setForm({ ...form, setting_value: e.target.value })} 
