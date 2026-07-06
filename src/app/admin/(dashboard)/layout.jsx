@@ -28,20 +28,25 @@ import {
 
 const sidebarLinks = [
     { id: 'dashboard', label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-    { id: 'blog', label: 'Blog', href: '/admin/blog', icon: FileText },
-    { id: 'portfolio', label: 'Portfolio', href: '/admin/portfolio', icon: Briefcase },
-    { id: 'testimonials', label: 'Testimonials', href: '/admin/testimonials', icon: Star },
     { id: 'messages', label: 'Pesan Masuk', href: '/admin/messages', icon: MessageSquare },
-    { id: 'divider-1', type: 'divider', label: 'Konten Website' },
-    { id: 'services', label: 'Services', href: '/admin/services', icon: Globe },
-    { id: 'faq', label: 'FAQ', href: '/admin/faq', icon: HelpCircle },
-    { id: 'featured-product', label: 'Produk Unggulan', href: '/admin/featured-product', icon: Package },
-    { id: 'about', label: 'About', href: '/admin/about', icon: Info },
-    { id: 'founder', label: 'Founder', href: '/admin/founder', icon: User },
-    { id: 'workflow', label: 'Workflow', href: '/admin/workflow', icon: Workflow },
-    { id: 'legalitas', label: 'Legalitas', href: '/admin/legalitas', icon: Scale },
+    
+    { id: 'divider-dynamic', type: 'divider', label: 'Konten Dinamis' },
+    { id: 'blog', label: 'Blog / Artikel', href: '/admin/blog', icon: FileText },
+    { id: 'portfolio', label: 'Portfolio / Proyek', href: '/admin/portfolio', icon: Briefcase },
+    { id: 'testimonials', label: 'Testimonials', href: '/admin/testimonials', icon: Star },
+    
+    { id: 'divider-sections', type: 'divider', label: 'Struktur Website' },
     { id: 'page-sections', label: 'Page Sections', href: '/admin/page-sections', icon: LayoutDashboard },
-    { id: 'categories', label: 'Categories', href: '/admin/categories', icon: Tags },
+    { id: 'services', label: 'Services / Layanan', href: '/admin/services', icon: Globe },
+    { id: 'featured-product', label: 'Produk Unggulan', href: '/admin/featured-product', icon: Package },
+    { id: 'workflow', label: 'Workflow / Alur', href: '/admin/workflow', icon: Workflow },
+    { id: 'about', label: 'About / Tentang', href: '/admin/about', icon: Info },
+    { id: 'founder', label: 'Founder / Tim', href: '/admin/founder', icon: User },
+    { id: 'faq', label: 'FAQ / Tanya Jawab', href: '/admin/faq', icon: HelpCircle },
+    { id: 'legalitas', label: 'Legalitas', href: '/admin/legalitas', icon: Scale },
+    
+    { id: 'divider-settings', type: 'divider', label: 'Pengaturan' },
+    { id: 'categories', label: 'Categories / Kategori', href: '/admin/categories', icon: Tags },
     { id: 'site-settings', label: 'Site Settings', href: '/admin/site-settings', icon: Settings },
 ];
 
