@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
     ArrowRight, MessageSquare, Sparkles, 
     ShieldCheck, CheckCircle2, Zap, Database, 
@@ -12,6 +13,7 @@ import {
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 import CountUp from '../animations/CountUp';
+
 
 const applications = [
     {
@@ -357,6 +359,19 @@ const Hero = () => {
         };
     }, [isPaused]);
 
+    const tabsContainerRef = useRef(null);
+
+    // Auto scroll the tab pill to center when activeApp changes
+    useEffect(() => {
+        if (tabsContainerRef.current && tabsContainerRef.current.children[activeApp]) {
+            tabsContainerRef.current.children[activeApp].scrollIntoView({
+                behavior: 'smooth',
+                block: 'nearest',
+                inline: 'center'
+            });
+        }
+    }, [activeApp]);
+
     const handlePrevApp = () => {
         setActiveApp((prev) => (prev - 1 + applications.length) % applications.length);
     };
@@ -494,15 +509,14 @@ const Hero = () => {
                                 onMouseLeave={() => setIsPaused(false)}
                                 className="relative rounded-2xl p-1 bg-gradient-to-b from-blue-500/30 via-slate-800/40 to-orange-500/20 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] border border-slate-700/60"
                             >
-                                <div className="rounded-xl bg-slate-950/95 backdrop-blur-xl overflow-hidden border border-slate-800/90">
+                                <div className="rounded-xl bg-slate-950/95 backdrop-blur-xl overflow-hidden border border-slate-800/90 flex flex-col justify-between w-full h-[650px] sm:h-[660px]">
                                     
-                                    {/* Header: Device-Aware Top Bar (Web vs Mobile App) */}
-                                    {currentApp.type === 'mobile' ? (
-                                        <div className="bg-slate-900/90 border-b border-slate-800 text-xs font-mono text-slate-400">
-                                            {/* Phone Status Bar */}
-                                            <div className="flex items-center justify-between px-4 pt-2.5 pb-1.5 text-[11px] text-slate-400">
+                                    {/* Unified Fixed Header (h-[88px] across Web & Mobile) */}
+                                    <div className="h-[88px] flex-shrink-0 flex flex-col justify-between bg-slate-900/90 border-b border-slate-800 text-xs font-mono text-slate-400">
+                                        {/* Top System Bar (h-8) */}
+                                        {currentApp.type === 'mobile' ? (
+                                            <div className="h-8 px-4 flex items-center justify-between border-b border-slate-800/70 text-[11px]">
                                                 <span className="font-semibold text-white">09:41</span>
-                                                {/* Dynamic Island Pill */}
                                                 <div className="w-20 h-3.5 rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center gap-1.5 shadow-inner">
                                                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                                                     <span className="w-1.5 h-1.5 rounded-full bg-orange-400/80"></span>
@@ -513,60 +527,91 @@ const Hero = () => {
                                                     <Battery className="w-3.5 h-3.5 text-emerald-400" />
                                                 </div>
                                             </div>
-
-                                            {/* Mobile App Header Title */}
-                                            <div className="flex items-center justify-between px-4 pb-2.5 pt-1">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-7 h-7 rounded-lg bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-orange-400">
-                                                        {currentApp.id === 'mobile-wali' && <Smartphone className="w-4 h-4" />}
-                                                        {currentApp.id === 'pos-kasir' && <Tablet className="w-4 h-4" />}
-                                                        {currentApp.id === 'mobile-absensi' && <MapPin className="w-4 h-4" />}
-                                                        {currentApp.id === 'mobile-kurir' && <Truck className="w-4 h-4" />}
-                                                        {currentApp.id === 'mobile-lms' && <GraduationCap className="w-4 h-4" />}
-                                                    </div>
-                                                    <div>
-                                                        <div className="text-xs font-bold text-white tracking-wide">{currentApp.title}</div>
-                                                        <div className="text-[10px] text-slate-400">{currentApp.tagline}</div>
-                                                    </div>
-                                                </div>
-                                                <span className="px-2 py-0.5 rounded bg-orange-950/80 border border-orange-500/40 text-orange-300 text-[10px] font-mono font-bold flex items-center gap-1">
-                                                    <Smartphone className="w-3 h-3" /> Mobile App
-                                                </span>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div className="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-slate-800 text-xs font-mono text-slate-400">
-                                            <div className="flex items-center gap-2">
-                                                <div className="flex gap-1.5">
+                                        ) : (
+                                            <div className="h-8 px-4 flex items-center justify-between border-b border-slate-800/70 text-[11px]">
+                                                <div className="flex items-center gap-1.5">
                                                     <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
                                                     <div className="w-2.5 h-2.5 rounded-full bg-orange-400/80"></div>
                                                     <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></div>
+                                                    <div className="ml-2 flex items-center gap-1 text-slate-300 text-[11px] bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800">
+                                                        <Globe className="w-3 h-3 text-blue-400" />
+                                                        <span className="truncate max-w-[170px] sm:max-w-[200px]">{currentApp.domain}</span>
+                                                    </div>
                                                 </div>
-                                                <div className="ml-1.5 flex items-center gap-1 text-slate-300 text-[11px] bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800">
-                                                    <Globe className="w-3 h-3 text-blue-400" />
-                                                    <span>{currentApp.domain}</span>
+                                                <div className="flex items-center gap-1 text-emerald-400 text-[10px]">
+                                                    <Activity className="w-3 h-3 text-emerald-400 animate-pulse" />
+                                                    <span>Active 42ms</span>
                                                 </div>
                                             </div>
+                                        )}
 
-                                            <span className="px-2 py-0.5 rounded bg-blue-950/80 border border-blue-500/40 text-blue-300 text-[10px] font-mono font-bold flex items-center gap-1">
-                                                <Activity className="w-3 h-3 text-blue-400 animate-pulse" /> Web ERP/SaaS
+                                        {/* App Title & Category Sub-Header (h-14) */}
+                                        <div className="h-14 px-4 py-2 flex items-center justify-between bg-slate-900/50">
+                                            <AnimatePresence mode="wait">
+                                                <motion.div 
+                                                    key={currentApp.id}
+                                                    initial={{ opacity: 0, y: -4 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    exit={{ opacity: 0, y: 4 }}
+                                                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                                                    className="flex items-center gap-2.5 overflow-hidden"
+                                                >
+                                                    <div className={`w-8 h-8 rounded-lg border flex items-center justify-center flex-shrink-0 ${
+                                                        currentApp.type === 'mobile'
+                                                            ? 'bg-orange-500/20 border-orange-500/40 text-orange-400'
+                                                            : 'bg-blue-500/20 border-blue-500/40 text-blue-400'
+                                                    }`}>
+                                                        {currentApp.id === 'spp-pesantren' && <CreditCard className="w-4 h-4" />}
+                                                        {currentApp.id === 'mobile-wali' && <Smartphone className="w-4 h-4" />}
+                                                        {currentApp.id === 'pos-kasir' && <Tablet className="w-4 h-4" />}
+                                                        {currentApp.id === 'compro-seo' && <Globe className="w-4 h-4" />}
+                                                        {currentApp.id === 'mobile-absensi' && <MapPin className="w-4 h-4" />}
+                                                        {currentApp.id === 'ecommerce-multivendor' && <ShoppingBag className="w-4 h-4" />}
+                                                        {currentApp.id === 'klinik-emr' && <Stethoscope className="w-4 h-4" />}
+                                                        {currentApp.id === 'mobile-kurir' && <Truck className="w-4 h-4" />}
+                                                        {currentApp.id === 'wms-gudang' && <Database className="w-4 h-4" />}
+                                                        {currentApp.id === 'mobile-lms' && <GraduationCap className="w-4 h-4" />}
+                                                    </div>
+                                                    <div className="overflow-hidden">
+                                                        <div className="text-xs font-bold text-white tracking-wide truncate">{currentApp.title}</div>
+                                                        <div className="text-[10px] text-slate-400 truncate">{currentApp.tagline}</div>
+                                                    </div>
+                                                </motion.div>
+                                            </AnimatePresence>
+
+                                            <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold flex items-center gap-1 flex-shrink-0 ${
+                                                currentApp.type === 'mobile'
+                                                    ? 'bg-orange-950/80 border border-orange-500/40 text-orange-300'
+                                                    : 'bg-blue-950/80 border border-blue-500/40 text-blue-300'
+                                            }`}>
+                                                {currentApp.type === 'mobile' ? (
+                                                    <><Smartphone className="w-3 h-3" /> Mobile App</>
+                                                ) : (
+                                                    <><Globe className="w-3 h-3" /> Web SaaS</>
+                                                )}
                                             </span>
                                         </div>
-                                    )}
+                                    </div>
 
-                                    {/* 2-Second Countdown Progress Bar */}
-                                    <div className="h-0.5 w-full bg-slate-800 overflow-hidden relative">
-                                        <div 
+                                    {/* 2-Second Countdown Animated Progress Bar */}
+                                    <div className="h-0.5 w-full bg-slate-800 overflow-hidden relative flex-shrink-0">
+                                        <motion.div 
                                             key={`${activeApp}-${isPaused}`}
-                                            className={`h-full ${isPaused ? 'bg-amber-400 w-full' : 'bg-gradient-to-r from-blue-500 via-sky-400 to-orange-500 animate-hero-progress'}`}
+                                            className="h-full bg-gradient-to-r from-blue-500 via-sky-400 to-orange-500"
+                                            initial={{ width: '0%' }}
+                                            animate={{ width: '100%' }}
+                                            transition={{ 
+                                                duration: isPaused ? 0 : 2, 
+                                                ease: 'linear' 
+                                            }}
                                         />
                                     </div>
 
-                                    {/* Interactive Controls & 10-App Switcher */}
-                                    <div className="p-3 bg-slate-900/60 border-b border-slate-800/80 space-y-2.5">
+                                    {/* Unified Controls & 10-App Selector Strip (h-[74px]) */}
+                                    <div className="h-[74px] p-2.5 bg-slate-900/60 border-b border-slate-800/80 flex flex-col justify-between flex-shrink-0">
                                         {/* Auto-cycle Controls Bar */}
                                         <div className="flex items-center justify-between text-xs font-mono text-slate-400">
-                                            <div className="flex items-center gap-2">
+                                            <div className="flex items-center gap-1.5">
                                                 <button
                                                     onClick={handlePrevApp}
                                                     title="Aplikasi Sebelumnya"
@@ -610,7 +655,7 @@ const Hero = () => {
                                         </div>
 
                                         {/* 10 Applications Scrollable Pill Strip */}
-                                        <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-0.5 text-[11px]">
+                                        <div ref={tabsContainerRef} className="flex gap-1.5 overflow-x-auto no-scrollbar pb-0.5 text-[11px]">
                                             {applications.map((app, idx) => {
                                                 const isActive = activeApp === idx;
                                                 const isMobile = app.type === 'mobile';
@@ -618,7 +663,7 @@ const Hero = () => {
                                                     <button
                                                         key={app.id}
                                                         onClick={() => setActiveApp(idx)}
-                                                        className={`py-1 px-2 rounded-md whitespace-nowrap transition-all flex items-center gap-1.5 border text-[11px] font-mono ${
+                                                        className={`py-0.5 px-2 rounded-md whitespace-nowrap transition-all flex items-center gap-1 border text-[11px] font-mono ${
                                                             isActive
                                                                 ? isMobile
                                                                     ? 'bg-orange-500 border-orange-400 text-white font-bold shadow-sm'
@@ -633,114 +678,145 @@ const Hero = () => {
                                         </div>
                                     </div>
 
-                                    {/* Console Body: Active Application Preview */}
-                                    <div key={activeApp} className="p-5 sm:p-6 space-y-4 animate-in fade-in duration-300">
-                                        {/* Metric Card 1 */}
-                                        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 transition-all">
-                                            <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
-                                                <span>{currentApp.metricTitle}</span>
-                                                <span className="text-emerald-400 font-semibold text-[11px] bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">
-                                                    {currentApp.badge}
-                                                </span>
-                                            </div>
-                                            <div className="flex items-baseline justify-between mb-2">
-                                                <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                                                    {currentApp.metricValue}
+                                    {/* Console Body: Silky Smooth Framer Motion Cross-fade with Blur & Slide */}
+                                    <div className="flex-1 p-3.5 sm:p-4 relative overflow-hidden flex flex-col justify-between min-h-0">
+                                        <AnimatePresence mode="wait">
+                                            <motion.div 
+                                                key={activeApp} 
+                                                initial={{ opacity: 0, x: 14, filter: 'blur(4px)' }}
+                                                animate={{ opacity: 1, x: 0, filter: 'blur(0px)' }}
+                                                exit={{ opacity: 0, x: -14, filter: 'blur(4px)' }}
+                                                transition={{ 
+                                                    duration: 0.35, 
+                                                    ease: [0.22, 1, 0.36, 1] 
+                                                }}
+                                                className="h-full flex flex-col justify-between gap-2.5"
+                                            >
+                                                {/* Metric Card (h-[135px]) */}
+                                                <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-3 sm:p-3.5 flex flex-col justify-between h-[135px]">
+                                                    <div className="flex items-center justify-between text-xs text-slate-400">
+                                                        <span className="truncate max-w-[200px]">{currentApp.metricTitle}</span>
+                                                        <span className="text-emerald-400 font-semibold text-[10px] bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60 flex-shrink-0">
+                                                            {currentApp.badge}
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex items-baseline justify-between my-1">
+                                                        <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                                                            {currentApp.metricValue}
+                                                        </div>
+                                                        <span className="text-xs font-mono text-orange-400 font-semibold">
+                                                            {currentApp.targetText}
+                                                        </span>
+                                                    </div>
+                                                    {/* Dual Color Progress Bar */}
+                                                    <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden flex">
+                                                        <div className="bg-blue-500 h-full transition-all duration-500" style={{ width: currentApp.progressBlue }}></div>
+                                                        <div className="bg-orange-500 h-full transition-all duration-500" style={{ width: currentApp.progressOrange }}></div>
+                                                    </div>
+                                                    <div className="pt-2 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-400">
+                                                        <span className="truncate">{currentApp.subMetric}</span>
+                                                        <span className="text-blue-400 font-mono flex-shrink-0">{currentApp.statusLabel}</span>
+                                                    </div>
                                                 </div>
-                                                <span className="text-xs font-mono text-orange-400 font-semibold">
-                                                    {currentApp.targetText}
-                                                </span>
-                                            </div>
-                                            {/* Dual Color Progress Bar */}
-                                            <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden flex">
-                                                <div className="bg-blue-500 h-full" style={{ width: currentApp.progressBlue }}></div>
-                                                <div className="bg-orange-500 h-full" style={{ width: currentApp.progressOrange }}></div>
-                                            </div>
-                                            <div className="mt-3 pt-2.5 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-400">
-                                                <span>{currentApp.subMetric}</span>
-                                                <span className="text-blue-400 font-mono">{currentApp.statusLabel}</span>
-                                            </div>
-                                        </div>
 
-                                        {/* Feature Card 1 */}
-                                        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
-                                            <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                                                    <span className="font-semibold text-slate-200">{currentApp.feature1.title}</span>
+                                                {/* Feature Card 1 (h-[96px]) */}
+                                                <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-3 flex flex-col justify-between h-[96px]">
+                                                    <div className="flex items-center justify-between text-xs text-slate-400">
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                                            <span className="font-semibold text-slate-200 truncate">{currentApp.feature1.title}</span>
+                                                        </div>
+                                                        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60 flex-shrink-0">
+                                                            {currentApp.feature1.badge}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-xs text-slate-300 leading-relaxed text-justify line-clamp-2">
+                                                        {currentApp.feature1.desc}
+                                                    </p>
                                                 </div>
-                                                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">
-                                                    {currentApp.feature1.badge}
-                                                </span>
-                                            </div>
-                                            <p className="text-xs text-slate-300 leading-relaxed text-justify">
-                                                {currentApp.feature1.desc}
-                                            </p>
-                                        </div>
 
-                                        {/* Feature Card 2 */}
-                                        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
-                                            <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="w-2 h-2 rounded-full bg-blue-400"></span>
-                                                    <span className="font-semibold text-slate-200">{currentApp.feature2.title}</span>
+                                                {/* Feature Card 2 (h-[96px]) */}
+                                                <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-3 flex flex-col justify-between h-[96px]">
+                                                    <div className="flex items-center justify-between text-xs text-slate-400">
+                                                        <div className="flex items-center gap-2">
+                                                            <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                                                            <span className="font-semibold text-slate-200 truncate">{currentApp.feature2.title}</span>
+                                                        </div>
+                                                        <span className="text-[10px] font-mono text-orange-400 bg-orange-950/60 px-2 py-0.5 rounded border border-orange-800/60 flex-shrink-0">
+                                                            {currentApp.feature2.badge}
+                                                        </span>
+                                                    </div>
+                                                    <p className="text-xs text-slate-300 leading-relaxed text-justify line-clamp-2">
+                                                        {currentApp.feature2.desc}
+                                                    </p>
                                                 </div>
-                                                <span className="text-[10px] font-mono text-orange-400 bg-orange-950/60 px-2 py-0.5 rounded border border-orange-800/60">
-                                                    {currentApp.feature2.badge}
-                                                </span>
-                                            </div>
-                                            <p className="text-xs text-slate-300 leading-relaxed text-justify">
-                                                {currentApp.feature2.desc}
-                                            </p>
-                                        </div>
+                                            </motion.div>
+                                        </AnimatePresence>
+                                    </div>
 
-                                        {/* Footer Bar: Mobile Navigation Simulation vs Web Tags */}
+                                    {/* Unified Fixed Footer (h-[86px] across Web & Mobile) */}
+                                    <div className="h-[86px] px-4 py-2 bg-slate-900/70 border-t border-slate-800/80 flex flex-col justify-between flex-shrink-0">
+                                        {/* Row 1: Interactive Touch / Workspace Emulation */}
                                         {currentApp.type === 'mobile' ? (
-                                            <div className="pt-2 border-t border-slate-800/80">
-                                                <div className="grid grid-cols-4 gap-1 text-center text-[10px] text-slate-400 py-1">
-                                                    <div className="flex flex-col items-center gap-1 text-orange-400 font-bold">
-                                                        <Smartphone className="w-3.5 h-3.5" />
+                                            <div>
+                                                <div className="grid grid-cols-4 gap-1 text-center text-[10px] text-slate-400 py-0.5">
+                                                    <div className="flex flex-col items-center gap-0.5 text-orange-400 font-bold">
+                                                        <Smartphone className="w-3 h-3" />
                                                         <span>Home</span>
                                                     </div>
-                                                    <div className="flex flex-col items-center gap-1 hover:text-white">
-                                                        <Activity className="w-3.5 h-3.5" />
+                                                    <div className="flex flex-col items-center gap-0.5 hover:text-white">
+                                                        <Activity className="w-3 h-3" />
                                                         <span>Aktivitas</span>
                                                     </div>
-                                                    <div className="flex flex-col items-center gap-1 hover:text-white">
-                                                        <MessageSquare className="w-3.5 h-3.5" />
+                                                    <div className="flex flex-col items-center gap-0.5 hover:text-white">
+                                                        <MessageSquare className="w-3 h-3" />
                                                         <span>Pesan</span>
                                                     </div>
-                                                    <div className="flex flex-col items-center gap-1 hover:text-white">
-                                                        <ShieldCheck className="w-3.5 h-3.5" />
+                                                    <div className="flex flex-col items-center gap-0.5 hover:text-white">
+                                                        <ShieldCheck className="w-3 h-3" />
                                                         <span>Profil</span>
                                                     </div>
                                                 </div>
-                                                {/* Mobile Home Bar Handle */}
-                                                <div className="w-24 h-1 bg-slate-700/80 rounded-full mx-auto mt-2"></div>
-                                                <div className="mt-3 flex flex-wrap gap-1.5 justify-center">
-                                                    {currentApp.tags.map((tag, i) => (
-                                                        <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400">
-                                                            {tag}
-                                                        </span>
-                                                    ))}
-                                                </div>
+                                                <div className="w-24 h-1 bg-slate-700/80 rounded-full mx-auto mt-1"></div>
                                             </div>
                                         ) : (
-                                            <div className="pt-2 border-t border-slate-800/80">
-                                                <div className="flex flex-wrap gap-1.5">
-                                                    {currentApp.tags.map((tag, i) => (
-                                                        <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">
-                                                            {tag}
-                                                        </span>
-                                                    ))}
+                                            <div>
+                                                <div className="grid grid-cols-4 gap-1 text-center text-[10px] text-slate-400 py-0.5">
+                                                    <div className="flex flex-col items-center gap-0.5 text-blue-400 font-bold">
+                                                        <Layers className="w-3 h-3" />
+                                                        <span>Overview</span>
+                                                    </div>
+                                                    <div className="flex flex-col items-center gap-0.5 hover:text-white">
+                                                        <Database className="w-3 h-3" />
+                                                        <span>Database</span>
+                                                    </div>
+                                                    <div className="flex flex-col items-center gap-0.5 hover:text-white">
+                                                        <Zap className="w-3 h-3" />
+                                                        <span>API Gate</span>
+                                                    </div>
+                                                    <div className="flex flex-col items-center gap-0.5 hover:text-white">
+                                                        <ShieldCheck className="w-3 h-3" />
+                                                        <span>Keamanan</span>
+                                                    </div>
                                                 </div>
+                                                <div className="w-24 h-1 bg-slate-800 rounded-full mx-auto mt-1"></div>
                                             </div>
                                         )}
+
+                                        {/* Row 2: Tech Stack Tags */}
+                                        <div className="flex flex-wrap gap-1 justify-center overflow-hidden">
+                                            {currentApp.tags.map((tag, i) => (
+                                                <span key={i} className="text-[10px] font-mono px-2 py-0.2 rounded bg-slate-950/90 border border-slate-800 text-slate-400">
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </ScrollReveal>
                     </div>
+
 
 
                 </div>
