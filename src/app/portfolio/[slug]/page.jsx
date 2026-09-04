@@ -104,7 +104,7 @@ export default async function PortfolioDetailPage({ params }) {
                                 </h1>
                             </div>
 
-                            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mt-2">
+                            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mt-2 text-justify">
                                 {project.header_subtitle || project.description}
                             </p>
                         </div>
@@ -122,7 +122,7 @@ export default async function PortfolioDetailPage({ params }) {
                                 <Briefcase className="w-5 h-5 text-blue-400" />
                                 <h2 className="font-heading text-xl sm:text-2xl font-bold text-white">Ringkasan Sistem</h2>
                             </div>
-                            <p className="text-slate-300 leading-relaxed text-sm sm:text-base">{project.description}</p>
+                            <p className="text-slate-300 leading-relaxed text-sm sm:text-base text-justify">{project.description}</p>
                         </section>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -131,7 +131,7 @@ export default async function PortfolioDetailPage({ params }) {
                                     <Target className="w-5 h-5 text-amber-400" />
                                     <h3 className="font-bold text-white text-base">Tantangan & Problem</h3>
                                 </div>
-                                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">{project.challenge}</p>
+                                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed text-justify">{project.challenge}</p>
                             </section>
 
                             <section className="studio-card rounded-2xl p-6 border border-white/[0.08] bg-slate-900/30">
@@ -139,7 +139,7 @@ export default async function PortfolioDetailPage({ params }) {
                                     <Lightbulb className="w-5 h-5 text-emerald-400" />
                                     <h3 className="font-bold text-white text-base">Solusi Rekayasa</h3>
                                 </div>
-                                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">{project.solution}</p>
+                                <p className="text-slate-300 text-xs sm:text-sm leading-relaxed text-justify">{project.solution}</p>
                             </section>
                         </div>
                     </div>

@@ -119,7 +119,7 @@ export default async function BlogPage() {
                                                     {posts[0].title}
                                                 </h2>
 
-                                                <p className="text-slate-300 text-sm sm:text-base leading-relaxed line-clamp-3 mb-6">
+                                                <p className="text-slate-300 text-sm sm:text-base leading-relaxed line-clamp-3 mb-6 text-justify">
                                                     {posts[0].excerpt}
                                                 </p>
                                             </div>
@@ -181,7 +181,7 @@ export default async function BlogPage() {
                                                     {post.title}
                                                 </h3>
 
-                                                <p className="text-slate-400 text-xs sm:text-sm line-clamp-2 leading-relaxed">
+                                                <p className="text-slate-400 text-xs sm:text-sm line-clamp-2 leading-relaxed text-justify">
                                                     {post.excerpt}
                                                 </p>
                                             </div>

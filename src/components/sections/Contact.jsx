@@ -86,6 +86,11 @@ const Contact = () => {
 
     return (
         <section id="contact" className="py-24 sm:py-32 bg-[#070C18] text-white relative border-t border-slate-800/80 overflow-hidden">
+            {/* Ghost Typography Watermark */}
+            <div className="absolute top-12 left-1/2 -translate-x-1/2 select-none pointer-events-none text-[20vw] font-black tracking-tighter text-white/[0.03] leading-none whitespace-nowrap z-0">
+                VELORA
+            </div>
+
             <div className="absolute inset-0 studio-grid-pattern opacity-25 pointer-events-none"></div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">

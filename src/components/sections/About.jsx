@@ -76,6 +76,11 @@ const About = () => {
 
     return (
         <section id="tentang" className="py-20 sm:py-28 bg-gradient-to-b from-white via-gray-50/50 to-white relative overflow-hidden">
+            {/* Ghost Typography Watermark */}
+            <div className="absolute top-12 left-1/2 -translate-x-1/2 select-none pointer-events-none text-[18vw] font-black tracking-tighter text-slate-900/[0.025] leading-none whitespace-nowrap z-0">
+                VELORA
+            </div>
+
             {/* Background decorations */}
             <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-teal-100/40 to-transparent rounded-full blur-3xl translate-x-1/3 -translate-y-1/3 pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-blue-100/30 to-transparent rounded-full blur-3xl -translate-x-1/3 translate-y-1/3 pointer-events-none"></div>
@@ -143,7 +148,7 @@ const About = () => {
                             {/* Paragraphs */}
                             <div className="space-y-4 mb-8">
                                 {aboutData.paragraphs.map((p, i) => (
-                                    <p key={i} className="text-gray-600 leading-relaxed text-[15px] sm:text-base">{p}</p>
+                                    <p key={i} className="text-gray-600 leading-relaxed text-[15px] sm:text-base text-justify">{p}</p>
                                 ))}
                             </div>
 

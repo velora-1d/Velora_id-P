@@ -65,7 +65,7 @@ const TestimonialCard = ({ testimonial }) => (
                 </div>
 
                 {/* Content */}
-                <p className="text-slate-300 text-sm sm:text-[15px] leading-relaxed mb-6 font-normal">
+                <p className="text-slate-300 text-sm sm:text-[15px] leading-relaxed mb-6 font-normal text-justify">
                     &quot;{testimonial.content}&quot;
                 </p>
             </div>
@@ -122,6 +122,13 @@ const Testimonials = () => {
     return (
         <section id="testimonials" className="py-24 sm:py-32 bg-[#070C18] text-white relative border-t border-slate-800/80 overflow-hidden">
             <div className="absolute inset-0 studio-grid-pattern opacity-25 pointer-events-none"></div>
+
+            {/* Giant Ghost Typography Watermark */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center pointer-events-none select-none z-0 w-full overflow-hidden opacity-[0.03]">
+                <span className="text-[18vw] font-black text-white tracking-tighter leading-none select-none whitespace-nowrap">
+                    VELORA
+                </span>
+            </div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
                 {/* Header */}

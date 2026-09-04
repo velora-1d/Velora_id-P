@@ -149,6 +149,13 @@ const FeaturedProduct = () => {
             <div className="absolute inset-0 studio-grid-pattern opacity-25 pointer-events-none"></div>
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-7xl h-[600px] bg-[radial-gradient(ellipse_60%_40%_at_50%_50%,rgba(37,99,235,0.12),transparent)] pointer-events-none"></div>
 
+            {/* Giant Ghost Typography Watermark */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center pointer-events-none select-none z-0 w-full overflow-hidden opacity-[0.03]">
+                <span className="text-[18vw] font-black text-white tracking-tighter leading-none select-none whitespace-nowrap">
+                    VELORA
+                </span>
+            </div>
+
             <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
                 {/* Section Header */}
                 <ScrollReveal width="100%">
@@ -235,7 +242,7 @@ const FeaturedProduct = () => {
                                     <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-tight">
                                         {active?.title}
                                     </h3>
-                                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 sm:mb-8">
+                                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed text-justify mb-6 sm:mb-8">
                                         {active?.description}
                                     </p>
 

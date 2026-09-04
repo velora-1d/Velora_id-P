@@ -109,22 +109,29 @@ const Portfolio = () => {
     const projectUrl = (project) => `/portfolio/${project.slug || project.id}`;
 
     return (
-        <section id="portfolio" className="py-24 sm:py-32 bg-[#070C18] text-white relative border-t border-slate-800/80 overflow-hidden">
+        <section id="portfolio" className="py-24 sm:py-32 bg-[#faf9f7] text-slate-900 relative border-t border-slate-200/80 overflow-hidden">
             {/* Subtle technical background grid */}
-            <div className="absolute inset-0 studio-grid-pattern opacity-25 pointer-events-none"></div>
+            <div className="absolute inset-0 studio-grid-pattern-light opacity-50 pointer-events-none"></div>
+
+            {/* Giant Ghost Typography Watermark */}
+            <div className="absolute top-12 left-1/2 -translate-x-1/2 flex justify-center pointer-events-none select-none z-0 w-full overflow-hidden opacity-[0.03]">
+                <span className="text-[16vw] font-black text-slate-900 tracking-tighter leading-none select-none whitespace-nowrap">
+                    PORTFOLIO
+                </span>
+            </div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
                 {/* Header */}
                 <ScrollReveal width="100%">
                     <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-xs font-mono text-blue-300 uppercase tracking-widest mb-4">
-                            <Layers className="w-3.5 h-3.5 text-blue-400" />
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-xs font-mono text-blue-700 uppercase tracking-widest mb-4 shadow-sm">
+                            <Layers className="w-3.5 h-3.5 text-blue-600" />
                             [SHOWCASE_PORTFOLIO]
                         </div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
                             Studi Kasus & Rekayasa Produk
                         </h2>
-                        <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
                             Kompilasi sistem informasi, platform e-commerce, dan aplikasi kustom yang telah kami selesaikan dengan arsitektur tangguh.
                         </p>
                     </div>
@@ -133,7 +140,7 @@ const Portfolio = () => {
                 {/* Category Segmented Controls */}
                 <ScrollReveal width="100%">
                     <div className="flex justify-center mb-10 sm:mb-14">
-                        <div className="inline-flex flex-wrap justify-center p-1 rounded-xl bg-slate-950 border border-slate-800 gap-1">
+                        <div className="inline-flex flex-wrap justify-center p-1 rounded-xl bg-slate-100 border border-slate-200/90 gap-1 shadow-inner">
                             {categories.map(cat => {
                                 const isActive = filter === cat;
                                 return (
@@ -142,8 +149,8 @@ const Portfolio = () => {
                                         onClick={() => setFilter(cat)}
                                         className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 ${
                                             isActive
-                                                ? 'bg-blue-600 text-white shadow-md shadow-blue-900/30'
-                                                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
+                                                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                                                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
                                         }`}
                                     >
                                         {cat}
@@ -158,12 +165,12 @@ const Portfolio = () => {
                     {/* FEATURED CASE STUDY (COMMAND CENTER DISPLAY) */}
                     {featured && (
                         <ScrollReveal width="100%">
-                            <div className="mb-10 sm:mb-12 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950 border border-slate-800 overflow-hidden shadow-2xl group">
+                            <div className="mb-10 sm:mb-12 rounded-3xl studio-card-light overflow-hidden shadow-sm group">
                                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
                                     {/* Left (Span 7): Device / Screen Showcase */}
                                     <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-auto overflow-hidden bg-slate-950 flex flex-col justify-between">
                                         {/* Browser frame top */}
-                                        <div className="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-slate-800/80 z-10 text-[11px] font-mono text-slate-400">
+                                        <div className="flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800 z-10 text-[11px] font-mono text-slate-300">
                                             <div className="flex items-center gap-2">
                                                 <div className="flex gap-1.5">
                                                     <div className="w-2 h-2 rounded-full bg-red-500/80"></div>
@@ -184,10 +191,10 @@ const Portfolio = () => {
                                     </div>
 
                                     {/* Right (Span 5): Case Study Brief */}
-                                    <div className="lg:col-span-5 p-6 sm:p-8 md:p-10 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-slate-800">
+                                    <div className="lg:col-span-5 p-6 sm:p-8 md:p-10 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-slate-200/80 bg-white">
                                         <div>
                                             <div className="flex items-center justify-between gap-2 mb-3">
-                                                <span className="text-[10px] font-mono uppercase tracking-wider text-blue-400 bg-blue-950/80 border border-blue-800/60 px-2.5 py-0.5 rounded">
+                                                <span className="text-[10px] font-mono uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/80 px-2.5 py-0.5 rounded">
                                                     {featured.category}
                                                 </span>
                                                 <span className="text-xs text-slate-500 font-mono flex items-center gap-1">
@@ -196,20 +203,20 @@ const Portfolio = () => {
                                                 </span>
                                             </div>
 
-                                            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-tight group-hover:text-blue-300 transition-colors">
+                                            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3 tracking-tight group-hover:text-blue-600 transition-colors">
                                                 {featured.title}
                                             </h3>
 
-                                            <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                                            <p className="text-slate-600 text-sm leading-relaxed mb-6 text-justify">
                                                 {featured.description}
                                             </p>
 
                                             {/* Stack Tag Chips */}
                                             <div className="mb-6">
-                                                <span className="text-[11px] font-mono text-slate-500 block mb-2 uppercase tracking-wider">Teknologi yang Diterapkan:</span>
+                                                <span className="text-[11px] font-mono text-slate-400 block mb-2 uppercase tracking-wider">Teknologi yang Diterapkan:</span>
                                                 <div className="flex flex-wrap gap-1.5">
                                                     {featured.tech.split(',').map((t, i) => (
-                                                        <span key={i} className="text-xs font-mono px-2.5 py-1 rounded bg-slate-950 border border-slate-800 text-blue-300">
+                                                        <span key={i} className="text-xs font-mono px-2.5 py-1 rounded bg-slate-50 border border-slate-200 text-blue-700">
                                                             {t.trim()}
                                                         </span>
                                                     ))}
@@ -217,15 +224,15 @@ const Portfolio = () => {
                                             </div>
                                         </div>
 
-                                        <div className="pt-5 border-t border-slate-800 flex items-center justify-between">
+                                        <div className="pt-5 border-t border-slate-100 flex items-center justify-between">
                                             <Link
                                                 href={projectUrl(featured)}
-                                                className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 px-5 py-2.5 rounded-xl transition-all shadow-md shadow-blue-900/30 group"
+                                                className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 px-5 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20 group"
                                             >
                                                 <span>Buka Studi Kasus</span>
-                                                <ArrowRight className="w-4 h-4 text-blue-200 transition-transform group-hover:translate-x-1" />
+                                                <ArrowRight className="w-4 h-4 text-blue-100 transition-transform group-hover:translate-x-1" />
                                             </Link>
-                                            <span className="text-xs font-mono text-emerald-400 flex items-center gap-1">
+                                            <span className="text-xs font-mono text-emerald-600 flex items-center gap-1">
                                                 <ShieldCheck className="w-3.5 h-3.5" /> Terverifikasi
                                             </span>
                                         </div>
@@ -243,18 +250,18 @@ const Portfolio = () => {
                                 <ScrollReveal key={project.id || index} delay={index * 0.05} width="100%">
                                     <Link
                                         href={projectUrl(project)}
-                                        className="rounded-xl bg-slate-900/70 hover:bg-slate-900 border border-slate-800/80 hover:border-blue-500/40 overflow-hidden flex flex-col justify-between transition-all duration-200 group h-full shadow-sm hover:shadow-xl hover:shadow-blue-950/20"
+                                        className="rounded-2xl studio-card-light hover:border-blue-500/40 overflow-hidden flex flex-col justify-between transition-all duration-200 group h-full shadow-sm hover:shadow-md hover:-translate-y-1"
                                     >
                                         <div>
                                             {/* Preview Image with Subtle Frame */}
-                                            <div className="h-44 sm:h-48 overflow-hidden bg-slate-950 relative border-b border-slate-800">
+                                            <div className="h-44 sm:h-48 overflow-hidden bg-slate-950 relative border-b border-slate-200">
                                                 <img
                                                     src={project.image_url || project.image}
                                                     alt={project.title}
-                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                                 />
                                                 <div className="absolute top-3 left-3">
-                                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-950/90 backdrop-blur-md border border-slate-800 text-slate-300">
+                                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900/90 backdrop-blur-md border border-slate-800 text-white">
                                                         {project.category}
                                                     </span>
                                                 </div>
@@ -262,27 +269,27 @@ const Portfolio = () => {
 
                                             {/* Card Details */}
                                             <div className="p-5">
-                                                <div className="flex items-center justify-between text-xs text-slate-400 font-mono mb-2">
+                                                <div className="flex items-center justify-between text-xs text-slate-500 font-mono mb-2">
                                                     <span>{project.client}</span>
-                                                    {PIcon && <PIcon className="w-3.5 h-3.5 text-blue-400" />}
+                                                    {PIcon && <PIcon className="w-3.5 h-3.5 text-blue-600" />}
                                                 </div>
 
-                                                <h4 className="font-bold text-white text-base sm:text-lg mb-2 leading-snug group-hover:text-blue-300 transition-colors line-clamp-1">
+                                                <h4 className="font-bold text-slate-900 text-base sm:text-lg mb-2 leading-snug group-hover:text-blue-600 transition-colors line-clamp-1">
                                                     {project.title}
                                                 </h4>
 
-                                                <p className="text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-4">
+                                                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-4 text-justify">
                                                     {project.description}
                                                 </p>
                                             </div>
                                         </div>
 
                                         {/* Card Footer with Stack and Action */}
-                                        <div className="p-5 pt-3 border-t border-slate-800/70 flex items-center justify-between text-xs font-mono">
-                                            <span className="text-slate-400 truncate max-w-[170px]">
+                                        <div className="p-5 pt-3 border-t border-slate-100 flex items-center justify-between text-xs font-mono">
+                                            <span className="text-slate-500 truncate max-w-[170px]">
                                                 {project.tech}
                                             </span>
-                                            <span className="text-blue-400 font-semibold flex items-center gap-1 group-hover:gap-1.5 transition-all">
+                                            <span className="text-blue-600 font-semibold flex items-center gap-1 group-hover:gap-1.5 transition-all">
                                                 <span>Detail</span>
                                                 <ChevronRight className="w-3.5 h-3.5" />
                                             </span>

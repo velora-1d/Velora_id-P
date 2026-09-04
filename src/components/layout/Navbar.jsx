@@ -109,10 +109,10 @@ const Navbar = () => {
                         <div className="hidden lg:flex items-center">
                             <button
                                 onClick={() => scrollToSection('contact')}
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-semibold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-900/30 transition-all duration-200 group"
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-bold bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-500 hover:to-orange-400 text-white shadow-lg shadow-blue-900/30 hover:shadow-orange-500/20 transition-all duration-200 group hover:-translate-y-0.5"
                             >
                                 <span>Hubungi Kami</span>
-                                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform text-blue-200" />
+                                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform text-orange-100 group-hover:text-white" />
                             </button>
                         </div>
 
@@ -187,10 +187,10 @@ const Navbar = () => {
                         <div className="px-4 pb-6 pt-2 border-t border-slate-800">
                             <button
                                 onClick={() => scrollToSection('contact')}
-                                className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-colors shadow-lg shadow-blue-900/30"
+                                className="w-full bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-500 hover:to-orange-400 text-white py-3.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-blue-900/30 hover:shadow-orange-500/20"
                             >
                                 <span>Hubungi Kami</span>
-                                <ArrowRight className="w-4 h-4 text-blue-200" />
+                                <ArrowRight className="w-4 h-4 text-orange-100" />
                             </button>
                         </div>
                     </div>

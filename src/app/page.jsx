@@ -53,7 +53,7 @@ export default async function Home() {
 
     return (
         <LazyMotion features={domMax}>
-            <div className="font-sans bg-[#070C18] text-slate-100 min-h-screen overflow-x-hidden">
+            <div className="font-sans text-slate-900 bg-white overflow-x-hidden">
                 {faqSchema && (
                     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
                 )}

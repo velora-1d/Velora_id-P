@@ -36,11 +36,16 @@ const Legalitas = () => {
         { icon: Building, label: 'Nama Usaha', value: d.nama_usaha, sub: d.nama_usaha_sub, color: 'text-amber-600', bg: 'bg-amber-50' },
         { icon: Shield, label: 'Pemilik', value: d.pemilik, sub: d.pemilik_title, color: 'text-teal-600', bg: 'bg-teal-50' },
         { icon: MapPin, label: 'Domisili', value: d.domisili, sub: d.domisili_sub, color: 'text-blue-600', bg: 'bg-blue-50' },
-        { icon: Calendar, label: 'Tanggal Terbit', value: d.tanggal_terbit, sub: d.tanggal_terbit_sub, color: 'text-violet-600', bg: 'bg-violet-50' },
+        { icon: Calendar, label: 'Tanggal Terbit', value: d.tanggal_terbit, sub: d.tanggal_terbit_sub, color: 'text-blue-600', bg: 'bg-blue-50' },
     ];
 
     return (
         <section id="legalitas" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
+            {/* Ghost Typography Watermark */}
+            <div className="absolute top-12 left-1/2 -translate-x-1/2 select-none pointer-events-none text-[18vw] font-black tracking-tighter text-slate-900/[0.025] leading-none whitespace-nowrap z-0">
+                LEGALITAS
+            </div>
+
             {/* Background */}
             <div className="absolute top-0 left-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
             <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
@@ -160,16 +165,16 @@ const Legalitas = () => {
                                             </div>
                                             <div>
                                                 <h4 className="text-gray-900 font-bold text-sm mb-1.5">Wilayah Operasional</h4>
-                                                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{d.wilayah_desc}</p>
+                                                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed text-justify">{d.wilayah_desc}</p>
                                             </div>
                                         </div>
                                         <div className="flex items-start gap-4 p-5 rounded-2xl bg-gray-50/80 border border-gray-100">
-                                            <div className="w-10 h-10 rounded-xl bg-violet-50 flex items-center justify-center flex-shrink-0">
-                                                <FileText className="w-5 h-5 text-violet-500" />
+                                            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center flex-shrink-0">
+                                                <FileText className="w-5 h-5 text-blue-600" />
                                             </div>
                                             <div>
                                                 <h4 className="text-gray-900 font-bold text-sm mb-1.5">Bidang Usaha (KBLI)</h4>
-                                                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed">{d.kbli_desc}</p>
+                                                <p className="text-gray-500 text-xs sm:text-sm leading-relaxed text-justify">{d.kbli_desc}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -181,7 +186,7 @@ const Legalitas = () => {
                                             <span className="text-amber-600/70 text-xs font-semibold uppercase tracking-widest">Ditandatangani Secara Elektronik</span>
                                             <Fingerprint className="w-4 h-4 text-amber-400" />
                                         </div>
-                                        <p className="text-gray-400 text-xs leading-relaxed max-w-lg mx-auto">
+                                        <p className="text-gray-400 text-xs leading-relaxed max-w-lg mx-auto text-justify">
                                             {d.footer_text}
                                         </p>
                                     </div>

@@ -212,7 +212,7 @@ export default async function BlogPostPage({ params }) {
                                         ))}
                                     </ul>
                                 ) : (
-                                    <p className="text-slate-300 text-base sm:text-lg leading-relaxed">{paragraph}</p>
+                                    <p className="text-slate-300 text-base sm:text-lg leading-relaxed text-justify">{paragraph}</p>
                                 )}
                             </div>
                         ))}

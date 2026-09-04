@@ -92,23 +92,28 @@ const Founder = () => {
     }, []);
 
     return (
-        <section id="founder" className="py-24 sm:py-32 bg-[#070C18] text-slate-100 relative overflow-hidden border-t border-white/[0.06]">
+        <section id="founder" className="py-24 sm:py-32 bg-[#faf9f7] text-slate-900 relative overflow-hidden border-t border-slate-200/80">
+            {/* Ghost Typography Watermark */}
+            <div className="absolute top-12 left-1/2 -translate-x-1/2 select-none pointer-events-none text-[18vw] font-black tracking-tighter text-slate-900/[0.03] leading-none whitespace-nowrap z-0">
+                FOUNDER
+            </div>
+
             {/* Ambient Lighting & Studio Grid */}
-            <div className="absolute inset-0 studio-grid-pattern opacity-10 pointer-events-none" />
-            <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-blue-600/[0.06] rounded-full blur-[120px] pointer-events-none" />
+            <div className="absolute inset-0 studio-grid-pattern-light opacity-30 pointer-events-none" />
+            <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-blue-600/[0.04] rounded-full blur-[120px] pointer-events-none" />
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-7xl">
                 {/* Section Header */}
                 <ScrollReveal width="100%">
                     <div className="flex flex-col items-center mb-16 sm:mb-20 text-center">
                         <div className="inline-flex items-center gap-2 studio-mono-badge mb-4">
-                            <span className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
                             LEADERSHIP & ENGINEERING
                         </div>
-                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight">
                             Profil Founder & Arsitek
                         </h2>
-                        <p className="mt-4 text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed">
+                        <p className="mt-4 text-base sm:text-lg text-slate-600 max-w-2xl leading-relaxed">
                             Integrasi disiplin legalitas formal dan rekayasa perangkat lunak untuk solusi digital yang kokoh dan berkelanjutan.
                         </p>
                     </div>
@@ -118,16 +123,16 @@ const Founder = () => {
                     {/* LEFT COLUMN: Photo (Sticky) */}
                     <div className="lg:col-span-5 relative z-0 lg:sticky lg:top-28">
                         <ScrollReveal direction="right" width="100%">
-                            <div className="relative rounded-3xl overflow-hidden studio-card border border-white/[0.1] shadow-2xl bg-slate-900/60 h-[420px] sm:h-[520px] lg:h-[620px] group">
+                            <div className="relative rounded-3xl overflow-hidden studio-card-light border border-slate-200 shadow-xl bg-white h-[420px] sm:h-[520px] lg:h-[620px] group">
                                 <img
                                     src={founderData.photo_url}
                                     alt={founderData.name}
-                                    className="w-full h-full object-cover object-top filter saturate-[0.9] brightness-[0.95] group-hover:scale-[1.02] group-hover:saturate-100 transition-all duration-700"
+                                    className="w-full h-full object-cover object-top filter saturate-[0.95] brightness-[0.98] group-hover:scale-[1.02] group-hover:saturate-100 transition-all duration-700"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-[#070C18] via-[#070C18]/30 to-transparent" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent" />
                                 
                                 {/* Identity overlay at bottom of photo */}
-                                <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8 backdrop-blur-md bg-slate-950/70 border-t border-white/[0.08]">
+                                <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8 backdrop-blur-md bg-slate-950/80 border-t border-white/[0.1]">
                                     <div className="flex items-center gap-2 mb-2">
                                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                                         <span className="text-xs font-mono font-medium text-emerald-400 tracking-wide">Direct Technical Leadership</span>
@@ -143,34 +148,34 @@ const Founder = () => {
                     <div className="lg:col-span-7 space-y-6">
                         {/* CARD 1: Bio & Introduction */}
                         <ScrollReveal direction="left" width="100%">
-                            <div className="studio-card rounded-3xl p-6 sm:p-10 border border-white/[0.08] bg-slate-900/50 backdrop-blur-xl">
-                                <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-white/[0.08]">
+                            <div className="studio-card-light rounded-3xl p-6 sm:p-10 border border-slate-200/80 bg-white shadow-sm">
+                                <div className="flex flex-wrap items-center justify-between gap-4 pb-6 mb-6 border-b border-slate-100">
                                     <div>
-                                        <span className="text-xs font-mono text-blue-400 font-semibold uppercase tracking-wider block mb-1">
+                                        <span className="text-xs font-mono text-blue-600 font-semibold uppercase tracking-wider block mb-1">
                                             {founderData.title}
                                         </span>
-                                        <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                                        <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
                                             {founderData.name}
                                         </h3>
                                     </div>
-                                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/80 border border-white/[0.08] text-xs font-mono text-slate-300">
-                                        <MapPin className="w-3.5 h-3.5 text-blue-400" />
+                                    <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-xs font-mono text-slate-700">
+                                        <MapPin className="w-3.5 h-3.5 text-blue-600" />
                                         Pasirjambu, Bandung
                                     </div>
                                 </div>
 
-                                <div className="space-y-4 text-slate-300 leading-relaxed text-sm sm:text-base">
+                                <div className="space-y-4 text-slate-600 leading-relaxed text-sm sm:text-base">
                                     {founderData.bio_paragraphs.map((p, i) => (
-                                        <p key={i} dangerouslySetInnerHTML={{ __html: p }} />
+                                        <p key={i} className="text-justify" dangerouslySetInnerHTML={{ __html: p }} />
                                     ))}
                                 </div>
 
                                 {/* Stats Strip */}
-                                <div className="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-white/[0.08]">
+                                <div className="grid grid-cols-3 gap-4 mt-8 pt-8 border-t border-slate-100">
                                     {founderData.stats.map((stat, i) => (
                                         <div key={i} className="text-center sm:text-left">
-                                            <div className="text-2xl sm:text-3xl font-black text-white font-mono tracking-tight">{stat.value}</div>
-                                            <div className="text-[10px] sm:text-xs text-slate-400 font-mono uppercase tracking-wider mt-1">{stat.label}</div>
+                                            <div className="text-2xl sm:text-3xl font-black text-slate-900 font-mono tracking-tight">{stat.value}</div>
+                                            <div className="text-[10px] sm:text-xs text-slate-500 font-mono uppercase tracking-wider mt-1">{stat.label}</div>
                                         </div>
                                     ))}
                                 </div>
@@ -180,28 +185,28 @@ const Founder = () => {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {/* CARD 2: Career Track */}
                             <ScrollReveal direction="up" delay={0.1}>
-                                <div className="studio-card rounded-3xl p-6 sm:p-8 border border-white/[0.08] bg-slate-900/40 h-full">
-                                    <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.06]">
-                                        <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-slate-300">
+                                <div className="studio-card-light rounded-3xl p-6 sm:p-8 border border-slate-200/80 bg-white shadow-sm h-full">
+                                    <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                                        <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-slate-800">
                                             Rekam Jejak
                                         </h4>
-                                        <span className="text-[10px] font-mono text-slate-500">MILESTONES</span>
+                                        <span className="text-[10px] font-mono text-slate-400">MILESTONES</span>
                                     </div>
 
                                     <div className="space-y-5 relative">
-                                        <div className="absolute left-[13px] top-2 bottom-2 w-px bg-white/[0.08]" />
+                                        <div className="absolute left-[13px] top-2 bottom-2 w-px bg-slate-200" />
                                         {journey.map((j, i) => {
                                             const JIcon = j.icon;
                                             return (
                                                 <div key={i} className="flex gap-4 relative z-10">
-                                                    <div className="w-7 h-7 rounded-lg bg-slate-800 border border-white/[0.1] flex items-center justify-center flex-shrink-0 text-blue-400">
+                                                    <div className="w-7 h-7 rounded-lg bg-blue-50 border border-blue-100 flex items-center justify-center flex-shrink-0 text-blue-600">
                                                         <JIcon className="w-3.5 h-3.5" />
                                                     </div>
                                                     <div>
-                                                        <span className="inline-block px-2 py-0.5 rounded bg-blue-500/10 border border-blue-500/20 text-[10px] font-mono font-semibold text-blue-300 mb-1">
+                                                        <span className="inline-block px-2 py-0.5 rounded bg-blue-50 border border-blue-200/60 text-[10px] font-mono font-semibold text-blue-700 mb-1">
                                                             {j.year}
                                                         </span>
-                                                        <p className="text-xs sm:text-sm font-medium text-slate-200 leading-snug">{j.text}</p>
+                                                        <p className="text-xs sm:text-sm font-medium text-slate-700 leading-snug">{j.text}</p>
                                                     </div>
                                                 </div>
                                             );
@@ -212,18 +217,18 @@ const Founder = () => {
 
                             {/* CARD 3: Core Competencies & Direct Connect */}
                             <ScrollReveal direction="up" delay={0.2}>
-                                <div className="studio-card rounded-3xl p-6 sm:p-8 border border-white/[0.08] bg-slate-900/40 h-full flex flex-col justify-between">
+                                <div className="studio-card-light rounded-3xl p-6 sm:p-8 border border-slate-200/80 bg-white shadow-sm h-full flex flex-col justify-between">
                                     <div>
-                                        <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/[0.06]">
-                                            <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-slate-300">
+                                        <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                                            <h4 className="text-xs font-mono font-bold uppercase tracking-widest text-slate-800">
                                                 Kompetensi Kunci
                                             </h4>
-                                            <span className="text-[10px] font-mono text-slate-500">STACK & LEGAL</span>
+                                            <span className="text-[10px] font-mono text-slate-400">STACK & LEGAL</span>
                                         </div>
 
                                         <div className="flex flex-wrap gap-2 mb-6">
                                             {expertise.map((skill, i) => (
-                                                <span key={i} className="px-2.5 py-1 rounded-md bg-slate-800/80 border border-white/[0.06] text-xs font-mono text-slate-300 hover:border-blue-500/40 hover:text-white transition-colors">
+                                                <span key={i} className="px-2.5 py-1 rounded-md bg-slate-100 border border-slate-200/80 text-xs font-mono text-slate-700 hover:border-blue-500/40 hover:text-blue-700 hover:bg-blue-50 transition-colors">
                                                     {skill}
                                                 </span>
                                             ))}
@@ -231,7 +236,7 @@ const Founder = () => {
                                     </div>
 
                                     <div>
-                                        <div className="text-xs font-mono font-bold uppercase tracking-widest text-slate-400 mb-3">
+                                        <div className="text-xs font-mono font-bold uppercase tracking-widest text-slate-500 mb-3">
                                             Koneksi Profesional
                                         </div>
                                         <div className="flex gap-2">
@@ -244,7 +249,7 @@ const Founder = () => {
                                                         target="_blank"
                                                         rel="noopener noreferrer"
                                                         aria-label={link.label}
-                                                        className={`w-10 h-10 rounded-xl bg-slate-800/70 border border-white/[0.08] flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-800 hover:scale-105 transition-all duration-200 ${sc?.color || ''}`}
+                                                        className="w-10 h-10 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 hover:text-blue-600 hover:bg-white hover:border-blue-300 hover:scale-105 transition-all duration-200"
                                                     >
                                                         {sc?.icon}
                                                     </a>
@@ -258,17 +263,17 @@ const Founder = () => {
 
                         {/* CARD 4: Direct Consultation Strip */}
                         <ScrollReveal direction="up" delay={0.3}>
-                            <div className="rounded-3xl p-6 sm:p-8 border border-blue-500/30 bg-gradient-to-r from-blue-950/40 via-slate-900/60 to-slate-900/40 backdrop-blur-xl flex flex-col sm:flex-row items-center justify-between gap-6">
+                            <div className="rounded-3xl p-6 sm:p-8 border border-blue-200 bg-gradient-to-r from-blue-50/80 via-white to-sky-50/80 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
                                 <div>
-                                    <span className="text-xs font-mono text-blue-400 tracking-wider uppercase font-semibold block mb-1">
+                                    <span className="text-xs font-mono text-blue-600 tracking-wider uppercase font-semibold block mb-1">
                                         Executive Consultation
                                     </span>
-                                    <h3 className="text-lg sm:text-xl font-bold text-white">Diskusikan Arsitektur Sistem Anda</h3>
-                                    <p className="text-slate-400 text-xs sm:text-sm mt-1">Konsultasi teknis dan legalitas implementasi langsung bersama Lead Architect.</p>
+                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900">Diskusikan Arsitektur Sistem Anda</h3>
+                                    <p className="text-slate-600 text-xs sm:text-sm mt-1">Konsultasi teknis dan legalitas implementasi langsung bersama Lead Architect.</p>
                                 </div>
                                 <a
                                     href="#contact"
-                                    className="flex-shrink-0 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-sm shadow-lg shadow-blue-600/25 transition-all flex items-center gap-2 hover:-translate-y-0.5"
+                                    className="flex-shrink-0 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-sm shadow-md shadow-blue-600/20 transition-all flex items-center gap-2 hover:-translate-y-0.5"
                                 >
                                     <Mail className="w-4 h-4" /> Mulai Diskusi
                                 </a>

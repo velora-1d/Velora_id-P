@@ -108,22 +108,29 @@ const Services = () => {
     const activeCategory = categories[activeTab] || categories[0];
 
     return (
-        <section id="services" className="py-24 sm:py-32 bg-slate-900/50 relative border-t border-slate-800/80">
+        <section id="services" className="py-24 sm:py-32 bg-[#faf9f7] text-slate-900 relative border-t border-slate-200/80 overflow-hidden">
             {/* Subtle background ambient dot grid */}
-            <div className="absolute inset-0 studio-grid-pattern opacity-20 pointer-events-none"></div>
+            <div className="absolute inset-0 studio-grid-pattern-light opacity-50 pointer-events-none"></div>
+
+            {/* Giant Ghost Typography Watermark */}
+            <div className="absolute top-12 left-1/2 -translate-x-1/2 flex justify-center pointer-events-none select-none z-0 w-full overflow-hidden opacity-[0.03]">
+                <span className="text-[18vw] font-black text-slate-900 tracking-tighter leading-none select-none whitespace-nowrap">
+                    SERVICES
+                </span>
+            </div>
 
             <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
                 {/* Section Header */}
                 <ScrollReveal width="100%">
                     <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-xs font-mono text-blue-300 uppercase tracking-widest mb-4">
-                            <Layers className="w-3.5 h-3.5 text-blue-400" />
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-xs font-mono text-blue-700 uppercase tracking-widest mb-4 shadow-sm">
+                            <Layers className="w-3.5 h-3.5 text-blue-600" />
                             [LAYANAN_STUDIO]
                         </div>
-                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
                             Katalog Solusi Rekayasa Digital
                         </h2>
-                        <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                        <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
                             Mulai dari peluncuran kilat, website representatif berkecepatan tinggi, hingga sistem tata kelola institusi terpadu.
                         </p>
                     </div>
@@ -132,7 +139,7 @@ const Services = () => {
                 {/* Technical Category Segmented Control */}
                 <ScrollReveal width="100%">
                     <div className="flex justify-center mb-10 sm:mb-12">
-                        <div className="inline-flex flex-wrap justify-center p-1 rounded-xl bg-slate-950 border border-slate-800 gap-1 shadow-inner">
+                        <div className="inline-flex flex-wrap justify-center p-1 rounded-xl bg-slate-100 border border-slate-200/90 gap-1 shadow-inner">
                             {categories.map((cat, index) => {
                                 const isActive = activeTab === index;
                                 return (
@@ -141,11 +148,11 @@ const Services = () => {
                                         onClick={() => setActiveTab(index)}
                                         className={`px-4 sm:px-5 py-2.5 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2 ${
                                             isActive
-                                                ? 'bg-blue-600 text-white shadow-md shadow-blue-900/30'
-                                                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
+                                                ? 'bg-blue-600 text-white shadow-md shadow-blue-600/20'
+                                                : 'text-slate-600 hover:text-slate-900 hover:bg-white'
                                         }`}
                                     >
-                                        <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-white' : 'bg-slate-600'}`}></span>
+                                        <span className={`w-1.5 h-1.5 rounded-full ${isActive ? 'bg-white' : 'bg-slate-400'}`}></span>
                                         <span>{cat.name}</span>
                                     </button>
                                 );
@@ -157,55 +164,55 @@ const Services = () => {
                 {/* Bento Grid Architecture */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 items-stretch">
                     {/* Left: Interactive Category Overview Showcase (Span 5) */}
-                    <div className="lg:col-span-5 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950/90 border border-slate-800 p-6 sm:p-8 flex flex-col justify-between shadow-xl relative overflow-hidden">
+                    <div className="lg:col-span-5 rounded-3xl studio-card-light p-6 sm:p-8 flex flex-col justify-between shadow-sm relative overflow-hidden">
                         {/* Top Ambient Glow */}
-                        <div className="absolute top-0 right-0 w-48 h-48 bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+                        <div className="absolute top-0 right-0 w-48 h-48 bg-blue-600/5 rounded-full blur-3xl pointer-events-none"></div>
 
                         <div>
                             <div className="flex items-center justify-between mb-4">
-                                <span className="text-[11px] font-mono uppercase tracking-wider text-blue-400 bg-blue-950/60 border border-blue-800/60 px-2.5 py-1 rounded">
+                                <span className="text-[11px] font-mono uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/80 px-2.5 py-1 rounded">
                                     {activeCategory.badge || 'PRODUKSI'}
                                 </span>
-                                <span className="text-xs text-slate-500 font-mono">0{activeTab + 1} / 0{categories.length}</span>
+                                <span className="text-xs text-slate-400 font-mono">0{activeTab + 1} / 0{categories.length}</span>
                             </div>
 
-                            <h3 className="text-2xl sm:text-3xl font-bold text-white tracking-tight mb-2">
+                            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-2">
                                 {activeCategory.name}
                             </h3>
-                            <p className="text-blue-400 text-xs sm:text-sm font-medium mb-4">
+                            <p className="text-blue-600 text-xs sm:text-sm font-semibold mb-4">
                                 {activeCategory.tagline}
                             </p>
-                            <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                            <p className="text-slate-600 text-sm leading-relaxed mb-6 text-justify">
                                 {activeCategory.description}
                             </p>
 
                             {/* Technical Architecture Feature Mini-card */}
-                            <div className="rounded-xl bg-slate-950/80 border border-slate-800/90 p-4 font-mono text-xs text-slate-300 space-y-2.5">
+                            <div className="rounded-xl bg-slate-50 border border-slate-200/90 p-4 font-mono text-xs text-slate-700 space-y-2.5">
                                 <div className="text-[11px] text-slate-500 uppercase tracking-wider flex items-center gap-1.5">
-                                    <Activity className="w-3.5 h-3.5 text-blue-400" /> Standar Eksekusi Velora:
+                                    <Activity className="w-3.5 h-3.5 text-blue-600" /> Standar Eksekusi Velora:
                                 </div>
-                                <div className="flex items-center justify-between border-b border-slate-800/60 pb-1.5">
-                                    <span className="text-slate-400">Garansi & Bugfix</span>
-                                    <span className="text-emerald-400 font-semibold">Aktif 30-90 Hari</span>
+                                <div className="flex items-center justify-between border-b border-slate-200/70 pb-1.5">
+                                    <span className="text-slate-500">Garansi & Bugfix</span>
+                                    <span className="text-emerald-600 font-semibold">Aktif 30-90 Hari</span>
                                 </div>
-                                <div className="flex items-center justify-between border-b border-slate-800/60 pb-1.5">
-                                    <span className="text-slate-400">Stack Standar</span>
-                                    <span className="text-blue-300 font-semibold">Clean Architecture</span>
+                                <div className="flex items-center justify-between border-b border-slate-200/70 pb-1.5">
+                                    <span className="text-slate-500">Stack Standar</span>
+                                    <span className="text-blue-600 font-semibold">Clean Architecture</span>
                                 </div>
                                 <div className="flex items-center justify-between">
-                                    <span className="text-slate-400">Hak Milik Source Code</span>
-                                    <span className="text-slate-200 font-semibold">100% Milik Klien</span>
+                                    <span className="text-slate-500">Hak Milik Source Code</span>
+                                    <span className="text-slate-900 font-semibold">100% Milik Klien</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="mt-8 pt-5 border-t border-slate-800/80 flex items-center justify-between">
+                        <div className="mt-8 pt-5 border-t border-slate-200/80 flex items-center justify-between">
                             <a
                                 href="#contact"
-                                className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 px-5 py-2.5 rounded-xl transition-all shadow-md shadow-blue-900/30 group"
+                                className="inline-flex items-center gap-2 text-sm font-bold text-white bg-gradient-to-r from-blue-600 to-orange-500 hover:from-blue-500 hover:to-orange-400 px-5 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20 hover:shadow-orange-500/20 group hover:-translate-y-0.5"
                             >
                                 <span>Konsultasikan Kebutuhan</span>
-                                <ArrowRight className="w-4 h-4 text-blue-200 transition-transform group-hover:translate-x-1" />
+                                <ArrowRight className="w-4 h-4 text-orange-100 transition-transform group-hover:translate-x-1" />
                             </a>
                             <span className="text-xs text-slate-500 hidden sm:inline-block">Konsultasi Tanpa Biaya</span>
                         </div>
@@ -218,33 +225,33 @@ const Services = () => {
                             return (
                                 <div
                                     key={idx}
-                                    className="group rounded-2xl bg-slate-900/70 hover:bg-slate-900 border border-slate-800/80 hover:border-blue-500/40 p-5 sm:p-6 transition-all duration-200 flex flex-col justify-between shadow-sm hover:shadow-lg hover:shadow-blue-950/20"
+                                    className="group rounded-2xl studio-card-light hover:border-blue-500/40 p-5 sm:p-6 transition-all duration-200 flex flex-col justify-between shadow-sm hover:shadow-md hover:-translate-y-0.5"
                                 >
                                     <div>
                                         <div className="flex items-center justify-between mb-4">
-                                            <div className="w-10 h-10 rounded-xl bg-blue-950/70 border border-blue-800/60 flex items-center justify-center text-blue-400 group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all duration-200">
+                                            <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200/80 flex items-center justify-center text-blue-600 group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all duration-200">
                                                 <SIcon className="w-5 h-5" />
                                             </div>
                                             {service.tag && (
-                                                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-slate-400">
+                                                <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-600">
                                                     {service.tag}
                                                 </span>
                                             )}
                                         </div>
 
-                                        <h4 className="text-base font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">
+                                        <h4 className="text-base font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
                                             {service.title}
                                         </h4>
-                                        <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
+                                        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed text-justify">
                                             {service.description}
                                         </p>
                                     </div>
 
-                                    <div className="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs text-slate-500 font-mono">
-                                        <span className="flex items-center gap-1.5 text-emerald-400/90">
+                                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500 font-mono">
+                                        <span className="flex items-center gap-1.5 text-emerald-600">
                                             <CheckCircle2 className="w-3.5 h-3.5" /> Siap Produksi
                                         </span>
-                                        <ChevronRight className="w-4 h-4 text-slate-600 group-hover:text-blue-400 group-hover:translate-x-0.5 transition-all" />
+                                        <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 group-hover:translate-x-0.5 transition-all" />
                                     </div>
                                 </div>
                             );
