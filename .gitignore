@@ -48,3 +48,7 @@ skills-lock.json
 # pnpm files
 pnpm-lock.yaml
 pnpm-workspace.yaml
+
+# Database backups
+backups/
+
