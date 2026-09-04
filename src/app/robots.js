@@ -12,11 +12,22 @@ export default function robots() {
                 disallow: ['/admin/', '/api/'],
             },
             {
-                userAgent: ['GPTBot', 'Claude-Web', 'PerplexityBot'],
+                userAgent: [
+                    'GPTBot',
+                    'OAI-SearchBot',
+                    'ChatGPT-User',
+                    'ClaudeBot',
+                    'Claude-Web',
+                    'PerplexityBot',
+                    'Google-Extended',
+                    'cohere-ai',
+                ],
                 allow: '/',
                 disallow: ['/admin/', '/api/'],
             },
         ],
         sitemap: 'https://www.ve-lora.my.id/sitemap.xml',
+        host: 'https://www.ve-lora.my.id',
     };
 }
+

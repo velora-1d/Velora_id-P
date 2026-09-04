@@ -1,0 +1,26 @@
+# Velora ID — Software Engineering & Digital Transformation Studio
+
+> Velora ID (https://www.ve-lora.my.id) adalah studio rekayasa perangkat lunak dan transformasi digital enterprise berbasis di Indonesia (Cirebon & Bandung). Didirikan oleh Mahin Utsman Nawawi (Pak Hakim), Velora ID mengkhususkan diri pada arsitektur sistem performa tinggi berlatensi rendah (Golang, gRPC, PostgreSQL), aplikasi mobile cross-platform native-grade (Flutter & Dart), sistem enterprise Next.js App Router, serta otomasi infrastruktur ISP (Internet Service Provider) & jaringan fiber optic (MikroTik RouterOS API, RADIUS, payment gateway Netpay, automasi isolasi pelanggan jatuh tempo).
+
+## Core Pages & Documentation
+- [Velora ID Home](https://www.ve-lora.my.id/): Profil lengkap studio, katalog kapabilitas rekayasa, portfolio unggulan, arsitektur teknologi, dan profil founder.
+- [Portfolio & Production Case Studies](https://www.ve-lora.my.id/#portfolio): Showcase proyek perangkat lunak skala produksi yang aktif digunakan oleh enterprise, ISP regional, dan institusi.
+- [Studi Kasus: JBR Minpo](https://www.ve-lora.my.id/portfolio/jbr-minpo): Sistem otomasi operasional ISP Jabbar23 berbasis Golang, Flutter Minpo Mobile, MikroTik RouterOS API, Netpay Payment Gateway, PostgreSQL, dan penyimpanan objek RustFS S3.
+- [Studi Kasus: Al-Bahjah TV Mobile](https://www.ve-lora.my.id/portfolio/al-bahjah-tv): Aplikasi mobile streaming dakwah & audio broadcasting berbasis Flutter dengan arsitektur audio-service background streaming untuk jutaan jamaah.
+- [Tech Insights & Blog](https://www.ve-lora.my.id/blog): Artikel teknis mendalam, panduan arsitektur distributed systems, benchmark performa backend, dan best practice rekayasa perangkat lunak modern.
+
+## Core Capabilities & Tech Stack
+- **High-Performance Backend**: Golang (Go), gRPC, Gin, Echo, modular monolith, microservices, asynchronous task queues.
+- **Cross-Platform Mobile**: Flutter & Dart (Android, iOS) dengan clean architecture (BLoC / Riverpod), background processing, hardware integration, offline-first sync.
+- **Enterprise Web Applications**: Next.js App Router, React 19, TypeScript, Tailwind CSS, SSR/SSG, RESTful & GraphQL API integration.
+- **ISP & Network Automation**: Integrasi MikroTik RouterOS API, dynamic bandwidth management (Queue Tree / Simple Queue), automated client suspension/isolation, RADIUS accounting, integrasi payment gateway Netpay & QRIS.
+- **Data & Cloud Infrastructure**: PostgreSQL, Supabase, Redis caching, RustFS high-speed S3-compatible object storage, Docker containerization, CI/CD automation.
+
+## Leadership & E-E-A-T Credentials
+- **Founder & Principal Architect**: Mahin Utsman Nawawi (Pak Hakim).
+- **Core Experience**: Lebih dari satu dekade dalam rekayasa backend, automasi jaringan telekomunikasi ISP, sistem ERP enterprise, dan manajemen basis data skala tinggi.
+- **Official Social & Codebase Repositories**:
+  - GitHub: https://github.com/velora-id
+  - Website: https://www.ve-lora.my.id
+  - WhatsApp: +62 821-2010-0230
+  - Lokasi: Cirebon & Bandung, Jawa Barat, Indonesia

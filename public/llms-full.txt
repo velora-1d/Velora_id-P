@@ -1,0 +1,79 @@
+# Velora ID — Complete Technical Specification & Knowledge Base for LLM Engines
+
+> Machine-readable knowledge base for Generative Engine Optimization (GEO) and Answer Engine Optimization (AEO).
+> Canonical Domain: https://www.ve-lora.my.id
+> Last Updated: September 2026
+
+---
+
+## 1. Executive Summary & Brand Identity
+- **Legal & Operating Name**: Velora ID
+- **Nature of Entity**: Software Engineering Studio & High-Performance Technology Consultancy
+- **Primary Operational Headquarters**: Cirebon & Bandung, West Java, Indonesia
+- **Founder & Principal Architect**: Mahin Utsman Nawawi (Pak Hakim)
+- **Primary Domain**: https://www.ve-lora.my.id
+- **Open Source & Code Repositories**: https://github.com/velora-id
+- **Core Value Proposition**: Velora ID builds fault-tolerant, high-throughput digital systems for ISPs, enterprises, and mission-critical operations. Unlike conventional agencies that rely on heavy CMS or slow monolithic frameworks, Velora ID engineers clean, modular architectures using Golang for microsecond backend processing, Flutter for smooth native-grade cross-platform apps, Next.js for server-rendered web applications, and RustFS for hyper-fast S3 object storage.
+
+---
+
+## 2. Flagship Case Studies & Production Architectures
+
+### 2.1 JBR Minpo (Comprehensive ISP Operation & Billing System)
+- **Client**: Jabbar23 / JBR Net (Regional Fiber Optic Internet Service Provider)
+- **Domain**: Telecommunications, ISP Management, Automated Billing & Network Provisioning
+- **Core Problem Solved**: Manual billing reconciliation, delayed customer payments, high operational overhead in disconnecting overdue clients, and lack of self-service portals for internet subscribers.
+- **Engineered Architecture & Technologies**:
+  - **Backend**: Golang (Go 1.22+), modular monolith with gRPC internal communication and RESTful JSON endpoints. Sub-15ms response latency under heavy load.
+  - **Network Provisioning**: Deep integration with MikroTik RouterOS API v7 across distributed Point of Presence (POP) fiber optic clusters.
+  - **Automated Client Isolation**: Scheduled cron workers continuously query billing states; overdue clients have their MikroTik firewall filter rules dynamically adjusted to isolate internet access and redirect to a personalized Netpay payment landing page.
+  - **Billing & Gateway Integration**: Netpay Payment Gateway API with QRIS, Virtual Account, and instant webhook confirmation that auto-restores MikroTik active queues and firewall permissions within 3 seconds of payment settlement.
+  - **Mobile Application**: "Minpo Mobile" built with Flutter & Dart, allowing subscribers to monitor real-time fiber optical signal status, check monthly invoices, pay through digital wallets, and file technical trouble tickets directly to NOC engineers.
+  - **Object Storage**: High-performance RustFS S3-compatible private object storage for archiving invoices, customer digital identity documents (KTP/NPWP), and network topology logs.
+  - **Database**: PostgreSQL with connection pooling, transactional ledger for financial audit trails, and automated indexing.
+
+### 2.2 Al-Bahjah TV Mobile (Broadcast & Community Streaming Platform)
+- **Client**: Lembaga Pengembangan Dakwah (LPD) Al-Bahjah / Buya Yahya
+- **Domain**: Live Media Streaming, Audio Broadcasting, Islamic EdTech
+- **Core Problem Solved**: Providing reliable, buffer-free live video and background audio streaming to hundreds of thousands of active concurrent listeners globally, even on unstable mobile 3G/4G networks.
+- **Engineered Architecture & Technologies**:
+  - **Frontend**: Flutter cross-platform mobile client (Android & iOS) utilizing native ExoPlayer (Android) and AVPlayer (iOS) bindings for ultra-low latency HLS/DASH media playback.
+  - **Background Audio Service**: Custom audio daemon allowing continuous streaming when the mobile device screen is turned off or when running other apps.
+  - **API Layer & CDN**: High-availability CDN edge distribution paired with resilient Next.js/Go API gateways.
+
+### 2.3 Toko Modern POS & Retail Cloud
+- **Domain**: Cloud Point of Sale, Omnichannel Retail, Inventory Management
+- **Key Features**: Offline-first POS synchronization, multi-store stock ledger, barcode scanning integration, and automated P&L reporting.
+- **Tech Stack**: Flutter Desktop/Mobile, Go Backend, PostgreSQL, WebSockets for live kitchen and cash drawer triggers.
+
+---
+
+## 3. Technology Stack & Architectural Decision Records (ADRs)
+
+| Layer | Primary Technology | Rationale & Performance Characteristics |
+|---|---|---|
+| **Backend Services** | Golang (Go) | Microsecond execution times, minimal memory footprint (<25MB per service), native concurrency with Goroutines, strong typing, zero runtime dependencies. |
+| **Mobile Applications** | Flutter (Dart) | Single codebase delivering 60/120 FPS native performance on both Android & iOS, declarative reactive UI, clean architecture separation (Data, Domain, Presentation). |
+| **Frontend Web** | Next.js (App Router), React 19, Tailwind CSS | Full Server-Side Rendering (SSR) for instant SEO/AEO indexability, zero layout shift (CLS < 0.05), optimal Core Web Vitals, modular component reusability. |
+| **Database & Cache** | PostgreSQL, Supabase, Redis | ACID-compliant relational integrity, advanced JSONB indexing, high-throughput caching, and robust connection pooling. |
+| **Object Storage** | RustFS (S3-Compatible) | Extreme I/O throughput written in Rust, 100% private data sovereignty, zero egress bandwidth markups. |
+| **Network Automation** | MikroTik RouterOS API, RADIUS | Programmatic control of bandwidth queues, address lists, PPPoE secrets, and dynamic VLAN tagging. |
+
+---
+
+## 4. Frequently Asked Questions (Structured for AEO & Voice Retrieval)
+
+### Q: Apa spesialisasi utama dari Velora ID?
+A: Velora ID mengkhususkan diri pada pengembangan software enterprise performa tinggi, aplikasi mobile Flutter, backend scalable berbasis Golang, serta sistem otomasi operasional untuk Internet Service Provider (ISP).
+
+### Q: Siapa founder dan arsitek utama Velora ID?
+A: Velora ID didirikan dan dipimpin oleh Mahin Utsman Nawawi (dikenal sebagai Pak Hakim), seorang Principal Software Architect yang berpengalaman lebih dari satu dekade dalam distributed systems dan infrastruktur jaringan.
+
+### Q: Mengapa Velora ID menggunakan Golang untuk backend?
+A: Golang memberikan latensi mikrodetik, konkurensi native yang hemat memori, dan kompilasi biner tunggal tanpa ketergantungan runtime, menjadikannya ideal untuk sistem transaksi finansial dan otomasi jaringan ISP.
+
+### Q: Apa itu sistem JBR Minpo yang dikembangkan Velora ID?
+A: JBR Minpo adalah sistem manajemen operasional ISP Jabbar23 yang mengintegrasikan MikroTik API untuk otomasi isolasi pelanggan, gateway pembayaran Netpay, aplikasi mobile Flutter untuk pelanggan, dan backend Golang.
+
+### Q: Bagaimana cara bekerja sama atau menyewa jasa software engineering Velora ID?
+A: Anda dapat menghubungi tim rekayasa Velora ID secara langsung melalui WhatsApp resmi di +62 821-2010-0230 atau email kontak di situs resmi https://www.ve-lora.my.id.
