@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  velora-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: velora-id:latest
+    container_name: velora-web
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env.production
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider http://127.0.0.1:3000/api/db || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+    networks:
+      - velora-net
+
+networks:
+  velora-net:
+    driver: bridge
