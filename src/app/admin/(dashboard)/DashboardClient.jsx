@@ -6,7 +6,7 @@ import { FileText, Briefcase, Star, MessageSquare, ArrowRight, Clock, Mail } fro
 
 const statCards = [
     { label: 'Blog Posts', key: 'blog', icon: FileText, href: '/admin/blog', color: 'from-blue-500 to-blue-600' },
-    { label: 'Portfolio', key: 'portfolio', icon: Briefcase, href: '/admin/portfolio', color: 'from-purple-500 to-purple-600' },
+    { label: 'Portfolio', key: 'portfolio', icon: Briefcase, href: '/admin/portfolio', color: 'from-cyan-500 to-blue-600' },
     { label: 'Testimonials', key: 'testimonials', icon: Star, href: '/admin/testimonials', color: 'from-amber-500 to-amber-600' },
     { label: 'Pesan Masuk', key: 'messages', icon: MessageSquare, href: '/admin/messages', color: 'from-emerald-500 to-emerald-600' },
 ];

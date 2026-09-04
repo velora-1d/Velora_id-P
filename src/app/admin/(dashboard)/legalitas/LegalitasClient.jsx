@@ -39,32 +39,45 @@ export default function LegalitasClient({ initialData }) {
     const inp = "w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50";
 
     return (
-        <div className="max-w-3xl mx-auto">
-            <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-                <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center"><Scale className="w-5 h-5 text-primary" /></div>
-                    <div>
-                        <h3 className="text-lg font-bold text-white">Data Legalitas</h3>
-                        <p className="text-xs text-gray-500">Informasi legalitas usaha</p>
+        <div className="w-full space-y-6">
+            <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full">
+                <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-6">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <Scale className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-bold text-white">Data Legalitas</h3>
+                            <p className="text-xs text-gray-400">Informasi legalitas dan izin usaha resmi Velora</p>
+                        </div>
                     </div>
+                    <button
+                        type="button"
+                        onClick={handleSubmit}
+                        disabled={saving}
+                        className="px-5 py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white rounded-xl text-sm font-medium flex items-center gap-2 transition-colors cursor-pointer"
+                    >
+                        {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                        {saving ? 'Menyimpan...' : 'Simpan'}
+                    </button>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         {fields.map(f => (
                             <div key={f.key}>
-                                <label className="block text-sm text-gray-400 mb-1">{f.label}</label>
+                                <label className="block text-sm text-gray-300 mb-1 font-medium">{f.label}</label>
                                 <input type="text" value={form[f.key] || ''} onChange={(e) => setForm({ ...form, [f.key]: e.target.value })} className={inp} />
                             </div>
                         ))}
                     </div>
                     <div>
-                        <label className="block text-sm text-gray-400 mb-1">Alamat</label>
+                        <label className="block text-sm text-gray-300 mb-1 font-medium">Alamat Kantor Resmi</label>
                         <textarea value={form.address || ''} onChange={(e) => setForm({ ...form, address: e.target.value })} rows={3} className={`${inp} resize-none`} />
                     </div>
 
-                    <div className="flex justify-end pt-2">
-                        <button type="submit" disabled={saving} className="px-8 py-3 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white rounded-xl font-medium flex items-center gap-2">
+                    <div className="flex justify-end pt-3">
+                        <button type="submit" disabled={saving} className="px-8 py-3 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white rounded-xl font-medium flex items-center gap-2 shadow-lg shadow-primary/20 cursor-pointer">
                             {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
                             {saving ? 'Menyimpan...' : 'Simpan Perubahan'}
                         </button>

@@ -74,111 +74,154 @@ export default function FounderClient({ initialData }) {
     ];
 
     return (
-        <div className="max-w-3xl mx-auto">
-            <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6">
-                <div className="flex items-center gap-3 mb-6">
-                    <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center"><User className="w-5 h-5 text-primary" /></div>
-                    <div>
-                        <h3 className="text-lg font-bold text-white">Data Founder</h3>
-                        <p className="text-xs text-gray-500">Edit informasi founder website</p>
+        <div className="w-full space-y-6">
+            <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 w-full">
+                <div className="flex items-center justify-between border-b border-gray-800 pb-4 mb-6">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 bg-primary/10 rounded-xl flex items-center justify-center">
+                            <User className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-bold text-white">Data Founder</h3>
+                            <p className="text-xs text-gray-400">Kelola profil, foto, bio, statistik, dan media sosial founder</p>
+                        </div>
                     </div>
+                    <button
+                        type="button"
+                        onClick={handleSubmit}
+                        disabled={saving}
+                        className="px-5 py-2.5 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white rounded-xl text-sm font-medium flex items-center gap-2 transition-colors cursor-pointer"
+                    >
+                        {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                        {saving ? 'Menyimpan...' : 'Simpan'}
+                    </button>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-5">
-                    {/* Name & Title */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <label className="block text-sm text-gray-400 mb-1">Nama</label>
-                            <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inp} required />
-                        </div>
-                        <div>
-                            <label className="block text-sm text-gray-400 mb-1">Jabatan</label>
-                            <input type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inp} />
-                        </div>
-                    </div>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        {/* Kolom Kiri: Foto & Status (lg:col-span-4) */}
+                        <div className="lg:col-span-4 space-y-5">
+                            <ImageUpload
+                                label="Foto Founder"
+                                value={form.photo_url}
+                                onChange={(url) => setForm({ ...form, photo_url: url })}
+                                folder="team"
+                            />
 
-                    {/* Photo */}
-                    <ImageUpload
-                        label="Foto Founder"
-                        value={form.photo_url}
-                        onChange={(url) => setForm({ ...form, photo_url: url })}
-                        folder="team"
-                    />
-
-                    {/* Published Toggle */}
-                    <div className="flex items-center gap-3">
-                        <label className="text-sm text-gray-400">Published</label>
-                        <button
-                            type="button"
-                            onClick={() => setForm({ ...form, published: !form.published })}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors ${form.published ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}`}
-                        >
-                            {form.published ? <><Eye className="w-3 h-3" /> Aktif</> : <><EyeOff className="w-3 h-3" /> Draft</>}
-                        </button>
-                    </div>
-
-                    {/* Bio paragraphs */}
-                    <div>
-                        <div className="flex items-center justify-between mb-2">
-                            <label className="text-sm text-gray-400">Bio (paragraf)</label>
-                            <button type="button" onClick={() => addArr('bio_paragraphs', '')} className="text-xs text-primary flex items-center gap-1"><Plus className="w-3 h-3" /> Tambah Paragraf</button>
-                        </div>
-                        <p className="text-xs text-gray-600 mb-3">Setiap paragraf akan ditampilkan sebagai blok teks terpisah pada halaman website.</p>
-                        {(form.bio_paragraphs || []).map((p, i) => (
-                            <div key={i} className="flex gap-2 mb-2">
-                                <div className="flex-shrink-0 w-6 h-6 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-500 mt-2">{i + 1}</div>
-                                <textarea value={p} onChange={(e) => updateArr('bio_paragraphs', i, e.target.value)} rows={3} className={`${inp} flex-1 resize-none`} placeholder={`Paragraf ${i + 1}...`} />
-                                {form.bio_paragraphs.length > 1 && <button type="button" onClick={() => removeArr('bio_paragraphs', i)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-xl"><X className="w-4 h-4" /></button>}
+                            <div className="bg-gray-800/60 border border-gray-700/60 p-4 rounded-xl space-y-3">
+                                <label className="block text-sm font-medium text-gray-300">Status Publikasi</label>
+                                <div className="flex items-center justify-between">
+                                    <span className="text-xs text-gray-400">Tampilkan di website utama</span>
+                                    <button
+                                        type="button"
+                                        onClick={() => setForm({ ...form, published: !form.published })}
+                                        className={`px-3 py-1.5 rounded-lg text-xs font-medium flex items-center gap-1.5 transition-colors ${form.published ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-red-500/20 text-red-400 border border-red-500/30'}`}
+                                    >
+                                        {form.published ? <><Eye className="w-3.5 h-3.5" /> Aktif</> : <><EyeOff className="w-3.5 h-3.5" /> Draft</>}
+                                    </button>
+                                </div>
                             </div>
-                        ))}
-                    </div>
-
-                    {/* Stats */}
-                    <div>
-                        <div className="flex items-center justify-between mb-2">
-                            <label className="text-sm text-gray-400">Stats</label>
-                            <button type="button" onClick={() => addArr('stats', { label: '', value: '' })} className="text-xs text-primary flex items-center gap-1"><Plus className="w-3 h-3" /> Tambah</button>
                         </div>
-                        {(form.stats || []).map((s, i) => (
-                            <div key={i} className="flex gap-2 mb-2">
-                                <input type="text" placeholder="Value (contoh: 50+)" value={s.value} onChange={(e) => updateObj('stats', i, 'value', e.target.value)} className={`${inp} w-28`} />
-                                <input type="text" placeholder="Label (contoh: Proyek Selesai)" value={s.label} onChange={(e) => updateObj('stats', i, 'label', e.target.value)} className={`${inp} flex-1`} />
-                                <button type="button" onClick={() => removeArr('stats', i)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-xl"><X className="w-4 h-4" /></button>
-                            </div>
-                        ))}
-                    </div>
 
-                    {/* Social Links */}
-                    <div>
-                        <div className="flex items-center justify-between mb-2">
-                            <label className="text-sm text-gray-400">Social Links</label>
-                            <button type="button" onClick={() => addArr('social_links', { type: '', href: '', label: '' })} className="text-xs text-primary flex items-center gap-1"><Plus className="w-3 h-3" /> Tambah</button>
+                        {/* Kolom Kanan: Nama, Jabatan, Bio, Stats, Social Links (lg:col-span-8) */}
+                        <div className="lg:col-span-8 space-y-5">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm text-gray-300 mb-1 font-medium">Nama Founder</label>
+                                    <input type="text" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className={inp} required />
+                                </div>
+                                <div>
+                                    <label className="block text-sm text-gray-300 mb-1 font-medium">Jabatan</label>
+                                    <input type="text" value={form.title} onChange={(e) => setForm({ ...form, title: e.target.value })} className={inp} />
+                                </div>
+                            </div>
+
+                            {/* Bio paragraphs */}
+                            <div className="bg-gray-800/40 border border-gray-700/50 p-4 rounded-xl space-y-3">
+                                <div className="flex items-center justify-between">
+                                    <div>
+                                        <label className="text-sm font-medium text-gray-300">Bio Paragraf</label>
+                                        <p className="text-xs text-gray-400 mt-0.5">Setiap paragraf tampil sebagai blok terpisah pada landing page.</p>
+                                    </div>
+                                    <button type="button" onClick={() => addArr('bio_paragraphs', '')} className="text-xs text-primary hover:underline flex items-center gap-1 font-medium cursor-pointer">
+                                        <Plus className="w-3.5 h-3.5" /> Tambah Paragraf
+                                    </button>
+                                </div>
+                                <div className="space-y-2">
+                                    {(form.bio_paragraphs || []).map((p, i) => (
+                                        <div key={i} className="flex gap-2">
+                                            <div className="flex-shrink-0 w-6 h-6 bg-gray-800 rounded-lg flex items-center justify-center text-xs text-gray-400 mt-2 font-medium">{i + 1}</div>
+                                            <textarea value={p} onChange={(e) => updateArr('bio_paragraphs', i, e.target.value)} rows={3} className={`${inp} flex-1 resize-none`} placeholder={`Tulis isi paragraf ${i + 1}...`} />
+                                            {form.bio_paragraphs.length > 1 && (
+                                                <button type="button" onClick={() => removeArr('bio_paragraphs', i)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-xl self-start mt-1 cursor-pointer">
+                                                    <X className="w-4 h-4" />
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Stats */}
+                            <div className="bg-gray-800/40 border border-gray-700/50 p-4 rounded-xl space-y-3">
+                                <div className="flex items-center justify-between">
+                                    <label className="text-sm font-medium text-gray-300">Statistik / Pencapaian</label>
+                                    <button type="button" onClick={() => addArr('stats', { label: '', value: '' })} className="text-xs text-primary hover:underline flex items-center gap-1 font-medium cursor-pointer">
+                                        <Plus className="w-3.5 h-3.5" /> Tambah
+                                    </button>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    {(form.stats || []).map((s, i) => (
+                                        <div key={i} className="flex gap-2 bg-gray-900/60 p-2.5 rounded-xl border border-gray-800 items-center">
+                                            <input type="text" placeholder="Nilai (50+)" value={s.value} onChange={(e) => updateObj('stats', i, 'value', e.target.value)} className={`${inp} w-28`} />
+                                            <input type="text" placeholder="Label (Proyek Selesai)" value={s.label} onChange={(e) => updateObj('stats', i, 'label', e.target.value)} className={`${inp} flex-1`} />
+                                            <button type="button" onClick={() => removeArr('stats', i)} className="p-1.5 text-red-400 hover:bg-red-500/10 rounded-lg cursor-pointer">
+                                                <X className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            {/* Social Links */}
+                            <div className="bg-gray-800/40 border border-gray-700/50 p-4 rounded-xl space-y-3">
+                                <div className="flex items-center justify-between">
+                                    <label className="text-sm font-medium text-gray-300">Tautan Media Sosial</label>
+                                    <button type="button" onClick={() => addArr('social_links', { type: '', href: '', label: '' })} className="text-xs text-primary hover:underline flex items-center gap-1 font-medium cursor-pointer">
+                                        <Plus className="w-3.5 h-3.5" /> Tambah
+                                    </button>
+                                </div>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    {(form.social_links || []).map((s, i) => (
+                                        <div key={i} className="flex gap-2 bg-gray-900/60 p-2.5 rounded-xl border border-gray-800 items-center">
+                                            <select
+                                                value={s.type}
+                                                onChange={(e) => {
+                                                    const selected = platformOptions.find(p => p.value === e.target.value);
+                                                    updateObj('social_links', i, 'type', e.target.value);
+                                                    if (selected) updateObj('social_links', i, 'label', selected.label);
+                                                }}
+                                                className={`${inp} w-32`}
+                                            >
+                                                <option value="">Platform</option>
+                                                {platformOptions.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
+                                            </select>
+                                            <input type="text" placeholder="URL Tautan" value={s.href} onChange={(e) => updateObj('social_links', i, 'href', e.target.value)} className={`${inp} flex-1`} />
+                                            <button type="button" onClick={() => removeArr('social_links', i)} className="p-1.5 text-red-400 hover:bg-red-500/10 rounded-lg cursor-pointer">
+                                                <X className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className="flex justify-end pt-3">
+                                <button type="submit" disabled={saving} className="px-8 py-3 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white rounded-xl font-medium flex items-center gap-2 shadow-lg shadow-primary/20 cursor-pointer">
+                                    {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
+                                    {saving ? 'Menyimpan...' : 'Simpan Perubahan'}
+                                </button>
+                            </div>
                         </div>
-                        {(form.social_links || []).map((s, i) => (
-                            <div key={i} className="flex gap-2 mb-2">
-                                <select
-                                    value={s.type}
-                                    onChange={(e) => {
-                                        const selected = platformOptions.find(p => p.value === e.target.value);
-                                        updateObj('social_links', i, 'type', e.target.value);
-                                        if (selected) updateObj('social_links', i, 'label', selected.label);
-                                    }}
-                                    className={`${inp} w-36`}
-                                >
-                                    <option value="">Pilih Platform</option>
-                                    {platformOptions.map(p => <option key={p.value} value={p.value}>{p.label}</option>)}
-                                </select>
-                                <input type="text" placeholder="URL" value={s.href} onChange={(e) => updateObj('social_links', i, 'href', e.target.value)} className={`${inp} flex-1`} />
-                                <button type="button" onClick={() => removeArr('social_links', i)} className="p-2 text-red-400 hover:bg-red-500/10 rounded-xl"><X className="w-4 h-4" /></button>
-                            </div>
-                        ))}
-                    </div>
-
-                    <div className="flex justify-end pt-2">
-                        <button type="submit" disabled={saving} className="px-8 py-3 bg-primary hover:bg-primary/90 disabled:opacity-50 text-white rounded-xl font-medium flex items-center gap-2">
-                            {saving ? <Loader2 className="w-5 h-5 animate-spin" /> : <Save className="w-5 h-5" />}
-                            {saving ? 'Menyimpan...' : 'Simpan Perubahan'}
-                        </button>
                     </div>
                 </form>
             </div>

@@ -173,7 +173,7 @@ export default function AdminLayout({ children }) {
             {/* Main content — offset by sidebar width on desktop */}
             <div className="lg:ml-64 flex flex-col min-h-screen">
                 {/* Top bar — sticky within the main content area */}
-                <header className="sticky top-0 z-30 bg-gray-950/80 backdrop-blur-xl border-b border-gray-800 px-4 sm:px-6 py-3 sm:py-4 flex items-center gap-3 sm:gap-4">
+                <header className="sticky top-0 z-30 bg-gray-950/80 backdrop-blur-xl border-b border-gray-800 px-4 sm:px-6 lg:px-8 py-3.5 flex items-center gap-3 sm:gap-4">
                     <button
                         onClick={() => setSidebarOpen(true)}
                         className="lg:hidden p-2 text-gray-400 hover:text-white rounded-lg hover:bg-gray-800"
@@ -187,8 +187,8 @@ export default function AdminLayout({ children }) {
                     </div>
                 </header>
 
-                {/* Page content */}
-                <main className="flex-1 p-4 sm:p-6">
+                {/* Page content — full width with matching padding */}
+                <main className="flex-1 px-4 sm:px-6 lg:px-8 py-6 w-full max-w-full">
                     {children}
                 </main>
             </div>
