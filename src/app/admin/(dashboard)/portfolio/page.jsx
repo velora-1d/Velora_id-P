@@ -1,7 +1,9 @@
+import { Suspense } from 'react';
 import { createClient } from '@/lib/supabase/server';
 import PortfolioClient from './PortfolioClient';
 
 export const metadata = { title: 'Kelola Portfolio - Admin Velora' };
+export const dynamic = 'force-dynamic';
 
 export default async function AdminPortfolioPage() {
     const supabase = await createClient();
@@ -10,5 +12,9 @@ export default async function AdminPortfolioPage() {
         supabase.from('categories').select('*').eq('type', 'portfolio').eq('published', true).order('sort_order', { ascending: true }),
     ]);
 
-    return <PortfolioClient initialProjects={projects || []} categories={categories || []} />;
+    return (
+        <Suspense fallback={<div className="p-12 text-center text-gray-500">Memuat portofolio...</div>}>
+            <PortfolioClient initialProjects={projects || []} categories={categories || []} />
+        </Suspense>
+    );
 }
