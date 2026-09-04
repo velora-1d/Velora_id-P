@@ -9,6 +9,18 @@ import { getIcon } from '@/lib/icons';
 
 const fallbackProjects = [
     {
+        title: "JBR Minpo — ISP Billing Engine, POP Network & Mobile App",
+        slug: "jbr-minpo-isp",
+        category: "Mobile & Desktop",
+        client: "ISP Jabbar23 & PT Jaringan Berkah Raya",
+        description: "Sistem komprehensif manajemen operasional ISP Jabbar23: sinkronisasi area Point of Presence (POP) jaringan fiber optic, integrasi gateway pembayaran Netpay API, automasi isolasi pelanggan jatuh tempo, dan aplikasi mobile Flutter pelanggan (Minpo Mobile) untuk cek tagihan, riwayat pemakaian, dan pelaporan gangguan.",
+        challenge: "Sinkronisasi data pelanggan dan status koneksi lintas Point of Presence (POP) area jaringan fiber, penanganan integrasi format khusus gateway Netpay API (application/x-www-form-urlencoded), serta pemenuhan standar arsitektur 16KB page size NDK dan obfuscation Proguard R8 pada aplikasi mobile Android.",
+        solution: "Mengembangkan query sinkronisasi area POP yang teroptimasi, implementasi middleware adapter Netpay payment callback, arsitektur aplikasi mobile Flutter dengan state management reaktif, serta pembaruan toolchain NDK 28 untuk performa rilis Android modern.",
+        tech: "Flutter, Dart, PHP / Laravel, MySQL, Netpay Payment Gateway, MikroTik API, NDK",
+        image_url: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80",
+        icon_name: "Radio"
+    },
+    {
         title: "Santrix Platform — SaaS Manajemen Pesantren Multi-Tenant",
         slug: "santrix-platform",
         category: "SaaS & Web App",
@@ -41,18 +53,6 @@ const fallbackProjects = [
         challenge: "Automasi isolasi jaringan bagi pelanggan yang jatuh tempo serta sinkronisasi data tagihan ribuan pelanggan secara instan ke perangkat router MikroTik.",
         solution: "Integrasi API router MikroTik & Radius server, trigger auto-isolate melalui webhook pembayaran, serta notifikasi WhatsApp tagihan otomatis sebelum jatuh tempo.",
         tech: "Flutter, Laravel, MikroTik API, Radius, MySQL, Tailwind CSS",
-        image_url: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80",
-        icon_name: "Radio"
-    },
-    {
-        title: "JBR Minpo — ISP Billing Engine, POP Network & Mobile App",
-        slug: "jbr-minpo-isp",
-        category: "Mobile & Desktop",
-        client: "ISP Jabbar23 & PT Jaringan Berkah Raya",
-        description: "Sistem komprehensif manajemen operasional ISP Jabbar23: sinkronisasi area Point of Presence (POP) jaringan fiber optic, integrasi gateway pembayaran Netpay API, automasi isolasi pelanggan jatuh tempo, dan aplikasi mobile Flutter pelanggan (Minpo Mobile) untuk cek tagihan, riwayat pemakaian, dan pelaporan gangguan.",
-        challenge: "Sinkronisasi data pelanggan dan status koneksi lintas Point of Presence (POP) area jaringan fiber, penanganan integrasi format khusus gateway Netpay API (application/x-www-form-urlencoded), serta pemenuhan standar arsitektur 16KB page size NDK dan obfuscation Proguard R8 pada aplikasi mobile Android.",
-        solution: "Mengembangkan query sinkronisasi area POP yang teroptimasi, implementasi middleware adapter Netpay payment callback, arsitektur aplikasi mobile Flutter dengan state management reaktif, serta pembaruan toolchain NDK 28 untuk performa rilis Android modern.",
-        tech: "Flutter, Dart, PHP / Laravel, MySQL, Netpay Payment Gateway, MikroTik API, NDK",
         image_url: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80",
         icon_name: "Radio"
     },
@@ -325,10 +325,15 @@ const Portfolio = () => {
                                     {/* Right (Span 5): Case Study Brief */}
                                     <div className="lg:col-span-5 p-6 sm:p-8 md:p-10 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-slate-200/80 bg-white">
                                         <div>
-                                            <div className="flex items-center justify-between gap-2 mb-3">
-                                                <span className="text-[10px] font-mono uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/80 px-2.5 py-0.5 rounded">
-                                                    {featured.category}
-                                                </span>
+                                            <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
+                                                <div className="flex items-center gap-2">
+                                                    <span className="text-[10px] font-mono uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/80 px-2.5 py-0.5 rounded font-bold">
+                                                        {featured.category}
+                                                    </span>
+                                                    <span className="text-[10px] font-mono uppercase tracking-wider text-amber-800 bg-amber-50 border border-amber-300/80 px-2.5 py-0.5 rounded font-bold flex items-center gap-1 shadow-sm">
+                                                        ★ PROYEK UTAMA
+                                                    </span>
+                                                </div>
                                                 <span className="text-xs text-slate-500 font-mono flex items-center gap-1">
                                                     <MapPin className="w-3.5 h-3.5 text-slate-400" />
                                                     {featured.client}
