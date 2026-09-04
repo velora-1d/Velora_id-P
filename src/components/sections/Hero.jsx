@@ -1,15 +1,300 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
     ArrowRight, MessageSquare, Sparkles, 
     ShieldCheck, CheckCircle2, Zap, Database, 
-    Layers, ChevronRight, Terminal, Activity,
-    Globe, Smartphone, CreditCard
+    Layers, ChevronRight, ChevronLeft, Terminal, Activity,
+    Globe, Smartphone, CreditCard, Play, Pause,
+    Wifi, Battery, Tablet, ShoppingBag, Stethoscope,
+    Truck, GraduationCap, MapPin, QrCode
 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 import CountUp from '../animations/CountUp';
+
+const applications = [
+    {
+        id: 'spp-pesantren',
+        type: 'web',
+        category: 'Web SaaS & ERP',
+        shortName: '01 SPP',
+        title: 'Sistem SPP & Keuangan',
+        tagline: 'ERP Keuangan Pesantren & Sekolah',
+        domain: 'spp.velora.id/keuangan',
+        metricTitle: 'Realisasi SPP Bulan Berjalan',
+        metricValue: 'Rp 54.250.000',
+        targetText: '90.4% Target',
+        badge: '+18.4% YoY',
+        subMetric: '142 Santri Lunas',
+        statusLabel: 'Auto-Reconciled',
+        progressBlue: '70%',
+        progressOrange: '20%',
+        feature1: {
+            title: 'WhatsApp Billing Bot',
+            badge: '0 Antrean',
+            desc: 'Invoice PDF resmi otomatis terkirim langsung ke nomor WhatsApp wali murid saat invoice terbit tanpa rekap manual.'
+        },
+        feature2: {
+            title: 'Kanal VA & QRIS All Bank',
+            badge: 'Settlement T+0',
+            desc: 'Integrasi payment gateway multi-bank (BCA, BRI, Mandiri, BSI, QRIS) dengan verifikasi mutasi instan 24/7.'
+        },
+        tags: ['Next.js 16', 'PostgreSQL', 'Midtrans API', 'WA Gateway']
+    },
+    {
+        id: 'mobile-wali',
+        type: 'mobile',
+        category: 'Mobile App (iOS & Android)',
+        shortName: '02 Wali (App)',
+        title: 'Mobile Wali Murid',
+        tagline: 'Portal Monitoring Siswa & Santri',
+        domain: 'app.velora.id/wali-murid',
+        metricTitle: 'Tagihan & Saku Santri Realtime',
+        metricValue: '1-Tap Bayar QRIS',
+        targetText: 'Instant Topup',
+        badge: 'Play Store & App Store',
+        subMetric: 'Hafalan & Nilai Rapor',
+        statusLabel: 'Cloud Synced',
+        progressBlue: '60%',
+        progressOrange: '35%',
+        feature1: {
+            title: 'Presensi & Pelanggaran Kedisiplinan',
+            badge: 'Push Notification',
+            desc: 'Orang tua menerima notifikasi instan saat siswa clock-in asrama, izin kepulangan, maupun capaian setoran hafalan.'
+        },
+        feature2: {
+            title: 'Uang Saku Digital Smartcard',
+            badge: 'RFID Terintegrasi',
+            desc: 'Wali dapat membatasi limit jajan harian santri di kantin dan memantau riwayat transaksi jajan secara transparan.'
+        },
+        tags: ['React Native / Flutter', 'Push FCM', 'Biometrik', 'Offline Cache']
+    },
+    {
+        id: 'pos-kasir',
+        type: 'mobile',
+        category: 'Mobile & Tablet POS',
+        shortName: '03 Kasir (App)',
+        title: 'Aplikasi Kasir POS',
+        tagline: 'Kasir Retail Mart & Toko Cepat',
+        domain: 'pos.velora.id/terminal-01',
+        metricTitle: 'Total Omzet Kasir Shift Berjalan',
+        metricValue: 'Rp 18.640.000',
+        targetText: '312 Transaksi',
+        badge: 'Offline-First',
+        subMetric: 'Thermal Struk 58/80mm',
+        statusLabel: 'Bluetooth Connected',
+        progressBlue: '80%',
+        progressOrange: '15%',
+        feature1: {
+            title: 'Scan Barcode Kamera & Hardware',
+            badge: '0.2s Input',
+            desc: 'Mendukung barcode scanner wireless, kamera HP, dan pencarian kilat nama barang dengan puluhan ribu SKU katalog.'
+        },
+        feature2: {
+            title: 'Mode Transaksi Tanpa Internet',
+            badge: 'Auto-Sync Online',
+            desc: 'Tetap bisa melayani antrean kasir saat jaringan mati, data otomatis tersinkronisasi ke server pusat saat online.'
+        },
+        tags: ['Flutter / Android', 'SQLite Local', 'ESC/POS Printer', 'Multi-Shift']
+    },
+    {
+        id: 'compro-seo',
+        type: 'web',
+        category: 'Web Portal & CMS',
+        shortName: '04 Compro Web',
+        title: 'Website Company Profile',
+        tagline: 'Corporate High-Speed SEO Web',
+        domain: 'velora.id/corporate',
+        metricTitle: 'Google PageSpeed Insights',
+        metricValue: '99 / 100 Score',
+        targetText: 'Speed Index 0.8s',
+        badge: 'Core Web Vitals Pass',
+        subMetric: 'LCP 0.9s • CLS 0.00',
+        statusLabel: 'Google Rank #1',
+        progressBlue: '85%',
+        progressOrange: '15%',
+        feature1: {
+            title: 'SEO Schema & OpenGraph JSON-LD',
+            badge: 'JSON-LD Active',
+            desc: 'Struktur data mikro untuk Organization, FAQ, dan LocalBusiness agar profil bisnis muncul di pencarian Google teratas.'
+        },
+        feature2: {
+            title: 'Headless CMS Dashboard Kustom',
+            badge: 'Zero Coding',
+            desc: 'Admin dapat memperbarui portfolio, pricing paket, dan artikel blog secara mandiri tanpa menyentuh source code.'
+        },
+        tags: ['Next.js 16', 'Tailwind CSS', 'Schema.org', 'Edge Caching']
+    },
+    {
+        id: 'mobile-absensi',
+        type: 'mobile',
+        category: 'Mobile App (iOS & Android)',
+        shortName: '05 Presensi (App)',
+        title: 'Mobile Presensi GPS',
+        tagline: 'Absensi Karyawan & Guru Anti-Fake GPS',
+        domain: 'hr.velora.id/mobile-attendance',
+        metricTitle: 'Tingkat Kehadiran Karyawan Hari Ini',
+        metricValue: '98.5% Hadir',
+        targetText: '84 Staf Tepat Waktu',
+        badge: 'Anti-Mock Location',
+        subMetric: 'Geofence Radius 25m',
+        statusLabel: 'GPS Verified',
+        progressBlue: '75%',
+        progressOrange: '20%',
+        feature1: {
+            title: 'Selfie Face Matching & Liveness',
+            badge: 'Biometric AI',
+            desc: 'Pendeteksian wajah asli dengan verifikasi kedipan mata untuk mencegah kecurangan foto atau titip absen sesama staf.'
+        },
+        feature2: {
+            title: 'Geofencing Radius Koordinat Kantor',
+            badge: 'Radius Terkunci',
+            desc: 'Tombol clock-in otomatis nonaktif jika posisi perangkat berada di luar batas koordinat kantor yang ditentukan.'
+        },
+        tags: ['Flutter', 'Google Maps API', 'Face Recognition', 'Payroll Export']
+    },
+    {
+        id: 'ecommerce-multivendor',
+        type: 'web',
+        category: 'E-Commerce Platform',
+        shortName: '06 E-Commerce',
+        title: 'Toko Online & E-Commerce',
+        tagline: 'Katalog Produk & Checkout Otomatis',
+        domain: 'store.velora.id/checkout',
+        metricTitle: 'Gross Merchandise Value (GMV)',
+        metricValue: 'Rp 128.900.000',
+        targetText: 'Conversion 4.2%',
+        badge: '+24.6% MoM',
+        subMetric: '418 Pesanan Terbayar',
+        statusLabel: 'Payment Settled',
+        progressBlue: '65%',
+        progressOrange: '30%',
+        feature1: {
+            title: 'Kalkulasi Ongkir Ekspedisi Instan',
+            badge: 'Multi-Kurir API',
+            desc: 'Cek tarif ongkos kirim otomatis hingga level kecamatan untuk JNE, J&T, SiCepat, Anteraja, dan ekspedisi kargo.'
+        },
+        feature2: {
+            title: 'Tracking Resi Otomatis via WA',
+            badge: 'Webhook Active',
+            desc: 'Pelanggan mendapatkan pesan WhatsApp otomatis berisi nomor resi dan tautan pelacakan langsung saat barang dikirim.'
+        },
+        tags: ['Next.js', 'Supabase DB', 'RajaOngkir API', 'Midtrans Snap']
+    },
+    {
+        id: 'klinik-emr',
+        type: 'web',
+        category: 'Healthtech EMR',
+        shortName: '07 Klinik EMR',
+        title: 'Sistem Klinik & EMR',
+        tagline: 'Rekam Medis Terintegrasi SATUSEHAT',
+        domain: 'klinik.velora.id/satusehat',
+        metricTitle: 'Pasien Terlayani Hari Ini',
+        metricValue: '64 Pasien',
+        targetText: 'Antrean Cepat 3 Mnt',
+        badge: 'SATUSEHAT Ready',
+        subMetric: 'Rekam Medis Digital ICD-10',
+        statusLabel: 'FHIR Compliant',
+        progressBlue: '70%',
+        progressOrange: '25%',
+        feature1: {
+            title: 'Sinkronisasi API SATUSEHAT Kemenkes',
+            badge: 'HL7 / FHIR',
+            desc: 'Pengiriman data rekam medis terenkripsi langsung ke server Kemenkes RI sesuai mandat Permenkes No. 24 Tahun 2022.'
+        },
+        feature2: {
+            title: 'Display Panggilan Antrean TV Poli',
+            badge: 'Voice Call Auto',
+            desc: 'Panggilan suara nomor antrean otomatis pada layar TV poli umum, poli gigi, dan loket penyerahan obat farmasi.'
+        },
+        tags: ['Next.js', 'PostgreSQL', 'HL7 FHIR API', 'E-Klaim BPJS']
+    },
+    {
+        id: 'mobile-kurir',
+        type: 'mobile',
+        category: 'Mobile Delivery App',
+        shortName: '08 Kurir (App)',
+        title: 'Mobile Driver & Kurir',
+        tagline: 'Aplikasi Pengantaran & Pelacakan Armada',
+        domain: 'delivery.velora.id/driver',
+        metricTitle: 'Drop Point Pengantaran Hari Ini',
+        metricValue: '48 / 50 Paket',
+        targetText: '96% Selesai',
+        badge: 'Live GPS Fleet',
+        subMetric: 'Optimasi Rute Cepat',
+        statusLabel: 'On-Schedule',
+        progressBlue: '85%',
+        progressOrange: '12%',
+        feature1: {
+            title: 'Bukti Pengantaran Foto & E-Signature',
+            badge: 'Digital POD',
+            desc: 'Kurir mengambil foto penerima paket ber-watermark waktu dan meminta tanda tangan digital langsung di layar HP.'
+        },
+        feature2: {
+            title: 'Navigasi Peta Turn-by-Turn GPS',
+            badge: 'Peta Realtime',
+            desc: 'Integrasi rute navigasi efisien menghindari jalan macet untuk menghemat waktu pengiriman dan konsumsi bahan bakar.'
+        },
+        tags: ['Android / iOS', 'WebSockets', 'OpenStreetMap', 'Digital Signature']
+    },
+    {
+        id: 'wms-gudang',
+        type: 'web',
+        category: 'Enterprise ERP',
+        shortName: '09 WMS Gudang',
+        title: 'Manajemen Gudang (WMS)',
+        tagline: 'Warehouse & Inventory Control Realtime',
+        domain: 'wms.velora.id/inventory',
+        metricTitle: 'Akurasi Stok Pergudangan',
+        metricValue: '99.8% Accurate',
+        targetText: 'Zero Discrepancy',
+        badge: 'FIFO / FEFO',
+        subMetric: '24.120 SKU Aktif',
+        statusLabel: 'Multi-Warehouse',
+        progressBlue: '75%',
+        progressOrange: '20%',
+        feature1: {
+            title: 'Stok Opname Barcode Scanner',
+            badge: 'Cepat & Akurat',
+            desc: 'Audit fisik barang di rak gudang secara cepat tanpa kertas manual, menghindari selisih antara fisik dan sistem.'
+        },
+        feature2: {
+            title: 'Alert Minimum Stok & Reorder PO',
+            badge: 'Auto Purchase Draft',
+            desc: 'Pemberitahuan otomatis saat stok menyentuh titik batas aman agar proses pemesanan ke supplier tidak terlambat.'
+        },
+        tags: ['Go / Node.js', 'PostgreSQL', 'Barcode Handheld', 'Multi-Warehouse']
+    },
+    {
+        id: 'mobile-lms',
+        type: 'mobile',
+        category: 'Mobile EdTech App',
+        shortName: '10 CBT (App)',
+        title: 'Mobile LMS & Ujian CBT',
+        tagline: 'Aplikasi Belajar & Tryout Anti-Curang',
+        domain: 'cbt.velora.id/student-app',
+        metricTitle: 'Siswa Ujian Simultan Realtime',
+        metricValue: '1.250 Peserta',
+        targetText: '0 Server Lag',
+        badge: 'Anti-Screen Capture',
+        subMetric: 'Timer CBT Terenkripsi',
+        statusLabel: 'Kiosk Protected',
+        progressBlue: '90%',
+        progressOrange: '10%',
+        feature1: {
+            title: 'Kiosk Lock Layar & Anti-Contek',
+            badge: 'Layar Terkunci',
+            desc: 'Aplikasi mengunci HP siswa sehingga tidak dapat beralih aplikasi, split screen, atau browsing jawaban di Google.'
+        },
+        feature2: {
+            title: 'Koreksi Nilai & Pembahasan Instan',
+            badge: 'Hasil Realtime',
+            desc: 'Hasil ujian dan statistik pemahaman materi per topik langsung dihitung otomatis begitu tombol submit diklik.'
+        },
+        tags: ['React Native', 'Secure Enclave', 'Socket.io', 'CBT Engine']
+    }
+];
 
 const fallbackStats = [
     { setting_value: '50', setting_label: 'Proyek Selesai', setting_suffix: '+' },
@@ -19,7 +304,10 @@ const fallbackStats = [
 
 const Hero = () => {
     const [stats, setStats] = useState(fallbackStats);
-    const [previewTab, setPreviewTab] = useState('sistem');
+    const [activeApp, setActiveApp] = useState(0);
+    const [isPaused, setIsPaused] = useState(false);
+    const timerRef = useRef(null);
+
     const [heroData, setHeroData] = useState({
         title: 'Rekayasa Website &\nSistem Digital Presisi',
         subtitle: 'Kami merancang website kustom, sistem informasi pesantren/sekolah, dan aplikasi bisnis modern yang cepat, aman, serta terintegrasi payment gateway.',
@@ -52,6 +340,32 @@ const Hero = () => {
         };
         fetchHeroData();
     }, []);
+
+    // Auto-cycle 10 aplikasi setiap 2 detik (otomatis pause jika mouse hover atau user toggle)
+    useEffect(() => {
+        if (isPaused) {
+            if (timerRef.current) clearInterval(timerRef.current);
+            return;
+        }
+
+        timerRef.current = setInterval(() => {
+            setActiveApp((prev) => (prev + 1) % applications.length);
+        }, 2000);
+
+        return () => {
+            if (timerRef.current) clearInterval(timerRef.current);
+        };
+    }, [isPaused]);
+
+    const handlePrevApp = () => {
+        setActiveApp((prev) => (prev - 1 + applications.length) % applications.length);
+    };
+
+    const handleNextApp = () => {
+        setActiveApp((prev) => (prev + 1) % applications.length);
+    };
+
+    const currentApp = applications[activeApp] || applications[0];
 
     return (
         <section id="home" className="relative min-h-screen bg-[#070C18] text-white pt-28 lg:pt-36 pb-20 overflow-hidden flex flex-col justify-center">
@@ -172,145 +486,262 @@ const Hero = () => {
                         </ScrollReveal>
                     </div>
 
-                    {/* RIGHT COLUMN: Interactive Bespoke Command Center Preview */}
+                    {/* RIGHT COLUMN: Interactive Bespoke Command Center Preview (10 Apps: Web & Mobile) */}
                     <div className="lg:col-span-6 xl:col-span-5 relative">
                         <ScrollReveal delay={0.3} direction="left">
-                            <div className="relative rounded-2xl p-1 bg-gradient-to-b from-blue-500/30 via-slate-800/40 to-orange-500/20 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] border border-slate-700/60">
+                            <div 
+                                onMouseEnter={() => setIsPaused(true)}
+                                onMouseLeave={() => setIsPaused(false)}
+                                className="relative rounded-2xl p-1 bg-gradient-to-b from-blue-500/30 via-slate-800/40 to-orange-500/20 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8)] border border-slate-700/60"
+                            >
                                 <div className="rounded-xl bg-slate-950/95 backdrop-blur-xl overflow-hidden border border-slate-800/90">
-                                    {/* Console Header */}
-                                    <div className="flex items-center justify-between px-4 py-3 bg-slate-900/80 border-b border-slate-800 text-xs font-mono text-slate-400">
-                                        <div className="flex items-center gap-2">
-                                            <div className="flex gap-1.5">
-                                                <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
-                                                <div className="w-2.5 h-2.5 rounded-full bg-orange-400/80"></div>
-                                                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></div>
+                                    
+                                    {/* Header: Device-Aware Top Bar (Web vs Mobile App) */}
+                                    {currentApp.type === 'mobile' ? (
+                                        <div className="bg-slate-900/90 border-b border-slate-800 text-xs font-mono text-slate-400">
+                                            {/* Phone Status Bar */}
+                                            <div className="flex items-center justify-between px-4 pt-2.5 pb-1.5 text-[11px] text-slate-400">
+                                                <span className="font-semibold text-white">09:41</span>
+                                                {/* Dynamic Island Pill */}
+                                                <div className="w-20 h-3.5 rounded-full bg-slate-950 border border-slate-800 flex items-center justify-center gap-1.5 shadow-inner">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-orange-400/80"></span>
+                                                </div>
+                                                <div className="flex items-center gap-1.5">
+                                                    <span className="text-[10px] text-slate-400">5G</span>
+                                                    <Wifi className="w-3 h-3 text-slate-300" />
+                                                    <Battery className="w-3.5 h-3.5 text-emerald-400" />
+                                                </div>
                                             </div>
-                                            <span className="ml-1.5 text-slate-400 text-[11px]">system.velora.id/hub</span>
+
+                                            {/* Mobile App Header Title */}
+                                            <div className="flex items-center justify-between px-4 pb-2.5 pt-1">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="w-7 h-7 rounded-lg bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-orange-400">
+                                                        {currentApp.id === 'mobile-wali' && <Smartphone className="w-4 h-4" />}
+                                                        {currentApp.id === 'pos-kasir' && <Tablet className="w-4 h-4" />}
+                                                        {currentApp.id === 'mobile-absensi' && <MapPin className="w-4 h-4" />}
+                                                        {currentApp.id === 'mobile-kurir' && <Truck className="w-4 h-4" />}
+                                                        {currentApp.id === 'mobile-lms' && <GraduationCap className="w-4 h-4" />}
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-xs font-bold text-white tracking-wide">{currentApp.title}</div>
+                                                        <div className="text-[10px] text-slate-400">{currentApp.tagline}</div>
+                                                    </div>
+                                                </div>
+                                                <span className="px-2 py-0.5 rounded bg-orange-950/80 border border-orange-500/40 text-orange-300 text-[10px] font-mono font-bold flex items-center gap-1">
+                                                    <Smartphone className="w-3 h-3" /> Mobile App
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-slate-800 text-xs font-mono text-slate-400">
+                                            <div className="flex items-center gap-2">
+                                                <div className="flex gap-1.5">
+                                                    <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                                                    <div className="w-2.5 h-2.5 rounded-full bg-orange-400/80"></div>
+                                                    <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></div>
+                                                </div>
+                                                <div className="ml-1.5 flex items-center gap-1 text-slate-300 text-[11px] bg-slate-950/80 px-2 py-0.5 rounded border border-slate-800">
+                                                    <Globe className="w-3 h-3 text-blue-400" />
+                                                    <span>{currentApp.domain}</span>
+                                                </div>
+                                            </div>
+
+                                            <span className="px-2 py-0.5 rounded bg-blue-950/80 border border-blue-500/40 text-blue-300 text-[10px] font-mono font-bold flex items-center gap-1">
+                                                <Activity className="w-3 h-3 text-blue-400 animate-pulse" /> Web ERP/SaaS
+                                            </span>
+                                        </div>
+                                    )}
+
+                                    {/* 2-Second Countdown Progress Bar */}
+                                    <div className="h-0.5 w-full bg-slate-800 overflow-hidden relative">
+                                        <div 
+                                            key={`${activeApp}-${isPaused}`}
+                                            className={`h-full ${isPaused ? 'bg-amber-400 w-full' : 'bg-gradient-to-r from-blue-500 via-sky-400 to-orange-500 animate-hero-progress'}`}
+                                        />
+                                    </div>
+
+                                    {/* Interactive Controls & 10-App Switcher */}
+                                    <div className="p-3 bg-slate-900/60 border-b border-slate-800/80 space-y-2.5">
+                                        {/* Auto-cycle Controls Bar */}
+                                        <div className="flex items-center justify-between text-xs font-mono text-slate-400">
+                                            <div className="flex items-center gap-2">
+                                                <button
+                                                    onClick={handlePrevApp}
+                                                    title="Aplikasi Sebelumnya"
+                                                    className="p-1 rounded bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-colors"
+                                                >
+                                                    <ChevronLeft className="w-3.5 h-3.5" />
+                                                </button>
+                                                <button
+                                                    onClick={() => setIsPaused(!isPaused)}
+                                                    title={isPaused ? "Lanjutkan Auto-Play (2s)" : "Jeda Auto-Play"}
+                                                    className="p-1 rounded bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-colors"
+                                                >
+                                                    {isPaused ? <Play className="w-3.5 h-3.5 text-orange-400" /> : <Pause className="w-3.5 h-3.5 text-blue-400" />}
+                                                </button>
+                                                <button
+                                                    onClick={handleNextApp}
+                                                    title="Aplikasi Selanjutnya"
+                                                    className="p-1 rounded bg-slate-950 hover:bg-slate-800 border border-slate-800 text-slate-300 hover:text-white transition-colors"
+                                                >
+                                                    <ChevronRight className="w-3.5 h-3.5" />
+                                                </button>
+
+                                                {isPaused ? (
+                                                    <span className="px-2 py-0.5 rounded bg-amber-950/70 border border-amber-600/50 text-amber-300 text-[10px] font-bold">
+                                                        PAUSED
+                                                    </span>
+                                                ) : (
+                                                    <span className="px-2 py-0.5 rounded bg-emerald-950/70 border border-emerald-600/50 text-emerald-300 text-[10px] font-bold flex items-center gap-1">
+                                                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping"></span>
+                                                        AUTO 2s
+                                                    </span>
+                                                )}
+                                            </div>
+
+                                            <div className="flex items-center gap-1.5 text-[11px]">
+                                                <span className="text-slate-500">Katalog:</span>
+                                                <span className="font-bold text-white bg-slate-950 px-2 py-0.5 rounded border border-slate-800">
+                                                    {(activeApp + 1).toString().padStart(2, '0')} / 10
+                                                </span>
+                                            </div>
                                         </div>
 
-                                        <div className="flex items-center gap-1.5 text-emerald-400 text-[11px]">
-                                            <Activity className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
-                                            <span>Active • 42ms</span>
+                                        {/* 10 Applications Scrollable Pill Strip */}
+                                        <div className="flex gap-1.5 overflow-x-auto no-scrollbar pb-0.5 text-[11px]">
+                                            {applications.map((app, idx) => {
+                                                const isActive = activeApp === idx;
+                                                const isMobile = app.type === 'mobile';
+                                                return (
+                                                    <button
+                                                        key={app.id}
+                                                        onClick={() => setActiveApp(idx)}
+                                                        className={`py-1 px-2 rounded-md whitespace-nowrap transition-all flex items-center gap-1.5 border text-[11px] font-mono ${
+                                                            isActive
+                                                                ? isMobile
+                                                                    ? 'bg-orange-500 border-orange-400 text-white font-bold shadow-sm'
+                                                                    : 'bg-blue-600 border-blue-500 text-white font-bold shadow-sm'
+                                                                : 'bg-slate-950/90 border-slate-800 text-slate-400 hover:text-slate-200 hover:border-slate-700'
+                                                        }`}
+                                                    >
+                                                        <span>{app.shortName}</span>
+                                                    </button>
+                                                );
+                                            })}
                                         </div>
                                     </div>
 
-                                    {/* Preview Switcher Tabs */}
-                                    <div className="p-3 bg-slate-900/50 border-b border-slate-800/80">
-                                        <div className="grid grid-cols-2 gap-1.5 bg-slate-950 p-1 rounded-lg border border-slate-800 text-[11px]">
-                                            <button
-                                                onClick={() => setPreviewTab('sistem')}
-                                                className={`py-1.5 px-2 rounded-md transition-all text-center ${previewTab === 'sistem' ? 'bg-blue-600 text-white font-semibold shadow-sm' : 'text-slate-400 hover:text-white'}`}
-                                            >
-                                                Sistem SPP &amp; Keuangan
-                                            </button>
-                                            <button
-                                                onClick={() => setPreviewTab('compro')}
-                                                className={`py-1.5 px-2 rounded-md transition-all text-center ${previewTab === 'compro' ? 'bg-orange-500 text-white font-semibold shadow-sm' : 'text-slate-400 hover:text-white'}`}
-                                            >
-                                                Website Company Profile
-                                            </button>
+                                    {/* Console Body: Active Application Preview */}
+                                    <div key={activeApp} className="p-5 sm:p-6 space-y-4 animate-in fade-in duration-300">
+                                        {/* Metric Card 1 */}
+                                        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4 transition-all">
+                                            <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
+                                                <span>{currentApp.metricTitle}</span>
+                                                <span className="text-emerald-400 font-semibold text-[11px] bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">
+                                                    {currentApp.badge}
+                                                </span>
+                                            </div>
+                                            <div className="flex items-baseline justify-between mb-2">
+                                                <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                                                    {currentApp.metricValue}
+                                                </div>
+                                                <span className="text-xs font-mono text-orange-400 font-semibold">
+                                                    {currentApp.targetText}
+                                                </span>
+                                            </div>
+                                            {/* Dual Color Progress Bar */}
+                                            <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden flex">
+                                                <div className="bg-blue-500 h-full" style={{ width: currentApp.progressBlue }}></div>
+                                                <div className="bg-orange-500 h-full" style={{ width: currentApp.progressOrange }}></div>
+                                            </div>
+                                            <div className="mt-3 pt-2.5 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-400">
+                                                <span>{currentApp.subMetric}</span>
+                                                <span className="text-blue-400 font-mono">{currentApp.statusLabel}</span>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    {/* Console Body */}
-                                    <div className="p-5 sm:p-6 space-y-4">
-                                        {previewTab === 'sistem' ? (
-                                            <>
-                                                {/* Metric 1: Financial Realization */}
-                                                <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
-                                                    <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
-                                                        <span>Realisasi SPP Bulan Berjalan</span>
-                                                        <span className="text-emerald-400 font-semibold text-[11px] bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">+18.4% YoY</span>
+                                        {/* Feature Card 1 */}
+                                        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+                                            <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
+                                                <div className="flex items-center gap-2">
+                                                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                                    <span className="font-semibold text-slate-200">{currentApp.feature1.title}</span>
+                                                </div>
+                                                <span className="text-[10px] font-mono text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">
+                                                    {currentApp.feature1.badge}
+                                                </span>
+                                            </div>
+                                            <p className="text-xs text-slate-300 leading-relaxed text-justify">
+                                                {currentApp.feature1.desc}
+                                            </p>
+                                        </div>
+
+                                        {/* Feature Card 2 */}
+                                        <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
+                                            <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
+                                                <div className="flex items-center gap-2">
+                                                    <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                                                    <span className="font-semibold text-slate-200">{currentApp.feature2.title}</span>
+                                                </div>
+                                                <span className="text-[10px] font-mono text-orange-400 bg-orange-950/60 px-2 py-0.5 rounded border border-orange-800/60">
+                                                    {currentApp.feature2.badge}
+                                                </span>
+                                            </div>
+                                            <p className="text-xs text-slate-300 leading-relaxed text-justify">
+                                                {currentApp.feature2.desc}
+                                            </p>
+                                        </div>
+
+                                        {/* Footer Bar: Mobile Navigation Simulation vs Web Tags */}
+                                        {currentApp.type === 'mobile' ? (
+                                            <div className="pt-2 border-t border-slate-800/80">
+                                                <div className="grid grid-cols-4 gap-1 text-center text-[10px] text-slate-400 py-1">
+                                                    <div className="flex flex-col items-center gap-1 text-orange-400 font-bold">
+                                                        <Smartphone className="w-3.5 h-3.5" />
+                                                        <span>Home</span>
                                                     </div>
-                                                    <div className="flex items-baseline justify-between mb-2">
-                                                        <div className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Rp 54.250.000</div>
-                                                        <span className="text-xs font-mono text-orange-400 font-semibold">90.4% Target</span>
+                                                    <div className="flex flex-col items-center gap-1 hover:text-white">
+                                                        <Activity className="w-3.5 h-3.5" />
+                                                        <span>Aktivitas</span>
                                                     </div>
-                                                    {/* Dual Color Progress Bar */}
-                                                    <div className="w-full bg-slate-800 h-2 rounded-full overflow-hidden flex">
-                                                        <div className="bg-blue-500 h-full w-[70%]"></div>
-                                                        <div className="bg-orange-500 h-full w-[20%]"></div>
+                                                    <div className="flex flex-col items-center gap-1 hover:text-white">
+                                                        <MessageSquare className="w-3.5 h-3.5" />
+                                                        <span>Pesan</span>
                                                     </div>
-                                                    <div className="mt-3 pt-2.5 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-400">
-                                                        <span>142 Santri/Siswa Lunas</span>
-                                                        <span className="text-blue-400 font-mono">Auto-Reconciled</span>
+                                                    <div className="flex flex-col items-center gap-1 hover:text-white">
+                                                        <ShieldCheck className="w-3.5 h-3.5" />
+                                                        <span>Profil</span>
                                                     </div>
                                                 </div>
-
-                                                {/* Metric 2: WhatsApp Billing Bot */}
-                                                <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
-                                                    <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-                                                        <div className="flex items-center gap-2">
-                                                            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                                                            <span className="font-semibold text-slate-200">WhatsApp Billing Bot</span>
-                                                        </div>
-                                                        <span className="text-[10px] font-mono text-emerald-400">0 Pending Queue</span>
-                                                    </div>
-                                                    <p className="text-xs text-slate-400 leading-relaxed text-justify">
-                                                        Invoice PDF digital resmi terkirim langsung ke nomor WhatsApp wali murid saat invoice terbit tanpa rekap manual.
-                                                    </p>
+                                                {/* Mobile Home Bar Handle */}
+                                                <div className="w-24 h-1 bg-slate-700/80 rounded-full mx-auto mt-2"></div>
+                                                <div className="mt-3 flex flex-wrap gap-1.5 justify-center">
+                                                    {currentApp.tags.map((tag, i) => (
+                                                        <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-400">
+                                                            {tag}
+                                                        </span>
+                                                    ))}
                                                 </div>
-
-                                                {/* Metric 3: Multi-channel Gateway */}
-                                                <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
-                                                    <div className="text-xs text-slate-400 mb-2 font-medium">Kanal Pembayaran Otomatis</div>
-                                                    <div className="flex flex-wrap gap-1.5">
-                                                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-orange-950/70 border border-orange-700/60 text-orange-300 font-bold">QRIS All Bank</span>
-                                                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/70 border border-blue-800 text-blue-300">BCA VA</span>
-                                                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/70 border border-blue-800 text-blue-300">BRI VA</span>
-                                                        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/70 border border-blue-800 text-blue-300">Mandiri</span>
-                                                    </div>
-                                                    <div className="mt-3 pt-2.5 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-400">
-                                                        <span>Settlement Instan T+0</span>
-                                                        <span className="text-emerald-400 font-semibold">Terenkripsi 256-bit</span>
-                                                    </div>
-                                                </div>
-                                            </>
+                                            </div>
                                         ) : (
-                                            <>
-                                                {/* Metric Tab Compro: PageSpeed */}
-                                                <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
-                                                    <div className="text-xs text-slate-400 mb-2">Google PageSpeed Insights</div>
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="flex items-baseline gap-2">
-                                                            <span className="text-4xl font-extrabold text-emerald-400">99</span>
-                                                            <span className="text-xs text-slate-400">/ 100 Score</span>
-                                                        </div>
-                                                        <span className="px-2.5 py-1 rounded bg-emerald-950/60 border border-emerald-800/60 text-emerald-400 text-xs font-mono font-bold">Core Web Vitals Pass</span>
-                                                    </div>
-                                                    <p className="text-xs text-slate-400 mt-2.5 leading-relaxed text-justify">
-                                                        Waktu muat di bawah 1 detik dengan Next.js Server Components untuk retensi calon klien dan ranking SEO Google tertinggi.
-                                                    </p>
+                                            <div className="pt-2 border-t border-slate-800/80">
+                                                <div className="flex flex-wrap gap-1.5">
+                                                    {currentApp.tags.map((tag, i) => (
+                                                        <span key={i} className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-900 border border-slate-800 text-slate-300">
+                                                            {tag}
+                                                        </span>
+                                                    ))}
                                                 </div>
-
-                                                {/* Metric Tab Compro: SEO Schema */}
-                                                <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
-                                                    <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-                                                        <span className="font-semibold text-white">SEO &amp; Rich Snippets Schema</span>
-                                                        <span className="text-blue-400 text-[11px] font-mono">JSON-LD</span>
-                                                    </div>
-                                                    <p className="text-xs text-slate-400 leading-relaxed text-justify">
-                                                        Lengkap dengan OpenGraph, JSON-LD Schema (Organization, FAQ, LocalBusiness), dan otomatis sitemap.xml.
-                                                    </p>
-                                                </div>
-
-                                                {/* Metric Tab Compro: CMS Control */}
-                                                <div className="bg-slate-900/80 border border-slate-800 rounded-xl p-4">
-                                                    <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-                                                        <span className="font-semibold text-white">Dashboard CMS Kustom</span>
-                                                        <span className="text-orange-400 text-[11px] font-mono">Instant Edit</span>
-                                                    </div>
-                                                    <p className="text-xs text-slate-400 leading-relaxed text-justify">
-                                                        Perbarui portofolio, harga layanan, dan artikel blog langsung dari panel admin tanpa perlu memahami koding.
-                                                    </p>
-                                                </div>
-                                            </>
+                                            </div>
                                         )}
                                     </div>
                                 </div>
                             </div>
                         </ScrollReveal>
                     </div>
+
 
                 </div>
             </div>

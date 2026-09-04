@@ -422,3 +422,12 @@
   font-family: var(--font-mono), monospace;
   letter-spacing: 0.06em;
 }
+
+@keyframes heroProgress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+.animate-hero-progress {
+  animation: heroProgress 2s linear forwards;
+}
