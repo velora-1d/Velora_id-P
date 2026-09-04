@@ -193,16 +193,34 @@ export function createPgQueryBuilder(cookieStore = null) {
                     // Check admin session cookie
                     const cookie = cookieStore ? await cookieStore.get('velora_admin_session') : null;
                     if (cookie && cookie.value) {
-                        return {
-                            data: {
-                                user: {
-                                    id: 'velora-admin-id',
-                                    email: 'admin@velora.id',
-                                    role: 'authenticated'
-                                }
-                            },
-                            error: null
-                        };
+                        try {
+                            const decoded = Buffer.from(cookie.value, 'base64').toString('utf-8');
+                            const sessionData = JSON.parse(decoded);
+                            return {
+                                data: {
+                                    user: {
+                                        id: sessionData.userId || 'admin',
+                                        email: sessionData.email || 'admin@velora.id',
+                                        role: sessionData.role || 'admin',
+                                        user_metadata: {
+                                            full_name: sessionData.name || 'Admin Velora'
+                                        }
+                                    }
+                                },
+                                error: null
+                            };
+                        } catch {
+                            return {
+                                data: {
+                                    user: {
+                                        id: 'admin',
+                                        email: 'admin@velora.id',
+                                        role: 'authenticated'
+                                    }
+                                },
+                                error: null
+                            };
+                        }
                     }
                     return { data: { user: null }, error: null };
                 } catch {

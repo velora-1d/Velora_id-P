@@ -78,13 +78,38 @@ export function createClient() {
             },
             auth: {
                 async getUser() {
-                    return { data: { user: null }, error: null };
+                    try {
+                        const res = await fetch('/api/admin/me');
+                        if (!res.ok) return { data: { user: null }, error: null };
+                        const data = await res.json();
+                        return { data: { user: data.user }, error: null };
+                    } catch {
+                        return { data: { user: null }, error: null };
+                    }
                 },
                 async signInWithPassword({ email, password }) {
-                    return { data: { user: { id: 'admin', email } }, error: null };
+                    try {
+                        const res = await fetch('/api/admin/login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ email, password })
+                        });
+                        const data = await res.json();
+                        if (!res.ok) {
+                            return { data: { user: null, session: null }, error: { message: data.error || 'Email atau password salah' } };
+                        }
+                        return { data: { user: data.user, session: { access_token: 'active' } }, error: null };
+                    } catch (err) {
+                        return { data: { user: null, session: null }, error: { message: err.message || 'Gagal terhubung ke server' } };
+                    }
                 },
                 async signOut() {
-                    return { error: null };
+                    try {
+                        await fetch('/api/admin/logout', { method: 'POST' });
+                        return { error: null };
+                    } catch (err) {
+                        return { error: { message: err.message } };
+                    }
                 }
             }
         };

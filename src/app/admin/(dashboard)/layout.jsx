@@ -66,7 +66,12 @@ export default function AdminLayout({ children }) {
     }, [supabase]);
 
     const handleLogout = useCallback(async () => {
-        await supabase.auth.signOut();
+        try {
+            await fetch('/api/admin/logout', { method: 'POST' });
+            await supabase.auth.signOut();
+        } catch {
+            // Ignore error
+        }
         router.push('/admin/login');
         router.refresh();
     }, [supabase, router]);

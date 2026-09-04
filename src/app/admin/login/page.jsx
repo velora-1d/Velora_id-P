@@ -24,20 +24,25 @@ export default function AdminLoginPage() {
         setLoading(true);
         setError('');
 
-        const { error } = await supabase.auth.signInWithPassword({
-            email,
-            password,
-        });
+        try {
+            const res = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
+            });
+            const data = await res.json();
 
-        if (error) {
-            setError(error.message === 'Invalid login credentials'
-                ? 'Email atau password salah'
-                : error.message
-            );
-            setLoading(false);
-        } else {
+            if (!res.ok) {
+                setError(data.error || 'Email atau password salah');
+                setLoading(false);
+                return;
+            }
+
             router.push('/admin');
             router.refresh();
+        } catch (err) {
+            setError(err.message || 'Terjadi kesalahan koneksi');
+            setLoading(false);
         }
     };
 
