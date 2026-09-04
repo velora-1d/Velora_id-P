@@ -33,6 +33,7 @@ COPY . .
 # Environment variables for build stage
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+ENV DOCKER_BUILD=1
 
 # Execute Next.js standalone build
 RUN pnpm build
