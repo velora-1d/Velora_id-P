@@ -361,16 +361,20 @@ const Hero = () => {
 
     const tabsContainerRef = useRef(null);
 
-    // Auto scroll the tab pill to center when activeApp changes
+    // Auto scroll only the horizontal tab strip (NEVER scroll the window/page)
     useEffect(() => {
-        if (tabsContainerRef.current && tabsContainerRef.current.children[activeApp]) {
-            tabsContainerRef.current.children[activeApp].scrollIntoView({
-                behavior: 'smooth',
-                block: 'nearest',
-                inline: 'center'
+
+        const container = tabsContainerRef.current;
+        if (container && container.children[activeApp]) {
+            const activeEl = container.children[activeApp];
+            const targetLeft = activeEl.offsetLeft - (container.clientWidth / 2) + (activeEl.clientWidth / 2);
+            container.scrollTo({
+                left: Math.max(0, targetLeft),
+                behavior: 'smooth'
             });
         }
     }, [activeApp]);
+
 
     const handlePrevApp = () => {
         setActiveApp((prev) => (prev - 1 + applications.length) % applications.length);
@@ -679,8 +683,9 @@ const Hero = () => {
                                     </div>
 
                                     {/* Console Body: Silky Smooth Framer Motion Cross-fade with Blur & Slide */}
-                                    <div className="flex-1 p-3.5 sm:p-4 relative overflow-hidden flex flex-col justify-between min-h-0">
+                                    <div className="flex-1 min-h-[385px] p-3.5 sm:p-4 relative overflow-hidden flex flex-col justify-between">
                                         <AnimatePresence mode="wait">
+
                                             <motion.div 
                                                 key={activeApp} 
                                                 initial={{ opacity: 0, x: 14, filter: 'blur(4px)' }}
