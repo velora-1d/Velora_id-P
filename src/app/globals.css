@@ -56,7 +56,7 @@
    ================================ */
 @media (prefers-reduced-motion: reduce) {
 
-  *,
+  *:not(.animate-marquee):not(.animate-marquee *):not(.velora-marquee-track):not(.velora-marquee-track *),
   *::before,
   *::after {
     animation-duration: 0.01ms !important;

@@ -117,11 +117,31 @@ const Testimonials = () => {
         fetchTestimonials();
     }, []);
 
+    const [isPaused, setIsPaused] = useState(false);
     const baseList = testimonials.length > 0 ? testimonials : fallbackTestimonials;
     const trackList = baseList.length < 5 ? [...baseList, ...baseList] : baseList;
 
     return (
         <section id="testimonials" className="py-24 sm:py-32 bg-[#070C18] text-white relative border-t border-slate-800/80 overflow-hidden">
+            <style dangerouslySetInnerHTML={{ __html: `
+                @keyframes veloraMarqueeSlide {
+                    0% { transform: translate3d(0, 0, 0); }
+                    100% { transform: translate3d(-50%, 0, 0); }
+                }
+                .velora-marquee-track {
+                    display: flex !important;
+                    width: max-content !important;
+                    animation: veloraMarqueeSlide 26s linear infinite !important;
+                    will-change: transform;
+                }
+                .velora-marquee-track:hover {
+                    animation-play-state: paused !important;
+                }
+                .velora-marquee-track.is-paused {
+                    animation-play-state: paused !important;
+                }
+            `}} />
+
             <div className="absolute inset-0 studio-grid-pattern opacity-25 pointer-events-none"></div>
 
             {/* Giant Ghost Typography Watermark */}
@@ -134,7 +154,7 @@ const Testimonials = () => {
             <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
                 {/* Header */}
                 <ScrollReveal width="100%">
-                    <div className="flex flex-col items-center mb-14 sm:mb-16 text-center">
+                    <div className="flex flex-col items-center mb-10 sm:mb-12 text-center">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-xs font-mono text-blue-300 uppercase tracking-widest mb-4">
                             <MessageSquare className="w-3.5 h-3.5 text-blue-400" />
                             [REPUTASI_KLIEN]
@@ -150,12 +170,16 @@ const Testimonials = () => {
             </div>
 
             {/* Auto-scrolling Infinite Marquee */}
-            <div className="relative overflow-hidden py-4 w-full select-none">
+            <div 
+                className="relative overflow-hidden py-4 w-full select-none"
+                onMouseEnter={() => setIsPaused(true)}
+                onMouseLeave={() => setIsPaused(false)}
+            >
                 {/* Side Fade Gradients */}
                 <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-36 bg-gradient-to-r from-[#070C18] via-[#070C18]/80 to-transparent z-10 pointer-events-none"></div>
                 <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-36 bg-gradient-to-l from-[#070C18] via-[#070C18]/80 to-transparent z-10 pointer-events-none"></div>
 
-                <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+                <div className={`flex w-max velora-marquee-track ${isPaused ? 'is-paused' : ''}`}>
                     {/* Track 1 */}
                     <div className="flex shrink-0">
                         {trackList.map((testimonial, index) => (
@@ -171,15 +195,24 @@ const Testimonials = () => {
                 </div>
             </div>
 
-            {/* Trust Indicator Pill */}
-            <div className="container mx-auto px-6 mt-14 sm:mt-16">
+            {/* Trust Indicator Pill & Autoplay status */}
+            <div className="container mx-auto px-6 mt-8 sm:mt-10">
                 <ScrollReveal width="100%">
-                    <div className="text-center">
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/80 border border-slate-800 text-xs sm:text-sm text-slate-400 font-mono">
                             <span>Dipercaya oleh</span>
                             <span className="text-white font-bold">50+ lembaga & institusi</span>
                             <span>di seluruh Indonesia</span>
                         </div>
+
+                        <button 
+                            type="button"
+                            onClick={() => setIsPaused(!isPaused)}
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-900/60 border border-slate-800 text-xs font-mono text-slate-400 hover:text-white hover:border-slate-700 transition-colors"
+                        >
+                            <span className={`w-2 h-2 rounded-full ${isPaused ? 'bg-amber-400' : 'bg-emerald-400 animate-pulse'}`} />
+                            <span>{isPaused ? 'Lanjutkan Geser' : 'Jeda Otomatis'}</span>
+                        </button>
                     </div>
                 </ScrollReveal>
             </div>
