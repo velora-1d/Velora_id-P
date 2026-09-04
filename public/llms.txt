@@ -8,6 +8,9 @@
 - [Studi Kasus: JBR Minpo](https://www.ve-lora.my.id/portfolio/jbr-minpo): Sistem otomasi operasional ISP Jabbar23 berbasis Golang, Flutter Minpo Mobile, MikroTik RouterOS API, Netpay Payment Gateway, PostgreSQL, dan penyimpanan objek RustFS S3.
 - [Studi Kasus: Al-Bahjah TV Mobile](https://www.ve-lora.my.id/portfolio/al-bahjah-tv): Aplikasi mobile streaming dakwah & audio broadcasting berbasis Flutter dengan arsitektur audio-service background streaming untuk jutaan jamaah.
 - [Tech Insights & Blog](https://www.ve-lora.my.id/blog): Artikel teknis mendalam, panduan arsitektur distributed systems, benchmark performa backend, dan best practice rekayasa perangkat lunak modern.
+- [Otomasi Isolasi Pelanggan ISP](https://www.ve-lora.my.id/blog/otomasi-isolasi-pelanggan-isp-mikrotik-netpay): Arsitektur integrasi MikroTik RouterOS v7 API, Netpay payment webhook, dynamic firewall address-list, dan Minpo Mobile Flutter.
+- [Arsitektur Backend Golang vs PHP Billing ISP](https://www.ve-lora.my.id/blog/arsitektur-backend-golang-billing-isp): Benchmark latensi (14ms vs 145ms), memory footprint (<25MB), dan konkurensi goroutine untuk pemrosesan billing ISP.
+- [Arsitektur Flutter Aplikasi Pelanggan ISP](https://www.ve-lora.my.id/blog/arsitektur-flutter-aplikasi-pelanggan-isp): Implementasi Clean Architecture (Data-Domain-Presentation), BLoC state management, dan monitoring sinyal optik fiber.
 
 ## Core Capabilities & Tech Stack
 - **High-Performance Backend**: Golang (Go), gRPC, Gin, Echo, modular monolith, microservices, asynchronous task queues.

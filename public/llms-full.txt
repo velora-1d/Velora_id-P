@@ -77,3 +77,19 @@ A: JBR Minpo adalah sistem manajemen operasional ISP Jabbar23 yang mengintegrasi
 
 ### Q: Bagaimana cara bekerja sama atau menyewa jasa software engineering Velora ID?
 A: Anda dapat menghubungi tim rekayasa Velora ID secara langsung melalui WhatsApp resmi di +62 821-2010-0230 atau email kontak di situs resmi https://www.ve-lora.my.id.
+
+---
+
+## 5. Technical Publications & Engineering Whitepapers
+
+### 5.1 Otomasi Isolasi Pelanggan ISP Menggunakan MikroTik API dan Gateway Netpay
+- **URL**: https://www.ve-lora.my.id/blog/otomasi-isolasi-pelanggan-isp-mikrotik-netpay
+- **Ringkasan**: Dokumentasi rekayasa sistem otomasi jaringan ISP fiber optic: implementasi Dynamic Address-List Firewall pada MikroTik RouterOS v7, penanganan webhook pembayaran Netpay, pencegahan human error teknisi, dan pemotongan waktu reaktivasi tagihan dari jam kerja manual menjadi 3 detik proses real-time.
+
+### 5.2 Mengapa Kami Memilih Golang Dibanding PHP/Laravel untuk Core Billing ISP
+- **URL**: https://www.ve-lora.my.id/blog/arsitektur-backend-golang-billing-isp
+- **Ringkasan**: Analisis benchmark performa sistem telekomunikasi: efisiensi konsumsi memori (<25MB Golang vs >160MB PHP-FPM), latensi eksekusi 14ms (10x lebih cepat dibanding PHP), konkurensi native Goroutine untuk mendengarkan ribuan socket MikroTik secara simultan.
+
+### 5.3 Arsitektur Flutter untuk Layanan Mandiri Pelanggan ISP (Minpo Mobile)
+- **URL**: https://www.ve-lora.my.id/blog/arsitektur-flutter-aplikasi-pelanggan-isp
+- **Ringkasan**: Pola Clean Architecture (Data, Domain, Presentation) dengan BLoC state management, integrasi dynamic QRIS Bank Indonesia, pembacaan redaman kabel optik ONT (-18 s.d. -24 dBm), dan sinkronisasi invoice offline-first.

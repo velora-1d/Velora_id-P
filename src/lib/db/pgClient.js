@@ -57,6 +57,18 @@ export function createPgQueryBuilder(cookieStore = null) {
                     return builder;
                 },
 
+                neq(column, val) {
+                    values.push(val);
+                    conditions.push(`"${column}" != $${values.length}`);
+                    return builder;
+                },
+
+                ilike(column, val) {
+                    values.push(val);
+                    conditions.push(`"${column}" ILIKE $${values.length}`);
+                    return builder;
+                },
+
                 order(column, { ascending = true } = {}) {
                     orderByClause = `ORDER BY "${column}" ${ascending ? 'ASC' : 'DESC'}`;
                     return builder;

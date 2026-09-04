@@ -74,6 +74,69 @@ function formatDate(dateStr) {
     return d.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 
+function renderFormattedText(text) {
+    if (!text) return null;
+    const parts = text.split(/(\*\*.*?\*\*|`.*?`)/g);
+    return parts.map((part, index) => {
+        if (part.startsWith('**') && part.endsWith('**')) {
+            return <strong key={index} className="text-white font-bold">{part.slice(2, -2)}</strong>;
+        }
+        if (part.startsWith('`') && part.endsWith('`')) {
+            return <code key={index} className="px-1.5 py-0.5 rounded bg-slate-800 border border-white/[0.1] text-blue-300 font-mono text-xs sm:text-sm">{part.slice(1, -1)}</code>;
+        }
+        return part;
+    });
+}
+
+function renderTable(tableText) {
+    const lines = tableText.trim().split('\n').filter(l => l.trim() && !l.includes('---'));
+    if (lines.length < 1) return null;
+    const headerCells = lines[0].split('|').map(c => c.trim()).filter((_, idx, arr) => idx > 0 && idx < arr.length - 1);
+    const bodyRows = lines.slice(1).map(row => row.split('|').map(c => c.trim()).filter((_, idx, arr) => idx > 0 && idx < arr.length - 1));
+
+    return (
+        <div className="overflow-x-auto my-8 rounded-2xl border border-white/[0.1] bg-slate-900/60 shadow-xl backdrop-blur-sm">
+            <table className="w-full text-left text-xs sm:text-sm text-slate-300">
+                <thead className="bg-slate-950/80 text-blue-300 uppercase tracking-wider font-mono text-xs border-b border-white/[0.1]">
+                    <tr>
+                        {headerCells.map((h, i) => (
+                            <th key={i} className="px-4 py-3 sm:px-6 sm:py-4 font-bold">{h}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody className="divide-y divide-white/[0.06]">
+                    {bodyRows.map((row, ri) => (
+                        <tr key={ri} className="hover:bg-blue-600/5 transition-colors">
+                            {row.map((cell, ci) => (
+                                <td key={ci} className="px-4 py-3 sm:px-6 sm:py-4 leading-relaxed font-normal">
+                                    {renderFormattedText(cell)}
+                                </td>
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        </div>
+    );
+}
+
+function extractFaqsFromContent(content) {
+    if (!content || !content.includes('## Pertanyaan yang Sering Diajukan')) return [];
+    const faqSection = content.split('## Pertanyaan yang Sering Diajukan')[1];
+    if (!faqSection) return [];
+    const items = faqSection.split('### ').filter(Boolean);
+    const faqs = [];
+    for (const item of items) {
+        const lines = item.trim().split('\n');
+        const question = lines[0]?.trim();
+        const answer = lines.slice(1).join(' ').trim();
+        if (question && answer) {
+            faqs.push({ question, answer });
+        }
+    }
+    return faqs;
+}
+
 export default async function BlogPostPage({ params }) {
     const { slug } = await params;
     const post = await getPost(slug);
@@ -119,10 +182,28 @@ export default async function BlogPostPage({ params }) {
         ],
     };
 
+    // Extract FAQs if present for FAQPage schema
+    const postFaqs = extractFaqsFromContent(post.content);
+    const faqSchema = postFaqs.length > 0 ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: postFaqs.map(f => ({
+            '@type': 'Question',
+            name: f.question,
+            acceptedAnswer: {
+                '@type': 'Answer',
+                text: f.answer,
+            },
+        })),
+    } : null;
+
     return (
         <>
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
+            {faqSchema && (
+                <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+            )}
 
             <div className="min-h-screen bg-[#070C18] text-slate-100 relative overflow-hidden">
                 {/* Hero Header */}
@@ -187,35 +268,85 @@ export default async function BlogPostPage({ params }) {
                 {/* Article Content */}
                 <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 max-w-4xl relative z-10">
                     <article className="prose prose-invert prose-slate max-w-none leading-relaxed text-slate-300 text-base sm:text-lg">
-                        {post.content.split('\n\n').map((paragraph, i) => (
-                            <div key={i} className="mb-6">
-                                {paragraph.startsWith('## ') ? (
-                                    <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-white mt-12 mb-4 pb-3 border-b border-white/[0.08]">
-                                        {paragraph.replace('## ', '')}
+                        {post.content.split('\n\n').map((paragraph, i) => {
+                            const trimmed = paragraph.trim();
+                            if (!trimmed) return null;
+
+                            if (trimmed.startsWith('## ')) {
+                                return (
+                                    <h2 key={i} className="font-heading text-2xl sm:text-3xl font-extrabold text-white mt-12 mb-4 pb-3 border-b border-white/[0.08]">
+                                        {trimmed.replace('## ', '')}
                                     </h2>
-                                ) : paragraph.startsWith('### ') ? (
-                                    <h3 className="font-heading text-xl sm:text-2xl font-bold text-slate-100 mt-8 mb-3">
-                                        {paragraph.replace('### ', '')}
+                                );
+                            }
+
+                            if (trimmed.startsWith('### ')) {
+                                return (
+                                    <h3 key={i} className="font-heading text-xl sm:text-2xl font-bold text-slate-100 mt-8 mb-3">
+                                        {trimmed.replace('### ', '')}
                                     </h3>
-                                ) : paragraph.startsWith('**') ? (
-                                    <h3 className="text-white font-bold text-lg mt-8 mb-3 flex items-center gap-2.5">
-                                        <span className="w-2 h-2 rounded-full bg-blue-400 flex-shrink-0" />
-                                        {paragraph.replace(/\*\*/g, '')}
-                                    </h3>
-                                ) : paragraph.startsWith('- ') || paragraph.startsWith('* ') ? (
-                                    <ul className="space-y-2.5 ml-2">
-                                        {paragraph.split('\n').map((line, li) => (
+                                );
+                            }
+
+                            if (trimmed.startsWith('>')) {
+                                return (
+                                    <blockquote key={i} className="my-6 p-4 sm:p-6 rounded-2xl bg-blue-950/30 border-l-4 border-blue-500 text-blue-100 shadow-lg shadow-blue-950/20 backdrop-blur-sm">
+                                        <p className="text-base sm:text-lg font-medium leading-relaxed">
+                                            {renderFormattedText(trimmed.replace(/^>\s*/gm, ''))}
+                                        </p>
+                                    </blockquote>
+                                );
+                            }
+
+                            if (trimmed.startsWith('```')) {
+                                return (
+                                    <div key={i} className="my-6 rounded-2xl overflow-hidden border border-white/[0.1] bg-slate-950 font-mono text-xs sm:text-sm shadow-xl">
+                                        <pre className="p-4 sm:p-5 overflow-x-auto text-slate-300 leading-relaxed">
+                                            <code>{trimmed.replace(/^```[a-z]*\n?/i, '').replace(/\n?```$/, '')}</code>
+                                        </pre>
+                                    </div>
+                                );
+                            }
+
+                            if (trimmed.includes('|') && trimmed.includes('---')) {
+                                return <div key={i}>{renderTable(trimmed)}</div>;
+                            }
+
+                            if (trimmed.startsWith('---')) {
+                                return <hr key={i} className="my-10 border-white/[0.1]" />;
+                            }
+
+                            if (/^\d+\.\s/m.test(trimmed)) {
+                                return (
+                                    <ol key={i} className="space-y-3 my-4 list-decimal list-inside ml-2 text-slate-300">
+                                        {trimmed.split('\n').filter(l => l.trim()).map((line, li) => (
+                                            <li key={li} className="leading-relaxed">
+                                                {renderFormattedText(line.replace(/^\d+\.\s*/, ''))}
+                                            </li>
+                                        ))}
+                                    </ol>
+                                );
+                            }
+
+                            if (trimmed.startsWith('- ') || trimmed.startsWith('* ')) {
+                                return (
+                                    <ul key={i} className="space-y-2.5 ml-2 my-4">
+                                        {trimmed.split('\n').filter(l => l.trim()).map((line, li) => (
                                             <li key={li} className="flex items-start gap-2.5 text-slate-300 leading-relaxed text-base">
                                                 <span className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2.5 flex-shrink-0" />
-                                                {line.replace(/^[-*]\s/, '')}
+                                                <span>{renderFormattedText(line.replace(/^[-*]\s/, ''))}</span>
                                             </li>
                                         ))}
                                     </ul>
-                                ) : (
-                                    <p className="text-slate-300 text-base sm:text-lg leading-relaxed text-justify">{paragraph}</p>
-                                )}
-                            </div>
-                        ))}
+                                );
+                            }
+
+                            return (
+                                <p key={i} className="text-slate-300 text-base sm:text-lg leading-relaxed mb-6 text-justify">
+                                    {renderFormattedText(trimmed)}
+                                </p>
+                            );
+                        })}
                     </article>
 
                     {/* Meta Tags Strip */}
