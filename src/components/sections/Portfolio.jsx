@@ -17,7 +17,8 @@ const fallbackProjects = [
         challenge: "Sinkronisasi data pelanggan dan status koneksi lintas Point of Presence (POP) area jaringan fiber, penanganan integrasi format khusus gateway Netpay API (application/x-www-form-urlencoded), serta pemenuhan standar arsitektur 16KB page size NDK dan obfuscation Proguard R8 pada aplikasi mobile Android.",
         solution: "Mengembangkan query sinkronisasi area POP yang teroptimasi, implementasi middleware adapter Netpay payment callback, arsitektur aplikasi mobile Flutter dengan state management reaktif, serta pembaruan toolchain NDK 28 untuk performa rilis Android modern.",
         tech: "Flutter, Dart, PHP / Laravel, MySQL, Netpay Payment Gateway, MikroTik API, NDK",
-        image_url: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80",
+        image_url: "/images/portfolio/jbr-minpo-dashboard.png",
+        background_image_url: "/images/portfolio/jbr-minpo-mobile.jpg",
         icon_name: "Radio"
     },
     {
@@ -300,7 +301,7 @@ const Portfolio = () => {
                             <div className="mb-10 sm:mb-12 rounded-3xl studio-card-light overflow-hidden shadow-sm group">
                                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
                                     {/* Left (Span 7): Device / Screen Showcase */}
-                                    <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-auto overflow-hidden bg-slate-950 flex flex-col justify-between">
+                                    <div className="lg:col-span-7 relative min-h-[340px] sm:min-h-[420px] lg:min-h-full overflow-hidden bg-slate-950 flex flex-col justify-between">
                                         {/* Browser frame top */}
                                         <div className="flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800 z-10 text-[11px] font-mono text-slate-300">
                                             <div className="flex items-center gap-2">
@@ -311,15 +312,37 @@ const Portfolio = () => {
                                                 </div>
                                                 <span className="text-slate-400 ml-2 truncate max-w-[200px]">{featured.title.toLowerCase().replace(/\s+/g, '-')}.velora.id</span>
                                             </div>
-                                            <span className="text-blue-400 font-semibold">[PRODUKSI_LIVE]</span>
+                                            <div className="flex items-center gap-2">
+                                                <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                                <span className="text-blue-400 font-semibold">[PRODUKSI_LIVE]</span>
+                                            </div>
                                         </div>
 
-                                        <img
-                                            src={featured.image_url || featured.image}
-                                            alt={featured.title}
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent lg:hidden"></div>
+                                        <div className="relative flex-1 w-full h-full min-h-[300px] overflow-hidden bg-slate-950">
+                                            <img
+                                                src={featured.image_url || featured.image}
+                                                alt={featured.title}
+                                                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none"></div>
+
+                                            {/* Floating Mobile App Mockup when available */}
+                                            {featured.background_image_url && (
+                                                <div className="absolute right-4 bottom-4 w-28 sm:w-36 md:w-40 rounded-2xl p-1.5 bg-slate-900/95 backdrop-blur-xl border border-white/20 shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1 z-10">
+                                                    <div className="flex items-center justify-between px-1 py-0.5 mb-1 border-b border-white/10 text-[9px] font-mono text-slate-300">
+                                                        <span className="text-blue-400 font-bold">App Mobile</span>
+                                                        <span className="text-[8px] text-emerald-400 font-semibold">Flutter</span>
+                                                    </div>
+                                                    <div className="rounded-xl overflow-hidden aspect-[9/17] bg-slate-950 shadow-inner">
+                                                        <img
+                                                            src={featured.background_image_url}
+                                                            alt={`${featured.title} Mobile App`}
+                                                            className="w-full h-full object-cover object-top"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
 
                                     {/* Right (Span 5): Case Study Brief */}

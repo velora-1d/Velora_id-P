@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { ArrowLeft, Briefcase, Layers, Lightbulb, MessageSquare, Target } from 'lucide-react';
+import { ArrowLeft, Briefcase, Layers, Lightbulb, MessageSquare, Target, Monitor, Laptop, Smartphone, ExternalLink } from 'lucide-react';
 import { getIcon } from '@/lib/icons';
 
 export const dynamic = 'force-dynamic';
@@ -180,6 +180,128 @@ export default async function PortfolioDetailPage({ params }) {
                         </div>
                     </aside>
                 </div>
+
+                {/* Production Interface Showcase (Dual Screenshot Gallery) */}
+                {(project.image_url || project.background_image_url) && (
+                    <section className="mt-12 sm:mt-16 space-y-6">
+                        <div className="flex items-center justify-between flex-wrap gap-3">
+                            <div>
+                                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-xs font-mono text-blue-400 uppercase tracking-widest mb-2">
+                                    <Monitor className="w-3.5 h-3.5" />
+                                    [ANTARMUKA_PRODUKSI_LIVE]
+                                </div>
+                                <h2 className="font-heading text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+                                    Tangkapan Layar & Arsitektur Antarmuka
+                                </h2>
+                                <p className="text-slate-400 text-sm mt-1">
+                                    Dokumentasi visual implementasi nyata sistem di lingkungan operasional produksi.
+                                </p>
+                            </div>
+                            <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+                                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                Tervalidasi di Lingkungan Produksi
+                            </span>
+                        </div>
+
+                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                            {/* Web Dashboard View (8 cols if background_image_url exists, else 12) */}
+                            {project.image_url && (
+                                <div className={`${project.background_image_url ? 'lg:col-span-8' : 'lg:col-span-12'} studio-card rounded-3xl overflow-hidden border border-white/[0.1] bg-slate-900/50 shadow-2xl`}>
+                                    {/* Browser Header Bar */}
+                                    <div className="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-white/[0.08] text-xs font-mono text-slate-400">
+                                        <div className="flex items-center gap-2">
+                                            <div className="flex gap-1.5">
+                                                <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                                                <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></div>
+                                                <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></div>
+                                            </div>
+                                            <span className="text-slate-300 ml-2 font-mono text-[11px] truncate">
+                                                https://{(project.slug || 'app').toLowerCase()}.velora.id/admin/dashboard
+                                            </span>
+                                        </div>
+                                        <span className="text-[10px] uppercase font-mono tracking-wider text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">
+                                            Web Admin Console
+                                        </span>
+                                    </div>
+
+                                    {/* Screenshot Container */}
+                                    <div className="relative bg-slate-950 overflow-hidden group">
+                                        <img
+                                            src={project.image_url}
+                                            alt={`${project.title} Web Dashboard`}
+                                            className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.01]"
+                                        />
+                                    </div>
+
+                                    <div className="p-4 sm:p-5 bg-slate-900/70 border-t border-white/[0.06] flex items-center justify-between text-xs text-slate-400">
+                                        <div className="flex items-center gap-2">
+                                            <Laptop className="w-4 h-4 text-blue-400 flex-shrink-0" />
+                                            <span>Dashboard Administrasi &amp; Monitoring Pusat</span>
+                                        </div>
+                                        <a
+                                            href={project.image_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-400 hover:text-blue-300 inline-flex items-center gap-1 font-mono text-[11px]"
+                                        >
+                                            <span>Perbesar Layar</span>
+                                            <ExternalLink className="w-3 h-3" />
+                                        </a>
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Mobile App View (4 cols) */}
+                            {project.background_image_url && (
+                                <div className="lg:col-span-4 studio-card rounded-3xl overflow-hidden border border-white/[0.1] bg-slate-900/50 shadow-2xl flex flex-col">
+                                    {/* Mobile Header Bar */}
+                                    <div className="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-white/[0.08] text-xs font-mono text-slate-400">
+                                        <div className="flex items-center gap-1.5">
+                                            <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+                                            <span className="text-slate-300 font-semibold text-[11px]">Minpo Mobile</span>
+                                        </div>
+                                        <span className="text-[10px] uppercase font-mono tracking-wider text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                                            Flutter Client
+                                        </span>
+                                    </div>
+
+                                    {/* Phone Frame */}
+                                    <div className="p-4 bg-slate-950/80 flex items-center justify-center flex-1">
+                                        <div className="relative rounded-[2rem] p-2 bg-slate-800/80 border-2 border-slate-700 shadow-2xl max-w-[280px] w-full">
+                                            {/* Camera Notch / Island */}
+                                            <div className="w-20 h-4 bg-slate-950 rounded-full mx-auto mb-2 flex items-center justify-center">
+                                                <div className="w-2 h-2 rounded-full bg-slate-800"></div>
+                                            </div>
+                                            <div className="rounded-[1.4rem] overflow-hidden bg-slate-950 border border-white/10 group">
+                                                <img
+                                                    src={project.background_image_url}
+                                                    alt={`${project.title} Mobile App`}
+                                                    className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="p-4 sm:p-5 bg-slate-900/70 border-t border-white/[0.06] flex items-center justify-between text-xs text-slate-400">
+                                        <div className="flex items-center gap-2">
+                                            <Smartphone className="w-4 h-4 text-emerald-400 flex-shrink-0" />
+                                            <span>Portal Pelanggan (Self-Service)</span>
+                                        </div>
+                                        <a
+                                            href={project.background_image_url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-blue-400 hover:text-blue-300 inline-flex items-center gap-1 font-mono text-[11px]"
+                                        >
+                                            <span>Perbesar Layar</span>
+                                            <ExternalLink className="w-3 h-3" />
+                                        </a>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </section>
+                )}
             </main>
         </div>
     );
