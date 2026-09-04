@@ -1,8 +1,22 @@
 import Script from 'next/script';
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import { createClient } from '@/lib/supabase/server';
 import './globals.css';
+
+const plusJakarta = Plus_Jakarta_Sans({
+    subsets: ['latin'],
+    variable: '--font-sans',
+    display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+    subsets: ['latin'],
+    variable: '--font-mono',
+    display: 'swap',
+});
+
 
 export async function generateMetadata() {
     let titleSetting = 'Jasa Pembuatan Website & Sistem Digital Profesional | Velora ID';
@@ -104,7 +118,7 @@ export default async function RootLayout({ children }) {
     }
 
     return (
-        <html lang="id">
+        <html lang="id" className={`${plusJakarta.variable} ${jetbrainsMono.variable}`}>
             <head>
                 <Script
                     src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
@@ -123,7 +137,7 @@ export default async function RootLayout({ children }) {
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
                 />
             </head>
-            <body className="font-sans" suppressHydrationWarning={true}>
+            <body className="font-sans antialiased text-slate-900 bg-slate-950 selection:bg-blue-600 selection:text-white" suppressHydrationWarning={true}>
                 {children}
                 <Analytics />
                 <SpeedInsights />

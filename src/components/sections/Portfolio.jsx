@@ -2,59 +2,83 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Layers, Sparkles, MapPin, Zap, ChevronRight } from 'lucide-react';
+import { ArrowRight, Layers, Sparkles, MapPin, Zap, ChevronRight, ExternalLink, Terminal, ShieldCheck } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 import { getIcon } from '@/lib/icons';
 
 const fallbackProjects = [
     {
-        title: "E-Commerce Platform", category: "Retail & E-Commerce", client: "Fashion Hub Indonesia",
-        description: "Platform e-commerce multi-channel dengan integrasi payment gateway dan inventory management real-time.",
+        title: "E-Commerce Multi-Channel Platform", 
+        category: "Retail & E-Commerce", 
+        client: "Fashion Hub Indonesia",
+        description: "Platform e-commerce performa tinggi dengan integrasi auto-reconcile payment gateway, manajemen ribuan inventori varian, dan sinkronisasi pesanan ke marketplace.",
         challenge: "Klien membutuhkan sistem yang dapat mengelola ribuan produk dengan banyak varian dan integrasi ke marketplace.",
         solution: "Kami membangun platform custom dengan dashboard terpusat, sync otomatis ke Tokopedia/Shopee, dan laporan penjualan real-time.",
-        tech: "React, Node.js, PostgreSQL",
-        image_url: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=600&q=70", icon_name: "ShoppingCart", slug: 'e-commerce-platform'
+        tech: "Next.js 16, Node.js, PostgreSQL, Midtrans",
+        image_url: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=75", 
+        icon_name: "ShoppingCart", 
+        slug: 'e-commerce-platform'
     },
     {
-        title: "Digital Banking App", category: "Finance & Banking", client: "Bank Digital Nusantara",
-        description: "Aplikasi mobile banking dengan fitur transfer, pembayaran, dan investment tracking.",
+        title: "Digital Banking & Treasury App", 
+        category: "Finance & Banking", 
+        client: "Bank Digital Nusantara",
+        description: "Aplikasi perbankan dan pencatatan kas lembaga dengan autentikasi biometrik, laporan mutasi instan, dan otorisasi transaksi bertingkat.",
         challenge: "Membutuhkan keamanan tingkat tinggi dengan UX yang tetap mudah digunakan oleh semua kalangan.",
         solution: "Implementasi biometric authentication, end-to-end encryption, dengan UI/UX yang intuitif dan accessibility-friendly.",
-        tech: "Flutter, Go, MongoDB",
-        image_url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=70", icon_name: "CreditCard", slug: 'digital-banking-app'
+        tech: "Flutter, Go, PostgreSQL, Redis",
+        image_url: "https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=800&q=75", 
+        icon_name: "CreditCard", 
+        slug: 'digital-banking-app'
     },
     {
-        title: "Hospital Management System", category: "Healthcare", client: "RS Sehat Sejahtera",
-        description: "Sistem informasi rumah sakit terintegrasi dengan rekam medis elektronik dan telemedicine.",
+        title: "Sistem Informasi & Rekam Medis RS", 
+        category: "Healthcare", 
+        client: "RS Sehat Sejahtera",
+        description: "Sistem digitalisasi antrean pasien, integrasi bridging BPJS SatuSehat, dan sistem rekam medis elektronik (RME) terenkripsi.",
         challenge: "Sistem lama berbasis kertas menyebabkan keterlambatan layanan dan kehilangan data pasien.",
         solution: "Migrasi penuh ke sistem digital dengan modul pendaftaran, antrian, rekam medis, billing, dan telemedicine.",
-        tech: "Laravel, Vue.js, MySQL",
-        image_url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=600&q=70", icon_name: "Building2", slug: 'hospital-management-system'
+        tech: "Laravel, React, MySQL, Docker",
+        image_url: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=800&q=75", 
+        icon_name: "Building2", 
+        slug: 'hospital-management-system'
     },
     {
-        title: "Fleet Management System", category: "Logistics", client: "Logistics Prima",
-        description: "Sistem tracking armada real-time dengan optimasi rute dan manajemen pengiriman.",
+        title: "Fleet & Logistics Tracking Engine", 
+        category: "Logistics", 
+        client: "Logistics Prima",
+        description: "Sistem telematika dan tracking armada kendaraan realtime dengan algoritma optimasi rute bahan bakar dan notifikasi webhook pengiriman.",
         challenge: "Armada 200+ kendaraan sulit dipantau, banyak keterlambatan dan inefisiensi rute.",
         solution: "GPS tracking real-time, algoritma optimasi rute, dashboard monitoring, dan notifikasi otomatis ke pelanggan.",
-        tech: "Python, Django, PostgreSQL",
-        image_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=600&q=70", icon_name: "Truck", slug: 'fleet-management-system'
+        tech: "Python, FastAPI, PostgreSQL, Mapbox",
+        image_url: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=75", 
+        icon_name: "Truck", 
+        slug: 'fleet-management-system'
     },
     {
-        title: "Learning Management System", category: "Education", client: "EduTech Indonesia",
-        description: "Platform e-learning dengan virtual classroom, quiz interaktif, dan progress tracking.",
+        title: "Learning & Academic Portal (Pesantren)", 
+        category: "Education", 
+        client: "Pesantren & EduTech Hub",
+        description: "Portal akademik terintegrasi untuk ribuan santri dengan modul setoran hafalan Qur'an, absensi RFID, dan e-rapor Kurikulum Merdeka.",
         challenge: "Pandemi memaksa sekolah beralih online tanpa infrastruktur yang memadai.",
         solution: "LMS lengkap dengan video conference, bank soal, rapor digital, dan integrasi dengan sistem sekolah.",
-        tech: "Next.js, Firebase, WebRTC",
-        image_url: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=600&q=70", icon_name: "GraduationCap", slug: 'learning-management-system'
+        tech: "Next.js, Supabase, Tailwind, Cloudflare",
+        image_url: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=75", 
+        icon_name: "GraduationCap", 
+        slug: 'learning-management-system'
     },
     {
-        title: "Business Analytics Dashboard", category: "Retail & E-Commerce", client: "Retail Mart Group",
-        description: "Dashboard analytics real-time dengan AI-powered insights untuk pengambilan keputusan bisnis.",
+        title: "Executive Business Analytics Hub", 
+        category: "Retail & E-Commerce", 
+        client: "Retail Mart Group",
+        description: "Dashboard analitik eksekutif dengan agregasi data penjualan multi-cabang, grafik prediktif inventori stok, dan laporan laba bersih realtime.",
         challenge: "Data penjualan tersebar di berbagai platform, sulit mengambil keputusan berbasis data.",
         solution: "Unified dashboard dengan integrasi multi-source, visualisasi data interaktif, dan AI recommendation engine.",
-        tech: "React, Python, TensorFlow",
-        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=600&q=70", icon_name: "BarChart3", slug: 'business-analytics-dashboard'
+        tech: "React, Python, Tailwind, Supabase",
+        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=75", 
+        icon_name: "BarChart3", 
+        slug: 'business-analytics-dashboard'
     }
 ];
 
@@ -85,138 +109,183 @@ const Portfolio = () => {
     const projectUrl = (project) => `/portfolio/${project.slug || project.id}`;
 
     return (
-        <section id="portfolio" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
-            {/* Subtle cross pattern */}
-            <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='32' height='32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 12v8M12 16h8' stroke='%23000' stroke-width='0.5' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '32px 32px' }}></div>
+        <section id="portfolio" className="py-24 sm:py-32 bg-[#070C18] text-white relative border-t border-slate-800/80 overflow-hidden">
+            {/* Subtle technical background grid */}
+            <div className="absolute inset-0 studio-grid-pattern opacity-25 pointer-events-none"></div>
 
-            <div className="container mx-auto px-4 sm:px-6 relative z-10">
+            <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
                 {/* Header */}
                 <ScrollReveal width="100%">
-                    <div className="flex flex-col items-center mb-14 sm:mb-18">
-                        <div className="w-12 h-[2px] bg-gray-900 mb-6"></div>
-                        <span className="text-xs font-bold tracking-[0.3em] text-gray-400 uppercase mb-4 flex items-center gap-2">
-                            <Layers className="w-3.5 h-3.5" /> Portfolio
-                        </span>
-                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight text-center">
-                            Portfolio Kami
+                    <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-xs font-mono text-blue-300 uppercase tracking-widest mb-4">
+                            <Layers className="w-3.5 h-3.5 text-blue-400" />
+                            [SHOWCASE_PORTFOLIO]
+                        </div>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                            Studi Kasus & Rekayasa Produk
                         </h2>
-                        <p className="text-base sm:text-lg text-gray-500 max-w-lg mx-auto leading-relaxed text-center">
-                            Proyek-proyek transformasi digital yang telah kami selesaikan dengan sukses.
+                        <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                            Kompilasi sistem informasi, platform e-commerce, dan aplikasi kustom yang telah kami selesaikan dengan arsitektur tangguh.
                         </p>
                     </div>
                 </ScrollReveal>
 
-                {/* Category Pills */}
+                {/* Category Segmented Controls */}
                 <ScrollReveal width="100%">
-                    <div className="flex flex-wrap justify-center gap-2 mb-10 sm:mb-12">
-                        {categories.map(cat => (
-                            <button
-                                key={cat}
-                                onClick={() => setFilter(cat)}
-                                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${filter === cat
-                                    ? 'bg-gray-900 text-white shadow-lg shadow-gray-900/20'
-                                    : 'bg-white text-gray-500 hover:bg-gray-100 border border-gray-200'
-                                    }`}
-                            >
-                                {cat}
-                            </button>
-                        ))}
+                    <div className="flex justify-center mb-10 sm:mb-14">
+                        <div className="inline-flex flex-wrap justify-center p-1 rounded-xl bg-slate-950 border border-slate-800 gap-1">
+                            {categories.map(cat => {
+                                const isActive = filter === cat;
+                                return (
+                                    <button
+                                        key={cat}
+                                        onClick={() => setFilter(cat)}
+                                        className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all duration-200 ${
+                                            isActive
+                                                ? 'bg-blue-600 text-white shadow-md shadow-blue-900/30'
+                                                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-900/60'
+                                        }`}
+                                    >
+                                        {cat}
+                                    </button>
+                                );
+                            })}
+                        </div>
                     </div>
                 </ScrollReveal>
 
                 <div className="max-w-6xl mx-auto">
-                    {/* FEATURED — Overlapping Card Hero */}
+                    {/* FEATURED CASE STUDY (COMMAND CENTER DISPLAY) */}
                     {featured && (
                         <ScrollReveal width="100%">
-                            <Link
-                                href={projectUrl(featured)}
-                                className="relative mb-8 cursor-pointer group"
-                            >
-                                {/* Image */}
-                                <div className="h-[280px] sm:h-[360px] md:h-[400px] rounded-2xl overflow-hidden">
-                                    <img
-                                        src={featured.image_url || featured.image}
-                                        alt={featured.title}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    />
-                                </div>
-
-                                {/* Overlapping Card */}
-                                <div className="relative mx-4 sm:mx-8 md:mx-12 -mt-20 sm:-mt-24">
-                                    <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-gray-100">
-                                        <div className="flex flex-wrap items-center gap-2 mb-3">
-                                            <span className="px-3 py-1 bg-teal-50 text-teal-700 text-[11px] font-bold rounded-md uppercase tracking-wider border border-teal-100">
-                                                {featured.category}
-                                            </span>
-                                            <span className="px-2.5 py-1 bg-amber-50 text-amber-600 text-[11px] font-bold rounded-md flex items-center gap-1 border border-amber-100">
-                                                <Sparkles className="w-3 h-3" /> Featured
-                                            </span>
+                            <div className="mb-10 sm:mb-12 rounded-2xl bg-gradient-to-b from-slate-900/90 to-slate-950 border border-slate-800 overflow-hidden shadow-2xl group">
+                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
+                                    {/* Left (Span 7): Device / Screen Showcase */}
+                                    <div className="lg:col-span-7 relative h-72 sm:h-96 lg:h-auto overflow-hidden bg-slate-950 flex flex-col justify-between">
+                                        {/* Browser frame top */}
+                                        <div className="flex items-center justify-between px-4 py-3 bg-slate-900/90 border-b border-slate-800/80 z-10 text-[11px] font-mono text-slate-400">
+                                            <div className="flex items-center gap-2">
+                                                <div className="flex gap-1.5">
+                                                    <div className="w-2 h-2 rounded-full bg-red-500/80"></div>
+                                                    <div className="w-2 h-2 rounded-full bg-amber-500/80"></div>
+                                                    <div className="w-2 h-2 rounded-full bg-emerald-500/80"></div>
+                                                </div>
+                                                <span className="text-slate-400 ml-2 truncate max-w-[200px]">{featured.title.toLowerCase().replace(/\s+/g, '-')}.velora.id</span>
+                                            </div>
+                                            <span className="text-blue-400 font-semibold">[PRODUKSI_LIVE]</span>
                                         </div>
-                                        <h3 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-gray-900 mb-2 tracking-tight">
-                                            {featured.title}
-                                        </h3>
-                                        <p className="text-gray-500 text-sm sm:text-base mb-4 leading-relaxed line-clamp-2 max-w-2xl">
-                                            {featured.description}
-                                        </p>
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-4 text-xs sm:text-sm text-gray-400">
-                                                <span className="flex items-center gap-1.5"><MapPin className="w-3.5 h-3.5" /> {featured.client}</span>
-                                                <span className="flex items-center gap-1.5 font-mono"><Zap className="w-3.5 h-3.5" /> {featured.tech}</span>
+
+                                        <img
+                                            src={featured.image_url || featured.image}
+                                            alt={featured.title}
+                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent lg:hidden"></div>
+                                    </div>
+
+                                    {/* Right (Span 5): Case Study Brief */}
+                                    <div className="lg:col-span-5 p-6 sm:p-8 md:p-10 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-slate-800">
+                                        <div>
+                                            <div className="flex items-center justify-between gap-2 mb-3">
+                                                <span className="text-[10px] font-mono uppercase tracking-wider text-blue-400 bg-blue-950/80 border border-blue-800/60 px-2.5 py-0.5 rounded">
+                                                    {featured.category}
+                                                </span>
+                                                <span className="text-xs text-slate-500 font-mono flex items-center gap-1">
+                                                    <MapPin className="w-3.5 h-3.5 text-slate-400" />
+                                                    {featured.client}
+                                                </span>
                                             </div>
-                                            <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center group-hover:bg-teal-600 transition-colors duration-300">
-                                                <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" />
+
+                                            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-3 tracking-tight group-hover:text-blue-300 transition-colors">
+                                                {featured.title}
+                                            </h3>
+
+                                            <p className="text-slate-300 text-sm leading-relaxed mb-6">
+                                                {featured.description}
+                                            </p>
+
+                                            {/* Stack Tag Chips */}
+                                            <div className="mb-6">
+                                                <span className="text-[11px] font-mono text-slate-500 block mb-2 uppercase tracking-wider">Teknologi yang Diterapkan:</span>
+                                                <div className="flex flex-wrap gap-1.5">
+                                                    {featured.tech.split(',').map((t, i) => (
+                                                        <span key={i} className="text-xs font-mono px-2.5 py-1 rounded bg-slate-950 border border-slate-800 text-blue-300">
+                                                            {t.trim()}
+                                                        </span>
+                                                    ))}
+                                                </div>
                                             </div>
+                                        </div>
+
+                                        <div className="pt-5 border-t border-slate-800 flex items-center justify-between">
+                                            <Link
+                                                href={projectUrl(featured)}
+                                                className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 px-5 py-2.5 rounded-xl transition-all shadow-md shadow-blue-900/30 group"
+                                            >
+                                                <span>Buka Studi Kasus</span>
+                                                <ArrowRight className="w-4 h-4 text-blue-200 transition-transform group-hover:translate-x-1" />
+                                            </Link>
+                                            <span className="text-xs font-mono text-emerald-400 flex items-center gap-1">
+                                                <ShieldCheck className="w-3.5 h-3.5" /> Terverifikasi
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
-                            </Link>
+                            </div>
                         </ScrollReveal>
                     )}
 
-                    {/* REST — Overlapping Card Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                    {/* REST OF PORTFOLIO (TECHNICAL GRID CARDS) */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
                         {rest.map((project, index) => {
                             const PIcon = getIcon(project.icon_name || project.icon);
                             return (
-                                <ScrollReveal key={project.id || index} delay={index * 0.08} width="100%">
+                                <ScrollReveal key={project.id || index} delay={index * 0.05} width="100%">
                                     <Link
                                         href={projectUrl(project)}
-                                        className="cursor-pointer group"
+                                        className="rounded-xl bg-slate-900/70 hover:bg-slate-900 border border-slate-800/80 hover:border-blue-500/40 overflow-hidden flex flex-col justify-between transition-all duration-200 group h-full shadow-sm hover:shadow-xl hover:shadow-blue-950/20"
                                     >
-                                        {/* Image */}
-                                        <div className="h-48 sm:h-52 rounded-2xl overflow-hidden">
-                                            <img
-                                                src={project.image_url || project.image}
-                                                alt={project.title}
-                                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                            />
-                                        </div>
-
-                                        {/* Overlapping Content Card */}
-                                        <div className="relative mx-3 -mt-10">
-                                            <div className="bg-white rounded-xl p-5 shadow-lg border border-gray-100 group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300">
-                                                <div className="flex items-center justify-between mb-2">
-                                                    <span className="bg-gray-100 text-gray-600 px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider">
+                                        <div>
+                                            {/* Preview Image with Subtle Frame */}
+                                            <div className="h-44 sm:h-48 overflow-hidden bg-slate-950 relative border-b border-slate-800">
+                                                <img
+                                                    src={project.image_url || project.image}
+                                                    alt={project.title}
+                                                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 opacity-90 group-hover:opacity-100"
+                                                />
+                                                <div className="absolute top-3 left-3">
+                                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-slate-950/90 backdrop-blur-md border border-slate-800 text-slate-300">
                                                         {project.category}
-                                                    </span>
-                                                    {PIcon && <PIcon className="w-4 h-4 text-gray-300" />}
-                                                </div>
-                                                <h4 className="font-bold text-gray-900 text-base sm:text-lg mb-1 leading-snug group-hover:text-teal-600 transition-colors line-clamp-1">
-                                                    {project.title}
-                                                </h4>
-                                                <p className="text-gray-400 text-xs mb-3">{project.client}</p>
-                                                <p className="text-gray-500 text-sm leading-relaxed line-clamp-2 mb-4">
-                                                    {project.description}
-                                                </p>
-                                                <div className="flex items-center justify-between pt-3 border-t border-gray-50">
-                                                    <p className="text-[10px] text-gray-400 font-mono truncate pr-2">
-                                                        {project.tech}
-                                                    </p>
-                                                    <span className="text-xs font-semibold text-teal-600 flex items-center gap-1 flex-shrink-0 group-hover:gap-2 transition-all">
-                                                        Detail <ChevronRight className="w-3.5 h-3.5" />
                                                     </span>
                                                 </div>
                                             </div>
+
+                                            {/* Card Details */}
+                                            <div className="p-5">
+                                                <div className="flex items-center justify-between text-xs text-slate-400 font-mono mb-2">
+                                                    <span>{project.client}</span>
+                                                    {PIcon && <PIcon className="w-3.5 h-3.5 text-blue-400" />}
+                                                </div>
+
+                                                <h4 className="font-bold text-white text-base sm:text-lg mb-2 leading-snug group-hover:text-blue-300 transition-colors line-clamp-1">
+                                                    {project.title}
+                                                </h4>
+
+                                                <p className="text-slate-400 text-xs sm:text-sm leading-relaxed line-clamp-2 mb-4">
+                                                    {project.description}
+                                                </p>
+                                            </div>
+                                        </div>
+
+                                        {/* Card Footer with Stack and Action */}
+                                        <div className="p-5 pt-3 border-t border-slate-800/70 flex items-center justify-between text-xs font-mono">
+                                            <span className="text-slate-400 truncate max-w-[170px]">
+                                                {project.tech}
+                                            </span>
+                                            <span className="text-blue-400 font-semibold flex items-center gap-1 group-hover:gap-1.5 transition-all">
+                                                <span>Detail</span>
+                                                <ChevronRight className="w-3.5 h-3.5" />
+                                            </span>
                                         </div>
                                     </Link>
                                 </ScrollReveal>

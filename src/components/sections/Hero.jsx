@@ -1,7 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ArrowRight, MessageSquare, Play, Sparkles } from 'lucide-react';
+import { 
+    ArrowRight, MessageSquare, Sparkles, 
+    ShieldCheck, CheckCircle2, Zap, Database, 
+    Layers, ChevronRight, Terminal, Activity,
+    Globe, Smartphone, CreditCard
+} from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 import CountUp from '../animations/CountUp';
@@ -9,15 +14,15 @@ import CountUp from '../animations/CountUp';
 const fallbackStats = [
     { setting_value: '50', setting_label: 'Proyek Selesai', setting_suffix: '+' },
     { setting_value: '98', setting_label: 'Klien Puas', setting_suffix: '%' },
-    { setting_value: '24', setting_label: 'Support', setting_suffix: '/7' },
+    { setting_value: '24', setting_label: 'SLA Support', setting_suffix: '/7' },
 ];
 
 const Hero = () => {
     const [stats, setStats] = useState(fallbackStats);
+    const [previewTab, setPreviewTab] = useState('sistem');
     const [heroData, setHeroData] = useState({
-        title: 'Jasa Pembuatan Website\n& Sistem Digital',
-        subtitle: 'Website, Sistem, dan Solusi Digital yang cepat, modern, dan terintegrasi untuk bisnis & lembaga Anda.',
-        image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=70'
+        title: 'Rekayasa Website &\nSistem Digital Presisi',
+        subtitle: 'Kami merancang website kustom, sistem informasi pesantren/sekolah, dan aplikasi bisnis modern yang cepat, aman, serta terintegrasi payment gateway.',
     });
 
     useEffect(() => {
@@ -30,21 +35,17 @@ const Hero = () => {
                     .eq('published', true);
                 
                 if (!error && data && data.length > 0) {
-                    // Extract stats
                     const statItems = data.filter(item => item.setting_key.startsWith('hero_stat_'));
                     if (statItems.length > 0) {
                         setStats(statItems.sort((a, b) => (a.sort_order || 0) - (b.sort_order || 0)));
                     }
 
-                    // Extract hero configurations
                     const titleItem = data.find(item => item.setting_key === 'hero_title');
                     const subtitleItem = data.find(item => item.setting_key === 'hero_subtitle');
-                    const imageItem = data.find(item => item.setting_key === 'hero_image');
 
                     setHeroData({
-                        title: titleItem ? titleItem.setting_value : 'Jasa Pembuatan Website\n& Sistem Digital',
-                        subtitle: subtitleItem ? subtitleItem.setting_value : 'Website, Sistem, dan Solusi Digital yang cepat, modern, dan terintegrasi untuk bisnis & lembaga Anda.',
-                        image: imageItem ? imageItem.setting_value : 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=70'
+                        title: titleItem?.setting_value || 'Rekayasa Website &\nSistem Digital Presisi',
+                        subtitle: subtitleItem?.setting_value || 'Kami merancang website kustom, sistem informasi pesantren/sekolah, dan aplikasi bisnis modern yang cepat, aman, serta terintegrasi payment gateway.',
                     });
                 }
             } catch { }
@@ -53,95 +54,225 @@ const Hero = () => {
     }, []);
 
     return (
-        <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-            {/* Background Image with Overlay */}
-            <div className="absolute inset-0 z-0">
-                <img
-                    src={heroData.image}
-                    alt="Office Background"
-                    className="w-full h-full object-cover"
-                    loading="eager"
-                    fetchPriority="high"
-                />
-                <div className="absolute inset-0 bg-gradient-to-br from-gray-900/90 via-gray-900/80 to-primary/50"></div>
-            </div>
+        <section id="home" className="relative min-h-screen bg-[#070C18] text-white pt-28 pb-20 overflow-hidden flex flex-col justify-center">
+            {/* Subtle Engineering Grid & Top Radial Illumination */}
+            <div className="absolute inset-0 studio-grid-pattern opacity-30 pointer-events-none"></div>
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(37,99,235,0.22),transparent)] pointer-events-none"></div>
+            
+            {/* Top Hairline Ambient Beam */}
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-blue-500/50 to-transparent"></div>
 
-            {/* Animated Grid Pattern */}
-            <div className="absolute inset-0 z-[1] opacity-20" style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-            }}></div>
-
-            {/* Floating Elements - Static decorative blurs */}
-            <div className="absolute top-1/4 left-10 w-72 h-72 bg-primary/30 rounded-full blur-3xl"></div>
-            <div className="absolute bottom-1/4 right-10 w-96 h-96 bg-accent/20 rounded-full blur-3xl"></div>
-
-            {/* Content */}
-            <div className="relative z-10 container mx-auto px-4 sm:px-6 py-20 sm:py-28 md:py-32">
-                <div className="max-w-4xl mx-auto text-center">
-                    {/* Badge */}
+            <div className="relative z-10 container mx-auto px-4 sm:px-6 max-w-6xl">
+                {/* Hero Header */}
+                <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+                    {/* Engineering Studio Badge */}
                     <ScrollReveal direction="down">
-                        <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-1.5 sm:px-5 sm:py-2 mb-6 sm:mb-8">
-                            <span className="w-2 h-2 bg-emerald-400 rounded-full status-pulse"></span>
-                            <span className="text-white/90 text-sm font-medium flex items-center gap-1.5"><Sparkles className="w-3.5 h-3.5 text-amber-300" /> Open for Projects 2025</span>
+                        <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-blue-500/30 text-xs sm:text-sm text-blue-200 shadow-[0_0_15px_rgba(37,99,235,0.15)] mb-6 sm:mb-8 backdrop-blur-md">
+                            <span className="flex h-2 w-2 relative">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                            </span>
+                            <span className="font-mono text-xs text-blue-300 uppercase tracking-wider font-semibold">VELORA STUDIO</span>
+                            <span className="text-slate-500">•</span>
+                            <span className="text-slate-300 font-medium">Digital Product & Software Engineering</span>
                         </div>
                     </ScrollReveal>
 
-                    {/* Main Heading */}
-                    <ScrollReveal delay={0.2}>
-                        <h1 className="font-heading text-4xl sm:text-5xl md:text-7xl font-extrabold text-white mb-6 sm:mb-8 leading-tight tracking-tight whitespace-pre-line">
+                    {/* Main Headline */}
+                    <ScrollReveal delay={0.1}>
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight leading-[1.08] mb-6 whitespace-pre-line">
                             {heroData.title}
                         </h1>
                     </ScrollReveal>
 
                     {/* Subtitle */}
-                    <ScrollReveal delay={0.4}>
-                        <p className="text-lg sm:text-xl md:text-2xl text-gray-300 mb-8 sm:mb-12 max-w-2xl mx-auto leading-relaxed font-light whitespace-pre-line">
+                    <ScrollReveal delay={0.2}>
+                        <p className="text-base sm:text-lg md:text-xl text-slate-300/90 leading-relaxed font-normal max-w-2xl mx-auto mb-8 sm:mb-10">
                             {heroData.subtitle}
                         </p>
                     </ScrollReveal>
 
-                    {/* CTA Buttons */}
-                    <ScrollReveal delay={0.6}>
-                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center mb-10 sm:mb-16 px-4 sm:px-0">
+                    {/* Action Buttons */}
+                    <ScrollReveal delay={0.3}>
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
                             <button
                                 onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="group inline-flex items-center justify-center gap-3 bg-white text-gray-900 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-base sm:text-lg btn-hover shadow-2xl hover:shadow-white/20 w-full sm:w-auto"
+                                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-blue-600 hover:bg-blue-500 active:bg-blue-700 text-white px-7 py-3.5 rounded-xl font-semibold text-sm sm:text-base transition-all duration-200 shadow-[0_0_25px_rgba(37,99,235,0.35)] border border-blue-400/30 group"
                             >
-                                <MessageSquare className="w-5 h-5" />
-                                Konsultasi Gratis
-                                <ArrowRight className="w-5 h-5 icon-hover" />
+                                <MessageSquare className="w-4 h-4 text-blue-200" />
+                                <span>Konsultasi Proyek</span>
+                                <ArrowRight className="w-4 h-4 text-blue-200 transition-transform group-hover:translate-x-1" />
                             </button>
+
                             <button
                                 onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
-                                className="inline-flex items-center justify-center gap-3 bg-transparent border-2 border-white/30 text-white hover:bg-white/10 px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold text-base sm:text-lg btn-hover w-full sm:w-auto"
+                                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 bg-slate-900/80 hover:bg-slate-800/90 active:bg-slate-900 text-slate-200 px-6 py-3.5 rounded-xl font-medium text-sm sm:text-base border border-slate-700/80 transition-all duration-200 backdrop-blur-sm"
                             >
-                                <Play className="w-5 h-5" />
-                                Lihat Portfolio
+                                <Terminal className="w-4 h-4 text-slate-400" />
+                                <span>Eksplorasi Portfolio</span>
                             </button>
                         </div>
                     </ScrollReveal>
 
-                    {/* Stats */}
-                    <ScrollReveal delay={0.8} width="100%">
-                        <div className="grid grid-cols-3 gap-4 sm:gap-8 max-w-sm sm:max-w-lg mx-auto">
-                            {stats.map((stat, i) => (
-                                <div key={i} className={`text-center ${i === 1 ? 'border-x border-white/10' : ''}`}>
-                                    <div className="text-2xl sm:text-4xl font-extrabold text-white mb-1">
-                                        <CountUp to={parseInt(stat.setting_value)} />{stat.setting_suffix}
+                    {/* Tech Badges Strip */}
+                    <ScrollReveal delay={0.4}>
+                        <div className="mt-8 flex flex-wrap justify-center items-center gap-2 text-xs font-mono text-slate-400">
+                            <span className="px-2.5 py-1 rounded bg-slate-900/60 border border-slate-800 flex items-center gap-1.5">
+                                <Zap className="w-3.5 h-3.5 text-blue-400" /> Next.js 16
+                            </span>
+                            <span className="px-2.5 py-1 rounded bg-slate-900/60 border border-slate-800 flex items-center gap-1.5">
+                                <Database className="w-3.5 h-3.5 text-sky-400" /> PostgreSQL / Supabase
+                            </span>
+                            <span className="px-2.5 py-1 rounded bg-slate-900/60 border border-slate-800 flex items-center gap-1.5">
+                                <CreditCard className="w-3.5 h-3.5 text-emerald-400" /> Midtrans / Xendit Ready
+                            </span>
+                            <span className="px-2.5 py-1 rounded bg-slate-900/60 border border-slate-800 flex items-center gap-1.5">
+                                <ShieldCheck className="w-3.5 h-3.5 text-indigo-400" /> 100% Data Protection
+                            </span>
+                        </div>
+                    </ScrollReveal>
+                </div>
+
+                {/* BESPOKE COMMAND CENTER PREVIEW (ANTI-AI SLOP LIVE MOCKUP) */}
+                <ScrollReveal delay={0.5}>
+                    <div className="max-w-4xl mx-auto rounded-2xl p-1 bg-gradient-to-b from-slate-700/60 via-slate-800/40 to-slate-900/80 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.7)] border border-slate-700/50">
+                        <div className="rounded-xl bg-slate-950/90 backdrop-blur-xl overflow-hidden border border-slate-800/80">
+                            {/* Window Header */}
+                            <div className="flex items-center justify-between px-4 py-3 bg-slate-900/70 border-b border-slate-800 text-xs font-mono text-slate-400">
+                                <div className="flex items-center gap-2">
+                                    <div className="flex gap-1.5">
+                                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                                        <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></div>
+                                        <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></div>
                                     </div>
-                                    <div className="text-gray-400 text-xs sm:text-sm">{stat.setting_label}</div>
+                                    <span className="ml-2 text-slate-400 text-[11px] hidden sm:inline-block">system.velora.id/hub</span>
+                                </div>
+
+                                {/* Preview Switcher Tabs */}
+                                <div className="flex items-center bg-slate-950 p-0.5 rounded-lg border border-slate-800 text-[11px]">
+                                    <button
+                                        onClick={() => setPreviewTab('sistem')}
+                                        className={`px-3 py-1 rounded-md transition-colors ${previewTab === 'sistem' ? 'bg-blue-600 text-white font-medium shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                                    >
+                                        Sistem Bendahara & SPP
+                                    </button>
+                                    <button
+                                        onClick={() => setPreviewTab('compro')}
+                                        className={`px-3 py-1 rounded-md transition-colors ${previewTab === 'compro' ? 'bg-blue-600 text-white font-medium shadow-sm' : 'text-slate-400 hover:text-white'}`}
+                                    >
+                                        Website Company Profile
+                                    </button>
+                                </div>
+
+                                <div className="hidden sm:flex items-center gap-1.5 text-emerald-400 text-[11px]">
+                                    <Activity className="w-3.5 h-3.5" />
+                                    <span>Active • 42ms</span>
+                                </div>
+                            </div>
+
+                            {/* Window Body: Live Component Display */}
+                            <div className="p-5 sm:p-7">
+                                {previewTab === 'sistem' ? (
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        {/* Financial Metric Card */}
+                                        <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+                                            <div>
+                                                <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
+                                                    <span>Realisasi SPP Bulan Ini</span>
+                                                    <span className="text-emerald-400 font-semibold text-[11px] bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-800/60">+18.4%</span>
+                                                </div>
+                                                <div className="text-2xl font-bold text-white tracking-tight">Rp 54.250.000</div>
+                                                <div className="text-xs text-slate-500 mt-1">Target: Rp 60.000.000 (90.4%)</div>
+                                            </div>
+                                            <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                                                <span>142 Santri Lunas</span>
+                                                <span className="text-blue-400">Auto-Reconciled</span>
+                                            </div>
+                                        </div>
+
+                                        {/* WhatsApp Automation Status */}
+                                        <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+                                            <div>
+                                                <div className="flex items-center justify-between text-xs text-slate-400 mb-2">
+                                                    <span>WhatsApp Billing Bot</span>
+                                                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                                </div>
+                                                <div className="text-sm font-semibold text-slate-200">Notifikasi Tagihan Otomatis</div>
+                                                <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
+                                                    Invoice digital PDF otomatis terkirim langsung ke nomor WhatsApp wali murid saat invoice terbit.
+                                                </p>
+                                            </div>
+                                            <div className="mt-3 pt-3 border-t border-slate-800/80 flex items-center gap-1.5 text-xs text-emerald-400">
+                                                <CheckCircle2 className="w-3.5 h-3.5" />
+                                                <span>0 Pending Queue</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Gateway & Uptime Card */}
+                                        <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-4 flex flex-col justify-between">
+                                            <div>
+                                                <div className="text-xs text-slate-400 mb-2">Payment Gateway Multi-Channel</div>
+                                                <div className="flex flex-wrap gap-1.5 mt-2">
+                                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/80 border border-blue-800 text-blue-300">QRIS</span>
+                                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/80 border border-blue-800 text-blue-300">BCA VA</span>
+                                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/80 border border-blue-800 text-blue-300">BRI VA</span>
+                                                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-blue-950/80 border border-blue-800 text-blue-300">Mandiri</span>
+                                                </div>
+                                                <p className="text-xs text-slate-400 mt-3">Dana langsung masuk ke rekening lembaga secara realtime tanpa rekonsiliasi manual.</p>
+                                            </div>
+                                            <div className="mt-3 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+                                                <span>Settlement T+0</span>
+                                                <span className="text-emerald-400 font-semibold">100% Aman</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        {/* Performance Card */}
+                                        <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-4">
+                                            <div className="text-xs text-slate-400 mb-2">Google PageSpeed Insights</div>
+                                            <div className="flex items-baseline gap-2">
+                                                <span className="text-3xl font-bold text-emerald-400">99</span>
+                                                <span className="text-xs text-slate-400">/ 100 Score</span>
+                                            </div>
+                                            <p className="text-xs text-slate-400 mt-2">Core Web Vitals hijau. Loading di bawah 1 detik untuk retensi calon pelanggan maksimal.</p>
+                                        </div>
+
+                                        {/* SEO & Conversion Card */}
+                                        <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-4">
+                                            <div className="text-xs text-slate-400 mb-2">SEO & Structured Schema</div>
+                                            <div className="text-sm font-semibold text-white">Google Rich Results Ready</div>
+                                            <p className="text-xs text-slate-400 mt-2">Lengkap dengan OpenGraph, JSON-LD Schema (Organization, FAQ, LocalBusiness), dan sitemap otomatis.</p>
+                                        </div>
+
+                                        {/* CMS Control Card */}
+                                        <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-4">
+                                            <div className="text-xs text-slate-400 mb-2">Dashboard CMS Kustom</div>
+                                            <div className="text-sm font-semibold text-white">Edit Konten Kapan Saja</div>
+                                            <p className="text-xs text-slate-400 mt-2">Ubah banner, portfolio, harga layanan, dan artikel blog langsung dari panel admin tanpa menyentuh kode.</p>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </ScrollReveal>
+
+                {/* Elevated Stats Bento Strip */}
+                <ScrollReveal delay={0.6}>
+                    <div className="mt-12 sm:mt-16 max-w-3xl mx-auto rounded-2xl bg-slate-900/60 border border-slate-800/80 p-5 sm:p-6 backdrop-blur-md">
+                        <div className="grid grid-cols-3 divide-x divide-slate-800/80 text-center">
+                            {stats.map((stat, i) => (
+                                <div key={i} className="px-2 sm:px-4">
+                                    <div className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight mb-1 font-sans">
+                                        <CountUp to={parseInt(stat.setting_value) || 0} />{stat.setting_suffix}
+                                    </div>
+                                    <div className="text-slate-400 text-xs sm:text-sm font-medium">{stat.setting_label}</div>
                                 </div>
                             ))}
                         </div>
-                    </ScrollReveal>
-                </div>
-            </div>
-
-            {/* Scroll Indicator */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10">
-                <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
-                    <div className="w-1 h-3 bg-white rounded-full animate-scroll-hint"></div>
-                </div>
+                    </div>
+                </ScrollReveal>
             </div>
         </section>
     );

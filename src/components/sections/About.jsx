@@ -90,8 +90,8 @@ const About = () => {
                             <Users className="w-3.5 h-3.5" />
                             TENTANG KAMI
                         </span>
-                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
-                            Mengenal <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">Velora</span>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-5 tracking-tight">
+                            Mengenal <span className="text-blue-600">Velora</span>
                         </h2>
                         <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
                             Tim profesional yang berdedikasi membantu bisnis Anda tumbuh melalui inovasi digital dan solusi teknologi terdepan.
@@ -104,9 +104,6 @@ const About = () => {
                     {/* Image side with decorative frame */}
                     <ScrollReveal direction="right">
                         <div className="relative">
-                            {/* Decorative elements */}
-                            <div className="absolute -top-4 -left-4 w-24 h-24 border-t-[3px] border-l-[3px] border-teal-400/50 rounded-tl-3xl pointer-events-none"></div>
-                            <div className="absolute -bottom-4 -right-4 w-24 h-24 border-b-[3px] border-r-[3px] border-cyan-400/50 rounded-br-3xl pointer-events-none"></div>
 
                             {/* Main image */}
                             <div className="relative rounded-2xl overflow-hidden shadow-2xl shadow-gray-200/60">
@@ -160,7 +157,7 @@ const About = () => {
                                                 <div className="w-8 h-8 rounded-lg bg-teal-50 flex items-center justify-center group-hover:bg-teal-100 transition-colors">
                                                     <StatIcon className="w-4 h-4 text-teal-600" />
                                                 </div>
-                                                <span className="text-2xl sm:text-3xl font-extrabold bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">
+                                                <span className="text-2xl sm:text-3xl font-extrabold text-blue-600">
                                                     <CountUp to={stat.value} />{stat.suffix}
                                                 </span>
                                             </div>

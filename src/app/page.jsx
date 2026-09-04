@@ -53,7 +53,7 @@ export default async function Home() {
 
     return (
         <LazyMotion features={domMax}>
-            <div className="font-sans text-gray-900 overflow-x-hidden">
+            <div className="font-sans bg-[#070C18] text-slate-100 min-h-screen overflow-x-hidden">
                 {faqSchema && (
                     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
                 )}
@@ -113,4 +113,4 @@ export default async function Home() {
 }
 
 // Simple placeholder to maintain layout while loading
-const SectionPlaceholder = () => <div className="min-h-[200px] w-full" />;
+const SectionPlaceholder = () => <div className="min-h-[200px] w-full bg-[#070C18]" />;

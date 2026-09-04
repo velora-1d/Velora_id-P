@@ -1,52 +1,46 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ChevronDown, MessageSquare, HelpCircle, Database, Server, Wrench, Clock, RefreshCw, CreditCard, Plus, Minus, Sparkles, ArrowRight } from 'lucide-react';
+import { ChevronDown, MessageSquare, HelpCircle, Database, Server, Wrench, Clock, RefreshCw, CreditCard, ArrowRight } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 
 const faqItems = [
     {
         icon: Database,
-        iconGradient: 'from-blue-500 to-indigo-500',
         question: "Apakah website saya butuh database?",
-        answer: "Tidak selalu! Kalau Anda hanya butuh website sederhana untuk menampilkan profil bisnis, cukup tanpa database. Tapi kalau butuh fitur seperti mengelola data, pembayaran, atau laporan — maka perlu database. Tenang, kami yang urus semuanya!",
-        highlight: "Website profil = tanpa database. Website dengan fitur = pakai database."
+        answer: "Tidak selalu. Untuk website profil perusahaan sederhana, landing page promosi, atau katalog produk statis, tanpa database justru membuat website lebih cepat dan hemat biaya. Namun jika Anda membutuhkan autentikasi pengguna, sistem kasir/bendahara, atau dashboard CMS pengelola konten, kami akan pasangkan database PostgreSQL/Supabase terenkripsi.",
+        highlight: "Profil statis = super cepat tanpa database • Sistem interaktif/CMS = database PostgreSQL aman."
     },
     {
         icon: Server,
-        iconGradient: 'from-teal-500 to-cyan-500',
-        question: "Website saya nanti disimpan di mana?",
-        answer: "Website Anda kami simpan di server cloud yang cepat, aman, dan selalu online 24 jam. Sudah termasuk sertifikat keamanan SSL (gembok hijau di browser) jadi pengunjung merasa aman saat mengakses website Anda.",
-        highlight: "Server cepat + aman + SSL gratis sudah termasuk."
+        question: "Di mana website dan sistem kami akan dihosting?",
+        answer: "Kami mendeploy di infrastruktur cloud global performa tinggi (Vercel, Cloudflare, atau VPS dedicated seperti DigitalOcean/Biznet). Sudah termasuk sertifikasi keamanan HTTPS/SSL Grade A+ otomatis, proteksi DDoS, dan backup database otomatis harian.",
+        highlight: "Server cloud SSD cepat + HTTPS SSL Grade A+ + proteksi DDoS sudah termasuk."
     },
     {
         icon: Wrench,
-        iconGradient: 'from-amber-500 to-orange-500',
-        question: "Kalau ada masalah, siapa yang bantu?",
-        answer: "Kami menyediakan layanan perawatan rutin: backup data, cek server, perbaikan error, dan update keamanan. Plus, Anda bisa hubungi kami kapan saja via WhatsApp — kami fast response 24/7!",
-        highlight: "Support WhatsApp 24/7. Backup & maintenance rutin."
+        question: "Bagaimana jika terjadi error atau butuh bantuan darurat?",
+        answer: "Seluruh proyek di Velora mendapatkan garansi pemeliharaan aktif setelah serah terima. Anda dapat langsung menghubungi technical support kami melalui jalur khusus WhatsApp dengan SLA tanggapan cepat.",
+        highlight: "Dedicated WhatsApp Support + Garansi bugfix aktif 30-90 hari."
     },
     {
         icon: Clock,
-        iconGradient: 'from-violet-500 to-purple-500',
-        question: "Berapa lama sampai website jadi?",
-        answer: "Tergantung tingkat kerumitannya. Website sederhana bisa jadi dalam 1-3 hari. Company profile profesional sekitar 1-2 minggu. Sistem yang lebih kompleks membutuhkan 1-3 bulan. Kami akan kasih timeline yang jelas di awal.",
-        highlight: "Website simple: 1-3 hari • Profesional: 1-2 minggu • Kompleks: 1-3 bulan"
+        question: "Berapa lama estimasi pengerjaan hingga website go-live?",
+        answer: "Jasa cepat (deploy server/domain) selesai dalam 1-3 hari kerja. Website Company Profile dan Landing Page profesional diselesaikan dalam 1-2 minggu. Sementara sistem manajemen sekolah/pesantren terintegrasi memerlukan sprint 2-4 minggu dengan sesi pelatihan staf.",
+        highlight: "Jasa Cepat: 1-3 hari • Company Profile: 1-2 minggu • Sistem Terpadu: 2-4 minggu."
     },
     {
         icon: RefreshCw,
-        iconGradient: 'from-emerald-500 to-green-500',
-        question: "Boleh minta revisi kalau belum cocok?",
-        answer: "Tentu boleh! Revisi tidak dibatasi selama masih sesuai kesepakatan awal. Kami tidak akan launch sebelum Anda benar-benar puas dengan hasilnya. Kepuasan Anda adalah prioritas kami.",
-        highlight: "Revisi unlimited sampai Anda puas 100%!"
+        question: "Apakah ada batasan revisi selama proses pembuatan?",
+        answer: "Kami menerapkan fase review bertahap (Wireframe -> Desain -> Integrasi Kode). Revisi tidak dibatasi selama masih dalam lingkup kesepakatan fitur awal, hingga Anda puas 100% sebelum peluncuran resmi.",
+        highlight: "Review bertahap tanpa batas revisi selama dalam cakupan kesepakatan awal."
     },
     {
         icon: CreditCard,
-        iconGradient: 'from-rose-500 to-pink-500',
-        question: "Bisa bayar bertahap atau cicil?",
-        answer: "Bisa! Untuk project besar, kami menerima pembayaran bertahap: DP 50% di awal, sisanya dilunasi sebelum website diluncurkan. Untuk jasa cepat (deploy dll), pembayaran di awal secara penuh.",
-        highlight: "DP 50% → Pelunasan saat selesai. Transparan & fleksibel."
+        question: "Bagaimana skema pembayaran di Velora ID?",
+        answer: "Sangat transparan dan fleksibel. Untuk proyek pengembangan sistem, kami menggunakan skema termin (DP 50% di awal pengerjaan, dan sisa pelunasan setelah sistem selesai diuji dan siap diluncurkan). Pembayaran mendukung transfer bank dan Virtual Account.",
+        highlight: "Skema termin aman: DP 50% -> Pelunasan setelah verifikasi sistem selesai."
     }
 ];
 
@@ -70,9 +64,7 @@ const FAQ = () => {
                         ...d,
                     })));
                 }
-            } catch {
-                // Fallback to hardcoded data
-            }
+            } catch { }
         };
         fetchFaqs();
     }, []);
@@ -80,143 +72,95 @@ const FAQ = () => {
     const toggle = (idx) => setOpenIndex(openIndex === idx ? -1 : idx);
 
     return (
-        <section id="faq" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
-            {/* Background decoration */}
-            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-amber-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
-            {/* Subtle triangle pattern */}
-            <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='44' height='38' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M22 2L42 36H2Z' stroke='%23000' stroke-width='0.3' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '44px 38px' }}></div>
+        <section id="faq" className="py-24 sm:py-32 bg-[#080E1A] text-white relative border-t border-slate-800/80 overflow-hidden">
+            <div className="absolute inset-0 studio-grid-pattern opacity-25 pointer-events-none"></div>
 
-            <div className="container mx-auto px-4 sm:px-6 relative z-10">
-                {/* Header — Centered, Friendly */}
+            <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-4xl">
+                {/* Header */}
                 <ScrollReveal width="100%">
                     <div className="text-center mb-14 sm:mb-16">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200/60 text-amber-700 rounded-full text-xs font-bold uppercase tracking-widest mb-5">
-                            <HelpCircle className="w-3.5 h-3.5" />
-                            Pertanyaan Umum
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-xs font-mono text-blue-300 uppercase tracking-widest mb-4">
+                            <HelpCircle className="w-3.5 h-3.5 text-blue-400" />
+                            [KONSULTASI_FAQ]
                         </div>
-                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
-                            Ada Pertanyaan? <br className="hidden sm:block" />
-                            <span className="bg-gradient-to-r from-teal-600 to-cyan-600 bg-clip-text text-transparent">Kami Jawab!</span>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                            Pertanyaan yang Kerap Ditanyakan
                         </h2>
-                        <p className="text-base sm:text-lg text-gray-500 max-w-xl mx-auto leading-relaxed">
-                            Berikut jawaban untuk pertanyaan yang paling sering ditanyakan oleh calon klien kami. Simpel & mudah dipahami.
+                        <p className="text-base sm:text-lg text-slate-400 max-w-xl mx-auto leading-relaxed">
+                            Penjelasan transparan seputar proses teknis, hosting, garansi, dan skema kerja sama di Velora.
                         </p>
                     </div>
                 </ScrollReveal>
 
-                {/* FAQ Cards */}
-                <div className="max-w-3xl mx-auto">
-                    <div className="space-y-4">
-                        {faqs.map((faq, index) => {
-                            const isOpen = openIndex === index;
-                            const IconComp = faq.icon || faqItems[index]?.icon || HelpCircle;
-                            const gradient = faq.iconGradient || faqItems[index]?.iconGradient || 'from-gray-500 to-gray-600';
-                            return (
-                                <ScrollReveal key={faq.id || index} delay={index * 0.06} width="100%">
-                                    <div
-                                        className={`group bg-white rounded-2xl sm:rounded-3xl border-2 transition-all duration-400 overflow-hidden ${isOpen
-                                            ? 'border-teal-200 shadow-xl shadow-teal-100/40'
-                                            : 'border-gray-100 hover:border-gray-200 shadow-sm hover:shadow-md'
-                                            }`}
+                {/* FAQ Accordion List */}
+                <div className="space-y-3.5">
+                    {faqs.map((faq, index) => {
+                        const isOpen = openIndex === index;
+                        const IconComp = faq.icon || faqItems[index]?.icon || HelpCircle;
+                        return (
+                            <ScrollReveal key={faq.id || index} delay={index * 0.05} width="100%">
+                                <div
+                                    className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+                                        isOpen
+                                            ? 'bg-slate-900 border-blue-500/60 shadow-lg shadow-blue-950/30'
+                                            : 'bg-slate-950/80 border-slate-800/80 hover:border-slate-700 hover:bg-slate-900/40'
+                                    }`}
+                                >
+                                    <button
+                                        onClick={() => toggle(index)}
+                                        className="w-full px-5 py-4.5 sm:px-6 sm:py-5 flex items-center justify-between gap-4 text-left"
                                     >
-                                        {/* Question Button */}
-                                        <button
-                                            onClick={() => toggle(index)}
-                                            className="w-full px-5 py-5 sm:px-7 sm:py-6 flex items-center gap-4 text-left"
-                                        >
-                                            {/* Icon Badge */}
-                                            <div className={`w-11 h-11 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-gradient-to-br ${gradient} flex items-center justify-center flex-shrink-0 transition-all duration-300 shadow-sm ${isOpen
-                                                ? 'scale-110 shadow-md'
-                                                : 'group-hover:scale-105'
-                                                }`}>
-                                                <IconComp className="w-5 h-5 sm:w-6 sm:h-6 text-white" strokeWidth={2} />
+                                        <div className="flex items-center gap-3.5 min-w-0">
+                                            <div className={`w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 transition-colors ${
+                                                isOpen ? 'bg-blue-600 text-white' : 'bg-slate-900 text-blue-400 border border-slate-800'
+                                            }`}>
+                                                <IconComp className="w-4 h-4" />
                                             </div>
-
-                                            {/* Question Text */}
-                                            <span className={`font-bold text-[15px] sm:text-lg flex-1 pr-2 transition-colors duration-200 ${isOpen ? 'text-teal-700' : 'text-gray-800'
-                                                }`}>
+                                            <span className="font-bold text-sm sm:text-base text-white tracking-tight pr-2">
                                                 {faq.question}
                                             </span>
-
-                                            {/* Toggle Icon */}
-                                            <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-all duration-300 ${isOpen
-                                                ? 'bg-teal-500 text-white rotate-0'
-                                                : 'bg-gray-100 text-gray-400 group-hover:bg-teal-50 group-hover:text-teal-500'
-                                                }`}>
-                                                {isOpen ? (
-                                                    <Minus className="w-4 h-4" />
-                                                ) : (
-                                                    <Plus className="w-4 h-4" />
-                                                )}
-                                            </div>
-                                        </button>
-
-                                        {/* Answer — Expandable */}
-                                        <div className={`overflow-hidden transition-all duration-400 ease-in-out ${isOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
-                                            }`}>
-                                            <div className="px-5 pb-5 sm:px-7 sm:pb-7 pt-0">
-                                                {/* Divider */}
-                                                <div className="w-full h-px bg-gradient-to-r from-transparent via-teal-200 to-transparent mb-5"></div>
-
-                                                {/* Answer Text */}
-                                                <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-4">
-                                                    {faq.answer}
-                                                </p>
-
-                                                {/* Highlight Chip */}
-                                                {faq.highlight && (
-                                                    <div className="inline-flex items-start gap-2 px-4 py-3 bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-100 rounded-xl">
-                                                        <Sparkles className="w-4 h-4 text-teal-500 flex-shrink-0 mt-0.5" />
-                                                        <span className="text-teal-700 text-xs sm:text-sm font-semibold leading-snug">
-                                                            {faq.highlight}
-                                                        </span>
-                                                    </div>
-                                                )}
-                                            </div>
                                         </div>
-                                    </div>
-                                </ScrollReveal>
-                            );
-                        })}
-                    </div>
 
-                    {/* Bottom CTA Card */}
-                    <ScrollReveal delay={0.3} width="100%">
-                        <div className="mt-10 sm:mt-12">
-                            <div className="relative bg-gray-900 rounded-2xl sm:rounded-3xl p-6 sm:p-8 overflow-hidden group">
-                                {/* Decorative */}
-                                <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500/20 rounded-full blur-3xl translate-x-1/3 -translate-y-1/3"></div>
-                                <div className="absolute bottom-0 left-0 w-48 h-48 bg-cyan-500/20 rounded-full blur-3xl -translate-x-1/3 translate-y-1/3"></div>
-
-                                <div className="relative z-10 flex flex-col sm:flex-row items-center gap-5 sm:gap-8">
-                                    {/* Icon */}
-                                    <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-teal-400 to-cyan-500 flex items-center justify-center flex-shrink-0 shadow-lg shadow-teal-500/30 group-hover:scale-110 transition-transform duration-500">
-                                        <MessageSquare className="w-7 h-7 sm:w-8 sm:h-8 text-white" />
-                                    </div>
-
-                                    {/* Text */}
-                                    <div className="text-center sm:text-left flex-1">
-                                        <h3 className="text-lg sm:text-xl font-bold text-white mb-1">
-                                            Masih ada pertanyaan?
-                                        </h3>
-                                        <p className="text-gray-400 text-sm leading-relaxed">
-                                            Jangan ragu! Konsultasi gratis via WhatsApp. Tim kami siap bantu kapan saja, 24/7.
-                                        </p>
-                                    </div>
-
-                                    {/* CTA Button */}
-                                    <button
-                                        onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                                        className="flex-shrink-0 inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-teal-400 to-cyan-500 hover:from-teal-500 hover:to-cyan-600 text-white rounded-xl font-bold text-sm shadow-lg shadow-teal-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:gap-3"
-                                    >
-                                        Tanya Sekarang
-                                        <ArrowRight className="w-4 h-4" />
+                                        <div className={`w-7 h-7 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-400 flex-shrink-0 transition-transform duration-200 ${
+                                            isOpen ? 'rotate-180 text-blue-400 border-blue-800' : ''
+                                        }`}>
+                                            <ChevronDown className="w-4 h-4" />
+                                        </div>
                                     </button>
+
+                                    {isOpen && (
+                                        <div className="px-5 pb-5 sm:px-6 sm:pb-6 pt-1 border-t border-slate-800/80">
+                                            <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-4 font-normal">
+                                                {faq.answer}
+                                            </p>
+                                            {faq.highlight && (
+                                                <div className="rounded-lg bg-blue-950/60 border border-blue-800/60 p-3 text-xs font-mono text-blue-300 flex items-center gap-2">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0"></span>
+                                                    <span>{faq.highlight}</span>
+                                                </div>
+                                            )}
+                                        </div>
+                                    )}
                                 </div>
-                            </div>
-                        </div>
-                    </ScrollReveal>
+                            </ScrollReveal>
+                        );
+                    })}
+                </div>
+
+                {/* Direct Consultation Box */}
+                <div className="mt-12 rounded-2xl bg-gradient-to-r from-slate-900 via-slate-900 to-blue-950/50 border border-slate-800 p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+                    <div>
+                        <h4 className="text-base sm:text-lg font-bold text-white mb-1">Punya Pertanyaan Spesifik Lainnya?</h4>
+                        <p className="text-xs sm:text-sm text-slate-400">Diskusikan kebutuhan arsitektur dan estimasi biaya langsung dengan tim teknis kami.</p>
+                    </div>
+                    <button
+                        onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-semibold text-xs sm:text-sm transition-all shadow-md shadow-blue-900/30 whitespace-nowrap"
+                    >
+                        <MessageSquare className="w-4 h-4 text-blue-200" />
+                        <span>Chat via WhatsApp</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                    </button>
                 </div>
             </div>
         </section>

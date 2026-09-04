@@ -151,8 +151,8 @@ const Footer = () => {
                                 <ul className="space-y-3">
                                     {['Deploy Website', 'Payment Gateway', 'Sistem Pesantren', 'Maintenance', 'SEO & Analytics'].map((item) => (
                                         <li key={item}>
-                                            <a href="#services" className="text-gray-400 text-sm hover:text-teal-400 transition-colors duration-200 flex items-center gap-2 group">
-                                                <span className="w-1 h-1 rounded-full bg-gray-600 group-hover:bg-teal-400 transition-colors"></span>
+                                            <a href="#services" className="text-gray-400 text-sm hover:text-blue-400 transition-colors duration-200 flex items-center gap-2 group">
+                                                <span className="w-1 h-1 rounded-full bg-gray-600 group-hover:bg-blue-400 transition-colors"></span>
                                                 {item}
                                             </a>
                                         </li>
@@ -172,8 +172,8 @@ const Footer = () => {
                                         { label: 'Kontak', href: '#contact' },
                                     ].map((item) => (
                                         <li key={item.label}>
-                                            <a href={item.href} className="text-gray-400 text-sm hover:text-teal-400 transition-colors duration-200 flex items-center gap-2 group">
-                                                <span className="w-1 h-1 rounded-full bg-gray-600 group-hover:bg-teal-400 transition-colors"></span>
+                                            <a href={item.href} className="text-gray-400 text-sm hover:text-blue-400 transition-colors duration-200 flex items-center gap-2 group">
+                                                <span className="w-1 h-1 rounded-full bg-gray-600 group-hover:bg-blue-400 transition-colors"></span>
                                                 {item.label}
                                             </a>
                                         </li>
@@ -191,8 +191,8 @@ const Footer = () => {
                                         { label: 'Produk Unggulan', href: '#featured' },
                                     ].map((item) => (
                                         <li key={item.label}>
-                                            <a href={item.href} className="text-gray-400 text-sm hover:text-teal-400 transition-colors duration-200 flex items-center gap-2 group">
-                                                <span className="w-1 h-1 rounded-full bg-gray-600 group-hover:bg-teal-400 transition-colors"></span>
+                                            <a href={item.href} className="text-gray-400 text-sm hover:text-blue-400 transition-colors duration-200 flex items-center gap-2 group">
+                                                <span className="w-1 h-1 rounded-full bg-gray-600 group-hover:bg-blue-400 transition-colors"></span>
                                                 {item.label}
                                             </a>
                                         </li>
@@ -216,8 +216,8 @@ const Footer = () => {
                             &copy; {year} Velora ID. All rights reserved.
                         </p>
                         <div className="flex items-center gap-6">
-                            <a href="#faq" className="text-gray-500 text-xs hover:text-teal-400 transition-colors">FAQ</a>
-                            <a href="#contact" className="text-gray-500 text-xs hover:text-teal-400 transition-colors">Hubungi Kami</a>
+                            <a href="#faq" className="text-gray-500 text-xs hover:text-blue-400 transition-colors">FAQ</a>
+                            <a href="#contact" className="text-gray-500 text-xs hover:text-blue-400 transition-colors">Hubungi Kami</a>
                             <button
                                 onClick={scrollToTop}
                                 className="w-8 h-8 rounded-lg bg-gray-800 border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:bg-gray-700 transition-all hover:-translate-y-0.5"

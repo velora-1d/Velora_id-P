@@ -67,7 +67,7 @@ const Navbar = () => {
                         : 'container px-6'
                     }`}>
                     <div className={`flex items-center justify-between transition-all duration-500 ${scrolled
-                            ? 'bg-white/80 backdrop-blur-xl shadow-lg shadow-black/[0.04] border border-gray-200/60 rounded-2xl px-4 sm:px-6 py-2.5'
+                            ? 'bg-slate-950/85 backdrop-blur-xl shadow-2xl border border-slate-800/90 rounded-2xl px-4 sm:px-6 py-2.5'
                             : 'px-0 py-0'
                         }`}>
                         {/* Logo */}
@@ -80,40 +80,26 @@ const Navbar = () => {
                                 alt="Velora"
                                 width={160}
                                 height={40}
-                                className={`w-auto transition-all duration-300 ${scrolled ? 'h-8' : 'h-10 sm:h-14'}`}
+                                className={`w-auto transition-all duration-300 ${scrolled ? 'h-8' : 'h-10 sm:h-12'}`}
                             />
-                            <span className={`font-heading font-bold tracking-tight transition-all duration-300 ${scrolled
-                                    ? 'text-lg text-gray-900'
-                                    : 'text-xl sm:text-2xl text-white'
-                                }`}>
+                            <span className="font-bold tracking-tight transition-all duration-300 text-lg sm:text-xl text-white">
                                 Velora
                             </span>
                         </button>
 
                         {/* Desktop Menu — centered */}
                         <div className="hidden lg:flex items-center">
-                            <div className={`flex items-center gap-0.5 transition-all duration-300 ${scrolled
-                                    ? ''
-                                    : 'bg-white/[0.08] backdrop-blur-md rounded-xl px-1 py-1 border border-white/[0.08]'
-                                }`}>
+                            <div className="flex items-center gap-1 bg-slate-900/60 backdrop-blur-md rounded-xl px-1.5 py-1 border border-slate-800/80">
                                 {navLinks.map((link) => (
                                     <button
                                         key={link.id}
                                         onClick={() => scrollToSection(link.id)}
-                                        className={`relative px-4 py-2 rounded-xl text-[13px] font-medium tracking-wide transition-all duration-300 ${activeSection === link.id
-                                                ? scrolled
-                                                    ? 'text-gray-900 bg-gray-100'
-                                                    : 'text-white bg-white/15'
-                                                : scrolled
-                                                    ? 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
-                                                    : 'text-white/60 hover:text-white hover:bg-white/[0.08]'
+                                        className={`relative px-4 py-1.5 rounded-lg text-[13px] font-medium tracking-wide transition-all duration-200 ${activeSection === link.id
+                                                ? 'text-white bg-blue-600 shadow-sm shadow-blue-900/40'
+                                                : 'text-slate-400 hover:text-white hover:bg-slate-800/50'
                                             }`}
                                     >
                                         {link.label}
-                                        {activeSection === link.id && (
-                                            <span className={`absolute -bottom-0.5 left-1/2 -translate-x-1/2 w-4 h-[2px] rounded-full transition-all duration-300 ${scrolled ? 'bg-gray-900' : 'bg-white'
-                                                }`}></span>
-                                        )}
                                     </button>
                                 ))}
                             </div>
@@ -123,22 +109,16 @@ const Navbar = () => {
                         <div className="hidden lg:flex items-center">
                             <button
                                 onClick={() => scrollToSection('contact')}
-                                className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-300 group ${scrolled
-                                        ? 'bg-gray-900 text-white hover:bg-gray-800 shadow-md shadow-gray-900/10'
-                                        : 'bg-white text-gray-900 hover:bg-white/90 shadow-lg shadow-black/10'
-                                    }`}
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-[13px] font-semibold bg-blue-600 hover:bg-blue-500 text-white shadow-lg shadow-blue-900/30 transition-all duration-200 group"
                             >
-                                Hubungi Kami
-                                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                                <span>Hubungi Kami</span>
+                                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform text-blue-200" />
                             </button>
                         </div>
 
                         {/* Mobile Toggle */}
                         <button
-                            className={`lg:hidden p-2 rounded-xl transition-all duration-200 ${scrolled
-                                    ? 'text-gray-700 hover:bg-gray-100'
-                                    : 'text-white hover:bg-white/10'
-                                }`}
+                            className="lg:hidden p-2 rounded-xl transition-all duration-200 text-white hover:bg-slate-800"
                             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                             aria-label="Toggle menu"
                         >
@@ -158,24 +138,24 @@ const Navbar = () => {
             >
                 {/* Backdrop */}
                 <div
-                    className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-500 ${mobileMenuOpen ? 'opacity-100' : 'opacity-0'
+                    className={`absolute inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-500 ${mobileMenuOpen ? 'opacity-100' : 'opacity-0'
                         }`}
                     onClick={() => setMobileMenuOpen(false)}
                 ></div>
 
                 {/* Menu Panel — slides from right */}
-                <div className={`absolute top-0 right-0 h-full w-[280px] sm:w-[320px] bg-white shadow-2xl transition-transform duration-500 ease-out ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+                <div className={`absolute top-0 right-0 h-full w-[280px] sm:w-[320px] bg-slate-950 border-l border-slate-800 shadow-2xl transition-transform duration-500 ease-out ${mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
                     }`}>
                     <div className="flex flex-col h-full">
                         {/* Mobile Header */}
-                        <div className="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+                        <div className="flex items-center justify-between px-6 py-5 border-b border-slate-800">
                             <div className="flex items-center gap-2">
                                 <img src="/images/logo.webp" alt="Velora" className="h-8 w-auto" />
-                                <span className="font-heading font-bold text-gray-900 text-lg">Velora</span>
+                                <span className="font-bold text-white text-lg tracking-tight">Velora</span>
                             </div>
                             <button
                                 onClick={() => setMobileMenuOpen(false)}
-                                className="p-2 rounded-xl text-gray-400 hover:text-gray-600 hover:bg-gray-50 transition-colors"
+                                className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-900 transition-colors"
                             >
                                 <X className="w-5 h-5" />
                             </button>
@@ -189,8 +169,8 @@ const Navbar = () => {
                                         key={link.id}
                                         onClick={() => scrollToSection(link.id)}
                                         className={`w-full text-left px-4 py-3 rounded-xl text-[15px] font-medium transition-all duration-200 flex items-center justify-between group ${activeSection === link.id
-                                                ? 'bg-gray-900 text-white'
-                                                : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                                                ? 'bg-blue-600 text-white shadow-md shadow-blue-900/30'
+                                                : 'text-slate-300 hover:bg-slate-900 hover:text-white'
                                             }`}
                                         style={{ transitionDelay: mobileMenuOpen ? `${i * 50}ms` : '0ms' }}
                                     >
@@ -204,13 +184,13 @@ const Navbar = () => {
                         </div>
 
                         {/* Mobile CTA */}
-                        <div className="px-4 pb-6 pt-2 border-t border-gray-100">
+                        <div className="px-4 pb-6 pt-2 border-t border-slate-800">
                             <button
                                 onClick={() => scrollToSection('contact')}
-                                className="w-full bg-gray-900 text-white py-3.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 hover:bg-gray-800 transition-colors shadow-lg"
+                                className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3.5 rounded-xl font-semibold text-sm flex items-center justify-center gap-2 transition-colors shadow-lg shadow-blue-900/30"
                             >
-                                Hubungi Kami
-                                <ArrowRight className="w-4 h-4" />
+                                <span>Hubungi Kami</span>
+                                <ArrowRight className="w-4 h-4 text-blue-200" />
                             </button>
                         </div>
                     </div>

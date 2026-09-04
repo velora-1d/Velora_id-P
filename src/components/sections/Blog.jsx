@@ -1,29 +1,29 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Calendar, User, Clock, PenLine, ArrowRight, ChevronRight } from 'lucide-react';
+import { Calendar, User, Clock, PenLine, ArrowRight, ChevronRight, BookOpen } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 import Link from 'next/link';
 
 const fallbackPosts = [
     {
-        title: "Tren Transformasi Digital 2025", category: "Technology", slug: "tren-transformasi-digital-2025",
-        excerpt: "Pelajari tren terbaru dalam transformasi digital yang akan membentuk masa depan bisnis di Indonesia.",
-        author: "Tim Velora", created_at: "2024-12-20", read_time: "5 menit",
-        image_url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=70"
+        title: "Arsitektur Multi-Tenant & Keamanan Data untuk Lembaga Pendidikan", category: "Architecture", slug: "tren-transformasi-digital-2025",
+        excerpt: "Bagaimana isolasi database relasional dan otentikasi berbasis RBAC melindungi integritas data operasional sekolah dan pesantren.",
+        author: "Tim Engineer Velora", created_at: "2025-01-15", read_time: "5 menit",
+        image_url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
     },
     {
-        title: "Implementasi AI untuk UMKM", category: "AI & Automation", slug: "implementasi-ai-untuk-umkm",
-        excerpt: "Bagaimana bisnis kecil dan menengah dapat memanfaatkan kecerdasan buatan untuk meningkatkan efisiensi.",
-        author: "Tim Velora", created_at: "2024-12-15", read_time: "4 menit",
-        image_url: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=600&q=70"
+        title: "Optimasi Query PostgreSQL & Realtime Supabase pada Beban Tinggi", category: "Database", slug: "implementasi-ai-untuk-umkm",
+        excerpt: "Pola indexing, row-level security policies, dan pencegahan connection spike saat pembayaran SPP serentak.",
+        author: "Tim Engineer Velora", created_at: "2025-01-08", read_time: "4 menit",
+        image_url: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80"
     },
     {
-        title: "Migrasi ke Cloud: Panduan Lengkap", category: "Cloud Computing", slug: "migrasi-ke-cloud-panduan-lengkap",
-        excerpt: "Langkah-langkah strategis untuk memindahkan infrastruktur bisnis Anda ke cloud dengan aman.",
-        author: "Tim Velora", created_at: "2024-12-10", read_time: "6 menit",
-        image_url: "https://images.unsplash.com/photo-1444703686981-a3abbc4d4fe3?auto=format&fit=crop&w=600&q=70"
+        title: "Integrasi Payment Gateway Otomatis: Rekonsiliasi Realtime Tanpa Celah", category: "Fintech", slug: "migrasi-ke-cloud-panduan-lengkap",
+        excerpt: "Strategi webhook idempotent, status synchronization, dan verifikasi hash signature untuk transaksi keuangan aman.",
+        author: "Tim Engineer Velora", created_at: "2024-12-28", read_time: "6 menit",
+        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
     }
 ];
 
@@ -55,144 +55,165 @@ const Blog = () => {
     const rest = posts.slice(1);
 
     return (
-        <section id="blog" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
-            {/* Subtle square grid */}
-            <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='48' height='48' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='8' y='8' width='32' height='32' rx='2' stroke='%23000' stroke-width='0.4' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '48px 48px' }}></div>
+        <section id="blog" className="py-24 sm:py-32 bg-[#070C18] text-slate-100 relative overflow-hidden border-t border-white/[0.06]">
+            {/* Ambient Lighting & Grid */}
+            <div className="absolute inset-0 studio-grid-pattern opacity-10 pointer-events-none" />
+            <div className="absolute -top-40 right-1/4 w-[500px] h-[500px] bg-blue-600/[0.06] rounded-full blur-[120px] pointer-events-none" />
 
-            <div className="container mx-auto px-4 sm:px-6 relative z-10">
+            <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-7xl">
                 {/* Header */}
                 <ScrollReveal width="100%">
-                    <div className="flex flex-col items-center mb-14 sm:mb-18">
-                        <div className="w-12 h-[2px] bg-gray-900 mb-6"></div>
-                        <span className="text-xs font-bold tracking-[0.3em] text-gray-400 uppercase mb-4 flex items-center gap-2">
-                            <PenLine className="w-3.5 h-3.5" /> Blog & Insights
-                        </span>
-                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight text-center">
-                            Artikel Terbaru
+                    <div className="flex flex-col items-center mb-16 sm:mb-20 text-center">
+                        <div className="inline-flex items-center gap-2 studio-mono-badge mb-4">
+                            <BookOpen className="w-3.5 h-3.5 text-blue-400" />
+                            INSIGHTS & PUBLICATIONS
+                        </div>
+                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+                            Wawasan Rekayasa Digital
                         </h2>
-                        <p className="text-base sm:text-lg text-gray-500 max-w-lg mx-auto leading-relaxed text-center">
-                            Wawasan tentang teknologi, transformasi digital, dan inovasi bisnis.
+                        <p className="mt-4 text-base sm:text-lg text-slate-400 max-w-2xl leading-relaxed">
+                            Dokumentasi arsitektur sistem, optimasi performa, dan praktik terbaik transformasi digital untuk institusi dan UMKM.
                         </p>
                     </div>
                 </ScrollReveal>
 
-                <div className="max-w-6xl mx-auto">
-                    {/* Featured Article */}
-                    {featured && (
-                        <ScrollReveal width="100%">
-                            <Link href={`/blog/${featured.slug}`} className="relative mb-8 cursor-pointer group block">
-                                {/* Image */}
-                                <div className="h-[280px] sm:h-[360px] md:h-[400px] rounded-2xl overflow-hidden">
-                                    <img
-                                        src={featured.image_url || featured.image}
-                                        alt={featured.title}
-                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                                    />
-                                </div>
+                {/* Featured Article */}
+                {featured && (
+                    <ScrollReveal width="100%">
+                        <Link href={`/blog/${featured.slug}`} className="group block mb-12">
+                            <div className="studio-card rounded-3xl overflow-hidden border border-white/[0.08] bg-slate-900/40 hover:border-blue-500/30 transition-all duration-300">
+                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+                                    {/* Image Column */}
+                                    <div className="lg:col-span-6 relative h-64 sm:h-80 lg:h-[420px] overflow-hidden bg-slate-950">
+                                        <img
+                                            src={featured.image_url || featured.image}
+                                            alt={featured.title}
+                                            className="w-full h-full object-cover object-center filter brightness-95 group-hover:scale-105 transition-transform duration-700"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-transparent via-[#070C18]/40 to-[#070C18] opacity-60" />
+                                        <div className="absolute top-4 left-4 z-10">
+                                            <span className="px-3 py-1 bg-blue-600/90 backdrop-blur-md text-white text-[11px] font-mono font-bold rounded-md uppercase tracking-wider shadow-lg">
+                                                Featured Insight
+                                            </span>
+                                        </div>
+                                    </div>
 
-                                {/* Overlapping Card */}
-                                <div className="relative mx-4 sm:mx-8 md:mx-12 -mt-20 sm:-mt-24">
-                                    <div className="bg-white rounded-2xl p-6 sm:p-8 shadow-xl border border-gray-100">
-                                        <div className="flex flex-wrap items-center gap-2 mb-3">
-                                            <span className="px-3 py-1 bg-teal-50 text-teal-700 text-[11px] font-bold rounded-md uppercase tracking-wider border border-teal-100">
-                                                Featured
-                                            </span>
-                                            <span className="px-3 py-1 bg-gray-100 text-gray-600 text-[11px] font-bold rounded-md uppercase tracking-wider border border-gray-200">
-                                                {featured.category}
-                                            </span>
-                                        </div>
-                                        <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-gray-900 mb-3 tracking-tight leading-tight">
-                                            {featured.title}
-                                        </h3>
-                                        <p className="text-gray-500 text-sm sm:text-base mb-5 leading-relaxed line-clamp-2 max-w-2xl">
-                                            {featured.excerpt}
-                                        </p>
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center gap-4 text-xs sm:text-sm text-gray-400">
-                                                <span className="flex items-center gap-1.5 align-middle">
-                                                    <User className="w-3.5 h-3.5" /> {featured.author}
+                                    {/* Content Column */}
+                                    <div className="lg:col-span-6 p-6 sm:p-10 lg:p-12 flex flex-col justify-between">
+                                        <div>
+                                            <div className="flex items-center gap-3 mb-4">
+                                                <span className="px-2.5 py-1 rounded bg-slate-800 border border-white/[0.08] text-[11px] font-mono font-medium text-blue-400 uppercase tracking-wider">
+                                                    {featured.category}
                                                 </span>
-                                                <span className="flex items-center gap-1.5 align-middle">
-                                                    <Calendar className="w-3.5 h-3.5" /> {formatDate(featured.created_at)}
-                                                </span>
-                                                <span className="flex items-center gap-1.5 align-middle">
-                                                    <Clock className="w-3.5 h-3.5" /> {featured.read_time}
+                                                <span className="text-xs font-mono text-slate-400 flex items-center gap-1.5">
+                                                    <Clock className="w-3.5 h-3.5 text-slate-400" />
+                                                    {featured.read_time}
                                                 </span>
                                             </div>
-                                            <div className="w-10 h-10 rounded-full bg-gray-900 flex items-center justify-center group-hover:bg-teal-600 transition-colors duration-300">
-                                                <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" />
+
+                                            <h3 className="font-heading text-2xl sm:text-3xl font-extrabold text-white mb-4 tracking-tight leading-snug group-hover:text-blue-400 transition-colors">
+                                                {featured.title}
+                                            </h3>
+
+                                            <p className="text-slate-300 text-sm sm:text-base leading-relaxed line-clamp-3 mb-6">
+                                                {featured.excerpt}
+                                            </p>
+                                        </div>
+
+                                        <div className="flex items-center justify-between pt-6 border-t border-white/[0.08]">
+                                            <div className="flex items-center gap-4 text-xs font-mono text-slate-400">
+                                                <span className="flex items-center gap-1.5">
+                                                    <User className="w-3.5 h-3.5 text-slate-400" />
+                                                    {featured.author}
+                                                </span>
+                                                <span className="hidden sm:flex items-center gap-1.5">
+                                                    <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                                                    {formatDate(featured.created_at)}
+                                                </span>
+                                            </div>
+
+                                            <div className="inline-flex items-center gap-2 text-sm font-semibold text-blue-400 group-hover:text-blue-300 transition-colors">
+                                                <span>Baca Artikel</span>
+                                                <div className="w-8 h-8 rounded-lg bg-blue-600/10 border border-blue-500/20 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                                    <ArrowRight className="w-4 h-4" />
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                    </ScrollReveal>
+                )}
+
+                {/* Secondary Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                    {(rest.length > 0 ? rest : posts.slice(0, 3)).map((post, index) => (
+                        <ScrollReveal key={post.id || index} delay={index * 0.1} width="100%">
+                            <Link href={`/blog/${post.slug}`} className="group block h-full">
+                                <div className="studio-card rounded-2xl overflow-hidden border border-white/[0.08] bg-slate-900/40 hover:border-blue-500/30 transition-all duration-300 hover:-translate-y-1 h-full flex flex-col justify-between">
+                                    <div>
+                                        {/* Image */}
+                                        <div className="h-48 sm:h-52 overflow-hidden bg-slate-950 relative">
+                                            <img
+                                                src={post.image_url || post.image}
+                                                alt={post.title}
+                                                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 filter brightness-90"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+                                            <div className="absolute top-3 left-3">
+                                                <span className="px-2.5 py-1 rounded bg-slate-950/80 backdrop-blur-md border border-white/[0.1] text-[10px] font-mono font-medium text-blue-300 uppercase tracking-wider">
+                                                    {post.category}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        {/* Content */}
+                                        <div className="p-6">
+                                            <div className="flex items-center gap-3 text-xs font-mono text-slate-400 mb-3">
+                                                <span className="flex items-center gap-1">
+                                                    <Clock className="w-3 h-3 text-slate-400" />
+                                                    {post.read_time}
+                                                </span>
+                                                <span>•</span>
+                                                <span>{formatDate(post.created_at)}</span>
+                                            </div>
+
+                                            <h4 className="font-bold text-white text-base sm:text-lg mb-2 leading-snug group-hover:text-blue-400 transition-colors line-clamp-2">
+                                                {post.title}
+                                            </h4>
+
+                                            <p className="text-slate-400 text-xs sm:text-sm line-clamp-2 leading-relaxed">
+                                                {post.excerpt}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* Footer */}
+                                    <div className="px-6 pb-6 pt-3 border-t border-white/[0.06] flex items-center justify-between">
+                                        <span className="text-xs font-mono text-slate-400">{post.author}</span>
+                                        <span className="text-xs font-semibold text-blue-400 flex items-center gap-1 group-hover:translate-x-0.5 transition-transform">
+                                            Baca <ChevronRight className="w-3.5 h-3.5" />
+                                        </span>
                                     </div>
                                 </div>
                             </Link>
                         </ScrollReveal>
-                    )}
-
-                    {/* Article Cards Grid */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                        {(rest.length > 0 ? rest : posts.slice(0, 3)).map((post, index) => (
-                            <ScrollReveal key={post.id || index} delay={index * 0.1} width="100%">
-                                <Link href={`/blog/${post.slug}`} className="cursor-pointer group block">
-                                    {/* Image */}
-                                    <div className="h-48 sm:h-52 rounded-2xl overflow-hidden">
-                                        <img
-                                            src={post.image_url || post.image}
-                                            alt={post.title}
-                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                        />
-                                    </div>
-
-                                    {/* Overlapping Content Card */}
-                                    <div className="relative mx-3 -mt-10">
-                                        <div className="bg-white rounded-xl p-5 shadow-lg border border-gray-100 group-hover:shadow-xl group-hover:-translate-y-1 transition-all duration-300">
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <span className="bg-gray-100 text-gray-600 px-2.5 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider">
-                                                    {post.category}
-                                                </span>
-                                                <span className="text-gray-400 text-[10px] flex items-center gap-1">
-                                                    <Clock className="w-3 h-3" /> {post.read_time}
-                                                </span>
-                                            </div>
-                                            <h4 className="font-bold text-gray-900 text-base sm:text-lg mb-1 leading-snug group-hover:text-teal-600 transition-colors line-clamp-2">
-                                                {post.title}
-                                            </h4>
-                                            <p className="text-gray-500 text-sm line-clamp-2 leading-relaxed mb-4">
-                                                {post.excerpt}
-                                            </p>
-
-                                            {/* Author + Read more */}
-                                            <div className="flex items-center justify-between pt-3 border-t border-gray-50">
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-6 h-6 rounded-full bg-teal-50 flex items-center justify-center">
-                                                        <User className="w-3 h-3 text-teal-600" />
-                                                    </div>
-                                                    <span className="text-xs text-gray-500 font-medium">{post.author}</span>
-                                                </div>
-                                                <span className="text-xs font-semibold text-teal-600 flex items-center gap-1 group-hover:gap-2 transition-all">
-                                                    Baca <ChevronRight className="w-3.5 h-3.5" />
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </Link>
-                            </ScrollReveal>
-                        ))}
-                    </div>
-
-                    {/* See All Articles Link */}
-                    <ScrollReveal width="100%" delay={0.3}>
-                        <div className="text-center mt-12">
-                            <Link
-                                href="/blog"
-                                className="inline-flex items-center gap-2 px-8 py-3.5 bg-gray-900 text-white rounded-xl font-semibold text-sm hover:bg-gray-800 transition-all duration-300 shadow-lg hover:-translate-y-0.5 group"
-                            >
-                                Lihat Semua Artikel
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-                            </Link>
-                        </div>
-                    </ScrollReveal>
+                    ))}
                 </div>
+
+                {/* Bottom CTA to /blog */}
+                <ScrollReveal width="100%" delay={0.2}>
+                    <div className="text-center mt-14">
+                        <Link
+                            href="/blog"
+                            className="inline-flex items-center gap-2 px-8 py-3.5 bg-slate-900 hover:bg-slate-800 border border-white/[0.1] hover:border-blue-500/40 text-white rounded-xl font-mono text-sm transition-all duration-300 shadow-lg hover:-translate-y-0.5 group"
+                        >
+                            <span>Eksplorasi Seluruh Publikasi</span>
+                            <ArrowRight className="w-4 h-4 text-blue-400 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                    </div>
+                </ScrollReveal>
             </div>
         </section>
     );

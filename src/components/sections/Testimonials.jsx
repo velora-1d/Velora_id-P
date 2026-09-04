@@ -1,96 +1,96 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Star, Quote } from 'lucide-react';
+import { Star, Quote, CheckCircle2, MessageSquare } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 
-// Fallback data jika DB belum ada
 const fallbackTestimonials = [
     {
-        content: "Velora sangat membantu digitalisasi administrasi pesantren kami. Sistem bendahara terintegrasi WA membuat pembayaran SPP jadi transparan.",
+        content: "Velora sangat membantu digitalisasi administrasi pesantren kami. Sistem bendahara terintegrasi WA membuat pembayaran SPP santri jadi transparan dan auto-reconcile.",
         name: "Ustadz Ahmad Fauzi",
-        role: "Kepala Pesantren Al-Hikmah",
+        role: "Pimpinan Lembaga",
+        company: "Pesantren Al-Hikmah",
         rating: 5
     },
     {
-        content: "Deploy website tugas kuliah dalam hitungan jam! Responsif dan profesional. Sangat recommended untuk mahasiswa yang butuh website cepat.",
+        content: "Deploy website company profile dan landing page selesai dalam hitungan hari. Loading super cepat, skor PageSpeed 99, dan langsung dapat klien dari Google.",
         name: "Rizky Pratama",
-        role: "Mahasiswa IT",
+        role: "Founder & Director",
+        company: "CV Digital Kreasi",
         rating: 5
     },
     {
-        content: "Integrasi payment gateway Midtrans untuk toko online kami berjalan lancar. Tim support sangat responsif dan helpful.",
+        content: "Integrasi payment gateway QRIS dan Virtual Account untuk platform kami berjalan lancar. Notifikasi WhatsApp instan sangat diapresiasi oleh pelanggan.",
         name: "Siti Nurhaliza",
-        role: "Owner Toko Online",
+        role: "Operasional Bisnis",
+        company: "Retail Prima Hub",
         rating: 5
     },
     {
-        content: "Website company profile kami jadi lebih profesional. SEO-nya juga bagus, sekarang sudah muncul di Google page 1!",
+        content: "Website resmi kami jadi jauh lebih representatif dan terpercaya di mata investor. Tim Velora sangat responsif dalam maintenance dan garansi.",
         name: "Budi Santoso",
-        role: "Direktur CV Maju Jaya",
+        role: "Managing Director",
+        company: "PT Maju Nusantara",
         rating: 5
     },
     {
-        content: "Sistem e-learning yang dibuatkan sangat user-friendly. Guru-guru kami yang gaptek pun bisa pakai dengan mudah.",
+        content: "Sistem e-rapor dan administrasi santri yang dibuatkan sangat intuitif. Guru dan staf tata usaha kami bisa langsung menggunakannya tanpa kendala.",
         name: "Ibu Dewi Kartika",
-        role: "Kepala Sekolah SDN 01",
+        role: "Kepala Kurikulum",
+        company: "SMP & MA Terpadu",
         rating: 5
     },
     {
-        content: "Maintenance server kami ditangani dengan baik. Response time cepat dan harga sangat bersaing.",
+        content: "Server stabil tanpa downtime, penataan database rapi, dan keamanan data terjamin. Partner teknologi terbaik untuk jangka panjang.",
         name: "Andi Wijaya",
-        role: "IT Manager PT Sukses",
+        role: "Head of Technology",
+        company: "Logistics Prima",
         rating: 5
     }
 ];
 
 const TestimonialCard = ({ testimonial }) => (
-    <div className="flex-shrink-0 w-[85vw] sm:w-[400px] pt-8 mx-3 sm:mx-4">
-        <div className="bg-white rounded-2xl p-6 sm:p-8 border border-gray-100 shadow-lg relative group hover:-translate-y-1 transition-all duration-300">
-            {/* Overlapping Avatar */}
-            <div className="absolute -top-8 left-1/2 -translate-x-1/2">
-                <div className="w-16 h-16 rounded-full bg-gradient-to-br from-teal-400 to-emerald-500 p-1 shadow-lg group-hover:scale-110 transition-transform duration-300">
-                    <div className="w-full h-full rounded-full bg-white flex items-center justify-center overflow-hidden">
-                        {testimonial.avatar_url ? (
-                            <img src={testimonial.avatar_url} alt={testimonial.name} className="w-full h-full object-cover" />
-                        ) : (
-                            <span className="text-teal-600 font-bold text-xl">
-                                {testimonial.name.split(' ').map(w => w[0]).join('').substring(0, 2)}
-                            </span>
-                        )}
+    <div className="flex-shrink-0 w-[85vw] sm:w-[380px] mx-3 sm:mx-4">
+        <div className="rounded-2xl bg-slate-900/80 border border-slate-800 p-6 sm:p-7 shadow-lg flex flex-col justify-between h-full group hover:border-blue-500/40 transition-all duration-200">
+            <div>
+                {/* Header: Stars & Quote Icon */}
+                <div className="flex items-center justify-between mb-4">
+                    <div className="flex gap-1">
+                        {[...Array(testimonial.rating || 5)].map((_, i) => (
+                            <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
+                        ))}
                     </div>
-                </div>
-            </div>
-
-            {/* Quote Icon */}
-            <div className="absolute top-6 right-6 text-gray-100 group-hover:text-teal-50 transition-colors">
-                <Quote className="w-10 h-10 fill-current" />
-            </div>
-
-            <div className="mt-8 text-center">
-                {/* Stars */}
-                <div className="flex justify-center gap-1 mb-4">
-                    {[...Array(testimonial.rating || 5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
-                    ))}
+                    <Quote className="w-6 h-6 text-slate-700" />
                 </div>
 
                 {/* Content */}
-                <p className="text-gray-600 text-sm sm:text-base leading-relaxed mb-6 italic relative z-10">
+                <p className="text-slate-300 text-sm sm:text-[15px] leading-relaxed mb-6 font-normal">
                     &quot;{testimonial.content}&quot;
                 </p>
+            </div>
 
-                {/* Author */}
-                <div>
-                    <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
-                    <p className="text-teal-600 text-xs font-medium uppercase tracking-wide mt-1">
-                        {testimonial.role}
-                    </p>
-                    {testimonial.company && (
-                        <p className="text-gray-400 text-xs mt-0.5">{testimonial.company}</p>
-                    )}
+            {/* Author */}
+            <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-blue-950 border border-blue-800 flex items-center justify-center text-blue-400 font-bold text-sm">
+                        {testimonial.avatar_url ? (
+                            <img src={testimonial.avatar_url} alt={testimonial.name} className="w-full h-full object-cover rounded-xl" />
+                        ) : (
+                            testimonial.name.split(' ').map(w => w[0]).join('').substring(0, 2)
+                        )}
+                    </div>
+                    <div>
+                        <h4 className="font-bold text-white text-sm tracking-tight">{testimonial.name}</h4>
+                        <p className="text-slate-400 text-xs">
+                            {testimonial.role}{testimonial.company ? ` • ${testimonial.company}` : ''}
+                        </p>
+                    </div>
                 </div>
+
+                <span className="text-emerald-400 text-[11px] font-mono flex items-center gap-1 hidden sm:flex">
+                    <CheckCircle2 className="w-3.5 h-3.5" /> Terverifikasi
+                </span>
             </div>
         </div>
     </div>
@@ -112,37 +112,30 @@ const Testimonials = () => {
                 if (!error && data && data.length > 0) {
                     setTestimonials(data);
                 }
-            } catch {
-                // Fallback to hardcoded data if DB not available
-            }
+            } catch { }
         };
-
         fetchTestimonials();
     }, []);
 
-    // Duplicate for infinite scroll effect
     const allTestimonials = [...testimonials, ...testimonials];
 
     return (
-        <section id="testimonials" className="py-20 sm:py-28 bg-[#faf9f7] relative overflow-hidden">
-            {/* Decorative elements */}
-            <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-teal-500/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-amber-500/5 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none"></div>
-            {/* Subtle circle rings */}
-            <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='56' height='56' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='28' cy='28' r='12' stroke='%23000' stroke-width='0.4' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '56px 56px' }}></div>
+        <section id="testimonials" className="py-24 sm:py-32 bg-[#070C18] text-white relative border-t border-slate-800/80 overflow-hidden">
+            <div className="absolute inset-0 studio-grid-pattern opacity-25 pointer-events-none"></div>
 
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
                 {/* Header */}
                 <ScrollReveal width="100%">
-                    <div className="flex flex-col items-center mb-16">
-                        <span className="inline-block px-4 py-2 bg-teal-50 text-teal-700 rounded-full text-xs font-bold uppercase tracking-widest mb-4 border border-teal-100">
-                            Testimoni
-                        </span>
-                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight text-center">
-                            Apa Kata Klien Kami
+                    <div className="flex flex-col items-center mb-14 sm:mb-16 text-center">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-xs font-mono text-blue-300 uppercase tracking-widest mb-4">
+                            <MessageSquare className="w-3.5 h-3.5 text-blue-400" />
+                            [REPUTASI_KLIEN]
+                        </div>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                            Kepercayaan Nyata dari Mitra Kami
                         </h2>
-                        <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed text-center">
-                            Kepuasan klien adalah prioritas utama kami dalam setiap karya yang kami ciptakan.
+                        <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                            Pengalaman langsung yayasan, pimpinan pesantren, dan pelaku usaha yang telah mempercayakan sistem digitalnya kepada Velora.
                         </p>
                     </div>
                 </ScrollReveal>
@@ -150,11 +143,10 @@ const Testimonials = () => {
 
             {/* Auto-scrolling Marquee */}
             <div className="relative overflow-hidden py-4">
-                {/* Gradient overlays */}
-                <div className="absolute left-0 top-0 bottom-0 w-8 sm:w-32 bg-gradient-to-r from-[#faf9f7] to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-8 sm:w-32 bg-gradient-to-l from-[#faf9f7] to-transparent z-10 pointer-events-none"></div>
+                {/* Side Fade Gradients */}
+                <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-32 bg-gradient-to-r from-[#070C18] to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-32 bg-gradient-to-l from-[#070C18] to-transparent z-10 pointer-events-none"></div>
 
-                {/* Scrolling container */}
                 <div className="flex animate-marquee hover:pause-animation">
                     {allTestimonials.map((testimonial, index) => (
                         <TestimonialCard key={index} testimonial={testimonial} />
@@ -162,13 +154,15 @@ const Testimonials = () => {
                 </div>
             </div>
 
-            {/* Trust indicator */}
-            <div className="container mx-auto px-6 mt-16">
+            {/* Trust Indicator Pill */}
+            <div className="container mx-auto px-6 mt-14 sm:mt-16">
                 <ScrollReveal width="100%">
                     <div className="text-center">
-                        <p className="text-gray-400 text-sm font-medium">
-                            Dipercaya oleh <span className="text-gray-900 font-bold">50+ klien</span> di seluruh Indonesia
-                        </p>
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-900/80 border border-slate-800 text-xs sm:text-sm text-slate-400 font-mono">
+                            <span>Dipercaya oleh</span>
+                            <span className="text-white font-bold">50+ lembaga & institusi</span>
+                            <span>di seluruh Indonesia</span>
+                        </div>
                     </div>
                 </ScrollReveal>
             </div>

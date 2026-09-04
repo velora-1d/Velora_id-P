@@ -55,9 +55,9 @@ const Legalitas = () => {
                             <Verified className="w-3.5 h-3.5" />
                             Legalitas Resmi
                         </div>
-                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-5 tracking-tight">
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-5 tracking-tight">
                             Usaha Terdaftar <br className="hidden sm:block" />
-                            <span className="bg-gradient-to-r from-amber-600 to-amber-500 bg-clip-text text-transparent">Secara Resmi</span>
+                            <span className="text-blue-600">Secara Resmi</span>
                         </h2>
                         <p className="text-base sm:text-lg text-gray-500 max-w-2xl mx-auto leading-relaxed">
                             Velora ID memiliki legalitas resmi yang diterbitkan oleh Pemerintah Republik Indonesia melalui sistem OSS.
@@ -77,11 +77,6 @@ const Legalitas = () => {
                                 {/* Top gold ribbon */}
                                 <div className="h-2 bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-400"></div>
 
-                                {/* Corner ornaments */}
-                                <div className="absolute top-4 left-4 w-12 h-12 border-t-2 border-l-2 border-amber-300/50 rounded-tl-xl pointer-events-none"></div>
-                                <div className="absolute top-4 right-4 w-12 h-12 border-t-2 border-r-2 border-amber-300/50 rounded-tr-xl pointer-events-none"></div>
-                                <div className="absolute bottom-4 left-4 w-12 h-12 border-b-2 border-l-2 border-amber-300/50 rounded-bl-xl pointer-events-none"></div>
-                                <div className="absolute bottom-4 right-4 w-12 h-12 border-b-2 border-r-2 border-amber-300/50 rounded-br-xl pointer-events-none"></div>
 
                                 {/* Watermark */}
                                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.03]">

@@ -1,17 +1,41 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { MessageSquare, FileSearch, Code2, Rocket, Globe } from 'lucide-react';
+import { MessageSquare, FileSearch, Code2, Rocket, Globe, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 
 const iconMap = { MessageSquare, FileSearch, Code2, Rocket, Globe };
 
 const fallbackSteps = [
-    { icon_name: 'MessageSquare', title: 'Konsultasi', description: 'Diskusi kebutuhan via WhatsApp. Kami dengarkan masalah Anda.', color_gradient: 'from-blue-500 to-blue-600' },
-    { icon_name: 'FileSearch', title: 'Proposal', description: 'Solusi terbaik dengan timeline dan estimasi transparan.', color_gradient: 'from-accent to-accent-dark' },
-    { icon_name: 'Code2', title: 'Development', description: 'Proses development dengan update real-time. Revisi unlimited.', color_gradient: 'from-indigo-500 to-indigo-600' },
-    { icon_name: 'Rocket', title: 'Launch', description: 'Go live dengan garansi maintenance dan support berkelanjutan.', color_gradient: 'from-emerald-500 to-emerald-600' },
+    { 
+        icon_name: 'MessageSquare', 
+        title: 'Discovery & Briefing', 
+        description: 'Diskusi intensif untuk membedah problem proses bisnis, arsitektur data, dan target solusi digital yang ingin dicapai.',
+        phase: 'TAHAP 01',
+        sla: '1-2 Hari'
+    },
+    { 
+        icon_name: 'FileSearch', 
+        title: 'Spesifikasi & Prototipe', 
+        description: 'Penyusunan blueprint arsitektur sistem, wireframe alur pengguna, serta proposal biaya & timeline yang transparan.',
+        phase: 'TAHAP 02',
+        sla: '2-4 Hari'
+    },
+    { 
+        icon_name: 'Code2', 
+        title: 'Development & Integrasi', 
+        description: 'Eksekusi coding dengan prinsip clean architecture, integrasi database, payment gateway, dan pengujian berkala.',
+        phase: 'TAHAP 03',
+        sla: 'Sprint 1-3 Minggu'
+    },
+    { 
+        icon_name: 'Rocket', 
+        title: 'Deploy, Pelatihan & Garansi', 
+        description: 'Peluncuran live ke server VPS, serah terima data, panduan staf lembaga, serta pendampingan garansi bugfix.',
+        phase: 'TAHAP 04',
+        sla: 'Garansi Aktif'
+    },
 ];
 
 const Workflow = () => {
@@ -28,7 +52,10 @@ const Workflow = () => {
                     .order('sort_order', { ascending: true });
 
                 if (!error && data && data.length > 0) {
-                    setSteps(data);
+                    setSteps(data.map((s, i) => ({
+                        ...fallbackSteps[i],
+                        ...s
+                    })));
                 }
             } catch { }
         };
@@ -36,60 +63,77 @@ const Workflow = () => {
     }, []);
 
     return (
-        <section id="workflow" className="py-16 sm:py-24 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
-            <div className="absolute top-1/2 left-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-            <div className="absolute top-1/2 right-0 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl translate-x-1/2 -translate-y-1/2 pointer-events-none"></div>
-            {/* Subtle horizontal dotted lines */}
-            <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 30h60' stroke='%23000' stroke-width='0.3' stroke-dasharray='4 4' fill='none'/%3E%3C/svg%3E")`, backgroundSize: '60px 60px' }}></div>
+        <section id="workflow" className="py-24 sm:py-32 bg-[#080E1A] text-white relative border-t border-slate-800/80 overflow-hidden">
+            <div className="absolute inset-0 studio-grid-pattern opacity-25 pointer-events-none"></div>
 
-            <div className="container mx-auto px-6 relative z-10">
+            <div className="container mx-auto px-4 sm:px-6 relative z-10 max-w-6xl">
+                {/* Header */}
                 <ScrollReveal width="100%">
-                    <div className="text-center mb-16">
-                        <span className="inline-block px-4 py-2 bg-accent/10 text-accent-dark rounded-full text-sm font-semibold mb-4 tracking-wide">
-                            CARA KERJA
-                        </span>
-                        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 tracking-tight">
-                            Proses yang Jelas & Transparan
+                    <div className="text-center mb-16 sm:mb-20">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-xs font-mono text-blue-300 uppercase tracking-widest mb-4">
+                            <Code2 className="w-3.5 h-3.5 text-blue-400" />
+                            [PIPELINE_EKSEKUSI]
+                        </div>
+                        <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4">
+                            Alur Pengerjaan yang Terstruktur & Transparan
                         </h2>
-                        <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                            Dari diskusi hingga launch, kami pastikan Anda selalu terinformasi.
+                        <p className="text-base sm:text-lg text-slate-400 max-w-2xl mx-auto leading-relaxed">
+                            Setiap fase pengerjaan memiliki indikator capaian yang jelas tanpa ada langkah tersembunyi.
                         </p>
                     </div>
                 </ScrollReveal>
 
-                <div className="relative max-w-5xl mx-auto">
-                    <div className="hidden md:block absolute top-16 left-[10%] right-[10%] h-1 bg-gradient-to-r from-blue-500 via-accent to-emerald-500 rounded-full"></div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-6">
-                        {steps.map((step, index) => {
-                            const IconComp = iconMap[step.icon_name] || Globe;
-                            return (
-                                <ScrollReveal key={index} delay={index * 0.2} className="h-full">
-                                    <div className="relative group text-center h-full">
-                                        <div className="relative mx-auto mb-6">
-                                            <div className={`w-32 h-32 rounded-full bg-gradient-to-br ${step.color_gradient || step.color} flex items-center justify-center shadow-xl mx-auto relative z-10`}>
-                                                <IconComp className="w-12 h-12 text-white" strokeWidth={1.5} />
+                {/* Pipeline Cards Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 relative">
+                    {steps.map((step, index) => {
+                        const IconComp = iconMap[step.icon_name] || Globe;
+                        return (
+                            <ScrollReveal key={index} delay={index * 0.1} className="h-full">
+                                <div className="h-full rounded-2xl bg-slate-900/80 border border-slate-800 p-6 flex flex-col justify-between hover:border-blue-500/40 transition-all duration-200 group">
+                                    <div>
+                                        <div className="flex items-center justify-between mb-5">
+                                            <div className="w-10 h-10 rounded-xl bg-blue-950 border border-blue-800 flex items-center justify-center text-blue-400 group-hover:scale-105 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                                                <IconComp className="w-5 h-5" />
                                             </div>
-                                            <div className="absolute -top-2 -right-2 w-10 h-10 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-lg shadow-lg z-20">
-                                                {index + 1}
-                                            </div>
+                                            <span className="text-xs font-mono text-slate-500">
+                                                0{index + 1}
+                                            </span>
                                         </div>
-                                        <h3 className="text-xl font-bold text-gray-900 mb-2">{step.title}</h3>
-                                        <p className="text-gray-600 text-sm leading-relaxed px-2">{step.description}</p>
+
+                                        <div className="text-[10px] font-mono text-blue-400 uppercase tracking-wider mb-1">
+                                            {step.phase || `FASE 0${index + 1}`}
+                                        </div>
+
+                                        <h3 className="text-lg font-bold text-white mb-2.5 tracking-tight group-hover:text-blue-300 transition-colors">
+                                            {step.title}
+                                        </h3>
+
+                                        <p className="text-slate-400 text-xs sm:text-sm leading-relaxed mb-6">
+                                            {step.description}
+                                        </p>
                                     </div>
-                                </ScrollReveal>
-                            );
-                        })}
-                    </div>
+
+                                    <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between text-[11px] font-mono text-slate-500">
+                                        <span className="flex items-center gap-1 text-emerald-400">
+                                            <CheckCircle2 className="w-3.5 h-3.5" /> Terarah
+                                        </span>
+                                        <span className="text-slate-400">{step.sla || 'Estimasi Tepat'}</span>
+                                    </div>
+                                </div>
+                            </ScrollReveal>
+                        );
+                    })}
                 </div>
 
-                <div className="mt-16 text-center">
+                {/* Bottom CTA */}
+                <div className="mt-14 sm:mt-16 text-center">
                     <button
                         onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-                        className="inline-flex items-center gap-3 bg-gray-900 hover:bg-gray-800 text-white px-8 py-4 rounded-full font-bold text-lg shadow-xl transition-all duration-200 transform hover:-translate-y-1"
+                        className="inline-flex items-center gap-2.5 bg-blue-600 hover:bg-blue-500 text-white px-7 py-3.5 rounded-xl font-semibold text-sm sm:text-base shadow-lg shadow-blue-900/30 transition-all group"
                     >
-                        <MessageSquare className="w-5 h-5" />
-                        Mulai Konsultasi
+                        <MessageSquare className="w-4 h-4 text-blue-200" />
+                        <span>Mulai Konsultasi Gratis</span>
+                        <ArrowRight className="w-4 h-4 text-blue-200 group-hover:translate-x-1 transition-transform" />
                     </button>
                 </div>
             </div>
