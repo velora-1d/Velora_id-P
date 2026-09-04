@@ -55,8 +55,66 @@ export default async function PortfolioDetailPage({ params }) {
     const ProjectIcon = getIcon(project.icon_name || project.icon);
     const tech = (project.tech || '').split(',').map((item) => item.trim()).filter(Boolean);
 
+    const projectUrl = `https://www.ve-lora.my.id/portfolio/${project.slug || slug}`;
+    const projectImageUrl = project.image_url?.startsWith('http')
+        ? project.image_url
+        : `https://www.ve-lora.my.id${project.image_url || '/images/og-preview.webp'}`;
+
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'BreadcrumbList',
+                '@id': `${projectUrl}#breadcrumb`,
+                itemListElement: [
+                    {
+                        '@type': 'ListItem',
+                        position: 1,
+                        name: 'Beranda',
+                        item: 'https://www.ve-lora.my.id',
+                    },
+                    {
+                        '@type': 'ListItem',
+                        position: 2,
+                        name: 'Portfolio',
+                        item: 'https://www.ve-lora.my.id/#portfolio',
+                    },
+                    {
+                        '@type': 'ListItem',
+                        position: 3,
+                        name: project.title,
+                        item: projectUrl,
+                    },
+                ],
+            },
+            {
+                '@type': 'SoftwareApplication',
+                '@id': `${projectUrl}#software`,
+                name: project.title,
+                description: project.description,
+                applicationCategory: 'BusinessApplication',
+                operatingSystem: 'All Modern Web Browsers, Android, iOS',
+                image: projectImageUrl,
+                url: projectUrl,
+                author: {
+                    '@type': 'Person',
+                    name: 'Mahin Utsman Nawawi, S.H.',
+                },
+                creator: {
+                    '@type': 'Organization',
+                    name: 'Velora ID',
+                    url: 'https://www.ve-lora.my.id',
+                },
+            },
+        ],
+    };
+
     return (
         <div className="min-h-screen bg-[#070C18] text-slate-100 relative overflow-hidden">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* Hero Banner */}
             <div className="relative h-[52vh] min-h-[420px] overflow-hidden bg-slate-950 border-b border-white/[0.08]">
                 {project.image_url && (

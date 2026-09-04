@@ -35,8 +35,36 @@ function formatDate(dateStr) {
 export default async function BlogPage() {
     const posts = await getPosts();
 
+    const blogSchema = {
+        '@context': 'https://schema.org',
+        '@graph': [
+            {
+                '@type': 'BreadcrumbList',
+                itemListElement: [
+                    { '@type': 'ListItem', position: 1, name: 'Beranda', item: 'https://www.ve-lora.my.id' },
+                    { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://www.ve-lora.my.id/blog' },
+                ],
+            },
+            {
+                '@type': 'Blog',
+                name: 'Blog & Engineering Insights Velora ID',
+                description: 'Artikel dan panduan rekayasa sistem informasi, aplikasi mobile, dan teknologi digital bisnis di Indonesia.',
+                url: 'https://www.ve-lora.my.id/blog',
+                publisher: {
+                    '@type': 'Organization',
+                    name: 'Velora ID',
+                    url: 'https://www.ve-lora.my.id',
+                },
+            },
+        ],
+    };
+
     return (
         <div className="min-h-screen bg-[#070C18] text-slate-100 relative overflow-hidden">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
+            />
             {/* Ambient Background & Grid */}
             <div className="absolute inset-0 studio-grid-pattern opacity-10 pointer-events-none" />
             <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-blue-600/[0.05] rounded-full blur-[140px] pointer-events-none" />
