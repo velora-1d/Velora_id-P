@@ -19,8 +19,8 @@ WORKDIR /app
 # Stage 1: Dependencies Installation
 # ------------------------------------------
 FROM base AS deps
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+COPY package.json pnpm-lock.yaml* ./
+RUN if [ -f pnpm-lock.yaml ]; then pnpm install --frozen-lockfile; else pnpm install; fi
 
 # ------------------------------------------
 # Stage 2: Application Build
