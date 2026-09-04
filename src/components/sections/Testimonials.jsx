@@ -51,29 +51,29 @@ const fallbackTestimonials = [
 ];
 
 const TestimonialCard = ({ testimonial }) => (
-    <div className="flex-shrink-0 w-[85vw] sm:w-[380px] mx-3 sm:mx-4">
-        <div className="rounded-2xl bg-slate-900/80 border border-slate-800 p-6 sm:p-7 shadow-lg flex flex-col justify-between h-full group hover:border-blue-500/40 transition-all duration-200">
+    <div className="flex-shrink-0 w-[85vw] sm:w-[380px] md:w-[410px] mx-2.5 sm:mx-3.5">
+        <div className="rounded-2xl bg-slate-900/90 border border-slate-800/90 p-6 sm:p-7 shadow-xl flex flex-col justify-between h-[225px] sm:h-[235px] group hover:border-blue-500/40 hover:bg-slate-900 transition-all duration-300 backdrop-blur-md">
             <div>
                 {/* Header: Stars & Quote Icon */}
-                <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center justify-between mb-3.5">
                     <div className="flex gap-1">
                         {[...Array(testimonial.rating || 5)].map((_, i) => (
                             <Star key={i} className="w-4 h-4 text-amber-400 fill-amber-400" />
                         ))}
                     </div>
-                    <Quote className="w-6 h-6 text-slate-700" />
+                    <Quote className="w-5 h-5 text-slate-700 group-hover:text-blue-400/50 transition-colors" />
                 </div>
 
                 {/* Content */}
-                <p className="text-slate-300 text-sm sm:text-[15px] leading-relaxed mb-6 font-normal text-justify">
+                <p className="text-slate-300 text-sm sm:text-[14.5px] leading-relaxed mb-4 font-normal text-justify line-clamp-3">
                     &quot;{testimonial.content}&quot;
                 </p>
             </div>
 
             {/* Author */}
-            <div className="pt-4 border-t border-slate-800/80 flex items-center justify-between">
+            <div className="pt-3.5 border-t border-slate-800/80 flex items-center justify-between mt-auto">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-blue-950 border border-blue-800 flex items-center justify-center text-blue-400 font-bold text-sm">
+                    <div className="w-9 h-9 rounded-xl bg-blue-950/80 border border-blue-800/80 flex items-center justify-center text-blue-400 font-bold text-xs">
                         {testimonial.avatar_url ? (
                             <img src={testimonial.avatar_url} alt={testimonial.name} className="w-full h-full object-cover rounded-xl" />
                         ) : (
@@ -81,14 +81,14 @@ const TestimonialCard = ({ testimonial }) => (
                         )}
                     </div>
                     <div>
-                        <h4 className="font-bold text-white text-sm tracking-tight">{testimonial.name}</h4>
-                        <p className="text-slate-400 text-xs">
+                        <h4 className="font-bold text-white text-xs sm:text-sm tracking-tight">{testimonial.name}</h4>
+                        <p className="text-slate-400 text-[11px] sm:text-xs line-clamp-1">
                             {testimonial.role}{testimonial.company ? ` • ${testimonial.company}` : ''}
                         </p>
                     </div>
                 </div>
 
-                <span className="text-emerald-400 text-[11px] font-mono flex items-center gap-1 hidden sm:flex">
+                <span className="text-emerald-400 text-[11px] font-mono flex items-center gap-1">
                     <CheckCircle2 className="w-3.5 h-3.5" /> Terverifikasi
                 </span>
             </div>
@@ -117,7 +117,8 @@ const Testimonials = () => {
         fetchTestimonials();
     }, []);
 
-    const allTestimonials = [...testimonials, ...testimonials];
+    const baseList = testimonials.length > 0 ? testimonials : fallbackTestimonials;
+    const trackList = baseList.length < 5 ? [...baseList, ...baseList] : baseList;
 
     return (
         <section id="testimonials" className="py-24 sm:py-32 bg-[#070C18] text-white relative border-t border-slate-800/80 overflow-hidden">
@@ -148,16 +149,25 @@ const Testimonials = () => {
                 </ScrollReveal>
             </div>
 
-            {/* Auto-scrolling Marquee */}
-            <div className="relative overflow-hidden py-4">
+            {/* Auto-scrolling Infinite Marquee */}
+            <div className="relative overflow-hidden py-4 w-full select-none">
                 {/* Side Fade Gradients */}
-                <div className="absolute left-0 top-0 bottom-0 w-12 sm:w-32 bg-gradient-to-r from-[#070C18] to-transparent z-10 pointer-events-none"></div>
-                <div className="absolute right-0 top-0 bottom-0 w-12 sm:w-32 bg-gradient-to-l from-[#070C18] to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute left-0 top-0 bottom-0 w-16 sm:w-36 bg-gradient-to-r from-[#070C18] via-[#070C18]/80 to-transparent z-10 pointer-events-none"></div>
+                <div className="absolute right-0 top-0 bottom-0 w-16 sm:w-36 bg-gradient-to-l from-[#070C18] via-[#070C18]/80 to-transparent z-10 pointer-events-none"></div>
 
-                <div className="flex animate-marquee hover:pause-animation">
-                    {allTestimonials.map((testimonial, index) => (
-                        <TestimonialCard key={index} testimonial={testimonial} />
-                    ))}
+                <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+                    {/* Track 1 */}
+                    <div className="flex shrink-0">
+                        {trackList.map((testimonial, index) => (
+                            <TestimonialCard key={`track-1-${index}`} testimonial={testimonial} />
+                        ))}
+                    </div>
+                    {/* Track 2 (Seamless loop replica) */}
+                    <div className="flex shrink-0" aria-hidden="true">
+                        {trackList.map((testimonial, index) => (
+                            <TestimonialCard key={`track-2-${index}`} testimonial={testimonial} />
+                        ))}
+                    </div>
                 </div>
             </div>
 
