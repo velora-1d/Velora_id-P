@@ -11,19 +11,19 @@ const fallbackPosts = [
         title: "Arsitektur Multi-Tenant & Keamanan Data untuk Lembaga Pendidikan", category: "Architecture", slug: "tren-transformasi-digital-2025",
         excerpt: "Bagaimana isolasi database relasional dan otentikasi berbasis RBAC melindungi integritas data operasional sekolah dan pesantren.",
         author: "Tim Engineer Velora", created_at: "2025-01-15", read_time: "5 menit",
-        image_url: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80"
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/blog/blog-digital-trends.jpg"
     },
     {
         title: "Optimasi Query PostgreSQL & Realtime Supabase pada Beban Tinggi", category: "Database", slug: "implementasi-ai-untuk-umkm",
         excerpt: "Pola indexing, row-level security policies, dan pencegahan connection spike saat pembayaran SPP serentak.",
         author: "Tim Engineer Velora", created_at: "2025-01-08", read_time: "4 menit",
-        image_url: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80"
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/blog/blog-ai-umkm.jpg"
     },
     {
         title: "Integrasi Payment Gateway Otomatis: Rekonsiliasi Realtime Tanpa Celah", category: "Fintech", slug: "migrasi-ke-cloud-panduan-lengkap",
         excerpt: "Strategi webhook idempotent, status synchronization, dan verifikasi hash signature untuk transaksi keuangan aman.",
         author: "Tim Engineer Velora", created_at: "2024-12-28", read_time: "6 menit",
-        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80"
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/blog/blog-cloud-migration.jpg"
     }
 ];
 

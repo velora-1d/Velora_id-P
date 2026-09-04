@@ -9,6 +9,7 @@ const fallbackTestimonials = [
     {
         content: "Velora sangat membantu digitalisasi administrasi pesantren kami. Sistem bendahara terintegrasi WA membuat pembayaran SPP santri jadi transparan dan auto-reconcile.",
         name: "Ustadz Ahmad Fauzi",
+        avatar_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/testimonials/avatar-ustadz-ahmad-fauzi.jpg",
         role: "Pimpinan Lembaga",
         company: "Pesantren Al-Hikmah",
         rating: 5
@@ -16,6 +17,7 @@ const fallbackTestimonials = [
     {
         content: "Deploy website company profile dan landing page selesai dalam hitungan hari. Loading super cepat, skor PageSpeed 99, dan langsung dapat klien dari Google.",
         name: "Rizky Pratama",
+        avatar_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/testimonials/avatar-rizky-pratama.jpg",
         role: "Founder & Director",
         company: "CV Digital Kreasi",
         rating: 5
@@ -23,20 +25,23 @@ const fallbackTestimonials = [
     {
         content: "Integrasi payment gateway QRIS dan Virtual Account untuk platform kami berjalan lancar. Notifikasi WhatsApp instan sangat diapresiasi oleh pelanggan.",
         name: "Siti Nurhaliza",
+        avatar_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/testimonials/avatar-siti-nurhaliza.jpg",
         role: "Operasional Bisnis",
         company: "Retail Prima Hub",
         rating: 5
     },
     {
-        content: "Website resmi kami jadi jauh lebih representatif dan terpercaya di mata investor. Tim Velora sangat responsif dalam maintenance dan garansi.",
-        name: "Budi Santoso",
-        role: "Managing Director",
-        company: "PT Maju Nusantara",
+        content: "Website resmi kami jadi jauh lebih representatif dan terpercaya di mata klien korporat. Tim Velora sangat responsif dalam maintenance dan implementasi SLA sistem.",
+        name: "Naura Maulia",
+        avatar_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/testimonials/avatar-naura-maulia.jpg",
+        role: "Direktur",
+        company: "CV Maju Jaya",
         rating: 5
     },
     {
         content: "Sistem e-rapor dan administrasi santri yang dibuatkan sangat intuitif. Guru dan staf tata usaha kami bisa langsung menggunakannya tanpa kendala.",
         name: "Ibu Dewi Kartika",
+        avatar_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/testimonials/avatar-ibu-dewi-kartika.jpg",
         role: "Kepala Kurikulum",
         company: "SMP & MA Terpadu",
         rating: 5
@@ -44,6 +49,7 @@ const fallbackTestimonials = [
     {
         content: "Server stabil tanpa downtime, penataan database rapi, dan keamanan data terjamin. Partner teknologi terbaik untuk jangka panjang.",
         name: "Andi Wijaya",
+        avatar_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/testimonials/avatar-andi-wijaya.jpg",
         role: "Head of Technology",
         company: "Logistics Prima",
         rating: 5

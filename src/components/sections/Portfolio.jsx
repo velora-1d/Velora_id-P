@@ -17,7 +17,7 @@ const fallbackProjects = [
         challenge: "Sinkronisasi data pelanggan dan status koneksi real-time lintas Point of Presence (POP) area jaringan fiber, penanganan throughput transaksi tinggi billing engine, integrasi gateway Netpay API, notifikasi push Firebase berlatar belakang, penyimpanan dokumen bukti bayar di object storage RustFS (S3), serta pemenuhan standar arsitektur 16KB page size NDK dan obfuscation Proguard R8 pada aplikasi mobile Android.",
         solution: "Membangun backend service performa tinggi berbasis Golang dengan database PostgreSQL, web console responsif dengan Next.js, implementasi adapter Netpay payment callback, integrasi MikroTik RouterOS API untuk isolasi otomatis seketika, pipeline penyimpanan RustFS S3, automasi push notification via Firebase FCM, serta optimalisasi native toolchain NDK pada aplikasi Flutter Minpo Mobile.",
         tech: "Golang, Next.js, Flutter, Dart, PostgreSQL, RustFS (S3), Firebase, Netpay Payment Gateway, MikroTik API, NDK",
-        image_url: "/images/portfolio/jbr-minpo-dashboard.png",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/jbr-minpo-dashboard.png",
         background_image_url: "/images/portfolio/jbr-minpo-mobile.jpg",
         icon_name: "Radio"
     },
@@ -30,7 +30,7 @@ const fallbackProjects = [
         challenge: "Mengelola isolasi data ratusan lembaga pesantren dalam satu sistem terpusat tanpa risiko kebocoran data antar-tenant serta query reporting yang tetap instan di bawah beban jutaan log transaksi.",
         solution: "Mengimplementasikan database tenancy isolation dengan Laravel, scoped query otomatis, integrasi payment gateway virtual account, asynchronous job queue, dan cache multi-layer.",
         tech: "Laravel 11, PostgreSQL, Multi-Tenant Architecture, Tailwind CSS, Redis, Docker",
-        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/santrix-platform.jpg",
         icon_name: "Building2"
     },
     {
@@ -42,7 +42,7 @@ const fallbackProjects = [
         challenge: "Menghadirkan aplikasi mobile yang responsif di ribuan perangkat wali santri serta aplikasi desktop loket pembayaran yang ringan tanpa membebani memori RAM komputer loket lama.",
         solution: "Membangun mobile app dengan Flutter & Riverpod untuk caching offline, serta merakit desktop app dengan Tauri & Rust yang hanya mengonsumsi memori di bawah 50MB RAM.",
         tech: "Flutter, Dart, Tauri, Rust, SQLite, REST API",
-        image_url: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/santrix-suite.jpg",
         icon_name: "Smartphone"
     },
     {
@@ -54,7 +54,7 @@ const fallbackProjects = [
         challenge: "Automasi isolasi jaringan bagi pelanggan yang jatuh tempo serta sinkronisasi data tagihan ribuan pelanggan secara instan ke perangkat router MikroTik.",
         solution: "Integrasi API router MikroTik & Radius server, trigger auto-isolate melalui webhook pembayaran, serta notifikasi WhatsApp tagihan otomatis sebelum jatuh tempo.",
         tech: "Flutter, Laravel, MikroTik API, Radius, MySQL, Tailwind CSS",
-        image_url: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/isp-jabbar23-system.jpg",
         icon_name: "Radio"
     },
     {
@@ -66,7 +66,7 @@ const fallbackProjects = [
         challenge: "Menangani lonjakan koneksi serentak ratusan siswa saat ujian online tanpa terjadi kegagalan pengiriman jawaban akibat fluktuasi koneksi internet siswa.",
         solution: "Arsitektur Next.js decoupled dengan backend Node.js teroptimasi, penyimpanan sementara jawaban di IndexedDB browser, dan sistem autosave berkala berlatar belakang.",
         tech: "Next.js 15, Node.js, Express, PostgreSQL, REST API, Tailwind CSS",
-        image_url: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/eduvera-platform.jpg",
         icon_name: "GraduationCap"
     },
     {
@@ -78,7 +78,7 @@ const fallbackProjects = [
         challenge: "Menghindari risiko suspend/blokir nomor WhatsApp akibat lonjakan pengiriman pesan massal dan memastikan pesan promosi sampai tepat waktu ke ribuan prospek.",
         solution: "Algoritma humanized typing delay, random interval rotation, message queue berbasis Redis, serta sistem distribusi chat masuk ke agen CS aktif secara round-robin.",
         tech: "Next.js, Node.js, WebSocket, WhatsApp Multi-Device Protocol, Redis",
-        image_url: "https://images.unsplash.com/photo-1611746872915-64382b5c76da?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/velorablast-crm.jpg",
         icon_name: "Bot"
     },
     {
@@ -90,7 +90,7 @@ const fallbackProjects = [
         challenge: "Menjamin integritas dan konsistensi transaksi finansial (ACID) serta mencegah double-spending atau selisih pencatatan mutasi saldo saat high concurrency.",
         solution: "Implementasi transaksi berbasis atomic row-locking di PostgreSQL, idempotency key pada setiap request pembayaran, dan verifikasi webhook HMAC-SHA256.",
         tech: "Go / Node.js, PostgreSQL, Redis, Payment Gateway API, Docker",
-        image_url: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/verapay-wallet.jpg",
         icon_name: "CreditCard"
     },
     {
@@ -102,7 +102,7 @@ const fallbackProjects = [
         challenge: "Menyaring ribuan berkas lamaran kerja yang masuk secara manual membutuhkan waktu berhari-hari bagi tim HR.",
         solution: "Sistem scoring kualifikasi kandidat otomatis, kanban board status pelamar (Screening, Interview, Offering), dan integrasi notifikasi WhatsApp/Email ke pelamar.",
         tech: "Next.js, Node.js, PostgreSQL, Tailwind CSS, REST API",
-        image_url: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/velora-jobs-ats.jpg",
         icon_name: "Users"
     },
     {
@@ -114,7 +114,7 @@ const fallbackProjects = [
         challenge: "Pencatatan kas dan administrasi pondok yang tersebar di buku tulis fisik rentan selisih perhitungan dan sulit diaudit saat pelaporan tahunan.",
         solution: "Digitalisasi buku kas berpasangan (debit/kredit) otomatis dengan neraca saldo real-time, akses role bertingkat (Pimpinan, Bendahara, Pengurus), dan ekspor laporan PDF/Excel.",
         tech: "Laravel 11, Flutter, Tauri, MySQL, Tailwind CSS, Alpine.js",
-        image_url: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/dashboard-riyadlulhuda.jpg",
         icon_name: "Layers"
     },
     {
@@ -126,7 +126,7 @@ const fallbackProjects = [
         challenge: "Kecurangan presensi karyawan menggunakan aplikasi Fake GPS atau titip absen yang merugikan perusahaan.",
         solution: "Algoritma deteksi mock provider OS Android/iOS, validasi lingkaran geofencing akurat hingga toleransi 5 meter, dan log kehadiran tamper-proof.",
         tech: "Flutter, Cloud Database, Geolocation API, Biometric Auth, Node.js",
-        image_url: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/skillage-absn-profiling.jpg",
         icon_name: "MapPin"
     },
     {
@@ -138,7 +138,7 @@ const fallbackProjects = [
         challenge: "Sinkronisasi stok barang antara etalase website dengan gudang fisik agar tidak terjadi overselling saat momen flash sale.",
         solution: "Sistem reservasi stok sementara pada sesi checkout, auto-deduct saat pembayaran terkonfirmasi, dan notifikasi otomatis stok menipis ke admin gudang.",
         tech: "React, Node.js, PostgreSQL, Midtrans, RajaOngkir API",
-        image_url: "https://images.unsplash.com/photo-1556742049-0a67e5572293?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/dimzzy-ecommerce.jpg",
         icon_name: "ShoppingCart"
     },
     {
@@ -150,7 +150,7 @@ const fallbackProjects = [
         challenge: "Menghitung metrik pendapatan berulang secara akurat dan mengotomasi dunning management (penagihan kartu/VA gagal) tanpa membuat pelanggan frustrasi.",
         solution: "Scheduler otomatis berbasis cron job dengan webhook payment gateway, auto-retry penagihan, dan reminder tagihan proaktif via WhatsApp & Email.",
         tech: "Next.js, Node.js, PostgreSQL, Cron Worker, Tailwind CSS",
-        image_url: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/one-subscribe-billing.jpg",
         icon_name: "Zap"
     },
     {
@@ -162,7 +162,7 @@ const fallbackProjects = [
         challenge: "Menyajikan informasi kelembagaan yang padat dengan tampilan visual yang elegan, terpercaya, dan sangat cepat diakses dari ponsel berpita internet terbatas.",
         solution: "Desain responsif mobile-first, optimasi Google PageSpeed 95+, integrasi CMS berita mandiri, dan integrasi WhatsApp pendaftaran one-click.",
         tech: "Next.js, Tailwind CSS, Headless CMS, SEO Optimization, Cloudflare",
-        image_url: "https://images.unsplash.com/photo-1541829070764-84a7d30dd3f3?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/profil-lembaga-portal.jpg",
         icon_name: "Globe"
     },
     {
@@ -174,7 +174,7 @@ const fallbackProjects = [
         challenge: "Memproses ribuan baris log transaksi menjadi grafik insight visual dalam hitungan detik tanpa membebani browser pengguna.",
         solution: "Pemrosesan data di sisi server (Server-Side Aggregation), indexing database teroptimasi, dan chart library berbasis Canvas performa tinggi.",
         tech: "React, Next.js, Python, Chart.js, PostgreSQL, PDFKit",
-        image_url: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/data-analyst-report.jpg",
         icon_name: "BarChart3"
     },
     {
@@ -186,7 +186,7 @@ const fallbackProjects = [
         challenge: "Menjaga performa vector similarity search tetap cepat dan daemon automasi browser berjalan stabil tanpa crash atau deteksi bot.",
         solution: "Vector embedding pipeline dengan pgvector di PostgreSQL, chunking semantik cerdas, serta Playwright stealth profile emulation.",
         tech: "Python, Playwright, Pgvector, Node.js, LangChain, OpenAI / Gemini",
-        image_url: "https://images.unsplash.com/photo-1677442136019-21780efad99a?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/rag-ai-automation.jpg",
         icon_name: "Terminal"
     },
     {
@@ -198,7 +198,7 @@ const fallbackProjects = [
         challenge: "Operasional kasir tidak boleh terhenti sedikitpun ketika koneksi internet toko sedang tidak stabil atau padam.",
         solution: "Arsitektur offline-first menggunakan IndexedDB lokal, antrian transaksi offline otomatis, dan auto-sync ke server saat koneksi pulih.",
         tech: "React, Electron / Tauri, IndexedDB, Web Bluetooth API, PostgreSQL",
-        image_url: "https://images.unsplash.com/photo-1556740758-90de374c12ad?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/pos-skillage-retail.jpg",
         icon_name: "CreditCard"
     },
     {
@@ -210,7 +210,7 @@ const fallbackProjects = [
         challenge: "Kompleksitas penyusunan jam mengajar guru dan jadwal mata pelajaran yang seringkali terjadi bentrok jadwal penggunaan ruang kelas/lab.",
         solution: "Algoritma deteksi bentrok jadwal otomatis, visualisasi matriks jadwal kelas interaktif, dan portal mandiri guru & wali murid.",
         tech: "Laravel 11, Livewire, MySQL, Tailwind CSS, Alpine.js",
-        image_url: "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1200&q=80",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/erp-sekolah-akademik.jpg",
         icon_name: "GraduationCap"
     }
 ];

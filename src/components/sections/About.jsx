@@ -12,7 +12,7 @@ const fallbackAbout = {
         'Velora didirikan pada tahun 2023 dengan visi sederhana: menjembatani kesenjangan antara teknologi canggih dan kebutuhan bisnis praktis. Bermula dari sebuah tim kecil pengembang yang passionate, kami berkembang menjadi konsultan transformasi digital yang melayani berbagai industri.',
         'Nama "Velora" diambil dari kata "Velocity" (kecepatan) dan "Aurora" (cahaya baru), melambangkan komitmen kami untuk membawa percepatan dan perspektif baru bagi setiap klien kami. Kami percaya bahwa teknologi bukan hanya alat, tetapi katalis untuk perubahan positif.'
     ],
-    imageUrl: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=600&q=70',
+    imageUrl: 'https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/about/studio-office-environment.jpg',
     stats: [
         { value: 50, label: 'Proyek Selesai', suffix: '+' },
         { value: 98, label: 'Klien Puas', suffix: '%' }
@@ -189,7 +189,7 @@ const About = () => {
                         {/* Banner Image */}
                         <div className="h-[250px] sm:h-[350px] rounded-3xl overflow-hidden relative shadow-lg shadow-gray-200/50 mb-0 z-0">
                             <img
-                                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=70"
+                                src={aboutData.imageUrl || "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/about/studio-office-environment.jpg"}
                                 alt="Velora Values"
                                 className="w-full h-full object-cover"
                             />

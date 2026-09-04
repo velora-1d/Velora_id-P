@@ -43,7 +43,7 @@ const expertise = [
 const fallbackFounder = {
     name: 'Mahin Utsman Nawawi, S.H.',
     title: 'Founder & Lead Architect',
-    photo_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+    photo_url: 'https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/founder/founder.jpg',
     bio_paragraphs: [
         'Seorang Sarjana Hukum yang mendedikasikan diri pada arsitektur perangkat lunak modern dan rekayasa web berkinerja tinggi. Perpaduan latar belakang legalitas formal dan keahlian teknis menghadirkan cara pandang holistik: membangun infrastruktur digital yang tidak hanya responsif dan terukur, tetapi juga patuh terhadap tata kelola dan kepastian hukum.',
         'Berbasis di Pasirjambu, Bandung, mendirikan Velora ID pada tahun 2023 dengan komitmen jelas: menghadirkan solusi teknologi berstandar korporasi yang dapat diakses oleh lembaga pendidikan, pesantren, dan UMKM nasional.'

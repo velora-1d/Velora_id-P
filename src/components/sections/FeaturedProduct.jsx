@@ -21,6 +21,7 @@ const fallbackFeatures = [
         description: 'Pembayaran digital multi-channel terintegrasi Midtrans/Xendit, tagihan SPP berkala, pencatatan kas masuk/keluar, dan notifikasi invoice WhatsApp otomatis langsung ke nomor orang tua/wali santri.',
         color_gradient: 'from-blue-600 to-slate-900',
         badge: 'MODUL_KEUANGAN',
+        image_url: 'https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/products/featured-sistem-bendahara.jpg',
         highlights: [
             'Payment Gateway QRIS & VA Bank (BCA, BRI, Mandiri)',
             'Notifikasi Tagihan WhatsApp Otomatis',
@@ -35,6 +36,7 @@ const fallbackFeatures = [
         description: 'Kelola seluruh biodata santri/siswa, rekam medis internal, kelas, asrama/jurusan, mutasi santri, surat menyurat resmi, hingga direktori alumni dalam satu basis data terenkripsi.',
         color_gradient: 'from-blue-600 to-slate-900',
         badge: 'MODUL_ADMINISTRASI',
+        image_url: 'https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/products/featured-sistem-sekretaris.jpg',
         highlights: [
             'Master Data Santri & Riwayat Akademik Terpadu',
             'Manajemen Kamar, Asrama, & Kelas Dinamis',
@@ -49,6 +51,7 @@ const fallbackFeatures = [
         description: 'Perhitungan nilai otomatis sesuai Kurikulum Merdeka dan standar kepesantrenan. Dilengkapi cetak rapor PDF legalitas, absensi harian per mapel, serta pencatatan hafalan/tahfidz.',
         color_gradient: 'from-blue-600 to-slate-900',
         badge: 'MODUL_AKADEMIK',
+        image_url: 'https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/products/featured-sistem-pendidikan.jpg',
         highlights: [
             'E-Rapor Digital Kurikulum Merdeka & Kemenag',
             'Modul Setoran Hafalan / Tahfidz Realtime',
@@ -276,6 +279,27 @@ const FeaturedProduct = () => {
                                     ))}
                                 </div>
                             </div>
+
+                            {/* Active Product Visual Mockup */}
+                            {active?.image_url && (
+                                <div className="mt-8 pt-6 border-t border-slate-800/80">
+                                    <div className="relative rounded-xl overflow-hidden border border-slate-800/90 shadow-2xl bg-slate-950 group">
+                                        <img 
+                                            src={active.image_url} 
+                                            alt={active.title} 
+                                            className="w-full h-auto max-h-[460px] object-cover object-top transition-transform duration-500 group-hover:scale-[1.01]" 
+                                            loading="lazy"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+                                        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-slate-300">
+                                            <span className="px-2.5 py-1 rounded bg-slate-900/90 border border-slate-700/80 text-blue-400 font-semibold">
+                                                Preview Antarmuka Sistem Live
+                                            </span>
+                                            <span className="text-slate-400">Arsitektur Velora Santrix Suite</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
 
