@@ -38,7 +38,7 @@ const iconMap = {
 };
 
 const fallbackSocials = [
-    { type: 'whatsapp', href: 'https://wa.me/6281320442174', label: 'WhatsApp' },
+    { type: 'whatsapp', href: 'https://wa.me/6285117776596', label: 'WhatsApp' },
     { type: 'linkedin', href: 'https://www.linkedin.com/in/mahin-utsman-nawawi-s-h-3b4758379/', label: 'LinkedIn' },
     { type: 'tiktok', href: 'https://www.tiktok.com/@velora002', label: 'TikTok' },
     { type: 'github', href: 'https://github.com/mahinutsmannawawi20-svg', label: 'GitHub' },
@@ -120,7 +120,7 @@ const Footer = () => {
                                         <div className="w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center flex-shrink-0">
                                             <Phone className="w-4 h-4 text-emerald-400" />
                                         </div>
-                                        <span className="text-gray-400">0813-2044-2174</span>
+                                        <span className="text-gray-400">0851-1777-6596</span>
                                     </div>
                                 </div>
 

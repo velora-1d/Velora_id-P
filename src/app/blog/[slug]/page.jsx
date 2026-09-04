@@ -376,7 +376,7 @@ export default async function BlogPostPage({ params }) {
                             </p>
                         </div>
                         <a
-                            href={`https://wa.me/6281320442174?text=${encodeURIComponent(`Halo Velora ID! Saya membaca artikel "${post.title}" dan tertarik berkonsultasi mengenai kebutuhan sistem kami.`)}`}
+                            href={`https://wa.me/6285117776596?text=${encodeURIComponent(`Halo Velora ID! Saya membaca artikel "${post.title}" dan tertarik berkonsultasi mengenai kebutuhan sistem kami.`)}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className="flex-shrink-0 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-sm shadow-lg shadow-blue-600/20 transition-all flex items-center gap-2 hover:-translate-y-0.5"

@@ -21,7 +21,7 @@ const Contact = () => {
     const [status, setStatus] = useState('');
     const [focusedField, setFocusedField] = useState(null);
     const [contactData, setContactData] = useState({
-        whatsapp: '6281320442174',
+        whatsapp: '6285117776596',
         email: 'velora20.id@gmail.com',
         address: 'Pasirjambu, Bandung',
         ctaTitle: 'Siap Memulai Proyek Digital?',
@@ -44,7 +44,7 @@ const Contact = () => {
                     const sub = data.find(d => d.setting_key === 'cta_subtitle')?.setting_value;
 
                     setContactData({
-                        whatsapp: wa || '6281320442174',
+                        whatsapp: wa || '6285117776596',
                         email: mail || 'velora20.id@gmail.com',
                         address: addr || 'Pasirjambu, Bandung',
                         ctaTitle: title || 'Siap Memulai Proyek Digital?',

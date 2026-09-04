@@ -227,7 +227,7 @@ export default async function PortfolioDetailPage({ params }) {
                                 Diskusikan spesifikasi kebutuhan digital Anda bersama tim arsitek kami via WhatsApp.
                             </p>
                             <a
-                                href={`https://wa.me/6281320442174?text=${encodeURIComponent(`Halo Velora! Saya tertarik dengan sistem "${project.title}" yang ada di portfolio.`)}`}
+                                href={`https://wa.me/6285117776596?text=${encodeURIComponent(`Halo Velora! Saya tertarik dengan sistem "${project.title}" yang ada di portfolio.`)}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-xl font-bold text-sm shadow-lg shadow-blue-600/25 transition-all"

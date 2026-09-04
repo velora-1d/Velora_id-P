@@ -397,7 +397,7 @@ export default function SiteSettingsClient({ initialData }) {
                                     value={form.contact_whatsapp}
                                     onChange={(e) => setForm({ ...form, contact_whatsapp: e.target.value })}
                                     className="w-full px-3 py-2.5 bg-gray-800 border border-gray-700 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-primary/50"
-                                    placeholder="Contoh: 6281320442174"
+                                    placeholder="Contoh: 6285117776596"
                                     required
                                 />
                             </div>
