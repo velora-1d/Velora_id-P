@@ -18,7 +18,7 @@ const fallbackProjects = [
         solution: "Membangun backend service performa tinggi berbasis Golang dengan database PostgreSQL, web console responsif dengan Next.js, implementasi adapter Netpay payment callback, integrasi MikroTik RouterOS API untuk isolasi otomatis seketika, pipeline penyimpanan RustFS S3, automasi push notification via Firebase FCM, serta optimalisasi native toolchain NDK pada aplikasi Flutter Minpo Mobile.",
         tech: "Golang, Next.js, Flutter, Dart, PostgreSQL, RustFS (S3), Firebase, Netpay Payment Gateway, MikroTik API, NDK",
         image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/jbr-minpo-dashboard.png",
-        background_image_url: "/images/portfolio/jbr-minpo-mobile.jpg",
+        background_image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/portfolio/jbr-minpo-mobile.jpg",
         icon_name: "Radio"
     },
     {

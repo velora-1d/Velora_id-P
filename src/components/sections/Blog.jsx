@@ -8,22 +8,34 @@ import Link from 'next/link';
 
 const fallbackPosts = [
     {
-        title: "Arsitektur Multi-Tenant & Keamanan Data untuk Lembaga Pendidikan", category: "Architecture", slug: "tren-transformasi-digital-2025",
-        excerpt: "Bagaimana isolasi database relasional dan otentikasi berbasis RBAC melindungi integritas data operasional sekolah dan pesantren.",
-        author: "Tim Engineer Velora", created_at: "2025-01-15", read_time: "5 menit",
-        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/blog/blog-digital-trends.jpg"
+        title: "Arsitektur Flutter untuk Layanan Mandiri Pelanggan ISP: Clean Code & Offline-First Sync",
+        category: "Mobile Apps",
+        slug: "arsitektur-flutter-aplikasi-pelanggan-isp",
+        excerpt: "Desain arsitektur mobile Flutter offline-first dengan reactive state management dan sync queue untuk layanan mandiri ribuan pelanggan ISP.",
+        author: "Tim Engineer Velora",
+        created_at: "2026-09-04",
+        read_time: "6 menit",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/blog/blog-flutter-isp-architecture.jpg"
     },
     {
-        title: "Optimasi Query PostgreSQL & Realtime Supabase pada Beban Tinggi", category: "Database", slug: "implementasi-ai-untuk-umkm",
-        excerpt: "Pola indexing, row-level security policies, dan pencegahan connection spike saat pembayaran SPP serentak.",
-        author: "Tim Engineer Velora", created_at: "2025-01-08", read_time: "4 menit",
-        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/blog/blog-ai-umkm.jpg"
+        title: "Mengapa Kami Memilih Golang Dibanding PHP/Laravel untuk Core Billing ISP Jutaan Transaksi",
+        category: "Backend Engineering",
+        slug: "arsitektur-backend-golang-billing-isp",
+        excerpt: "Analisis teknis arsitektur high-concurrency billing ISP: perbandingan memory footprint goroutine vs worker process PHP, latency, dan throughput.",
+        author: "Tim Engineer Velora",
+        created_at: "2026-09-04",
+        read_time: "7 menit",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/blog/blog-golang-billing-architecture.jpg"
     },
     {
-        title: "Integrasi Payment Gateway Otomatis: Rekonsiliasi Realtime Tanpa Celah", category: "Fintech", slug: "migrasi-ke-cloud-panduan-lengkap",
-        excerpt: "Strategi webhook idempotent, status synchronization, dan verifikasi hash signature untuk transaksi keuangan aman.",
-        author: "Tim Engineer Velora", created_at: "2024-12-28", read_time: "6 menit",
-        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/blog/blog-cloud-migration.jpg"
+        title: "Otomasi Isolasi Pelanggan ISP: Arsitektur MikroTik API, Netpay Gateway, dan Aplikasi Flutter",
+        category: "Network Automation",
+        slug: "otomasi-isolasi-pelanggan-isp-mikrotik-netpay",
+        excerpt: "Bagaimana integrasi MikroTik RouterOS API, webhook payment gateway, dan app pelanggan memproses re-aktivasi jaringan internet di bawah 2 detik.",
+        author: "Tim Engineer Velora",
+        created_at: "2026-09-04",
+        read_time: "8 menit",
+        image_url: "https://aenvcxkxbvwrcwsffdbb.supabase.co/storage/v1/object/public/Velora/blog/blog-mikrotik-netpay-isolation.jpg"
     }
 ];
 
