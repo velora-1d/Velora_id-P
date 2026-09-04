@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Layers, Sparkles, MapPin, Zap, ChevronRight, ExternalLink, Terminal, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Layers, Sparkles, MapPin, Zap, ChevronRight, ExternalLink, Terminal, ShieldCheck, Laptop, Smartphone } from 'lucide-react';
 import { createClient } from '@/lib/supabase/client';
 import ScrollReveal from '../animations/ScrollReveal';
 import { getIcon } from '@/lib/icons';
@@ -298,104 +298,136 @@ const Portfolio = () => {
                     {/* FEATURED CASE STUDY (COMMAND CENTER DISPLAY) */}
                     {featured && (
                         <ScrollReveal width="100%">
-                            <div className="mb-10 sm:mb-12 rounded-3xl studio-card-light overflow-hidden shadow-sm group">
-                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-stretch">
-                                    {/* Left (Span 7): Device / Screen Showcase */}
-                                    <div className="lg:col-span-7 relative min-h-[340px] sm:min-h-[420px] lg:min-h-full overflow-hidden bg-slate-950 flex flex-col justify-between">
-                                        {/* Browser frame top */}
-                                        <div className="flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800 z-10 text-[11px] font-mono text-slate-300">
-                                            <div className="flex items-center gap-2">
-                                                <div className="flex gap-1.5">
-                                                    <div className="w-2 h-2 rounded-full bg-red-500/80"></div>
-                                                    <div className="w-2 h-2 rounded-full bg-amber-500/80"></div>
-                                                    <div className="w-2 h-2 rounded-full bg-emerald-500/80"></div>
-                                                </div>
-                                                <span className="text-slate-400 ml-2 truncate max-w-[200px]">{featured.title.toLowerCase().replace(/\s+/g, '-')}.velora.id</span>
-                                            </div>
-                                            <div className="flex items-center gap-2">
-                                                <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                                                <span className="text-blue-400 font-semibold">[PRODUKSI_LIVE]</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="relative flex-1 w-full h-full min-h-[300px] overflow-hidden bg-slate-950">
-                                            <img
-                                                src={featured.image_url || featured.image}
-                                                alt={featured.title}
-                                                className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                                            />
-                                            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-transparent to-transparent pointer-events-none"></div>
-
-                                            {/* Floating Mobile App Mockup when available */}
-                                            {featured.background_image_url && (
-                                                <div className="absolute right-4 bottom-4 w-28 sm:w-36 md:w-40 rounded-2xl p-1.5 bg-slate-900/95 backdrop-blur-xl border border-white/20 shadow-2xl transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-1 z-10">
-                                                    <div className="flex items-center justify-between px-1 py-0.5 mb-1 border-b border-white/10 text-[9px] font-mono text-slate-300">
-                                                        <span className="text-blue-400 font-bold">App Mobile</span>
-                                                        <span className="text-[8px] text-emerald-400 font-semibold">Flutter</span>
-                                                    </div>
-                                                    <div className="rounded-xl overflow-hidden aspect-[9/17] bg-slate-950 shadow-inner">
-                                                        <img
-                                                            src={featured.background_image_url}
-                                                            alt={`${featured.title} Mobile App`}
-                                                            className="w-full h-full object-cover object-top"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-                                    </div>
-
-                                    {/* Right (Span 5): Case Study Brief */}
-                                    <div className="lg:col-span-5 p-6 sm:p-8 md:p-10 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-slate-200/80 bg-white">
-                                        <div>
-                                            <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
-                                                <div className="flex items-center gap-2">
-                                                    <span className="text-[10px] font-mono uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/80 px-2.5 py-0.5 rounded font-bold">
-                                                        {featured.category}
-                                                    </span>
-                                                    <span className="text-[10px] font-mono uppercase tracking-wider text-amber-800 bg-amber-50 border border-amber-300/80 px-2.5 py-0.5 rounded font-bold flex items-center gap-1 shadow-sm">
-                                                        ★ PROYEK UTAMA
-                                                    </span>
-                                                </div>
+                            <div className="mb-12 sm:mb-16 rounded-3xl studio-card-light overflow-hidden shadow-lg border border-slate-200/90 bg-white">
+                                {/* Top: Case Study Header & Brief */}
+                                <div className="p-6 sm:p-8 lg:p-10 border-b border-slate-200/80 bg-gradient-to-b from-white to-slate-50/50">
+                                    <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6">
+                                        <div className="max-w-3xl">
+                                            <div className="flex items-center gap-2 mb-3 flex-wrap">
+                                                <span className="text-[10px] font-mono uppercase tracking-wider text-blue-700 bg-blue-50 border border-blue-200/80 px-2.5 py-0.5 rounded font-bold">
+                                                    {featured.category}
+                                                </span>
+                                                <span className="text-[10px] font-mono uppercase tracking-wider text-amber-800 bg-amber-50 border border-amber-300/80 px-2.5 py-0.5 rounded font-bold flex items-center gap-1 shadow-sm">
+                                                    ★ PROYEK UTAMA
+                                                </span>
                                                 <span className="text-xs text-slate-500 font-mono flex items-center gap-1">
                                                     <MapPin className="w-3.5 h-3.5 text-slate-400" />
                                                     {featured.client}
                                                 </span>
                                             </div>
 
-                                            <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3 tracking-tight group-hover:text-blue-600 transition-colors">
+                                            <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 mb-3 tracking-tight">
                                                 {featured.title}
                                             </h3>
 
-                                            <p className="text-slate-600 text-sm leading-relaxed mb-6 text-justify">
+                                            <p className="text-slate-600 text-sm sm:text-base leading-relaxed mb-4 text-justify">
                                                 {featured.description}
                                             </p>
 
                                             {/* Stack Tag Chips */}
-                                            <div className="mb-6">
-                                                <span className="text-[11px] font-mono text-slate-400 block mb-2 uppercase tracking-wider">Teknologi yang Diterapkan:</span>
-                                                <div className="flex flex-wrap gap-1.5">
-                                                    {featured.tech.split(',').map((t, i) => (
-                                                        <span key={i} className="text-xs font-mono px-2.5 py-1 rounded bg-slate-50 border border-slate-200 text-blue-700">
-                                                            {t.trim()}
-                                                        </span>
-                                                    ))}
-                                                </div>
+                                            <div className="flex flex-wrap gap-1.5 pt-1">
+                                                {featured.tech.split(',').map((t, i) => (
+                                                    <span key={i} className="text-xs font-mono px-2.5 py-1 rounded bg-slate-100 border border-slate-200 text-blue-700 font-medium">
+                                                        {t.trim()}
+                                                    </span>
+                                                ))}
                                             </div>
                                         </div>
 
-                                        <div className="pt-5 border-t border-slate-100 flex items-center justify-between">
+                                        <div className="flex sm:flex-row lg:flex-col items-start sm:items-center lg:items-end justify-between gap-4 flex-shrink-0 pt-2 lg:pt-0">
                                             <Link
                                                 href={projectUrl(featured)}
-                                                className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 px-5 py-2.5 rounded-xl transition-all shadow-md shadow-blue-600/20 group"
+                                                className="inline-flex items-center gap-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 px-6 py-3 rounded-xl transition-all shadow-md shadow-blue-600/20 group whitespace-nowrap"
                                             >
                                                 <span>Buka Studi Kasus</span>
                                                 <ArrowRight className="w-4 h-4 text-blue-100 transition-transform group-hover:translate-x-1" />
                                             </Link>
                                             <span className="text-xs font-mono text-emerald-600 flex items-center gap-1">
-                                                <ShieldCheck className="w-3.5 h-3.5" /> Terverifikasi
+                                                <ShieldCheck className="w-4 h-4" /> Live di Produksi
                                             </span>
                                         </div>
+                                    </div>
+                                </div>
+
+                                {/* Bottom: Command Center Screens Showcase (100% Uncropped!) */}
+                                <div className="p-4 sm:p-6 lg:p-8 bg-slate-950">
+                                    <div className={`grid grid-cols-1 ${featured.background_image_url ? 'lg:grid-cols-12' : ''} gap-6 items-start`}>
+                                        {/* Web Console Screen (8 cols if mobile exists, else full width) */}
+                                        <div className={`${featured.background_image_url ? 'lg:col-span-8' : 'w-full'} rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 shadow-2xl flex flex-col`}>
+                                            {/* Browser Bar */}
+                                            <div className="flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800 text-[11px] font-mono text-slate-300">
+                                                <div className="flex items-center gap-2">
+                                                    <div className="flex gap-1.5">
+                                                        <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                                                        <div className="w-2.5 h-2.5 rounded-full bg-amber-500/80"></div>
+                                                        <div className="w-2.5 h-2.5 rounded-full bg-emerald-500/80"></div>
+                                                    </div>
+                                                    <span className="text-slate-400 ml-2 truncate max-w-[280px]">
+                                                        https://{(featured.slug || 'minpo').toLowerCase().replace(/\s+/g, '-')}.jabbar23.net/admin/dashboard
+                                                    </span>
+                                                </div>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                                                    <span className="text-blue-400 font-semibold">[PRODUKSI_LIVE]</span>
+                                                </div>
+                                            </div>
+
+                                            {/* Dashboard Image - FULL UNROUNDED & UNCROPPED */}
+                                            <div className="bg-slate-950 w-full overflow-hidden">
+                                                <img
+                                                    src={featured.image_url || featured.image}
+                                                    alt={featured.title}
+                                                    className="w-full h-auto object-contain block"
+                                                />
+                                            </div>
+
+                                            {/* Footer Caption */}
+                                            <div className="px-4 py-2.5 bg-slate-900/90 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-mono">
+                                                <div className="flex items-center gap-2 text-slate-300">
+                                                    <Laptop className="w-3.5 h-3.5 text-blue-400" />
+                                                    <span>Web Admin Console &amp; Monitoring Real-Time</span>
+                                                </div>
+                                                <span className="text-emerald-400 font-semibold">● 13.613 Pelanggan</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Mobile App Screen (4 cols) */}
+                                        {featured.background_image_url && (
+                                            <div className="lg:col-span-4 rounded-2xl overflow-hidden border border-slate-800 bg-slate-900 shadow-2xl flex flex-col">
+                                                {/* Mobile Header Bar */}
+                                                <div className="flex items-center justify-between px-4 py-3 bg-slate-900 border-b border-slate-800 text-[11px] font-mono text-slate-300">
+                                                    <div className="flex items-center gap-1.5">
+                                                        <Smartphone className="w-3.5 h-3.5 text-emerald-400" />
+                                                        <span className="text-slate-200 font-semibold">Minpo Mobile</span>
+                                                    </div>
+                                                    <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                                                        Flutter
+                                                    </span>
+                                                </div>
+
+                                                {/* Mobile Phone Mockup */}
+                                                <div className="p-4 bg-slate-950/90 flex items-center justify-center flex-1">
+                                                    <div className="rounded-[2rem] p-2 bg-slate-800/90 border-2 border-slate-700 shadow-2xl max-w-[240px] w-full">
+                                                        <div className="w-16 h-3 bg-slate-950 rounded-full mx-auto mb-2 flex items-center justify-center">
+                                                            <div className="w-1.5 h-1.5 rounded-full bg-slate-800"></div>
+                                                        </div>
+                                                        <div className="rounded-[1.4rem] overflow-hidden bg-slate-950 border border-white/10">
+                                                            <img
+                                                                src={featured.background_image_url}
+                                                                alt={`${featured.title} Mobile App`}
+                                                                className="w-full h-auto object-contain block"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Mobile Footer Caption */}
+                                                <div className="px-4 py-2.5 bg-slate-900/90 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400 font-mono">
+                                                    <span className="text-slate-300">Aplikasi Pelanggan</span>
+                                                    <span className="text-blue-400 font-semibold">Self-Service</span>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
