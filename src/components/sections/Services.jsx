@@ -125,7 +125,7 @@ const Services = () => {
                     <div className="flex flex-col items-center mb-12 sm:mb-16 text-center">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/80 text-xs font-mono text-blue-700 uppercase tracking-widest mb-4 shadow-sm">
                             <Layers className="w-3.5 h-3.5 text-blue-600" />
-                            [LAYANAN_STUDIO]
+                            [LAYANAN_DIGITAL]
                         </div>
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
                             Katalog Solusi Rekayasa Digital

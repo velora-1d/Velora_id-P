@@ -77,7 +77,7 @@ const Contact = () => {
             });
         } catch { }
 
-        const waMessage = `Halo Velora Studio!%0A%0A*Data Pengirim:*%0ANama: ${formData.name}%0AEmail: ${formData.email}%0APerusahaan/Lembaga: ${formData.company}%0A%0A*Kebutuhan:*%0A${formData.message}`;
+        const waMessage = `Halo Velora Digital!%0A%0A*Data Pengirim:*%0ANama: ${formData.name}%0AEmail: ${formData.email}%0APerusahaan/Lembaga: ${formData.company}%0A%0A*Kebutuhan:*%0A${formData.message}`;
         window.open(`https://wa.me/${contactData.whatsapp}?text=${waMessage}`, '_blank');
 
         setStatus('success');
@@ -99,8 +99,9 @@ const Contact = () => {
                     <div className="text-center mb-14 sm:mb-16">
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-950/70 border border-blue-500/30 text-xs font-mono text-blue-300 uppercase tracking-widest mb-4">
                             <MessageCircle className="w-3.5 h-3.5 text-blue-400" />
-                            [HUBUNGI_STUDIO]
+                            [HUBUNGI_VELORA]
                         </div>
+
                         <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight mb-4 whitespace-pre-line">
                             {contactData.ctaTitle}
                         </h2>
@@ -246,7 +247,7 @@ const Contact = () => {
                                     <div className="w-10 h-10 rounded-lg bg-sky-950 border border-sky-800 flex items-center justify-center text-sky-400 mb-3">
                                         <MapPin className="w-5 h-5" />
                                     </div>
-                                    <h4 className="font-bold text-sm text-white mb-1">Lokasi Studio</h4>
+                                    <h4 className="font-bold text-sm text-white mb-1">Lokasi Kantor</h4>
                                     <p className="text-slate-400 text-xs">{contactData.address}</p>
                                 </div>
                             </div>

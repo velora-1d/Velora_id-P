@@ -30,7 +30,8 @@ const journey = [
     { year: '2020', text: 'Lulus S.H. — Universitas Islam KH.Ruhiyat Cipasung', icon: GraduationCap },
     { year: '2021', text: 'Riset & Rekayasa Web Architecture', icon: Code2 },
     { year: '2022', text: 'Senior Full-Stack & Systems Freelance', icon: Briefcase },
-    { year: '2023', text: 'Pendirian Velora ID Technology Studio', icon: Scale },
+    { year: '2023', text: 'Pendirian Velora ID Digital Technology', icon: Scale },
+
 ];
 
 const expertise = [
