@@ -17,7 +17,14 @@ function publicUrlFor(key) {
     const configured = process.env.SUPABASE_STORAGE_PUBLIC_URL?.replace(/\/$/, '');
     if (configured) return `${configured}/${key}`;
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '');
+    let supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.replace(/\/$/, '');
+    if ((!supabaseUrl || supabaseUrl.startsWith('###')) && endpoint) {
+        const match = endpoint.match(/https:\/\/([a-zA-Z0-9_-]+)\.storage\.supabase\.co/);
+        if (match) {
+            supabaseUrl = `https://${match[1]}.supabase.co`;
+        }
+    }
+
     if (!supabaseUrl || !bucket) throw new Error('SUPABASE_STORAGE_PUBLIC_URL belum dikonfigurasi');
 
     return `${supabaseUrl}/storage/v1/object/public/${bucket}/${key}`;
