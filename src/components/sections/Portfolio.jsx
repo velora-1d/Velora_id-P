@@ -45,6 +45,18 @@ const fallbackProjects = [
         icon_name: "Radio"
     },
     {
+        title: "JBR Minpo — ISP Billing Engine, POP Network & Mobile App",
+        slug: "jbr-minpo-isp",
+        category: "Mobile & Desktop",
+        client: "ISP Jabbar23 & PT Jaringan Berkah Raya",
+        description: "Sistem komprehensif manajemen operasional ISP Jabbar23: sinkronisasi area Point of Presence (POP) jaringan fiber optic, integrasi gateway pembayaran Netpay API, automasi isolasi pelanggan jatuh tempo, dan aplikasi mobile Flutter pelanggan (Minpo Mobile) untuk cek tagihan, riwayat pemakaian, dan pelaporan gangguan.",
+        challenge: "Sinkronisasi data pelanggan dan status koneksi lintas Point of Presence (POP) area jaringan fiber, penanganan integrasi format khusus gateway Netpay API (application/x-www-form-urlencoded), serta pemenuhan standar arsitektur 16KB page size NDK dan obfuscation Proguard R8 pada aplikasi mobile Android.",
+        solution: "Mengembangkan query sinkronisasi area POP yang teroptimasi, implementasi middleware adapter Netpay payment callback, arsitektur aplikasi mobile Flutter dengan state management reaktif, serta pembaruan toolchain NDK 28 untuk performa rilis Android modern.",
+        tech: "Flutter, Dart, PHP / Laravel, MySQL, Netpay Payment Gateway, MikroTik API, NDK",
+        image_url: "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?auto=format&fit=crop&w=1200&q=80",
+        icon_name: "Radio"
+    },
+    {
         title: "EduVera — Integrated Education & Learning Management Platform",
         slug: "eduvera-platform",
         category: "EdTech & Akademik",
