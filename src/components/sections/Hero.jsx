@@ -149,20 +149,20 @@ const Hero = () => {
                             </div>
                         </ScrollReveal>
 
-                        {/* Tech Stack Badges */}
+                        {/* Capabilities & Standards Badges (Stack-Agnostic & Project-Tailored) */}
                         <ScrollReveal delay={0.5}>
                             <div className="mt-8 flex flex-wrap gap-2 text-xs font-mono text-slate-400">
                                 <span className="px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center gap-1.5 hover:border-blue-500/40 transition-colors">
-                                    <Zap className="w-3.5 h-3.5 text-blue-400" /> Next.js 16
+                                    <Zap className="w-3.5 h-3.5 text-blue-400" /> Stack Kustom Fleksibel
                                 </span>
                                 <span className="px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center gap-1.5 hover:border-sky-500/40 transition-colors">
-                                    <Database className="w-3.5 h-3.5 text-sky-400" /> PostgreSQL
+                                    <Database className="w-3.5 h-3.5 text-sky-400" /> Arsitektur Data Terukur
                                 </span>
                                 <span className="px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center gap-1.5 hover:border-orange-500/40 transition-colors">
-                                    <CreditCard className="w-3.5 h-3.5 text-orange-400" /> QRIS &amp; VA
+                                    <CreditCard className="w-3.5 h-3.5 text-orange-400" /> Integrasi API &amp; Payment
                                 </span>
                                 <span className="px-2.5 py-1 rounded-lg bg-slate-900/80 border border-slate-800 flex items-center gap-1.5 hover:border-emerald-500/40 transition-colors">
-                                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> 100% Secure
+                                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Garansi &amp; Standar SLA
                                 </span>
                             </div>
                         </ScrollReveal>
