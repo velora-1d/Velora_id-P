@@ -6,9 +6,9 @@
 # ==========================================
 
 # ------------------------------------------
-# Base Image: Alpine Linux with Node 20 LTS
+# Base Image: Alpine Linux with Node 22 LTS
 # ------------------------------------------
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN apk add --no-cache libc6-compat
@@ -41,7 +41,7 @@ RUN pnpm build
 # ------------------------------------------
 # Stage 3: Minimal Production Runner
 # ------------------------------------------
-FROM node:20-alpine AS runner
+FROM node:22-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
