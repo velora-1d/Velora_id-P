@@ -45,9 +45,6 @@ node_modules_old/
 .serena/
 skills-lock.json
 
-# pnpm files
-pnpm-workspace.yaml
-
 # Database backups
 backups/
 
